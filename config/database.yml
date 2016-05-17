@@ -1,7 +1,8 @@
 default: &default
-  adapter: postgresql
+  adapter: mysql2
   host: localhost
-  username: 
+  username: root
+  password: 
   pool: 5
   timeout: 5000
 
