@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(version: 20160524143325) do
     t.boolean  "admin"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.index ["context_group_id"], name: "index_users_on_context_group_id", using: :btree
   end
 
   add_foreign_key "clicks", "urls"
@@ -77,4 +78,5 @@ ActiveRecord::Schema.define(version: 20160524143325) do
   add_foreign_key "transfer_request_urls", "transfer_requests"
   add_foreign_key "transfer_request_urls", "urls"
   add_foreign_key "urls", "groups"
+  add_foreign_key "users", "groups", column: "context_group_id"
 end
