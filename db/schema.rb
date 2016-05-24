@@ -11,12 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160524143354) do
+ActiveRecord::Schema.define(version: 20160524143325) do
 
   create_table "clicks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "referrer"
-    t.string   "user_agent"
-    t.string   "ip_address"
     t.string   "country_code"
     t.integer  "url_id"
     t.datetime "created_at",   null: false
@@ -36,12 +33,6 @@ ActiveRecord::Schema.define(version: 20160524143354) do
     t.integer "user_id"
     t.index ["group_id"], name: "index_groups_users_on_group_id", using: :btree
     t.index ["user_id"], name: "index_groups_users_on_user_id", using: :btree
-  end
-
-  create_table "site_settings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer  "next_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "transfer_request_urls", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -72,8 +63,7 @@ ActiveRecord::Schema.define(version: 20160524143354) do
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "username"
-    t.string   "email"
+    t.string   "uid"
     t.integer  "context_group_id"
     t.boolean  "admin"
     t.datetime "created_at",       null: false

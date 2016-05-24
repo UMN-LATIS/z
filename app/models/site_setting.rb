@@ -1,2 +1,0 @@
-class SiteSetting < ApplicationRecord
-end
