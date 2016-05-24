@@ -46,6 +46,13 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   
   gem 'better_errors'
+  
+  gem "pry-coolline"
+  gem 'pry-byebug'
+
+  # All sorts of rails console helpers/debugging bundled into one package
+  gem "awesome_print"
+  gem "pry-rails"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
