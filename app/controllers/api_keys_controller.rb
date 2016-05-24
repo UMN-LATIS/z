@@ -1,0 +1,3 @@
+class ApiKeysController < ApplicationController
+  
+end

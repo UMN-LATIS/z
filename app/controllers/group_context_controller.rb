@@ -1,0 +1,3 @@
+class GroupContextController < ApplicationController
+  
+end

@@ -1,0 +1,3 @@
+class TransferRequestsController < ApplicationController
+  
+end
