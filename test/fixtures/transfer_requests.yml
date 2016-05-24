@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  to_group_id: 
+  from_group_id: 
+  key: MyString
+  status: MyString
+
+two:
+  to_group_id: 
+  from_group_id: 
+  key: MyString
+  status: MyString

@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  transfer_request: one
+  url: one
+
+two:
+  transfer_request: two
+  url: two
