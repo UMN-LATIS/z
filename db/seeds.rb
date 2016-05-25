@@ -21,6 +21,6 @@ other_groups = Group.create([
 	])
 	
 urls = Url.create([
-	{url: "google.com", keyword: "g", group: User.first.group},
-	{url: "umn.edu", keyword: "u", group: User.last.group}
+	{url: "google.com", keyword: "g", group: User.first.context_group},
+	{url: "umn.edu", keyword: "u", group: User.last.context_group}
 	])	
