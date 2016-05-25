@@ -1,0 +1,30 @@
+<table>
+	<thead>
+		<th>Keyword</th>
+		<th>URL</th>
+		<th>Total clicks</th>
+		<th></th>
+		<th></th>
+	</thead>
+	<tbody>
+		<% urls.each do |url| %>
+		<tr>
+			<td>
+				<%= url.keyword %>
+			</td>
+			<td>
+				<%= url.url %>
+			</td>
+			<td>
+				<%= url.total_clicks %>
+			</td>
+			<td>
+				edit
+			</td>
+			<td>
+				delete
+			</td>
+		</tr>
+		<% end %>
+	</tbody>
+</table>

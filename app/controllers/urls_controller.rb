@@ -1,6 +1,6 @@
 class UrlsController < ApplicationController
   def index
-    #code
+    @urls = Url.all
   end
   
   def show
@@ -26,4 +26,13 @@ class UrlsController < ApplicationController
   def destroy
     #code
   end
+  
+  private
+    def load_url
+      #code
+    end
+    
+    def url_params
+      #code
+    end
 end
