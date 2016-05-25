@@ -47,6 +47,8 @@ GEM
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
       rack (>= 0.9.0)
+    binding_of_caller (0.7.2)
+      debug_inspector (>= 0.0.1)
     builder (3.2.2)
     byebug (9.0.3)
     coderay (1.1.1)
@@ -105,6 +107,8 @@ GEM
     pry-rails (0.3.4)
       pry (>= 0.9.10)
     puma (3.4.0)
+    quiet_assets (1.1.0)
+      railties (>= 3.1, < 5.0)
     rack (2.0.0.rc1)
       json
     rack-test (0.6.3)
@@ -185,6 +189,7 @@ DEPENDENCIES
   annotate
   awesome_print
   better_errors
+  binding_of_caller
   byebug
   coffee-rails (~> 4.1.0)
   jbuilder (~> 2.0)
@@ -195,6 +200,7 @@ DEPENDENCIES
   pry-coolline
   pry-rails
   puma (~> 3.0)
+  quiet_assets
   rails (>= 5.0.0.rc1, < 5.1)
   sass-rails (~> 5.0)
   spring
