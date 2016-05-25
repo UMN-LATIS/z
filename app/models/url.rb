@@ -5,7 +5,7 @@
 #  id          :integer          not null, primary key
 #  url         :string(255)
 #  keyword     :string(255)
-#  clicks      :integer
+#  total_clicks      :integer
 #  group_id    :integer
 #  modified_by :integer
 #  created_at  :datetime         not null

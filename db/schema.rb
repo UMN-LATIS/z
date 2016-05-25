@@ -50,6 +50,8 @@ ActiveRecord::Schema.define(version: 20160524143325) do
     t.string   "status"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.index ["from_group_id"], name: "index_transfer_requests_on_from_group_id", using: :btree
+    t.index ["to_group_id"], name: "index_transfer_requests_on_to_group_id", using: :btree
   end
 
   create_table "urls", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -77,6 +79,8 @@ ActiveRecord::Schema.define(version: 20160524143325) do
   add_foreign_key "groups_users", "users"
   add_foreign_key "transfer_request_urls", "transfer_requests"
   add_foreign_key "transfer_request_urls", "urls"
+  add_foreign_key "transfer_requests", "groups", column: "from_group_id"
+  add_foreign_key "transfer_requests", "groups", column: "to_group_id"
   add_foreign_key "urls", "groups"
   add_foreign_key "users", "groups", column: "context_group_id"
 end

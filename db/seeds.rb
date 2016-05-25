@@ -21,7 +21,7 @@ other_groups = Group.create([
 	])
 	
 urls = Url.create([
-	{url: "google.com", keyword: "goog", total_clicks: 7, group: User.first.context_group},
+	{url: "google.com", keyword: "goog", total_clicks: 9, group: User.first.context_group},
 	{url: "umn.edu", keyword: "umn", total_clicks: 3, group: User.last.context_group}
 	])	
 
@@ -29,11 +29,13 @@ clicks = Click.create([
 	{country_code: "US", url_id: Url.first},
 	{country_code: "US", url_id: Url.first},
 	{country_code: "US", url_id: Url.first},
-	{country_code: "US", url_id: Url.first},
-	{country_code: "US", url_id: Url.first},
-	{country_code: "US", url_id: Url.first},
-	{country_code: "US", url_id: Url.first},
-	{country_code: "US", url_id: Url.last},
-	{country_code: "US", url_id: Url.last},
-	{country_code: "US", url_id: Url.last}
+	{country_code: "CA", url_id: Url.first},
+	{country_code: "UZ", url_id: Url.first},
+	{country_code: "CA", url_id: Url.first},
+	{country_code: "RU", url_id: Url.first},
+	{country_code: "CU", url_id: Url.first},
+	{country_code: "RU", url_id: Url.first},
+	{country_code: "CN", url_id: Url.last},
+	{country_code: "CN", url_id: Url.last},
+	{country_code: "CN", url_id: Url.last}
 	])
