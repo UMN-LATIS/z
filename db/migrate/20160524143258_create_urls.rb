@@ -3,7 +3,7 @@ class CreateUrls < ActiveRecord::Migration[5.0]
     create_table :urls do |t|
       t.string :url
       t.string :keyword
-      t.integer :clicks
+      t.integer :total_clicks
       t.references :group, foreign_key: true
       t.integer :modified_by
 

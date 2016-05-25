@@ -21,6 +21,19 @@ other_groups = Group.create([
 	])
 	
 urls = Url.create([
-	{url: "google.com", keyword: "g", group: User.first.context_group},
-	{url: "umn.edu", keyword: "u", group: User.last.context_group}
+	{url: "google.com", keyword: "goog", total_clicks: 7, group: User.first.context_group},
+	{url: "umn.edu", keyword: "umn", total_clicks: 3, group: User.last.context_group}
 	])	
+
+clicks = Click.create([
+	{country_code: "US", url_id: Url.first},
+	{country_code: "US", url_id: Url.first},
+	{country_code: "US", url_id: Url.first},
+	{country_code: "US", url_id: Url.first},
+	{country_code: "US", url_id: Url.first},
+	{country_code: "US", url_id: Url.first},
+	{country_code: "US", url_id: Url.first},
+	{country_code: "US", url_id: Url.last},
+	{country_code: "US", url_id: Url.last},
+	{country_code: "US", url_id: Url.last}
+	])

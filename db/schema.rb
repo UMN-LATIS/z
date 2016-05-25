@@ -55,11 +55,11 @@ ActiveRecord::Schema.define(version: 20160524143325) do
   create_table "urls", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "url"
     t.string   "keyword"
-    t.integer  "clicks"
+    t.integer  "total_clicks"
     t.integer  "group_id"
     t.integer  "modified_by"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.index ["group_id"], name: "index_urls_on_group_id", using: :btree
   end
 

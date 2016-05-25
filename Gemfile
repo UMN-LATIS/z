@@ -53,6 +53,8 @@ group :development do
   # All sorts of rails console helpers/debugging bundled into one package
   gem "awesome_print"
   gem "pry-rails"
+  
+  gem 'annotate'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
