@@ -1,3 +1,12 @@
+# == Schema Information
+#
+# Table name: groups_users
+#
+#  group_id            :integer
+#  user_id             :integer
+#  notify_user_changes :boolean          default(FALSE)
+#
+
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:

@@ -1,3 +1,11 @@
+# == Schema Information
+#
+# Table name: transfer_request_urls
+#
+#  transfer_request_id :integer
+#  url_id              :integer
+#
+
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
