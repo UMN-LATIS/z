@@ -1,30 +1,22 @@
-<table>
-	<thead>
-		<th>Keyword</th>
-		<th>URL</th>
-		<th>Total clicks</th>
-		<th></th>
-		<th></th>
-	</thead>
-	<tbody>
-		<% urls.each do |url| %>
-		<tr>
-			<td>
-				<%= url.keyword %>
-			</td>
-			<td>
-				<%= url.url %>
-			</td>
-			<td>
-				<%= url.total_clicks %>
-			</td>
-			<td>
-				edit
-			</td>
-			<td>
-				delete
-			</td>
-		</tr>
-		<% end %>
-	</tbody>
+<%- model_class = Url -%>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:url) %></th>
+      <th><%= model_class.human_attribute_name(:keyword) %></th>
+      <th><%= model_class.human_attribute_name(:total_clicks) %></th>
+      <th><%= model_class.human_attribute_name(:group_id) %></th>
+      <th><%= model_class.human_attribute_name(:modified_by) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% urls.each do |url| %>
+      <%= render 'url_row', url: url %>
+    <% end %>
+    
+  </tbody>
 </table>

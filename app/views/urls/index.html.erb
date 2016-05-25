@@ -1,2 +1,8 @@
-<h2>URLS</h2>
+<%- model_class = Url -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
 <%= render 'urls_table', urls: @urls %>
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_url_path,
+            :class => 'btn btn-primary', remote: true %>

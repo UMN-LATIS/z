@@ -1,0 +1,9 @@
+<tr>
+	<td colspan=7>
+		<%= form_for url, :html => { :class => "form-inline url", remote: true } do |f| %>
+		<%= f.text_field :url, :class => 'form-control' %>
+		<%= f.text_field :keyword, :class => 'form-control' %>
+		<%= f.submit nil, :class => 'btn btn-primary' %>
+		<% end %>
+	</td>
+</tr>
