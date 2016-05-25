@@ -22,6 +22,8 @@ class Url < ApplicationRecord
   
   before_validation(on: :create) do
     self.group = User.first.context_group
+    
+    # Set clicks to zero
     self.total_clicks = 0
   end
 
