@@ -1,5 +1,5 @@
 class UrlsController < ApplicationController
-  before_action :set_url, only: [:show, :update, :destroy]
+  before_action :set_url, only: [:show, :edit, :update, :destroy]
 
   # GET /urls
   # GET /urls.json
@@ -11,6 +11,13 @@ class UrlsController < ApplicationController
   # GET /urls/1
   # GET /urls/1.json
   def show
+  end
+  
+  def edit
+    respond_to do |format|
+      format.html
+      format.js   { render :layout => false }
+   end
   end
 
   # GET /urls/new
@@ -48,6 +55,7 @@ class UrlsController < ApplicationController
       if @url.update(url_params)
         format.html { redirect_to @url, notice: 'Url was successfully updated.' }
         format.json { render :show, status: :ok, location: @url }
+        format.js   { render :create }
       else
         format.html { render :edit }
         format.json { render json: @url.errors, status: :unprocessable_entity }
