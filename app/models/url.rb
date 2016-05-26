@@ -21,7 +21,7 @@ class Url < ApplicationRecord
   before_destroy {|url| url.transfer_requests.clear}
   
   validates :keyword, uniqueness: true, presence: true
-  validates :url, presence: true
+  validates :url, presence: true, format: { with: /\A#{URI::regexp(['http', 'https'])}\z/ }
   
   before_validation(on: :create) do
     self.group = User.first.context_group
@@ -44,4 +44,9 @@ class Url < ApplicationRecord
     self.keyword = self.keyword.gsub(/[^0-9a-z\\s]/i, '')
   end
 
+  def add_click!
+    self.clicks << Click.create(country_code: "US")
+    self.total_clicks = self.total_clicks + 1
+    self.save
+  end
 end

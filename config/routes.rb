@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   root 'urls#index'
   
   resources :urls
+  get "/:keyword", to: "redirect#index"
 end
