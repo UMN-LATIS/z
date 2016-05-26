@@ -1,9 +1,5 @@
 <% if @url.errors.present? %>
-	<% if @url.id.present? %>
-		$(document).find("tr#url-<%= @url.id %>").replaceWith($("<%= escape_javascript(ApplicationController.renderer.render(partial: 'urls/in_row_edit', locals: { url: @url })) %>"))
-	<% else %>
-		$(document).find("tr#url-<%= @url_identifier %>").replaceWith($("<%= escape_javascript(ApplicationController.renderer.render(partial: 'urls/in_row_new', locals: { url: @url, id: @url_identifier })) %>"))
-	<% end %>
+	$(document).find("tr#url-<%= @url_identifier %>").replaceWith($("<%= escape_javascript(render(partial: 'urls/in_row_new', locals: { url: @url, id: @url_identifier })) %>"))
 <% else %>
-	$(document).find("tr#url-<%= @url_identifier %>").replaceWith($("<%= escape_javascript(ApplicationController.renderer.render(partial: 'urls/url_row', locals: { url: @url })) %>"))
+	<%= render partial: "show.js", locals: {url: @url, row_identifier: @url_identifier} %>
 <% end %>

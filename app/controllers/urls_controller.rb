@@ -44,12 +44,11 @@ class UrlsController < ApplicationController
       if @url.save
         format.html { redirect_to urls_path, notice: 'Url was successfully created.' }
         format.json { render :show, status: :created, location: @url }
-        format.js   { render :layout => false }
       else
         format.html { render :new }
         format.json { render json: @url.errors, status: :unprocessable_entity }
-        format.js   { render :layout => false }
       end
+      format.js   { render :layout => false }
     end
   end
 
@@ -62,12 +61,11 @@ class UrlsController < ApplicationController
       if @url.update(url_params)
         format.html { redirect_to @url, notice: 'Url was successfully updated.' }
         format.json { render :show, status: :ok, location: @url }
-        format.js   { render :create }
       else
         format.html { render :edit }
         format.json { render json: @url.errors, status: :unprocessable_entity }
-        format.js   { render :create }
       end
+      format.js   { render :layout => false }
     end
   end
 
