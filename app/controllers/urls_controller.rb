@@ -27,7 +27,7 @@ class UrlsController < ApplicationController
   # GET /urls/new
   def new
     @url = Url.new
-    
+    @url_identifier = Time.now.to_ms
     respond_to do |format|
       format.html
       format.js   { render :layout => false }
@@ -37,7 +37,7 @@ class UrlsController < ApplicationController
   # POST /urls
   # POST /urls.json
   def create
-    @raw_keyword = url_params[:keyword]
+    @url_identifier = params[:new_identifier]
     @url = Url.new(url_params)
 
     respond_to do |format|
@@ -56,7 +56,8 @@ class UrlsController < ApplicationController
   # PATCH/PUT /urls/1
   # PATCH/PUT /urls/1.json
   def update
-    @raw_keyword = url_params[:keyword]
+    @url_identifier = @url.id
+    
     respond_to do |format|
       if @url.update(url_params)
         format.html { redirect_to @url, notice: 'Url was successfully updated.' }

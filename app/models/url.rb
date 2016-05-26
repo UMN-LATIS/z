@@ -30,12 +30,13 @@ class Url < ApplicationRecord
     self.total_clicks = 0
     
     # Set keyword if it's blank
-     index = Url.maximum(:id)
-     until Url.where(keyword: index.to_s(36)).blank?
-       index = index + 1
-     end
-     self.keyword = index.to_s(36)
-     
+    if self.keyword.blank?
+      index = Url.maximum(:id).next
+      until Url.where(keyword: index.to_s(36)).blank?
+        index = index + 1
+      end
+      self.keyword = index.to_s(36)
+    end
   end
   
   before_validation do 
