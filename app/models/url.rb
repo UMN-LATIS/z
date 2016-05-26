@@ -31,7 +31,7 @@ class Url < ApplicationRecord
     
     # Set keyword if it's blank
     if self.keyword.blank?
-      index = Url.maximum(:id).next
+      index = Url.maximum(:id).to_i.next
       until Url.where(keyword: index.to_s(36)).blank?
         index = index + 1
       end
