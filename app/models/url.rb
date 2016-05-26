@@ -14,10 +14,33 @@
 
 class Url < ApplicationRecord
   belongs_to :group
+  has_many :clicks
   has_and_belongs_to_many :transfer_requests, join_table: :transfer_request_urls
+  
   # this next bit of magic removes any associations in the transfer_request_urls table
   before_destroy {|url| url.transfer_requests.clear}
-  has_many :transfer_requests, :dependent => :destroy
-  has_many :clicks
+  
+  validates :keyword, uniqueness: true, presence: true
+  validates :url, presence: true
+  
+  before_validation(on: :create) do
+    self.group = User.first.context_group
+    
+    # Set clicks to zero
+    self.total_clicks = 0
+    
+    # Set keyword if it's blank
+     index = Url.maximum(:id)
+     until Url.where(keyword: index.to_s(36)).blank?
+       index = index + 1
+     end
+     self.keyword = index.to_s(36)
+     
+  end
+  
+  before_validation do 
+    # Strip URL of any invalid characters, only allow alphanumeric
+    self.keyword = self.keyword.gsub(/[^0-9a-z\\s]/i, '')
+  end
 
 end
