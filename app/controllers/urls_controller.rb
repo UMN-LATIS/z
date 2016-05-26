@@ -11,6 +11,10 @@ class UrlsController < ApplicationController
   # GET /urls/1
   # GET /urls/1.json
   def show
+    respond_to do |format|
+      format.html
+      format.js   { render :layout => false }
+   end
   end
   
   def edit
