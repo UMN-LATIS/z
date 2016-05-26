@@ -15,7 +15,7 @@
 class Url < ApplicationRecord
   belongs_to :group
   has_many :clicks
-  has_and_belongs_to_many :transfer_requests, join_table: :transfer_request_urls
+  has_and_belongs_to_many  :transfer_requests, join_table: :transfer_request_urls
   
   # this next bit of magic removes any associations in the transfer_request_urls table
   before_destroy {|url| url.transfer_requests.clear}
