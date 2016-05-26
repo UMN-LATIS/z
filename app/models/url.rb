@@ -20,11 +20,19 @@ class Url < ApplicationRecord
   # this next bit of magic removes any associations in the transfer_request_urls table
   before_destroy {|url| url.transfer_requests.clear}
   
+  validates :keyword, uniqueness: true, presence: true
+  validates :url, presence: true
+  
   before_validation(on: :create) do
     self.group = User.first.context_group
     
     # Set clicks to zero
     self.total_clicks = 0
+  end
+  
+  before_validation do 
+    # Strip URL of any invalid characters, only allow alphanumeric
+    self.keyword = self.keyword.gsub(/[^0-9a-z\\s]/i, '') unless self.keyword.blank?
   end
 
 end

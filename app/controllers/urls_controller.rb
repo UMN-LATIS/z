@@ -38,6 +38,7 @@ class UrlsController < ApplicationController
   # POST /urls.json
   def create
     @url = Url.new(url_params)
+    @raw_keyword = @url.keyword
 
     respond_to do |format|
       if @url.save
@@ -55,6 +56,7 @@ class UrlsController < ApplicationController
   # PATCH/PUT /urls/1
   # PATCH/PUT /urls/1.json
   def update
+    @raw_keyword = url_params[:keyword]
     respond_to do |format|
       if @url.update(url_params)
         format.html { redirect_to @url, notice: 'Url was successfully updated.' }
@@ -63,6 +65,7 @@ class UrlsController < ApplicationController
       else
         format.html { render :edit }
         format.json { render json: @url.errors, status: :unprocessable_entity }
+        format.js   { render :create }
       end
     end
   end
