@@ -37,8 +37,8 @@ class UrlsController < ApplicationController
   # POST /urls
   # POST /urls.json
   def create
+    @raw_keyword = url_params[:keyword]
     @url = Url.new(url_params)
-    @raw_keyword = @url.keyword
 
     respond_to do |format|
       if @url.save

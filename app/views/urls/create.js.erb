@@ -1,9 +1,9 @@
 <% if @url.errors.present? %>
 	<% if @url.id.present? %>
-		$('input').filter(function() { return this.value == '<%= @raw_keyword.present? ? @raw_keyword : @url.keyword %>' }).closest("tr").replaceWith($("<%= escape_javascript(ApplicationController.renderer.render(partial: 'urls/in_row_edit', locals: { url: @url })) %>"))
+		$('input').filter(function() { return this.value == '<%= @raw_keyword.nil? ? @url.keyword : @raw_keyword %>' }).closest("tr").replaceWith($("<%= escape_javascript(ApplicationController.renderer.render(partial: 'urls/in_row_edit', locals: { url: @url })) %>"))
 	<% else %>
-		$('input').filter(function() { return this.value == '<%= @raw_keyword.present? ? @raw_keyword : @url.keyword %>' }).closest("tr").replaceWith($("<%= escape_javascript(ApplicationController.renderer.render(partial: 'urls/in_row_new', locals: { url: @url })) %>"))
+		$('input').filter(function() { return this.value == '<%= @raw_keyword.nil? ? @url.keyword : @raw_keyword %>' }).closest("tr").replaceWith($("<%= escape_javascript(ApplicationController.renderer.render(partial: 'urls/in_row_new', locals: { url: @url })) %>"))
 	<% end %>
 <% else %>
-	$('input').filter(function() { return this.value == '<%= @raw_keyword.present? ? @raw_keyword : @url.keyword %>' }).closest("tr").replaceWith($("<%= escape_javascript(ApplicationController.renderer.render(partial: 'urls/url_row', locals: { url: @url })) %>"))
+	$('input').filter(function() { return this.value == '<%= @raw_keyword.nil? ? @url.keyword : @raw_keyword %>' }).closest("tr").replaceWith($("<%= escape_javascript(ApplicationController.renderer.render(partial: 'urls/url_row', locals: { url: @url })) %>"))
 <% end %>
