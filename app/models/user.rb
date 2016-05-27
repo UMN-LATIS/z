@@ -22,5 +22,4 @@ class User < ApplicationRecord
       Group.create(name: uid, description: uid) if context_group.blank?
     groups << context_group
   end
-
 end
