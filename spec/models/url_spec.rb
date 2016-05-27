@@ -1,37 +1,62 @@
-require "rails_helper"
-
-RSpec.describe Url, :type => :model do
-  # it "orders by last name" do
-  #   lindeman = User.create!(first_name: "Andy", last_name: "Lindeman")
-  #   chelimsky = User.create!(first_name: "David", last_name: "Chelimsky")
-	# 
-  #   expect(User.ordered_by_last_name).to eq([chelimsky, lindeman])
-  # end
-	
-	
-end
-
 # == Schema Information
 #
-# Table name: collections
+# Table name: urls
 #
-#  id          :integer          not null, primary key
-#  name        :string
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  description :string
+#  id           :integer          not null, primary key
+#  url          :string(255)
+#  keyword      :string(255)
+#  total_clicks :integer
+#  group_id     :integer
+#  modified_by  :integer
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
 #
 
 require 'rails_helper'
 
 RSpec.describe Url, type: :model do
   before do
-		@user = FactoryGirl.create(:user)
+    @user = FactoryGirl.create(:user)
     @url = FactoryGirl.build(:url)
   end
 
   subject { @url }
 
-  it {should be_valid}
+  it { should be_valid }
+  it { should respond_to 'total_clicks' }
+  it { should respond_to 'group' }
+  it { should respond_to 'group_id' }
+  it { should respond_to 'keyword' }
+  it { should respond_to 'url' }
+  it { should respond_to 'modified_by' }
+  it { should respond_to 'created_at' }
+  it { should respond_to 'updated_at' }
 
+  describe 'invalid Url' do
+    describe '[url]' do
+      describe 'not a proper URL' do
+        before { @url.url = 'google.com' }
+        it 'should not be valid' do
+          expect(@url).to_not be_valid
+        end
+      end
+      describe "doesn't exist" do
+        before { @url.url = '' }
+        it 'should not be valid' do
+          expect(@url).to_not be_valid
+        end
+      end
+    end
+    describe '[keyword]' do
+      describe 'already exists' do
+        before do
+          other_url = FactoryGirl.create(:url)
+          @url.url = other_url.keyword
+        end
+        it 'should not be valid' do
+          expect(@url).to_not be_valid
+        end
+      end
+    end
+  end
 end
