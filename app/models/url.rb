@@ -23,7 +23,7 @@ class Url < ApplicationRecord
   validates :keyword, uniqueness: true, presence: true
 
   validates :url, presence: true, format:
-    { with: /\A#{URI.regexp(%w('http', 'https'))}\z/ }
+    { with: /\A#{URI.regexp(%w(http https))}\z/ }
 
   before_validation(on: :create) do
     self.group = User.first.context_group
