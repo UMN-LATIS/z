@@ -98,7 +98,7 @@ body { margin: 0; }
   #umnhf-alt-n ul li:nth-child(odd) { background-color: #f9f9f9; }
   #umnhf-alt-n ul a { line-height: 40px; } }
 /* Unit footer styles */
-#umnhf-uf.umnhf { position: absolute; bottom:0; width:100%; height:100px; overflow: hidden; border-top: 1px solid #f0efee; }
+#umnhf-uf.umnhf { position: relative; bottom:0; width:100%; height:100px; overflow: hidden; border-top: 1px solid #f0efee; }
 #umnhf-uf a:hover, #umnhf-uf a:active, #umnhf-uf a:focus { text-decoration: underline; }
 #umnhf-uf p { margin: 0; }
 #umnhf-uf p, #umnhf-uf a, #umnhf-uf li, #umnhf-uf h3 { text-decoration: none; color: #404d5b; }

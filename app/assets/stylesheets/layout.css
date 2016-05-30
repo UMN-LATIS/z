@@ -361,9 +361,9 @@ footer {
 .cla-header .swooshes,.cla-header .main-swooshes,.cla-header .unit-swooshes{background:#2C2425;height:35px;}
 .cla-header .swooshes div.left,.cla-header .main-swooshes div.left,.cla-header .unit-swooshes div.left,.cla-header .swooshes .view-news-listing div.field-feature-image,.view-news-listing .cla-header .swooshes div.field-feature-image,.cla-header .main-swooshes .view-news-listing div.field-feature-image,.view-news-listing .cla-header .main-swooshes div.field-feature-image,.cla-header .unit-swooshes .view-news-listing div.field-feature-image,.view-news-listing .cla-header .unit-swooshes div.field-feature-image{margin-left:15px;}
 .cla-header .swooshes div.right,.cla-header .main-swooshes div.right,.cla-header .unit-swooshes div.right{margin-right:8px;}
-.cla-header .swooshes .logo,.cla-header .main-swooshes .logo,.cla-header .unit-swooshes .logo{position:relative;top:5px;width:220px;margin-left:54px;}
-@media only screen and (min-width:64.063em){.cla-header .swooshes .logo,.cla-header .main-swooshes .logo,.cla-header .unit-swooshes .logo{top:5px;width:300px;}}
-.cla-header .swooshes .unit-cla-lead,.cla-header .main-swooshes .unit-cla-lead,.cla-header .unit-swooshes .unit-cla-lead{position:relative;top:12px;margin-right:5px;font-size:.8rem;display:none;}
+.cla-header .swooshes .logo,.cla-header .main-swooshes .logo,.cla-header .unit-swooshes .logo{position:relative;top:15px;width:220px;margin-left:54px;}
+@media only screen and (min-width:64.063em){.cla-header .swooshes .logo,.cla-header .main-swooshes .logo,.cla-header .unit-swooshes .logo{top:15px;width:300px;}}
+.cla-header .swooshes .unit-cla-lead,.cla-header .main-swooshes .unit-cla-lead,.cla-header .unit-swooshes .unit-cla-lead{position:relative;top:12px;margin-right:15px;font-size:.8rem;display:none;}
 @media only screen and (min-width:64.063em){.cla-header .swooshes .unit-cla-lead,.cla-header .main-swooshes .unit-cla-lead,.cla-header .unit-swooshes .unit-cla-lead{display:inline-block;top:15px;}}
 @media only screen{.cla-header .main-swooshes{display:none;width: 100%;}}
 @media only screen and (min-width:64.063em){.cla-header .main-swooshes{display:block;height:57px;}}
@@ -402,4 +402,9 @@ footer {
 #edit_button > a {
   color:#fff;
   text-decoration: none;
+}
+
+footer#umnhf-f.umnhf {
+  position:fixed;
+  bottom: 0px;
 }
