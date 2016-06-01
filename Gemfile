@@ -38,14 +38,13 @@ gem "twitter-bootstrap-rails"
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
-  
+
   # Use Rspec, capybara, and poltergeist for testing
   gem 'rspec-rails'
   gem 'capybara'
   gem 'poltergeist'
   gem 'launchy'
   gem 'factory_girl_rails'
-  gem 'database_cleaner'
 end
 
 group :development do
@@ -55,20 +54,20 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  
+
   # Use better_errors to have more clear error messages and an interactive shell
   gem 'better_errors'
   gem 'binding_of_caller'
-  
+
   # Add some pry/rails console helpers for development
   gem "pry-coolline"
   gem 'pry-byebug'
   gem "awesome_print"
   gem "pry-rails"
-  
+
   # Use annotate to list the attributes of models
   gem 'annotate'
-  
+
   # Mute assets in development console
   gem 'quiet_assets'
 end

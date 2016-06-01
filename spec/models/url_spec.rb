@@ -34,8 +34,14 @@ RSpec.describe Url, type: :model do
 
   describe 'invalid Url' do
     describe '[url]' do
-      describe 'not a proper URL' do
+      describe 'missing http' do
         before { @url.url = 'google.com' }
+        it 'should not be valid' do
+          expect(@url).to_not be_valid
+        end
+      end
+      describe 'wrong caps' do
+        before { @url.url = 'Http://fun.net' }
         it 'should not be valid' do
           expect(@url).to_not be_valid
         end
@@ -56,6 +62,30 @@ RSpec.describe Url, type: :model do
         it 'should not be valid' do
           expect(@url).to_not be_valid
         end
+      end
+    end
+  end
+
+  describe 'valid url' do
+    describe 'various urls' do
+      it 'should be valid' do
+        @url.url = 'http://fun.com'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = 'https://fun.com'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = 'http://fun.com'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = 'https://fun.com'
+        expect(@url).to be_valid
       end
     end
   end

@@ -9,9 +9,7 @@ require 'support/wait_for_ajax'
 require 'support/factory_girl'
 require 'capybara/rspec'
 require 'capybara/poltergeist'
-require 'database_cleaner'
 
-DatabaseCleaner.strategy = :truncation
 Capybara.javascript_driver = :poltergeist
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
