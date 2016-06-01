@@ -1,6 +1,6 @@
-<tr>
-	<td colspan=8>
-		<%= render 'urls/in_row_form', url: url %>
+<tr id="url-<%= id %>">
+	<td colspan=5>
+		<%= render 'urls/in_row_form', url: url, id: id %>
 		<a href="#" class='btn btn-default cancel-new-url'>Cancel</a>
 	</td>
 </tr>

@@ -1,0 +1,5 @@
+<% if @url.errors.present? %>
+	$(document).find("tr#url-<%= @url.id %>").replaceWith($("<%= escape_javascript(render(partial: 'urls/in_row_edit', locals: { url: @url })) %>"))
+<% else %>
+	<%= render partial: "show.js", locals: {url: @url, row_identifier: @url.id} %>
+<% end %>
