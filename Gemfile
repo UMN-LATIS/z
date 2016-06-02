@@ -45,6 +45,13 @@ group :development, :test do
   gem 'poltergeist'
   gem 'launchy'
   gem 'factory_girl_rails'
+  gem 'database_cleaner'
+
+  # Add some pry/rails console helpers for development
+  gem "pry-coolline"
+  gem 'pry-byebug'
+  gem "awesome_print"
+  gem "pry-rails"
 end
 
 group :development do
@@ -59,11 +66,7 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
 
-  # Add some pry/rails console helpers for development
-  gem "pry-coolline"
-  gem 'pry-byebug'
-  gem "awesome_print"
-  gem "pry-rails"
+
 
   # Use annotate to list the attributes of models
   gem 'annotate'
