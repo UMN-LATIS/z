@@ -65,7 +65,7 @@ describe 'urls index page' do
           it 'should display an error' do
             find('.js-url-submit').click
             wait_for_ajax
-            expect(page).to have_content('http')
+            expect(page).to have_content('invalid')
           end
         end
       end
@@ -128,7 +128,7 @@ describe 'urls index page' do
         it 'should display an error' do
           find('.js-url-submit').click
           wait_for_ajax
-          expect(page).to have_content('http')
+          expect(page).to have_content('invalid')
         end
       end
     end
