@@ -7,3 +7,6 @@
 .field_with_errors input {
 	background-color: #FFC7C7;
 }
+.error-space {
+  color: #d00425;
+}

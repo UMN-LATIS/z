@@ -6,9 +6,22 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  	<%= favicon_link_tag 'https://langtest.umn.edu/static/images/favicon.ico' %>
+  	<%= render 'layouts/shim' %>
+  	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Molengo">
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  	<!--  Change stylesheet link depending on which search option you are using:
+        Dropdown: umnhf-dd.css (minified version at umnhf-dd.min.css)
+        Two-tier: umnhf-tt.css (minified version at umnhf-tt.min.css) -->
+  	<script src="https://a.umn.edu/templates/web/responsive/current/js/umnhf.js"></script>
   </head>
 
   <body>
-    <%= yield %>
+	<%= render 'layouts/header' %>
+	<%= render 'layouts/navigation_top' %>
+  <div class="container">
+	    <%= yield %>
+	</div>
+	<%= render 'layouts/footer' %>
   </body>
 </html>
