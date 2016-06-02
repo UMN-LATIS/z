@@ -98,7 +98,7 @@ p {
 .navbar-inverse .navbar-brand {
   font-family: 'Molengo', Georgia, Times, serif;
   font-size: 20px;
-  color: #000;  
+  color: #000;
 }
 
 .navbar-inverse .navbar-nav > li > a, .navbar-inverse .navbar-nav > li > a:visited, .navbar-inverse .navbar-nav > li > a:focus {
@@ -184,12 +184,12 @@ though the color below doesn't improve much.
 
 
 .navbar-inverse .navbar-toggle:hover,
-.navbar-inverse .navbar-toggle:focus {  
+.navbar-inverse .navbar-toggle:focus {
   background-color: #FECB45;
   border-color: #FECB45;
 }
 
-.navbar-inverse .navbar-toggle {  
+.navbar-inverse .navbar-toggle {
   border-color: #fff;
   margin-right: 10%;
 }
@@ -228,10 +228,6 @@ though the color below doesn't improve much.
   color: #fff;
 }
 
-.btn-toolbar a.btn, a.btn:visited {
-  color: #fff;
-}
-
 /* tables */
 
 .table {
@@ -262,11 +258,6 @@ though the color below doesn't improve much.
 #editable_content {
   margin-left: 15%;
   margin-right: 10%;
-}
-
-#content > a, a:visited {
-  color: #2FA4E7;
-  text-decoration: none;
 }
 
 #content a:hover {
@@ -314,12 +305,12 @@ footer {
 }
 
 .radio-inline {
-  margin-left: 20px;  
+  margin-left: 20px;
 }
 
 .container {
     margin-left: auto;
-  margin-right: auto;  
+  margin-right: auto;
   padding: 0;
 }
 
