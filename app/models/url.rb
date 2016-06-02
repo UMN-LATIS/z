@@ -30,16 +30,16 @@ class Url < ApplicationRecord
 
     # Set clicks to zero
     self.total_clicks = 0
+  end
 
+  before_validation do
     # Set keyword if it's blank
     if keyword.blank?
       index = Url.maximum(:id).to_i.next
       index += 1 until Url.where(keyword: index.to_s(36)).blank?
       self.keyword = index.to_s(36)
     end
-  end
 
-  before_validation do
     # Strip URL of any invalid characters, only allow alphanumeric
     self.keyword = keyword.gsub(/[^0-9a-z\\s]/i, '')
   end
