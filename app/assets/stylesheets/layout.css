@@ -397,5 +397,14 @@ footer {
 
 footer#umnhf-f.umnhf {
   position:fixed;
-  bottom: 0px;
+  bottom:0;
+  background: white;
+  margin: 0;
+  padding-bottom: 10px;
+}
+
+div.container {
+  height: 100%;
+  overflow: auto;
+  margin-bottom:60px;
 }
