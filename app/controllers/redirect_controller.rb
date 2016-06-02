@@ -1,6 +1,11 @@
 class RedirectController < ApplicationController
   def index
-    raise 'yo'
-    #code
+    url = Url.find_by_keyword(params[:keyword])
+    if url.present?
+      url.add_click!
+      redirect_to(url.url)
+    else
+      redirect_to root_path
+    end
   end
 end

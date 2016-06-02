@@ -27,7 +27,7 @@ class UrlsController < ApplicationController
   # GET /urls/new
   def new
     @url = Url.new
-    
+    @url_identifier = Time.now.to_ms
     respond_to do |format|
       format.html
       format.js   { render :layout => false }
@@ -37,36 +37,35 @@ class UrlsController < ApplicationController
   # POST /urls
   # POST /urls.json
   def create
-    @raw_keyword = url_params[:keyword]
+    @url_identifier = params[:new_identifier]
     @url = Url.new(url_params)
 
     respond_to do |format|
       if @url.save
         format.html { redirect_to urls_path, notice: 'Url was successfully created.' }
         format.json { render :show, status: :created, location: @url }
-        format.js   { render :layout => false }
       else
         format.html { render :new }
         format.json { render json: @url.errors, status: :unprocessable_entity }
-        format.js   { render :layout => false }
       end
+      format.js   { render :layout => false }
     end
   end
 
   # PATCH/PUT /urls/1
   # PATCH/PUT /urls/1.json
   def update
-    @raw_keyword = url_params[:keyword]
+    @url_identifier = @url.id
+    
     respond_to do |format|
       if @url.update(url_params)
         format.html { redirect_to @url, notice: 'Url was successfully updated.' }
         format.json { render :show, status: :ok, location: @url }
-        format.js   { render :create }
       else
         format.html { render :edit }
         format.json { render json: @url.errors, status: :unprocessable_entity }
-        format.js   { render :create }
       end
+      format.js   { render :layout => false }
     end
   end
 

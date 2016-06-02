@@ -1,6 +1,7 @@
 <%= form_for url, :html => { :class => "form-inline url", remote: true } do |f| %>
+<%= hidden_field_tag :new_identifier, id %>
 <%= f.text_field :url, :class => 'form-control', placeholder: "url" %>
 <%= f.text_field :keyword, :class => 'form-control',  placeholder: "keyword" %>
-<%= f.submit nil, :class => 'btn btn-primary' %>
+<%= f.submit nil, :class => 'btn btn-primary js-url-submit' %>
 
 <% end %>

@@ -1,1 +1,1 @@
-$("<%= escape_javascript(ApplicationController.renderer.render(partial: 'urls/in_row_new', locals: { url: @url })) %>").appendTo("table tbody");
+$("<%= escape_javascript(render(partial: 'urls/in_row_new', locals: { url: @url, id: @url_identifier })) %>").appendTo("table tbody");

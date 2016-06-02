@@ -1,1 +1,1 @@
-$(document).find("tr#url-<%= @url.id %>").replaceWith($("<%= escape_javascript(ApplicationController.renderer.render(partial: 'urls/url_row', locals: { url: @url })) %>"));
+<%= render partial: "show.js", locals: {url: @url, row_identifier: @url.id} %>
