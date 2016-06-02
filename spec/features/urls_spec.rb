@@ -75,12 +75,12 @@ describe 'urls index page' do
   describe 'with an existing url' do
     let(:new_url) { 'http://www.facebook.com' }
     let(:new_keyword) { 'face' }
-
     let(:invalid_url) { 'facebook.com' }
     before do
       @url = FactoryGirl.create(:url)
       visit urls_path
     end
+
     describe 'page content' do
       it 'should display the url\'s url' do
         expect(page).to have_content @url.url
@@ -98,8 +98,10 @@ describe 'urls index page' do
         expect(page).to have_content 'Edit'
       end
     end
+
     describe 'when editing existing url', js: true do
       before { find('.edit-url').click }
+
       describe 'with new valid content' do
         it 'should update the url in the db' do
           find('#url_url').set new_url
@@ -114,8 +116,10 @@ describe 'urls index page' do
           expect(@url.reload.keyword).to eq(new_keyword)
         end
       end
+
       describe 'with new invalid content' do
         before { find('#url_url').set invalid_url }
+
         it 'should not update the url in the db' do
           find('.js-url-submit').click
           wait_for_ajax
@@ -140,6 +144,4 @@ describe 'urls index page' do
       end
     end
   end
-
-
 end
