@@ -7,23 +7,22 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 users = User.create([
-	{uid: "rossx275"},
 	{uid: "wozniak"},
-	{uid: "tdbeder"},
+  {uid: "ebf"},
 	{uid: "andersen"}
 	])
-	
+
 other_groups = Group.create([
 	{name: "LATIS", description: "This is the LATIS test group"},
 	{name: "DCL", description: "This is the DCL test group"},
 	{name: "CLA PR", description: "This is the CLA PR test group"},
 	{name: "DASH", description: "This is the DASH test group"}
 	])
-	
+
 urls = Url.create([
 	{url: "google.com", keyword: "goog", total_clicks: 9, group: User.first.context_group},
 	{url: "umn.edu", keyword: "umn", total_clicks: 3, group: User.last.context_group}
-	])	
+	])
 
 clicks = Click.create([
 	{country_code: "US", url_id: Url.first},
