@@ -22,4 +22,15 @@ class User < ApplicationRecord
       Group.create(name: uid, description: uid) if context_group.blank?
     groups << context_group
   end
+
+  before_save { generate_token(:remember_token) }
+
+  private
+
+  def generate_token(column)
+    loop do
+      self[column] = SecureRandom.urlsafe_base64
+      break unless User.exists?(column => self[column])
+    end
+  end
 end

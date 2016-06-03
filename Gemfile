@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+# Use OmniAuth to support any type of auth
+gem 'omniauth'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '>= 5.0.0.rc1', '< 5.1'
@@ -33,7 +35,7 @@ gem 'jbuilder', '~> 2.0'
 # gem 'capistrano-rails', group: :development
 
 # Use bootstrap for styling
-gem "twitter-bootstrap-rails"
+gem 'twitter-bootstrap-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -48,10 +50,10 @@ group :development, :test do
   gem 'database_cleaner'
 
   # Add some pry/rails console helpers for development
-  gem "pry-coolline"
+  gem 'pry-coolline'
   gem 'pry-byebug'
-  gem "awesome_print"
-  gem "pry-rails"
+  gem 'awesome_print'
+  gem 'pry-rails'
 end
 
 group :development do

@@ -2,17 +2,24 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see
   # http://guides.rubyonrails.org/routing.html
 
-  root 'urls#index'
+  # Handle Auth
+  post '/auth/:provider/callback', to: 'sessions#create'
+
+  root 'home#index'
   get 'shortener', to: 'urls#index'
 
   # This will allow us to run the meat of the app at z.umn.edu/shortener and
   # assume that all other z.umn.edu/:keywords are requests for short urls.
   scope '/shortener' do
     # /	home	index	get
-    get '/home', to: 'home# index'
+    get '/home', to: 'home#index'
 
     # faq	faq	index	get
-    get '/faq', to: 'faq# index'
+    get '/faq', to: 'faq#index'
+
+    # sessions sessions destroy get
+    get '/signin', to: 'sessions#new'
+    get '/signout', to: 'sessions#destroy'
 
     # urls	urls	index	get
     # urls/:id	urls	show	get
