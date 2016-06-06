@@ -20,10 +20,15 @@
             </li>
           </ul>
     	   <% end %>
+         <% if signed_in? %>
+         <ul class='nav navbar-nav'>
+           <li><%= link_to 'URLs', urls_path %></li>
+         </ul>
+         <% end %>
     		  <ul class="nav navbar-nav sign-in-out">
             <li>
             <% if signed_in? %>
-              <%= link_to "Sign Out", signout_path %>
+              <%= link_to 'Sign Out', signout_path %>
             <% else %>
               <%= link_to "Sign In", signin_path %>
             <% end %>
