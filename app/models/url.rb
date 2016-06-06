@@ -22,8 +22,7 @@ class Url < ApplicationRecord
 
   validates :keyword, uniqueness: true, presence: true
 
-  validates :url, presence: true, format:
-    { with: /\A#{URI.regexp(%w(http https))}\z/ }
+  validates :url, presence: true
 
   before_validation(on: :create) do
     self.group = User.first.context_group
@@ -33,12 +32,18 @@ class Url < ApplicationRecord
   end
 
   before_validation do
+    # Add http:// if necessary
+    self.url = "http://#{url}" unless url =~ /\A#{URI.regexp(%w(http https))}\z/
+
     # Set keyword if it's blank
     if keyword.blank?
       index = Url.maximum(:id).to_i.next
       index += 1 until Url.where(keyword: index.to_s(36)).blank?
       self.keyword = index.to_s(36)
     end
+
+    # Downcase the keyword
+    self.keyword = keyword.downcase
 
     # Strip URL of any invalid characters, only allow alphanumeric
     self.keyword = keyword.gsub(/[^0-9a-z\\s]/i, '')
