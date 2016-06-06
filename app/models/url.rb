@@ -26,8 +26,6 @@ class Url < ApplicationRecord
     { with: /\A#{URI.regexp(%w(http https))}\z/ }
 
   before_validation(on: :create) do
-    self.group = User.first.context_group
-
     # Set clicks to zero
     self.total_clicks = 0
   end
@@ -36,7 +34,7 @@ class Url < ApplicationRecord
     # Set keyword if it's blank
     if keyword.blank?
       index = Url.maximum(:id).to_i.next
-      index += 1 until Url.where(keyword: index.to_s(36)).blank?
+      index += 1 while Url.exists?(keyword: index.to_s(36))
       self.keyword = index.to_s(36)
     end
 

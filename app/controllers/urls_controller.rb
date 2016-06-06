@@ -1,10 +1,11 @@
 class UrlsController < ApplicationController
   before_action :set_url, only: [:show, :edit, :update, :destroy]
+  before_action :ensure_signed_in
 
   # GET /urls
   # GET /urls.json
   def index
-    @urls = Url.all
+    @urls = Url.where(group: current_user.context_group)
     @url = Url.new
   end
 
@@ -16,7 +17,7 @@ class UrlsController < ApplicationController
       format.js   { render :layout => false }
    end
   end
-  
+
   def edit
     respond_to do |format|
       format.html
@@ -39,6 +40,7 @@ class UrlsController < ApplicationController
   def create
     @url_identifier = params[:new_identifier]
     @url = Url.new(url_params)
+    @url.group = current_user.context_group
 
     respond_to do |format|
       if @url.save
@@ -56,7 +58,7 @@ class UrlsController < ApplicationController
   # PATCH/PUT /urls/1.json
   def update
     @url_identifier = @url.id
-    
+
     respond_to do |format|
       if @url.update(url_params)
         format.html { redirect_to @url, notice: 'Url was successfully updated.' }
