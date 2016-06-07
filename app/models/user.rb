@@ -11,13 +11,15 @@
 #
 class User < ApplicationRecord
   has_and_belongs_to_many :groups, join_table: :groups_users
+  #has_many :groups_users
+  #has_many :groups, :through => :groups_users
   # this next bit of magic removes any associations in the group_users table
   before_destroy { |user| user.groups.clear }
   belongs_to :context_group,
              foreign_key: 'context_group_id',
              class_name: 'Group'
   validates :context_group, presence: true
-  validate :ensure_user_belongs_to_context_group
+  # validate :ensure_user_belongs_to_context_group
 
   before_validation(on: :create) do
     self.context_group =
