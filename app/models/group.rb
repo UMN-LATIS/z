@@ -16,7 +16,11 @@ class Group < ApplicationRecord
 
   has_many :user_contexts, foreign_key: :context_group_id, dependent: :nullify, class_name: 'User'
 
-  def has_user user
+  has_one :context_group,
+             class_name: 'User'
+
+
+  def has_user? user
     users.exists?(user.id)
   end
 
@@ -25,11 +29,7 @@ class Group < ApplicationRecord
   end
 
   def remove_user user
-    users.delete(user) unless !has_user(user)
-  end
-
-  def set_as_current_context user
-    user.context_group = self
+    users.delete(user)
   end
 
 
