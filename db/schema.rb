@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160602214736) do
+ActiveRecord::Schema.define(version: 20160607201831) do
 
   create_table "clicks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "country_code"
@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 20160602214736) do
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "uid"
-    t.integer  "context_group_id"
+    t.integer  "context_group_id", null: false
     t.boolean  "admin"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
