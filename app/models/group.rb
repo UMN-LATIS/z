@@ -16,9 +16,6 @@ class Group < ApplicationRecord
 
   has_many :user_contexts, foreign_key: :context_group_id, dependent: :nullify, class_name: 'User'
 
-  has_one :context_group,
-             class_name: 'User'
-
 
   def has_user? user
     users.exists?(user.id)
