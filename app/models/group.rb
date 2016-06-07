@@ -14,7 +14,7 @@ class Group < ApplicationRecord
   # this next bit of magic removes any associations in the group_users table
   before_destroy { |group| group.users.clear }
 
-  # has_many :context_user, foreign_key: :context_group_id, dependent: :nullify, source: :user
+  has_many :user_contexts, foreign_key: :context_group_id, dependent: :nullify, class_name: 'User'
 
   def has_user user
     users.exists?(user.id)
