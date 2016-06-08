@@ -10,9 +10,9 @@
 #
 
 class Group < ApplicationRecord
-   has_and_belongs_to_many :users, join_table: :groups_users
-   #has_many :groups_users
-   #has_many :users, :through => :groups_users
+   #has_and_belongs_to_many :users, join_table: :groups_users
+   has_many :groups_users
+   has_many :users, :through => :groups_users
   # this next bit of magic removes any associations in the group_users table
   before_destroy { |group| group.users.clear }
 
@@ -23,8 +23,9 @@ class Group < ApplicationRecord
     users.exists?(user.id)
   end
 
-  def add_user(user, send_group_change_notifications=0)
+  def add_user(user, send_group_change_notifications=false)
     self.users << user unless users.exists?(user.id)
+    # self.groups_users.where(:user_id => 3)
   end
 
   def remove_user user

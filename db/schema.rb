@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20160607201831) do
     t.datetime "updated_at",  null: false
   end
 
-  create_table "groups_users", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "groups_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "group_id"
     t.integer "user_id"
     t.boolean "notify_user_changes", default: false

@@ -10,16 +10,16 @@
 #  updated_at       :datetime         not null
 #
 class User < ApplicationRecord
-  has_and_belongs_to_many :groups, join_table: :groups_users
-  #has_many :groups_users
-  #has_many :groups, :through => :groups_users
+  #has_and_belongs_to_many :groups, join_table: :groups_users
+  has_many :groups_users
+  has_many :groups, :through => :groups_users
   # this next bit of magic removes any associations in the group_users table
   before_destroy { |user| user.groups.clear }
   belongs_to :context_group,
              foreign_key: 'context_group_id',
              class_name: 'Group'
   validates :context_group, presence: true
-  # validate :ensure_user_belongs_to_context_group
+  #validates :user_belongs_to_context_group_validation
 
   before_validation(on: :create) do
     self.context_group =
@@ -35,7 +35,7 @@ class User < ApplicationRecord
 
   private
 
-  def ensure_user_belongs_to_context_group
+  def user_belongs_to_context_group_validation
     if !self.in_group?(context_group)
       errors.add(:context_group, "#{self.uid} is not a member of #{context_group.name}: #{context_group.description} and so cannot switch contexts to it.")
     end
