@@ -1,1 +1,1 @@
-$(document).find("tr#url-<%= @url.id %>").replaceWith($("<%= escape_javascript(render(partial: 'urls/in_row_edit', locals: { url: @url })) %>"));
+$(document).find("tr#url-<%= @url_identifier %>").replaceWith($("<%= escape_javascript(render(partial: 'urls/in_row_form', locals: { url: @url, url_identifier: @url_identifier })) %>"));

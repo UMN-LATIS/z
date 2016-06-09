@@ -1,7 +1,20 @@
-<%= form_for url, :html => { :class => "form-inline url", remote: true } do |f| %>
-<%= hidden_field_tag :new_identifier, id %>
-<%= f.text_field :url, :class => 'form-control', placeholder: "url" %>
-<%= f.text_field :keyword, :class => 'form-control',  placeholder: "keyword" %>
-<%= f.submit nil, :class => 'btn btn-primary js-url-submit' %>
+<tr id="url-<%= url_identifier %>">
+	<td colspan=5>
+    <%= form_for url, :html => { class: "form-inline url", remote: true } do |f| %>
+      <%= hidden_field_tag :new_identifier, url_identifier %>
+      <%= f.text_field :url, class: 'form-control', placeholder: "url" %>
+      <%= f.text_field :keyword, class: 'form-control',  placeholder: "keyword" %>
+      <%= f.submit nil, class: 'btn btn-primary js-url-submit' %>
+    <% end %>
 
-<% end %>
+    <% if url.new_record? %>
+      <a href="#" class='btn btn-default cancel-new-url'>Cancel</a>
+    <% else %>
+      <%= link_to t('.cancel', default: t("helpers.links.cancel")),
+                  url_path(url),
+                class: 'btn btn-default cancel-url', remote: true %>
+    <% end %>
+
+    <%= render 'urls/in_row_errors', url: url %>
+  </td>
+</tr>

@@ -2,7 +2,25 @@
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
 </div>
-<%= render 'urls_table', urls: @urls %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:url) %></th>
+      <th><%= model_class.human_attribute_name(:keyword) %></th>
+      <th><%= model_class.human_attribute_name(:total_clicks) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @urls.each do |url| %>
+      <%= render 'in_row_show', url: url %>
+    <% end %>
+
+  </tbody>
+</table>
+
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_url_path,
             :class => 'btn btn-primary add-new-url', remote: true %>

@@ -1,9 +1,0 @@
-<tr id="url-<%= url.id %>">
-	<td colspan=5>
-		<%= render 'urls/in_row_form', url: url, id: url.id %>
-		<%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-								url_path(url),
-								:class => 'btn btn-default cancel-url', :remote => true %>
-    <%= render 'urls/in_row_errors', url: url %>
-	</td>
-</tr>
