@@ -1,1 +1,1 @@
-<%= render partial: "show.js", locals: {group: @group, row_identifier: @group.id} %>
+$(document).find("tr#group-<%= @group_identifier %>").replaceWith($("<%= escape_javascript(render(partial: 'groups/in_row_show', locals: { group: @group })) %>"));

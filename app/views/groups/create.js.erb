@@ -1,5 +1,0 @@
-<% if @group.errors.present? %>
-	$(document).find("tr#group-<%= @group_identifier %>").replaceWith($("<%= escape_javascript(render(partial: 'groups/in_row_new', locals: { group: @group, id: @group_identifier })) %>"))
-<% else %>
-	<%= render partial: "show.js", locals: {group: @group, row_identifier: @group_identifier} %>
-<% end %>

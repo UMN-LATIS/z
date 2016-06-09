@@ -1,1 +1,1 @@
-$("<%= escape_javascript(render(partial: 'groups/in_row_new', locals: { group: @group, id: @group_identifier })) %>").appendTo("table tbody");
+$("<%= escape_javascript(render(partial: 'groups/in_row_form', locals: { group: @group, group_identifier: @group_identifier })) %>").appendTo("table tbody");
