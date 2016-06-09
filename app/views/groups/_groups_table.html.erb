@@ -1,0 +1,18 @@
+<% model_class = Group %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:name) %></th>
+      <th><%= model_class.human_attribute_name(:description) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% groups.each do |group| %>
+      <%= render 'group_row', group: group %>
+    <% end %>
+    
+  </tbody>
+</table>

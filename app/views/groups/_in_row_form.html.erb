@@ -1,0 +1,7 @@
+<%= form_for group, :html => { :class => "form-inline group", remote: true } do |f| %>
+<%= hidden_field_tag :new_identifier, id %>
+<%= f.text_field :name, :class => 'form-control', placeholder: "name" %>
+<%= f.text_field :description, :class => 'form-control',  placeholder: "description" %>
+<%= f.submit nil, :class => 'btn btn-primary js-group-submit' %>
+
+<% end %>

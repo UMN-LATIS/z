@@ -1,0 +1,9 @@
+<tr id="group-<%= group.id %>">
+	<td colspan=4>
+		<%= render 'groups/in_row_form', group: group, id: group.id %>
+		<%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+								group_path(group),
+								:class => 'btn btn-default cancel-group', :remote => true %>
+    <%= render 'groups/in_row_errors', group: group %>
+	</td>
+</tr>

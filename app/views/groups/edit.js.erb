@@ -1,0 +1,1 @@
+$(document).find("tr#group-<%= @group.id %>").replaceWith($("<%= escape_javascript(render(partial: 'groups/in_row_edit', locals: { group: @group })) %>"));

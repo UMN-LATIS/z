@@ -1,0 +1,8 @@
+<%- model_class = Group -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<%= render 'groups_table', groups: @groups %>
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_group_path,
+            :class => 'btn btn-primary add-new-group', remote: true %>

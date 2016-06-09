@@ -25,7 +25,7 @@ class Group < ApplicationRecord
 
   def add_user(user, send_group_change_notifications=false)
     self.users << user unless users.exists?(user.id)
-    # self.groups_users.where(:user_id => 3)
+    groups_users.find_by_user_id(user).update(notify_user_changes: send_group_change_notifications)
   end
 
   def remove_user user
