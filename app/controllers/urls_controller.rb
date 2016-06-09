@@ -12,16 +12,18 @@ class UrlsController < ApplicationController
   # GET /urls/1
   # GET /urls/1.json
   def show
+    @url_identifier = @url.id
     respond_to do |format|
       format.html
-      format.js   { render :layout => false }
+      format.js   { render layout: false }
    end
   end
 
   def edit
+    @url_identifier = @url.id
     respond_to do |format|
       format.html
-      format.js   { render :layout => false }
+      format.js   { render layout: false }
    end
   end
 
@@ -31,8 +33,8 @@ class UrlsController < ApplicationController
     @url_identifier = Time.now.to_ms
     respond_to do |format|
       format.html
-      format.js   { render :layout => false }
-   end
+      format.js   { render layout: false }
+    end
   end
 
   # POST /urls
@@ -46,28 +48,29 @@ class UrlsController < ApplicationController
       if @url.save
         format.html { redirect_to urls_path, notice: 'Url was successfully created.' }
         format.json { render :show, status: :created, location: @url }
+        format.js   { render :show }
       else
         format.html { render :new }
         format.json { render json: @url.errors, status: :unprocessable_entity }
+        format.js   { render :edit }
       end
-      format.js   { render :layout => false }
+
     end
   end
 
   # PATCH/PUT /urls/1
   # PATCH/PUT /urls/1.json
   def update
-    @url_identifier = @url.id
-
     respond_to do |format|
       if @url.update(url_params)
         format.html { redirect_to @url, notice: 'Url was successfully updated.' }
         format.json { render :show, status: :ok, location: @url }
+        format.js   { render :show }
       else
         format.html { render :edit }
         format.json { render json: @url.errors, status: :unprocessable_entity }
+        format.js   { render :edit }
       end
-      format.js   { render :layout => false }
     end
   end
 
@@ -78,7 +81,7 @@ class UrlsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to urls_url, notice: 'Url was successfully destroyed.' }
       format.json { head :no_content }
-      format.js   { render :layout => false }
+      format.js   { render layout: false }
     end
   end
 
@@ -86,6 +89,7 @@ class UrlsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_url
       @url = Url.find(params[:id])
+      @url_identifier = @url.id
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
