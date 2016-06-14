@@ -20,5 +20,3 @@
 # Ignore Byebug command history file.
 .byebug_history
 .idea/
-
-vendor/bundle/
