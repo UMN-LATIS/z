@@ -13,4 +13,11 @@ FactoryGirl.define do
     url 'http://google.com'
     group { FactoryGirl.create(:user).context_group }
   end
+
+  factory :group do
+    name 'My First Group'
+    description 'first group of urls'
+  end
+
+
 end
