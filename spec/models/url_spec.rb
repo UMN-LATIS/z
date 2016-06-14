@@ -16,7 +16,6 @@ require 'rails_helper'
 
 RSpec.describe Url, type: :model do
   before do
-    @user = FactoryGirl.create(:user)
     @url = FactoryGirl.build(:url)
   end
 
@@ -34,18 +33,6 @@ RSpec.describe Url, type: :model do
 
   describe 'invalid Url' do
     describe '[url]' do
-      describe 'missing http' do
-        before { @url.url = 'google.com' }
-        it 'should not be valid' do
-          expect(@url).to_not be_valid
-        end
-      end
-      describe 'wrong caps' do
-        before { @url.url = 'Http://fun.net' }
-        it 'should not be valid' do
-          expect(@url).to_not be_valid
-        end
-      end
       describe "doesn't exist" do
         before { @url.url = '' }
         it 'should not be valid' do
@@ -57,7 +44,7 @@ RSpec.describe Url, type: :model do
       describe 'already exists' do
         before do
           other_url = FactoryGirl.create(:url)
-          @url.url = other_url.keyword
+          @url.keyword = other_url.keyword
         end
         it 'should not be valid' do
           expect(@url).to_not be_valid
@@ -73,6 +60,11 @@ RSpec.describe Url, type: :model do
         expect(@url).to be_valid
       end
 
+      it 'should not be valid' do
+        @url.url = 'Http://fun.net'
+        expect(@url).to be_valid
+      end
+
       it 'should be valid' do
         @url.url = 'https://fun.com'
         expect(@url).to be_valid
@@ -85,6 +77,11 @@ RSpec.describe Url, type: :model do
 
       it 'should be valid' do
         @url.url = 'https://fun.com'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = 'fun.com'
         expect(@url).to be_valid
       end
     end

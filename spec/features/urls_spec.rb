@@ -1,7 +1,10 @@
 require 'rails_helper'
 
 describe 'urls index page' do
-  before { @user = FactoryGirl.create(:user) }
+  before do
+    @user = FactoryGirl.create(:user)
+    sign_in(@user)
+  end
 
   describe 'creating new url', js: true do
     let(:url) { 'http://www.google.com' }
@@ -31,6 +34,15 @@ describe 'urls index page' do
           end.to change(Url, :count).by(1)
         end
       end
+      describe 'missing http/https' do
+        before { find('#url_url').set 'google.com' }
+        it 'should save upon clicking Create' do
+          expect do
+            find('.js-url-submit').click
+            wait_for_ajax
+          end.to change(Url, :count).by(1)
+        end
+      end
     end
     describe 'with invalid information' do
       describe '[keyword]' do
@@ -53,31 +65,14 @@ describe 'urls index page' do
           end
         end
       end
-      describe '[url]' do
-        describe 'missing http/https' do
-          before { find('#url_url').set 'google.com' }
-          it 'should not save upon clicking Create' do
-            expect do
-              find('.js-url-submit').click
-              wait_for_ajax
-            end.to change(Url, :count).by(0)
-          end
-          it 'should display an error' do
-            find('.js-url-submit').click
-            wait_for_ajax
-            expect(page).to have_content('invalid')
-          end
-        end
-      end
     end
   end
 
   describe 'with an existing url' do
     let(:new_url) { 'http://www.facebook.com' }
     let(:new_keyword) { 'face' }
-    let(:invalid_url) { 'facebook.com' }
     before do
-      @url = FactoryGirl.create(:url)
+      @url = FactoryGirl.create(:url, group: @user.context_group)
       visit urls_path
     end
 
@@ -114,21 +109,6 @@ describe 'urls index page' do
           find('.js-url-submit').click
           wait_for_ajax
           expect(@url.reload.keyword).to eq(new_keyword)
-        end
-      end
-
-      describe 'with new invalid content' do
-        before { find('#url_url').set invalid_url }
-
-        it 'should not update the url in the db' do
-          find('.js-url-submit').click
-          wait_for_ajax
-          expect(@url.reload.url).to_not eq(invalid_url)
-        end
-        it 'should display an error' do
-          find('.js-url-submit').click
-          wait_for_ajax
-          expect(page).to have_content('invalid')
         end
       end
     end

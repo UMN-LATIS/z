@@ -8,6 +8,7 @@ require 'rspec/rails'
 require 'support/wait_for_ajax'
 require 'support/factory_girl'
 require 'support/database_cleaner'
+require 'support/utilities'
 require 'capybara/rspec'
 require 'capybara/poltergeist'
 
