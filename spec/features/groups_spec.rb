@@ -7,24 +7,24 @@ describe 'groups index page' do
   end
 
   describe 'with an existing group' do
-    let(:new_name) { 'My First Group' }
-    let(:new_description) { 'first group of urls' }
+    let(:new_name) { 'My Second Group' }
+    let(:new_description) { 'second group of urls' }
     before do
       @group = FactoryGirl.create(:group)
       visit groups_path
     end
 
-    describe 'when editing existing group', js: true do
+    describe 'when updating an existing group', js: true do
       before { find('.edit-group').click }
 
       describe 'with new valid content' do
-        it 'should update the group in the db' do
+        it 'should update the group name in the db' do
           find('#group_name').set new_name
           find('.js-group-submit').click
           wait_for_ajax
           expect(@group.reload.name).to eq(new_name)
         end
-        it 'should update the description in the db' do
+        it 'should update the group description in the db' do
           find('#group_description').set new_description
           find('.js-group-submit').click
           wait_for_ajax
@@ -38,10 +38,7 @@ describe 'groups index page' do
         expect(page).to have_content @group.name
       end
       it 'should display the group\'s description' do
-        expect(page).to have_content @group.keyword
-      end
-      it 'should display the group\'s created at date' do
-        expect(page).to have_content @group.created_at
+        expect(page).to have_content @group.description
       end
       it 'should display an edit button' do
         expect(page).to have_content 'Edit'
@@ -51,7 +48,7 @@ describe 'groups index page' do
       end
     end
 
-    describe 'deleting an existing group' do
+    describe 'deleting an existing group', js: true do
       describe 'clicking delete' do
         it 'should delete the group' do
           expect do
@@ -62,14 +59,13 @@ describe 'groups index page' do
       end
     end
 
-  end
 
+    end
 
+  describe 'creating a new group', js: true do
 
-  describe 'creating a new group' do
-
-    let(:name) { 'My First Group' }
-    let(:description) { 'My first group of urls to keep things handy' }
+    let(:name) { 'My Other Group' }
+    let(:description) { 'My other group of urls to keep things handy' }
     before do
       visit groups_path
       find('.add-new-group').click
@@ -111,7 +107,7 @@ describe 'groups index page' do
           it 'should display an error' do
             find('.js-group-submit').click
             wait_for_ajax
-            expect(page).to have_content('required')
+            expect(page).to have_content('Name can\'t be blank')
           end
         end
       end
