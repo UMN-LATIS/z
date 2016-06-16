@@ -6,66 +6,9 @@ describe 'groups index page' do
     sign_in(@user)
   end
 
-  describe 'with an existing group' do
-    let(:new_name) { 'My Second Group' }
-    let(:new_description) { 'second group of urls' }
-    before do
-      @group = FactoryGirl.create(:group)
-      visit groups_path
-    end
-
-    describe 'when updating an existing group', js: true do
-      before { find('.edit-group').click }
-
-      describe 'with new valid content' do
-        it 'should update the group name in the db' do
-          find('#group_name').set new_name
-          find('.js-group-submit').click
-          wait_for_ajax
-          expect(@group.reload.name).to eq(new_name)
-        end
-        it 'should update the group description in the db' do
-          find('#group_description').set new_description
-          find('.js-group-submit').click
-          wait_for_ajax
-          expect(@group.reload.description).to eq(new_description)
-        end
-      end
-    end
-
-    describe 'page content' do
-      it 'should display the group\'s name' do
-        expect(page).to have_content @group.name
-      end
-      it 'should display the group\'s description' do
-        expect(page).to have_content @group.description
-      end
-      it 'should display an edit button' do
-        expect(page).to have_content 'Edit'
-      end
-      it 'should display a delete button' do
-        expect(page).to have_content 'Delete'
-      end
-    end
-
-    describe 'deleting an existing group', js: true do
-      describe 'clicking delete' do
-        it 'should delete the group' do
-          expect do
-            find('.delete-group').click
-            wait_for_ajax
-          end.to change(Group, :count).by(-1)
-        end
-      end
-    end
-
-
-    end
-
   describe 'creating a new group', js: true do
-
-    let(:name) { 'My Other Group' }
-    let(:description) { 'My other group of urls to keep things handy' }
+    let(:name) { 'My First Group' }
+    let(:description) { 'first group of urls' }
     before do
       visit groups_path
       find('.add-new-group').click
@@ -73,7 +16,6 @@ describe 'groups index page' do
       find('#group_name').set name
       find('#group_description').set description
     end
-
     describe 'with valid information' do
       describe 'when both fields are filled in' do
         it 'should save upon clicking Create' do
@@ -93,7 +35,6 @@ describe 'groups index page' do
         end
       end
     end
-
     describe 'with invalid information' do
       describe '[name]' do
         describe 'name is blank' do
@@ -112,7 +53,64 @@ describe 'groups index page' do
         end
       end
     end
-
   end
+
+  describe 'with an existing group' do
+    let(:new_name) { 'My Second Group' }
+    let(:new_description) { 'second group of urls' }
+    before do
+      visit groups_path
+    end
+
+    describe 'page content' do
+      it 'should display the created user\'s group\'s uid as name (see User.before_validation)' do
+        expect(page).to have_content @user.uid
+      end
+      it 'should display the group\'s description uid as description (see User.before_validation)' do
+        expect(page).to have_content @user.uid
+      end
+      it 'should display an edit button' do
+        expect(page).to have_content 'Edit'
+      end
+      it 'should display a delete button' do
+        expect(page).to have_content 'Delete'
+      end
+    end
+
+    describe 'when updating an existing group', js: true do
+      before do
+        find('.edit-group').click
+      end
+
+      describe 'with new valid content' do
+        it 'should update the group name in the db' do
+          find('#group_name').set new_name
+          find('.js-group-submit').click
+          wait_for_ajax
+          find('.edit-group').click
+          expect(find('#group_name')['value']).to eq(new_name)
+        end
+        it 'should update the group description in the db' do
+          find('#group_description').set new_description
+          find('.js-group-submit').click
+          wait_for_ajax
+          find('.edit-group').click
+          expect(find('#group_description')['value']).to eq(new_description)
+        end
+      end
+    end
+
+    describe 'deleting an existing group', js: true do
+      describe 'clicking delete' do
+        it 'should delete the group' do
+          expect do
+            find('.delete-group').click
+            wait_for_ajax
+          end.to change(Group, :count).by(-1)
+        end
+      end
+    end
+  end
+
 
 end

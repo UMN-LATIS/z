@@ -90,7 +90,7 @@ describe 'urls index page' do
         expect(page).to have_content 'Edit'
       end
       it 'should display a delete button' do
-        expect(page).to have_content 'Edit'
+        expect(page).to have_content 'Delete'
       end
     end
 
