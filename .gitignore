@@ -19,6 +19,4 @@
 
 # Ignore Byebug command history file.
 .byebug_history
-
-# Ignore weird idea folder
-/.idea/
+.idea/
