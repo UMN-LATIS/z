@@ -1,0 +1,1 @@
+$(document).find("tr#group-membership-<%= @group_membership_identifier %>").replaceWith($("<%= escape_javascript(render(partial: 'group_memberships/in_row_form', locals: { group: @group, group_membership_identifier: @group_membership_identifier })) %>"));
