@@ -10,6 +10,10 @@
 #  updated_at       :datetime         not null
 #
 class User < ApplicationRecord
+  # Simple PORO to add attributes from the data service if
+  # requested
+  include UserData
+
   #has_and_belongs_to_many :groups, join_table: :groups_users
   has_many :groups_users
   has_many :groups, :through => :groups_users
@@ -31,6 +35,11 @@ class User < ApplicationRecord
 
   def in_group?(group)
     group.has_user?(self)
+  end
+
+  def load_user_data
+    # sets this objects UserData attrs
+    UserDataService.load_user_data self
   end
 
   private

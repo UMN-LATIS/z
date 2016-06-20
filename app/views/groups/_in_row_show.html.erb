@@ -1,5 +1,10 @@
 <tr id='group-<%= group.id %>'>
-  <td><%= group.name %></td>
+  <td><%= group.name %>
+    <br/>
+    <%= link_to t('.group-members', default: t("helpers.links.group-members")),
+                edit_group_path(group),
+                class: 'btn btn-xs btn-default group-members', remote: true %>
+  </td>
   <td><%= group.description%></td>
   <td><%=l group.created_at %></td>
   <td>

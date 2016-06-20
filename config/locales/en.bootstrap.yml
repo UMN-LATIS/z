@@ -16,6 +16,7 @@ en:
       destroy: "Delete"
       new: "New"
       edit: "Edit"
+      group-members: "Members"
     titles:
       edit: "Edit %{model}"
       save: "Save %{model}"
