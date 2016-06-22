@@ -10,9 +10,8 @@
 #  updated_at       :datetime         not null
 #
 class User < ApplicationRecord
-  # Simple PORO to add attributes from the data service if
-  # requested
-  include UserData
+
+  attr_accessor :email, :first_name, :last_name
 
   #has_and_belongs_to_many :groups, join_table: :groups_users
   has_many :groups_users
@@ -40,6 +39,11 @@ class User < ApplicationRecord
   def load_user_data
     # sets this objects UserData attrs
     UserDataService.load_user_data self
+  end
+
+  def user_full_name
+    load_user_data unless first_name.present?
+    "#{last_name}, #{first_name}"
   end
 
   private

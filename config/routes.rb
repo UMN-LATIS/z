@@ -48,13 +48,13 @@ Rails.application.routes.draw do
     # groups/update	groups	update	post
     # groups/create	groups	create	put
     # groups/destroy	groups	destroy	delete
-    resources :groups
-
-    # members	group_memberships	index	get
-    # members/new	group_memberships	new	get
-    # members/create	group_memberships	create	put
-    # members/destroy	group_memberships	destroy	delete
-    resources :members, only: [:index, :new, :create, :destroy]
+    resources :groups do
+      # groups/:id/members	group_memberships	index	get
+      # groups/:id/members/new	group_memberships	new	get
+      # groups/:id/members/create	group_memberships	create	put
+      # groups/:id/members/destroy	group_memberships	destroy	delete
+      resources :members, only: [:index, :new, :create, :destroy], controller: 'group_memberships'
+    end
 
     # users/:id/show	user	show	put
     resources :users, only: [:show]

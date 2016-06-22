@@ -1,0 +1,14 @@
+<tr id='user-<%= member.id %>'>
+  <td><%= member.user_full_name %></td>
+  <td><%= member.uid %></td>
+  <td><%= member.admin%></td>
+  <td><%=l member.created_at %></td>
+
+  <td>
+    <%= link_to t('.destroy', default: t("helpers.links.destroy")),
+                group_member_path(@group, member),
+                :method => :delete,
+                :data => { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) },
+                class: 'btn btn-xs btn-danger delete-group-member', remote: true %>
+  </td>
+</tr>

@@ -1,0 +1,1 @@
+$("<%= escape_javascript(render(partial: 'group_memberships/in_row_search_results', locals: { group: @group, group_identifier: @group_identifier, :results => @results })) %>").appendTo("table tbody");

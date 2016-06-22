@@ -1,17 +1,65 @@
 class GroupMembershipsController < ApplicationController
+	before_action :set_params, only: [:show, :index, :update, :destroy]
+
+
 	def index
-		#code
 	end
 
 	def new
-		#code
+		@results = [];
+
+		respond_to do |format|
+			format.html
+			format.js   { render :layout => false }
+		end
+
 	end
 
 	def create
-		#code
+
+		# if user exists in Z just hydrate and assign to group
+
+		# else create the User then assign
+
+
+		member = User.find(params[:id]), false
+		@group.add_user(member)
+
+
+
+		respond_to do |format|
+			if @group.has_user?(member)
+				format.html { redirect_to groups_path, notice: 'Member was successfully added to group.' }
+				format.json { render :show, status: :created, location: @group }
+				format.js   { render :show }
+			else
+				format.html { render :new }
+				format.json { render json: @group.errors, status: :unprocessable_entity }
+				format.js   { render :edit }
+			end
+		end
 	end
 
+
 	def destroy
-		#code
+		@group.remove_user(User.find(params[:id]))
+		respond_to do |format|
+			format.html { redirect_to groups_url, notice: 'Group was successfully updated, user removed.' }
+			format.json { head :no_content }
+			format.js   { render :layout => false }
+		end
+
 	end	
+
+private
+
+	def set_params
+		@group = Group.find(params[:group_id])
+		@group_identifier = @group.id
+		@members = @group.users
+	end
+
+
+
+
 end

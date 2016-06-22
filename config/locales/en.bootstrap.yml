@@ -17,6 +17,9 @@ en:
       new: "New"
       edit: "Edit"
       group-members: "Members"
+      groups: "Groups"
+      add-member:  "Add Member"
+      search-users: "Find"
     titles:
       edit: "Edit %{model}"
       save: "Save %{model}"
