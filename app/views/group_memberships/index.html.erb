@@ -21,6 +21,7 @@
   </tbody>
 </table>
 
+
 <%= form_tag(new_group_member_path, :remote => true, :method => "get", id: "search-form") do %>
     <i>Add Someone</i>
     <%= text_field_tag :search, params[:search], placeholder: "Search People" %>

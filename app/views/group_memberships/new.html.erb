@@ -10,7 +10,7 @@
       </thead>
       <tbody>
       <% @results.each do |result| %>
-          <%= render 'in_row_search_results', group: @group, :result => result %>
+          <%= render 'search_results', group: @group, :result => result %>
       <% end %>
       </tbody>
     </table>
