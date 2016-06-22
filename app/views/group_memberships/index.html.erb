@@ -17,16 +17,11 @@
   <% @members.each do |member| %>
       <%= render 'in_row_show', member: member, group: @group %>
   <% end %>
-
+  <%= render 'in_row_form', group: @group %>
   </tbody>
 </table>
 
 
-<%= form_tag(new_group_member_path, :remote => true, :method => "get", id: "search-form") do %>
-    <i>Add Someone</i>
-    <%= text_field_tag :search, params[:search], placeholder: "Search People" %>
-    <%= submit_tag t('search-users', :default => t("helpers.links.search-users")), :class => 'btn btn-primary btn-sm add-new-group-member' %>
-<% end %>
 
 <%= link_to t('.groups', :default => t("helpers.links.groups")),
             groups_path,

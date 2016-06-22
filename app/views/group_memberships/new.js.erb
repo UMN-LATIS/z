@@ -1,1 +1,1 @@
-$("<%= escape_javascript(render(partial: 'group_memberships/search_results', locals: { group: @group, group_identifier: @group_identifier, :results => @results })) %>").appendTo("table tbody");
+$("<%= escape_javascript(render(partial: 'group_memberships/in_row_form', locals: { results: @results, group: @group, group_identifier: @group_identifier })) %>").appendTo("table tbody");

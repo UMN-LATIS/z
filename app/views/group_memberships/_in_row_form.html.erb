@@ -1,0 +1,29 @@
+<% if @results %>
+    <% @results.each do |result| %>
+        <tr id='result-<%= result.id %>'>
+          <td><%= result.user_full_name %></td>
+          <td><%= result.uid %></td>
+          <td><%= result.admin %></td>
+          <td><%= l result.created_at %></td>
+
+          <td>
+            <%= link_to t('.destroy', default: t("helpers.links.destroy")),
+                        group_member_path(@group, member),
+                        :method => :delete,
+                        :data => {confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?'))},
+                        class: 'btn btn-xs btn-danger delete-group-member', remote: true %>
+          </td>
+        </tr>
+    <% end %>
+<% else %>
+    <tr id="search">
+      <td colspan=4>
+        <%= form_tag(new_group_member_path, :remote => true, :method => "get", id: "search-form") do %>
+            <i>Add Someone</i>
+            <%= text_field_tag :search, params[:search], placeholder: "Search People" %>
+            <%= submit_tag t('search-users', :default => t("helpers.links.search-users")), :class => 'btn btn-primary btn-sm add-new-group-member' %>
+        <% end %>
+      </td>
+    </tr>
+
+<% end %>

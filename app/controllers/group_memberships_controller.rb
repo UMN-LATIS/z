@@ -6,7 +6,7 @@ class GroupMembershipsController < ApplicationController
 	end
 
 	def new
-		@results = [];
+		@results = UserDataService.search_for_user_data
 
 		respond_to do |format|
 			format.html
