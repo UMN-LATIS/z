@@ -29,9 +29,9 @@ class GroupMembershipsController < ApplicationController
 
 		respond_to do |format|
 			if @group.has_user?(member)
-				format.html { render action: 'index', notice: 'Member was successfully added to group.' }
-				format.json { render :index, status: :created, location: @group }
-				format.js   { render :index }
+			#	format.html { redirect_to 'index', notice: 'Member was successfully added to group.' }
+		#		format.json { render :index, status: :created, location: @group }
+				format.js   { render inline: "location.reload();"  }
 			else
 				format.html { render :new }
 				format.json { render json: @group.errors, status: :unprocessable_entity }
@@ -42,7 +42,8 @@ class GroupMembershipsController < ApplicationController
 
 
 	def destroy
-		@group.remove_user(User.find(params[:id]))
+		@member = User.find(params[:id])
+		@group.remove_user(@member)
 		respond_to do |format|
 			format.html { redirect_to groups_url, notice: 'Group was successfully updated, user removed.' }
 			format.json { head :no_content }
