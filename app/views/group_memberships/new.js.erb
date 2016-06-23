@@ -1,1 +1,2 @@
+$(document).find("tr#results").remove();
 $("<%= escape_javascript(render(partial: 'group_memberships/in_row_form', locals: { results: @results, group: @group, group_identifier: @group_identifier })) %>").appendTo("table tbody");

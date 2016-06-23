@@ -1,9 +1,8 @@
 <tr id='user-<%= member.id %>'>
   <td><%= member.user_full_name %></td>
   <td><%= member.uid %></td>
-  <td><%= member.admin%></td>
-  <td><%=l member.created_at %></td>
-
+  <td><% if member.admin %> Yes <% else %> No <% end %></td>
+  <td><%= member.created_at%></td>
   <td>
     <%= link_to t('.destroy', default: t("helpers.links.destroy")),
                 group_member_path(@group, member),
