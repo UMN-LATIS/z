@@ -8,7 +8,7 @@
   <tr>
     <th>Member Name</th>
     <th>Member ID</th>
-    <th>Is an Admin?</th>
+    <th>Member Email</th>
     <th>Member created on</th>
     <th><%= t '.actions', :default => t("helpers.actions") %></th>
   </tr>
@@ -25,4 +25,4 @@
 
 <%= link_to t('.groups', :default => t("helpers.links.groups")),
             groups_path,
-            :class => 'btn btn-primary group' %>
+            :class => 'btn btn-primary btn-xs group' %>

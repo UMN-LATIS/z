@@ -5,24 +5,27 @@
         </tr>
     <% else %>
         <% @results.each do |result| %>
-            <tr id='results' class="info">
+            <tr id='results' class="success">
               <td><%= result.user_full_name %></td>
               <td><%= result.uid %></td>
-              <td>admin checkbox here</td>
+              <td><%= result.email %></td>
               <td>Not Created</td>
               <td>
-                Add Button
+                <%= link_to t('.add', :default => t("helpers.links.add")),
+                            group_members_path(:uid => result.uid),
+
+                            :class => 'btn btn-primary btn-xs add-new-group-membership', :method => :post, remote: true %>
               </td>
             </tr>
         <% end %>
     <% end %>
 <% else %>
     <tr id="search">
-      <td colspan=5>
+      <td colspan=5 class="info">
         <%= form_tag(new_group_member_path, :remote => true, :method => "get", id: "search-form") do %>
             <i>Add Someone</i>
             <%= text_field_tag :search, params[:search], placeholder: "Search People" %>
-            <%= submit_tag t('search-users', :default => t("helpers.links.search-users")), :class => 'btn btn-primary btn-sm add-new-group-member' %>
+            <%= submit_tag t('search-users', :default => t("helpers.links.search-users")), :class => 'btn btn-primary btn-xs add-new-group-member' %>
         <% end %>
       </td>
     </tr>

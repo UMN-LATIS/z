@@ -1,5 +1,5 @@
 class GroupMembershipsController < ApplicationController
-	before_action :set_params, only: [:show, :index, :update, :destroy]
+	before_action :set_params, only: [:show, :index, :update, :create, :destroy]
 
 
 	def index
@@ -22,16 +22,16 @@ class GroupMembershipsController < ApplicationController
 		# else create the User then assign
 
 
-		member = User.find(params[:id]), false
+		member = User.create(:uid => params[:uid])
 		@group.add_user(member)
 
 
 
 		respond_to do |format|
 			if @group.has_user?(member)
-				format.html { redirect_to groups_path, notice: 'Member was successfully added to group.' }
-				format.json { render :show, status: :created, location: @group }
-				format.js   { render :show }
+				format.html { render action: 'index', notice: 'Member was successfully added to group.' }
+				format.json { render :index, status: :created, location: @group }
+				format.js   { render :index }
 			else
 				format.html { render :new }
 				format.json { render json: @group.errors, status: :unprocessable_entity }
