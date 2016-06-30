@@ -23,10 +23,6 @@
 
         $('#people_search').bind('typeahead:selected', function (obj, datum, name) {
             $("#uid").val(datum.uid);
-           // $('#people_search').typeahead('close');
-           // alert(JSON.stringify(datum.uid));
-          //  alert($('#person_id').val);
-
         });
 
     });

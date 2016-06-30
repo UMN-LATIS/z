@@ -26,7 +26,6 @@
             <i>Add Someone</i>
             <%= text_field_tag "people_search" %>
             <%= hidden_field_tag "uid" %>
-            <%#= text_field_tag :search, params[:search], placeholder: "Search People" %>
             <%= submit_tag t('search-users', :default => t("helpers.links.search-users")), :class => 'btn btn-primary btn-xs add-new-group-member' %>
         <% end %>
       </td>
