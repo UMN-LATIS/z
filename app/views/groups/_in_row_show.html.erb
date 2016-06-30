@@ -1,9 +1,5 @@
 <tr id='group-<%= group.id %>'>
   <td><%= group.name %>
-    <br/>
-    <%= link_to t('.group-members', default: t("helpers.links.group-members")),
-                group_members_path(group),
-                class: 'btn btn-xs btn-default group-members' %>
   </td>
   <td><%= group.description%></td>
   <td><%=l group.created_at %></td>
@@ -11,6 +7,9 @@
     <%= link_to t('.edit', default: t("helpers.links.edit")),
                 edit_group_path(group),
                 class: 'btn btn-xs btn-default edit-group', remote: true %>
+    <%= link_to t('.group-members', default: t("helpers.links.group-members")),
+                group_members_path(group),
+                class: 'btn btn-xs btn-default group-members' %>
     <%= link_to t('.destroy', default: t("helpers.links.destroy")),
                 group_path(group),
                 :method => :delete,

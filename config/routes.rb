@@ -14,6 +14,11 @@ Rails.application.routes.draw do
     # /	home	index	get
     get '/home', to: 'home#index'
 
+    # / user_lookup/:search_terms
+    get '/user_lookup/:search_terms', to: 'user_lookup#index'
+
+
+
     # faq	faq	index	get
     get '/faq', to: 'faq#index'
 
@@ -41,6 +46,7 @@ Rails.application.routes.draw do
       post 'confirm', on: :member
     end
 
+
     # groups	groups	index	get
     # groups/:id	groups	show	get
     # groups/:id/edit	groups	edit	get
@@ -53,6 +59,7 @@ Rails.application.routes.draw do
       # groups/:id/members/new	group_memberships	new	get
       # groups/:id/members/create	group_memberships	create	put
       # groups/:id/members/destroy	group_memberships	destroy	delete
+      get 'members/new/:search_terms', to: 'group_memberships#new'
       resources :members, only: [:index, :new, :create, :destroy], controller: 'group_memberships'
     end
 

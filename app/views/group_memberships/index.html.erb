@@ -3,6 +3,35 @@
   <h1><%= t '.title', :default => "#{@group.name} Members" %></h1>
 </div>
 
+<script type="text/javascript">
+
+    $(function () {
+        var peopleSearch = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+                url: "http://localhost:3000/shortener/groups/<%= @group.id %>/members/new/%QUERY",
+                wildcard: '%QUERY'
+            }
+        });
+
+        $('#people_search').typeahead({minLength: 4}, {
+            name: 'people_search',
+            display: 'value',
+            source: peopleSearch
+        });
+
+        $('#people_search').bind('typeahead:selected', function (obj, datum, name) {
+            $("#uid").val(datum.uid);
+           // $('#people_search').typeahead('close');
+           // alert(JSON.stringify(datum.uid));
+          //  alert($('#person_id').val);
+
+        });
+
+    });
+</script>
+
 <table class="table table-striped">
   <thead>
   <tr>
@@ -20,8 +49,6 @@
   <%= render 'in_row_form', group: @group %>
   </tbody>
 </table>
-
-
 
 <%= link_to t('.groups', :default => t("helpers.links.groups")),
             groups_path,

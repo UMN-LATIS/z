@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 gem 'omniauth'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '>= 5.0.0.rc2', '< 5.1'
+gem 'rails', '>= 5.0.0.rc1', '< 5.1'
 # Use mysql2 as the database for Active Record
 gem 'mysql2'
 # Use sqlite also
@@ -22,6 +22,10 @@ gem 'coffee-rails', '~> 4.1.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+
+# Use this as the autocompleter library
+gem 'twitter-typeahead-rails'
+
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5.x'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -36,6 +40,9 @@ gem 'jbuilder', '~> 2.0'
 
 # Use bootstrap for styling
 gem 'twitter-bootstrap-rails'
+
+# Use net-ldap for LDAP lookup integration
+gem 'net-ldap'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -68,8 +75,7 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
 
-  # rubocop for styled code
-  gem 'rubocop', '~> 0.40.0', require: false
+
 
   # Use annotate to list the attributes of models
   gem 'annotate'

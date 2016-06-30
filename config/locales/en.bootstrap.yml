@@ -19,7 +19,7 @@ en:
       group-members: "Members"
       groups: "Groups"
       add:  "Add"
-      search-users: "Find"
+      search-users: "Add"
     titles:
       edit: "Edit %{model}"
       save: "Save %{model}"
