@@ -1,33 +1,10 @@
-<% if defined? @results %>
-    <% if @results.empty? %>
-        <tr id='results'>
-          <td colspan="5"> No Results</td>
-        </tr>
-    <% else %>
-        <% @results.each do |result| %>
-            <tr id='results' class="success">
-              <td><%= result.user_full_name %></td>
-              <td><%= result.uid %></td>
-              <td><%= result.email %></td>
-              <td>Not Created</td>
-              <td>
-                <%= link_to t('.add', :default => t("helpers.links.add")),
-                            group_members_path(:uid => result.uid),
-
-                            :class => 'btn btn-primary btn-xs add-new-group-membership', :method => :post, remote: true %>
-              </td>
-            </tr>
-        <% end %>
+<tr id="search">
+  <td colspan=5 class="info">
+    <%= form_tag(group_members_path, :remote => true, :method => "post", id: "search-form") do %>
+        <i><%= t '.title', :default => t("helpers.links.add-someone") %> </i>
+        <%= text_field_tag "people_search" %>
+        <%= hidden_field_tag "uid" %>
+        <%= submit_tag t('search-users', :default => t("helpers.links.search-users")), :class => 'btn btn-primary btn-xs add-new-group-member' %>
     <% end %>
-<% else %>
-    <tr id="search">
-      <td colspan=5 class="info">
-        <%= form_tag(group_members_path, :remote => true, :method => "post", id: "search-form") do %>
-            <i>Add Someone</i>
-            <%= text_field_tag "people_search" %>
-            <%= hidden_field_tag "uid" %>
-            <%= submit_tag t('search-users', :default => t("helpers.links.search-users")), :class => 'btn btn-primary btn-xs add-new-group-member' %>
-        <% end %>
-      </td>
-    </tr>
-<% end %>
+  </td>
+</tr>
