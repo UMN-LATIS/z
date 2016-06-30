@@ -14,7 +14,7 @@ class GroupMembershipsController < ApplicationController
   end
 
   def create
-    member = User.create(:uid => params[:uid])
+    member = User.create(user_params)
     @group.add_user(member)
     respond_to do |format|
       if @group.has_user?(member)
@@ -47,5 +47,8 @@ class GroupMembershipsController < ApplicationController
     @members = @group.users
   end
 
+  def user_params
+    params.permit(:uid)
+  end
 
 end

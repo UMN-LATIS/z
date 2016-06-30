@@ -38,7 +38,7 @@ class UserLookupService
           filter: Net::LDAP::Filter.eq('uid', search_string),
           return_result: true
       ) #.map(&:displayname).flatten
-      results = results.map { |x| {value: x.try(:displayname), uid: x.uid, first_name: x.givenname, last_name: x.sn, email: x.try(:mail)} }.flatten unless results.blank?
+      results = results.map { |x| {value: x.try(:displayname), uid: x.try(:uid), first_name: x.try(:givenname), last_name: x.try(:sn), email: x.try(:mail)} }.flatten unless results.blank?
       return results
     end
   end
