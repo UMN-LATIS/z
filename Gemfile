@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 gem 'omniauth'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '>= 5.0.0.rc2', '< 5.1'
+gem 'rails', '>= 5.0.0', '< 5.1'
 # Use mysql2 as the database for Active Record
 gem 'mysql2'
 # Use sqlite also
@@ -73,9 +73,6 @@ group :development do
 
   # Use annotate to list the attributes of models
   gem 'annotate'
-
-  # Mute assets in development console
-  gem 'quiet_assets'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
