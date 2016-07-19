@@ -84,7 +84,7 @@ describe 'urls index page' do
         expect(page).to have_content @url.keyword
       end
       it 'should display the url\'s click count' do
-        expect(page).to have_content @url.total_clicks
+        expect(page).to have_css("td", text: @url.total_clicks)
       end
       it 'should display an edit button' do
         expect(page).to have_content 'Edit'

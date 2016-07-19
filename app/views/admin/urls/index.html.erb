@@ -5,16 +5,16 @@
 
 <form class="form-inline " action="<%= admin_urls_path %>">
   <div class="form-group">
-    <label for="url_user">Owner</label>
-    <input type="text" class="form-control" placeholder="Owner" name="url_owner" value="<%= params[:url_owner] %>">
+    <label for="url_filter_owner">Owner</label>
+    <input type="text" class="form-control" placeholder="Owner" name="url_filter_owner" id="url_filter_owner" value="<%= params[:url_filter_owner] %>">
   </div>
 
   <div class="form-group">
-    <label for="url_keyword">Keyword</label>
-    <input type="text" class="form-control" placeholder="Keyword" name="url_keyword" value="<%= params[:url_keyword] %>">
+    <label for="url_filter_keyword">Keyword</label>
+    <input type="text" class="form-control" placeholder="Keyword" name="url_filter_keyword" id="url_filter_keyword" value="<%= params[:url_filter_keyword] %>">
   </div>
 
-<input type="submit" value="Filter" class='btn btn-primary'>
+<input type="submit" value="Filter" class='btn btn-primary js-url-filter-submit'>
 </form>
 
 <table class="table table-striped">

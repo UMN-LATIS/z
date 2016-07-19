@@ -4,12 +4,12 @@ class Admin::UrlsController < ApplicationController
 
   def index
     # Find users by x500
-    keyword_to_search = "%#{params[:url_keyword].try(:downcase)}%"
+    keyword_to_search = "%#{params[:url_filter_keyword].try(:downcase)}%"
     @urls = Url.where('keyword LIKE ?', keyword_to_search)
 
     # If owner filter present, filter further
-    if params[:url_owner].present?
-      owner_to_search = "%#{params[:url_owner]}%"
+    if params[:url_filter_owner].present?
+      owner_to_search = "%#{params[:url_filter_owner]}%"
       possible_groups = Group.where('name LIKE ?', owner_to_search).map(&:id)
       @urls = @urls.where('group_id IN (?)', possible_groups)
     end
