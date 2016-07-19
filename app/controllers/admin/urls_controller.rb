@@ -1,14 +1,18 @@
 class Admin::UrlsController < ApplicationController
   before_action :set_url, only: [:show, :edit, :update, :destroy]
   before_action :ensure_signed_in
-  
+
   def index
     # Find users by x500
-    keyword_to_search = "%#{params[:url_keyword].downcase}%"
-    owner_to_search = "%#{params[:url_owner]}%"
-    possible_groups = Group.where('name LIKE ?', owner_to_search).map(&:id)
+    keyword_to_search = "%#{params[:url_keyword].try(:downcase)}%"
+    @urls = Url.where('keyword LIKE ?', keyword_to_search)
 
-    @urls = Url.where('keyword LIKE ? and group_id IN (?)', keyword_to_search, possible_groups)
+    # If owner filter present, filter further
+    if params[:url_owner].present?
+      owner_to_search = "%#{params[:url_owner]}%"
+      possible_groups = Group.where('name LIKE ?', owner_to_search).map(&:id)
+      @urls = @urls.where('group_id IN (?)', possible_groups)
+    end
   end
 
   # GET /urls/1
