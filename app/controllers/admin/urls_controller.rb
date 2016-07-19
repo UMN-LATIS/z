@@ -3,7 +3,7 @@ class Admin::UrlsController < ApplicationController
   before_action :ensure_signed_in
 
   def index
-    # Find users by x500
+    # Filter URLs based on keyword
     keyword_to_search = "%#{params[:url_filter_keyword].try(:downcase)}%"
     @urls = Url.where('keyword LIKE ?', keyword_to_search)
 
