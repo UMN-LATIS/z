@@ -1,0 +1,40 @@
+<%- model_class = Url -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+
+<form class="form-inline " action="<%= admin_urls_path %>">
+  <div class="form-group">
+    <label for="url_user">Owner</label>
+    <input type="text" class="form-control" placeholder="Owner" name="url_owner" value="<%= params[:url_owner] %>">
+  </div>
+
+  <div class="form-group">
+    <label for="url_keyword">Keyword</label>
+    <input type="text" class="form-control" placeholder="Keyword" name="url_keyword" value="<%= params[:url_keyword] %>">
+  </div>
+
+<input type="submit" value="Filter" class='btn btn-primary'>
+</form>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:owner) %></th>
+      <th><%= model_class.human_attribute_name(:url) %></th>
+      <th><%= model_class.human_attribute_name(:keyword) %></th>
+      <th><%= model_class.human_attribute_name(:total_clicks) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @urls.blank? %>
+    <% else %>
+      <% @urls.each do |url| %>
+        <%= render '/urls/in_row_show', url: url, show_owner: true %>
+      <% end %>
+    <% end %>
+
+  </tbody>
+</table>

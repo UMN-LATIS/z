@@ -1,0 +1,1 @@
+$(document).find("tr#url-<%= @url_identifier %>").replaceWith($("<%= escape_javascript(render(partial: 'urls/in_row_show', locals: { url: @url, admin_view: true })) %>"));
