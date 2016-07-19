@@ -32,7 +32,7 @@
     <% if @urls.blank? %>
     <% else %>
       <% @urls.each do |url| %>
-        <%= render '/urls/in_row_show', url: url, show_owner: true %>
+        <%= render '/urls/in_row_show', url: url, admin_view: true %>
       <% end %>
     <% end %>
 

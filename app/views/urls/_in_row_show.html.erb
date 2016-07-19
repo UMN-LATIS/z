@@ -12,7 +12,7 @@
   <% if admin_view %>
     <td>
       <%= link_to t('.edit', default: t("helpers.links.edit")),
-                  admin_edit_url_path(url),
+                  edit_admin_url_path(url),
                   class: 'btn btn-xs btn-default edit-url', remote: true %>
       <%= link_to t('.destroy', default: t("helpers.links.destroy")),
                   admin_url_path(url),

@@ -1,18 +1,28 @@
+<% # Set some optional defaults for admin views %>
+<% admin_view = false if local_assigns[:admin_view].nil? %>
+
 <tr id="url-<%= url_identifier %>">
 	<td colspan=5>
-    <%= form_for url, :html => { class: "form-inline url", remote: true } do |f| %>
-      <%= hidden_field_tag :new_identifier, url_identifier %>
-      <%= f.text_field :url, class: 'form-control', placeholder: "url" %>
-      <%= f.text_field :keyword, class: 'form-control',  placeholder: "keyword" %>
-      <%= f.submit nil, class: 'btn btn-primary js-url-submit' %>
+      <%= form_for_admin admin_view, url do |f| %>
+        <%= hidden_field_tag :new_identifier, url_identifier %>
+        <%= f.text_field :url, class: 'form-control', placeholder: "url" %>
+        <%= f.text_field :keyword, class: 'form-control',  placeholder: "keyword" %>
+        <%= f.submit nil, class: 'btn btn-primary js-url-submit' %>
     <% end %>
 
     <% if url.new_record? %>
       <a href="#" class='btn btn-default cancel-new-url'>Cancel</a>
     <% else %>
-      <%= link_to t('.cancel', default: t("helpers.links.cancel")),
+      <% if admin_view %>
+        <%= link_to t('.cancel', default: t("helpers.links.cancel")),
+                  admin_url_path(url),
+                class: 'btn btn-default cancel-url', remote: true %>
+      <% else %>
+        <%= link_to t('.cancel', default: t("helpers.links.cancel")),
                   url_path(url),
                 class: 'btn btn-default cancel-url', remote: true %>
+      <% end %>
+
     <% end %>
 
     <%= render 'urls/in_row_errors', url: url %>
