@@ -22,7 +22,7 @@ class Admin::UrlsController < ApplicationController
     respond_to do |format|
       format.html
       format.js { render layout: false }
-   end
+    end
   end
 
   def edit
@@ -30,7 +30,7 @@ class Admin::UrlsController < ApplicationController
     respond_to do |format|
       format.html
       format.js { render layout: false }
-   end
+    end
   end
 
   # PATCH/PUT /urls/1
@@ -53,7 +53,7 @@ class Admin::UrlsController < ApplicationController
     @url.destroy
     respond_to do |format|
       format.json { head :no_content }
-      format.js   { render layout: false }
+      format.js   { render 'urls/destroy', layout: false }
     end
   end
 
