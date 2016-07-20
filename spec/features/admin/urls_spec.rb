@@ -48,7 +48,7 @@ describe 'as a valid admin user' do
         end
 
         it 'should display the URL click count' do
-          expect(page).to have_css("td", text: @url.total_clicks)
+          expect(page).to have_css('td', text: @url.total_clicks)
         end
 
         describe 'with a filter that does not match' do
@@ -66,7 +66,7 @@ describe 'as a valid admin user' do
             end
 
             it 'should not display the URL click count' do
-              expect(page).to_not have_css("td", text: @url.total_clicks)
+              expect(page).to_not have_css('td', text: @url.total_clicks)
             end
           end
           describe 'keyword' do
@@ -83,7 +83,7 @@ describe 'as a valid admin user' do
             end
 
             it 'should not display the URL click count' do
-              expect(page).to_not have_css("td", text: @url.total_clicks)
+              expect(page).to_not have_css('td', text: @url.total_clicks)
             end
           end
         end
