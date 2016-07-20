@@ -1,16 +1,35 @@
+<% # Set some optional defaults for admin views %>
+<% admin_view = false if local_assigns[:admin_view].nil? %>
+
 <tr id='url-<%= url.id %>'>
+  <% if admin_view %>
+    <td><%= url.group.name %></td>
+  <% end %>
 	<td><%= url.url %></td>
 	<td><%= url.keyword %></td>
 	<td><%= url.total_clicks %></td>
 	<td><%=l url.created_at %></td>
-	<td>
-		<%= link_to t('.edit', default: t("helpers.links.edit")),
-								edit_url_path(url),
-								class: 'btn btn-xs btn-default edit-url', remote: true %>
-		<%= link_to t('.destroy', default: t("helpers.links.destroy")),
-								url_path(url),
-								:method => :delete,
-								:data => { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) },
-								class: 'btn btn-xs btn-danger delete-url', remote: true %>
-	</td>
+  <% if admin_view %>
+    <td>
+      <%= link_to t('.edit', default: t("helpers.links.edit")),
+                  edit_admin_url_path(url),
+                  class: 'btn btn-xs btn-default edit-url', remote: true %>
+      <%= link_to t('.destroy', default: t("helpers.links.destroy")),
+                  admin_url_path(url),
+                  :method => :delete,
+                  :data => { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) },
+                  class: 'btn btn-xs btn-danger delete-url', remote: true %>
+    </td>
+  <% else %>
+  	<td>
+  		<%= link_to t('.edit', default: t("helpers.links.edit")),
+  								edit_url_path(url),
+  								class: 'btn btn-xs btn-default edit-url', remote: true %>
+  		<%= link_to t('.destroy', default: t("helpers.links.destroy")),
+  								url_path(url),
+  								:method => :delete,
+  								:data => { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) },
+  								class: 'btn btn-xs btn-danger delete-url', remote: true %>
+  	</td>
+  <% end %>
 </tr>

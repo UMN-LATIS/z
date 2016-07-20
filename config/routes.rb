@@ -85,7 +85,7 @@ Rails.application.routes.draw do
       # admin/urls/update	admin::urls	update	post
       # admin/urls/delete	admin::urls	destroy	delete
       # admin/urls/create	admin::urls	create	put
-      resources :urls, only: [:index, :show, :update, :destroy, :create]
+      resources :urls, only: [:index, :edit, :show, :update, :destroy, :create]
 
       # admin/admins	admin::admins	index	get
       # admin/admins/delete	admin::admins	destroy	delete

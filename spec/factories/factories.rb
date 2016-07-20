@@ -11,6 +11,7 @@ FactoryGirl.define do
 
   factory :url do
     url 'http://google.com'
+    sequence(:keyword) {|n| "keyword#{n}" }
     group { FactoryGirl.create(:user).context_group }
   end
 
