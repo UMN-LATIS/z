@@ -74,8 +74,8 @@ Rails.application.routes.draw do
     # api_keys/destroy	api_keys	destroy	delete
     resources :api_keys, only: [:index, :new, :show, :update, :create, :destroy]
 
-    # group_context/update	group_context	update	put
-    resources :group_context, only: [:update]
+    # group_context/update	group_context	show	get
+    resources :group_context, only: [:show]
 
     namespace :admin do
       # admin/transfer_requests/	admin::transfer_requests	index	get
@@ -92,7 +92,7 @@ Rails.application.routes.draw do
       # admin/urls/update	admin::urls	update	post
       # admin/urls/delete	admin::urls	destroy	delete
       # admin/urls/create	admin::urls	create	put
-      resources :urls, only: [:index, :show, :update, :destroy, :create]
+      resources :urls, only: [:index, :edit, :show, :update, :destroy, :create]
 
       # admin/admins	admin::admins	index	get
       # admin/admins/delete	admin::admins	destroy	delete

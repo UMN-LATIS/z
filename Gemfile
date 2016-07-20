@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 gem 'omniauth'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '>= 5.0.0.rc1', '< 5.1'
+gem 'rails', '>= 5.0.0', '< 5.1'
 # Use mysql2 as the database for Active Record
 gem 'mysql2'
 # Use sqlite also
@@ -75,7 +75,8 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
 
-
+  # rubocop for styled code
+  gem 'rubocop', '~> 0.40.0', require: false
 
   # Use annotate to list the attributes of models
   gem 'annotate'
