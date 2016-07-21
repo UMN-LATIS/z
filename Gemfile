@@ -22,14 +22,17 @@ gem 'coffee-rails', '~> 4.1.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
-
-# Use this as the autocompleter library
-gem 'twitter-typeahead-rails'
-
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5.x'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
+
+# Use this as the autocompleter library
+gem 'twitter-typeahead-rails'
+
+# Use net-ldap for LDAP lookup integration
+gem 'net-ldap'
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
@@ -40,9 +43,6 @@ gem 'jbuilder', '~> 2.0'
 
 # Use bootstrap for styling
 gem 'twitter-bootstrap-rails'
-
-# Use net-ldap for LDAP lookup integration
-gem 'net-ldap'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -80,9 +80,6 @@ group :development do
 
   # Use annotate to list the attributes of models
   gem 'annotate'
-
-  # Mute assets in development console
-  gem 'quiet_assets'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
