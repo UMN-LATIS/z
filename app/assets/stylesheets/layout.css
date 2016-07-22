@@ -1,3 +1,5 @@
+@import "bootstrap";
+
 /* mixins, variables, etc. */
 
 @mixin box_sizing {
@@ -5,7 +7,7 @@
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
-$gray: gray;
+
 $grayLight: #bbbbbb;
 $grayMediumLight: #a4a4a4;
 $grayDarker: #8c8c8c;
@@ -403,6 +405,6 @@ footer#umnhf-f.umnhf {
 
 div.container {
   height: 100%;
-  overflow: auto;
+
   margin-bottom:60px;
 }

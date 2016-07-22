@@ -1,0 +1,10 @@
+<tr id="search">
+  <td colspan=5 class="info">
+    <%= form_tag(group_members_path, :remote => true, :method => "post", id: "search-form") do %>
+        <i><%= t '.title', :default => t("helpers.links.add-someone") %> </i>
+        <%= text_field_tag "people_search" %>
+        <%= hidden_field_tag "uid" %>
+        <%= submit_tag t('search-users', :default => t("helpers.links.search-users")), :class => 'btn btn-primary btn-xs add-new-group-member', :data => { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) } %>
+    <% end %>
+  </td>
+</tr>

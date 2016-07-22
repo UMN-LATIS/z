@@ -10,7 +10,10 @@
 #  updated_at       :datetime         not null
 #
 class User < ApplicationRecord
-  # has_and_belongs_to_many :groups, join_table: :groups_users
+
+  attr_accessor :email, :first_name, :last_name
+
+  #has_and_belongs_to_many :groups, join_table: :groups_users
   has_many :groups_users
   has_many :groups, through: :groups_users
   # this next bit of magic removes any associations in the group_users table
@@ -36,6 +39,21 @@ class User < ApplicationRecord
 
   def in_group?(group)
     group.has_user?(self)
+  end
+
+  def load_user_data
+    # sets this objects UserData attrs
+    me = UserLookupService.new(
+        query: self.uid
+    ).search_by_uid
+    self.first_name = me[0][:first_name][0] unless me[0][:first_name].blank?
+    self.last_name = me[0][:last_name][0] unless me[0][:last_name].blank?
+    self.email = me[0][:email][0] unless me[0][:email].blank?
+  end
+
+  def user_full_name
+    load_user_data unless first_name.present?
+    "#{last_name}, #{first_name}"
   end
 
   def update_context_group(group)
