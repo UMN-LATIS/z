@@ -59,8 +59,9 @@ Rails.application.routes.draw do
       # groups/:id/members/new	group_memberships	new	get
       # groups/:id/members/create	group_memberships	create	put
       # groups/:id/members/destroy	group_memberships	destroy	delete
-      get 'members/new/:search_terms', to: 'group_memberships#new'
-      resources :members, only: [:index, :new, :create, :destroy], controller: 'group_memberships'
+      resources :members, only: [:index, :new, :create, :destroy], controller: 'group_memberships' do
+          get 'new/:search_terms', to: 'group_memberships#new', on: :collection
+      end
     end
 
     # users/:id/show	user	show	put
