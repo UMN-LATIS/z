@@ -24,6 +24,20 @@ describe 'groups index page' do
             wait_for_ajax
           end.to change(Group, :count).by(1)
         end
+        it 'should add the user to the group' do
+          expect do
+            find('.js-group-submit').click
+            wait_for_ajax
+          end.to change(GroupsUser, :count).by(1)
+        end
+        it 'should update the context switcher' do
+          find('.js-group-submit').click
+          wait_for_ajax
+          # Need to click the viewing as portion to actually
+          # see the correct link
+          find('.js-viewing-as').click
+          expect(page).to have_css('a', text: name)
+        end
       end
       describe 'when the description is blank' do
         before { find('#group_description').set '' }
@@ -55,19 +69,23 @@ describe 'groups index page' do
     end
   end
 
-  describe 'with an existing group' do
+  describe 'with an existing group', js: true do
     let(:new_name) { 'My Second Group' }
     let(:new_description) { 'second group of urls' }
+    let(:group) { FactoryGirl.create(:group) }
     before do
+      group.users << @user
+      group.save
+      sign_in @user
       visit groups_path
     end
 
     describe 'page content' do
-      it 'should display the created user\'s group\'s uid as name (see User.before_validation)' do
-        expect(page).to have_content @user.uid
+      it 'should display the group name' do
+        expect(page).to have_content group.name
       end
-      it 'should display the group\'s description uid as description (see User.before_validation)' do
-        expect(page).to have_content @user.uid
+      it 'should display the group description' do
+        expect(page).to have_content group.description
       end
       it 'should display an edit button' do
         expect(page).to have_content 'Edit'
@@ -111,6 +129,4 @@ describe 'groups index page' do
       end
     end
   end
-
-
 end

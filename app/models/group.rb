@@ -8,30 +8,34 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
-
+# models/group.rb
 class Group < ApplicationRecord
-   #has_and_belongs_to_many :users, join_table: :groups_users
-   has_many :groups_users
-   has_many :users, :through => :groups_users
-  # this next bit of magic removes any associations in the group_users table
-  before_destroy { |group| group.users.clear }
+  has_many :groups_users, dependent: :destroy
+  has_many :users, through: :groups_users
+  has_many :urls, dependent: :destroy
 
-   has_many :user_contexts, foreign_key: :context_group_id, dependent: :nullify, class_name: 'User'
+  has_many :user_contexts, foreign_key: :context_group_id, class_name: 'User'
 
-   validates :name, presence: true
+  validates :name, presence: true
 
-  def has_user? user
+  # When a group is destroyed, be sure to reset everyone's contex
+  # to their defaults
+  before_destroy do |group|
+    User.where(context_group_id: group.id).find_each(&:reset_context!)
+  end
+
+  def user?(user)
     users.exists?(user.id)
   end
 
-  def add_user(user, send_group_change_notifications=false)
-    self.users << user unless users.exists?(user.id)
-    groups_users.find_by_user_id(user).update(notify_user_changes: send_group_change_notifications)
+  def add_user(user, send_group_change_notifications = false)
+    users << user unless users.exists?(user.id)
+    groups_users.find_by_user_id(user).update(
+      notify_user_changes: send_group_change_notifications
+    )
   end
 
-  def remove_user user
+  def remove_user(user)
     users.delete(user)
   end
-
-
 end

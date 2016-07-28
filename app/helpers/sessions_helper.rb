@@ -1,5 +1,8 @@
 module SessionsHelper
   def sign_in(user)
+    # Make sure user in memory matches the one in the DB
+    # by reloading it.
+    user.reload
     cookies.permanent[:remember_token] = user.remember_token
     self.current_user = user
   end

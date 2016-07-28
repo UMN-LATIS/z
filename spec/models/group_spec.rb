@@ -47,7 +47,7 @@ RSpec.describe Group, type: :model do
     end
   end
 
-  describe 'calling has_user?' do
+  describe 'calling user?' do
     before do
       @user = FactoryGirl.create(:user)
       @user_not = FactoryGirl.create(:user)
@@ -55,13 +55,13 @@ RSpec.describe Group, type: :model do
       @group.add_user @user
     end
     describe 'should have a user' do
-      it ' and return true when asked if has_user?' do
-        expect(@group.has_user? @user).to be true
+      it ' and return true when asked if user?' do
+        expect(@group.user? @user).to be true
       end
     end
     describe 'should not have a user' do
-      it ' and return true when asked if has_user?' do
-        expect(@group.has_user? @user_not).to be false
+      it ' and return true when asked if user?' do
+        expect(@group.user? @user_not).to be false
       end
     end
   end

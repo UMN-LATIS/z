@@ -1,1 +1,7 @@
-$(document).find("tr#group-<%= @group_identifier %>").replaceWith($("<%= escape_javascript(render(partial: 'groups/in_row_form', locals: { group: @group, group_identifier: @group_identifier })) %>"));
+$(document).find("tr#group-<%= @group_identifier %>").replaceWith(
+  $("<%= escape_javascript(render(partial: 'groups/in_row_form', locals: { group: @group, group_identifier: @group_identifier })) %>")
+);
+
+$(document).find("div#nav_context_switcher").html(
+  $("<%= escape_javascript(render(partial: 'layouts/nav/context_switcher')) %>")
+);

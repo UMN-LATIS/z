@@ -26,20 +26,9 @@
          <li><%= link_to 'Groups', groups_path %></li>
          <% end %>
        </ul>
-       <% if signed_in? and current_user.groups.length > 1 %>
-       <ul class='nav navbar-nav navbar-right'>
-         <li class="dropdown">
-           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Viewing as: <%= current_user.context_group.try(:name) %> <span class="caret"></span></a>
-           <ul class="dropdown-menu">
-             <li><a href="#">Switch to:</a></li>
-             <li role="separator" class="divider"></li>
-             <% (current_user.groups - [current_user.context_group]).each do |user_group| %>
-             <li><%= link_to user_group.name, group_context_path(user_group) %></li>
-             <% end %>
-           </ul>
-         </li>
-       </ul>
-       <% end %>
+       <div id="nav_context_switcher">
+         <%= render 'layouts/nav/context_switcher' %>
+       </div>
        <ul class="nav navbar-nav sign-in-out">
          <li>
          <% if signed_in? %>
@@ -49,7 +38,6 @@
          <% end %>
          </li>
        </ul>
-
      </div>
    </div>
  </nav>
