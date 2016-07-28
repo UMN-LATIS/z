@@ -1,0 +1,23 @@
+function drawChartHrs24() {
+  var data = new google.visualization.DataTable(<%= click_data_formatter(@clicks[:hrs24]).to_json.html_safe %>);
+
+  var options = {
+    axes: {
+      x: {
+        0: {label: 'Hour'}
+      },
+      y: {
+        0: {label: "Clicks"}
+      }
+    },
+    width: '100%',
+    height: 255,
+    legend: {
+      position: 'none'
+    }
+  };
+
+  var chart = new google.charts.Bar(document.getElementById('chart-div-hrs24'));
+
+  chart.draw(data, options);
+}

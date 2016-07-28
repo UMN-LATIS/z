@@ -1,5 +1,59 @@
 require 'rails_helper'
 
+describe 'urls show page' do
+  let(:keyword) { 'testkeyword' }
+  let(:url) { 'http://www.google.com' }
+  let(:created_at) { Time.now - 1.day }
+
+  before do
+    @user = FactoryGirl.create(:user)
+    sign_in(@user)
+
+    @url = FactoryGirl.create(
+      :url,
+      group: @user.context_group,
+      keyword: keyword,
+      url: url,
+      created_at: created_at
+    )
+    # add 10 clicks to yesterday
+    10.times do
+      @url.clicks << Click.create(
+        country_code: 'US',
+        created_at: Time.now - 1.day
+      )
+      @url.total_clicks += 1
+      @url.save
+    end
+
+    # add 5 clicks to today
+    5.times do
+      @url.add_click!
+    end
+
+    visit url_path(@url.keyword)
+  end
+
+  it 'should display long url' do
+    expect(page).to have_content url
+  end
+
+  it 'should display short url' do
+    expect(page).to have_content keyword
+  end
+
+  it 'should display created date' do
+    expect(page).to have_content created_at.strftime('%B %d, %Y at %I:%M%p')
+  end
+
+  it 'should display best day' do
+    expect(page).to have_content '10 hits'
+  end
+
+  it 'should display the total clicks' do
+    expect(page).to have_content '15 hits'
+  end
+end
 describe 'urls index page' do
   before do
     @user = FactoryGirl.create(:user)
@@ -84,7 +138,7 @@ describe 'urls index page' do
         expect(page).to have_content @url.keyword
       end
       it 'should display the url\'s click count' do
-        expect(page).to have_css("td", text: @url.total_clicks)
+        expect(page).to have_css('td', text: @url.total_clicks)
       end
       it 'should display an edit button' do
         expect(page).to have_content 'Edit'

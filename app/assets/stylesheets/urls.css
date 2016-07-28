@@ -10,3 +10,7 @@
 .error-space {
   color: #d00425;
 }
+
+#chart_div {
+  margin-top: 15px;
+}

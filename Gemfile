@@ -44,7 +44,14 @@ gem 'net-ldap'
 # Use bootstrap for styling
 gem 'twitter-bootstrap-rails'
 
+# Use for easy grouping by times
+gem 'groupdate'
+
 group :development, :test do
+
+  # Use holderjs for placeholders
+  gem 'rails-assets-holderjs', source: 'https://rails-assets.org'
+
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
 

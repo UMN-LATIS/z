@@ -1,5 +1,7 @@
+# controllers/url_controller.rb
 class UrlsController < ApplicationController
-  before_action :set_url, only: [:show, :edit, :update, :destroy]
+  before_action :set_url, only: [:edit, :update, :destroy]
+  before_action :set_url_friendly, only: [:show]
   before_action :ensure_signed_in
 
   # GET /urls
@@ -13,6 +15,15 @@ class UrlsController < ApplicationController
   # GET /urls/1.json
   def show
     @url_identifier = @url.id
+
+    @clicks = {
+      hrs24: @url.clicks_hrs24,
+      days7: @url.clicks_days7,
+      days30: @url.clicks_days30,
+      alltime: @url.clicks_alltime
+    }
+    
+    @best_day = @url.best_day
     respond_to do |format|
       format.html
       format.js { render layout: false }
@@ -52,7 +63,6 @@ class UrlsController < ApplicationController
       else
         format.js { render :edit }
       end
-
     end
   end
 
@@ -85,6 +95,11 @@ class UrlsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_url
     @url = Url.find(params[:id])
+    @url_identifier = @url.id
+  end
+
+  def set_url_friendly
+    @url = Url.find_by(keyword: params[:id])
     @url_identifier = @url.id
   end
 

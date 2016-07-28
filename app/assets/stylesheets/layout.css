@@ -196,34 +196,6 @@ though the color below doesn't improve much.
 
 
 
-.panel-default > .panel-heading {
-  cursor: pointer;
-  /*background-color: $grayLight; */
-  color:#FFFFFF;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border-radius: 4px 4px 0px 0px;
-  border-bottom: 1px solid #0074BD;
-}
-
-.panel-heading.collapsed {
-  background-color: #e35600;
-}
-
-
-.panel-primary > .panel-heading {
-  background-color: #fff;
-  border-color: #fff;
-}
-
-.panel-title > a, .panel-title > a:visited {
-  color: #0074BD;
-}
-
-.panel-primary {
-  border-color: #fff;
-}
-
 .btn-primary {
   color: #fff;
 }
@@ -306,12 +278,6 @@ footer {
 
 .radio-inline {
   margin-left: 20px;
-}
-
-.container {
-    margin-left: auto;
-  margin-right: auto;
-  padding: 0;
 }
 
 .dropdown-submenu{position:relative;}

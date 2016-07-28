@@ -1,0 +1,91 @@
+<%- model_class = Url -%>
+<div class="page-header">
+    <h3>Information about your link</h3>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">Short URL</div>
+      <div class="panel-body">
+        <a target='_blank' href="<%= full_url(@url) %>"><%= full_url(@url) %></a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">Long URL</div>
+      <div class="panel-body">
+        <a target='_blank' href="<%= @url.url %>"><%= @url.url %></a>
+      </div>
+    </div>
+  </div>
+</div>
+<h3>Traffic Statistics</h3>
+<div class="row">
+  <div class="col-md-7">
+    <ul id='show-tabs' class="col-md-12 nav nav-tabs" role='tablist'>
+      <li role="presentation" class="active"><a href="#chart-div-hrs24" data-load='hrs24' data-toggle='tab' role='tab'>Last 24 hours</a></li>
+      <li role="presentation"><a href="#chart-div-days7" data-load='days7' data-toggle='tab' role='tab'>7 days</a></li>
+      <li role="presentation"><a href="#chart-div-days30" data-load='days30' data-toggle='tab' role='tab'>30 days</a></li>
+      <li role="presentation"><a href="#chart-div-all" data-load='all' data-toggle='tab' role='tab'>All Time</a></li>
+    </ul>
+    <div class="col-md-12 tab-content">
+      <div role="tabpanel" class='tab-pane fade in active' id="chart-div-hrs24" ></div>
+      <div role="tabpanel" class='tab-pane fade' id="chart-div-days7"></div>
+      <div role="tabpanel" class='tab-pane fade' id="chart-div-days30"></div>
+      <div role="tabpanel" class='tab-pane fade' id="chart-div-all"></div>
+    </div>
+  </div>
+
+  <div class="col-md-5">
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading">Historical Click Count</div>
+      <div class="panel-body">
+        Short URL created on <%= @url.created_at.strftime("%B %d, %Y at %I:%M%p") %> (<%= time_ago_in_words(@url.created_at) %> ago)
+      </div>
+      <table class="table table-hover">
+        <tbody>
+          <tr>
+            <td>Last 24 hours</td>
+            <td><%= pluralize(@clicks[:hrs24].values.sum, 'hit') %></td>
+            <td><%= (@clicks[:hrs24].values.sum / 24.00).round(2) %> per hour</td>
+          </tr>
+
+          <tr>
+            <td>Last 7 days</td>
+            <td><%= pluralize(@clicks[:days7].values.sum, 'hit') %></td>
+            <td><%= (@clicks[:days7].values.sum / 7.00).round(2) %> per day</td>
+          </tr>
+
+          <tr>
+            <td>Last 30 days</td>
+            <td><%= pluralize(@clicks[:days30].values.sum, 'hit') %></td>
+            <td><%= (@clicks[:days30].values.sum / 30.0).round(2) %> per day</td>
+          </tr>
+
+          <tr>
+            <td>All time</td>
+            <td><%= pluralize(@url.total_clicks, 'hit') %></td>
+            <td><%= (@url.total_clicks / ((Time.now.to_ms - @url.created_at.to_ms) / 1000 / 60 / 60 / 24.0)).round(2) %> per day</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">Best Day</div>
+      <div class="panel-body">
+        <%= best_day_formatter(@best_day) %>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script type="text/javascript">
+  // Load the data functions for the Google Charts
+  <%= render partial: 'urls/show_js/hrs24.js' %>
+  <%= render partial: 'urls/show_js/days7.js' %>
+  <%= render partial: 'urls/show_js/days30.js' %>
+  <%= render partial: 'urls/show_js/alltime.js' %>
+</script>
