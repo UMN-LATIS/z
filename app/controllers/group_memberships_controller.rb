@@ -9,8 +9,9 @@ class GroupMembershipsController < ApplicationController
   def new
     render json:
                UserLookupService.new(
-                   query: params[:search_terms]
-               ).search_by_name
+                   query: params[:search_terms],
+                   query_type: params[:search_type]
+               ).search
   end
 
   def create
