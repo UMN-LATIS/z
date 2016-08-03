@@ -14,6 +14,14 @@ class UrlsController < ApplicationController
   # GET /urls/1
   # GET /urls/1.json
   def show
+    require 'barby'
+    require 'barby/barcode/qr_code'
+    require 'barby/outputter/svg_outputter'
+
+    @barcode = Barby::QrCode.new(@url.url)
+    @barcode_svg = Barby::SvgOutputter.new(@barcode)
+    @barcode_svg.xdim = 5
+
     @url_identifier = @url.id
 
     @clicks = {
@@ -22,7 +30,7 @@ class UrlsController < ApplicationController
       days30: @url.clicks_days30,
       alltime: @url.clicks_alltime
     }
-    
+
     @best_day = @url.best_day
     respond_to do |format|
       format.html

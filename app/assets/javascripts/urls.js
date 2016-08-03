@@ -20,6 +20,9 @@ $(document).bind('turbolinks:load', function () {
 // preloading the charts ruins their formatting
 $(document).on('shown.bs.tab', function (e) {
   switch($(e.target).data('load')) {
+    case 'hrs24':
+        drawChartHrs24();
+        break;
     case 'days7':
         drawChartDays7();
         break;

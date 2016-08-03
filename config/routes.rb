@@ -33,7 +33,9 @@ Rails.application.routes.draw do
     # urls/update	urls	update	post
     # urls/create	urls	create	put
     # urls/destroy	urls	destroy	delete
-    resources :urls
+    resources :urls do
+      get 'download_qrcode', to: 'url_barcodes#show'
+    end
 
     # transfer_requests	transfer_requests	index	get
     # transfer_requests/new	transfer_requests	new	post
