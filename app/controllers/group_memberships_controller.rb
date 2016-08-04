@@ -10,7 +10,7 @@ class GroupMembershipsController < ApplicationController
     render json:
                UserLookupService.new(
                    query: params[:search_terms],
-                   query_type: params[:search_type]
+                   query_type: 'all' #query_type: params[:search_type]
                ).search
   end
 
@@ -18,7 +18,7 @@ class GroupMembershipsController < ApplicationController
     member = User.create(user_params)
     @group.add_user(member)
     respond_to do |format|
-      if @group.has_user?(member)
+      if @group.user?(member)
         format.js { render inline: "location.reload();" }
       else
         format.html { render :new }

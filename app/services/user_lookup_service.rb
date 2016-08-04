@@ -20,7 +20,7 @@ class UserLookupService
           filter: get_filter,
           return_result: true
       )
-      results = results.map { |x| {value: x.try(:displayname), uid: x.try(:uid), first_name: x.try(:givenname), last_name: x.try(:sn), email: x.try(:mail)} }.flatten unless results.blank?
+      results = results.map { |x| {value: display_name(x), uid: x.try(:uid), first_name: x.try(:givenname), last_name: x.try(:sn), email: x.try(:mail)} }.flatten unless results.blank?
       return results
     else
       #authentication has failed
@@ -31,15 +31,25 @@ class UserLookupService
 
   private
 
+  def display_name(x)
+    name = x.try(:displayname)[0]
+    mail = x.try(:mail) ? x.try(:mail)[0] : 'No Email'
+    "#{name} (#{mail})"
+  end
+
   def get_filter
-    if @query_type.eql? "name"
-      return Net::LDAP::Filter.eq("cn", "#{@query.tr ' ', '*'}*")
-    elsif @query_type.eql? "uid"
-      return Net::LDAP::Filter.eq("uid", "#{@query}*")
-    elsif @query_type.eql? "all"
-      cn_filter = Net::LDAP::Filter.eq("cn", "#{@query.tr ' ', '*'}*")
-      uid_filter = Net::LDAP::Filter.eq("uid", "#{@query}*")
-      return Net::LDAP::Filter.join(cn_filter, uid_filter)
+    sn_filter = Net::LDAP::Filter.eq('sn', "#{@query}*")
+    uid_filter = Net::LDAP::Filter.eq('uid', "#{@query}*")
+    mail_filter = Net::LDAP::Filter.eq('mail', "#{@query}*")
+    if @query_type.eql? 'last_name'
+      return sn_filter
+    elsif @query_type.eql? 'uid'
+      return uid_filter
+    elsif @query_type.eql? 'mail'
+      return mail_filter
+    elsif @query_type.eql? 'all'
+      x = Net::LDAP::Filter.intersect(sn_filter, uid_filter)
+      return Net::LDAP::Filter.intersect(x, mail_filter)
     end
   end
 

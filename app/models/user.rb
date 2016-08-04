@@ -44,8 +44,9 @@ class User < ApplicationRecord
   def load_user_data
     # sets this objects UserData attrs
     me = UserLookupService.new(
-        query: self.uid
-    ).search_by_uid
+        query: self.uid,
+        query_type: "mail"
+    ).search
     self.first_name = me[0][:first_name][0] unless me[0][:first_name].blank?
     self.last_name = me[0][:last_name][0] unless me[0][:last_name].blank?
     self.email = me[0][:email][0] unless me[0][:email].blank?

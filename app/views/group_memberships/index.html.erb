@@ -14,9 +14,10 @@
             }
         });
 
-        $('#people_search').typeahead({minLength: 4}, {
+        $('#people_search').typeahead({minLength: 2}, {
             name: 'people_search',
             display: 'value',
+            limit: 100,
             source: peopleSearch
         });
 
