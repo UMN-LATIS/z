@@ -18,9 +18,9 @@
 .tt-input, /* UPDATE: newer versions use tt-input instead of tt-input */
 .tt-hint {
     width: 596px;
-    height: 30px;
+    height: 25px;
     padding: 8px 12px;
-    font-size: 24px;
+    font-size: 20px;
     line-height: 25px;
     border: 2px solid #ccc;
     border-radius: 8px;
