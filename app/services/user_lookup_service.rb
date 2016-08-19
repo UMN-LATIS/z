@@ -32,7 +32,7 @@ class UserLookupService
   private
 
   def display_name(x)
-    name = x.try(:displayname)[0]
+    name = x.try(:displayname)[0] ?  x.try(:displayname)[0] : 'No Name'
     mail = x.try(:mail) ? x.try(:mail)[0] : 'No Email'
     "#{name} (#{mail})"
   end

@@ -7,15 +7,15 @@ class GroupMembershipsController < ApplicationController
   end
 
   def new
-    render json:
-               UserLookupService.new(
-                   query: params[:search_terms],
-                   query_type: 'all' #query_type: params[:search_type]
-               ).search
+    render json: UserLookupService.new(
+               query: params[:search_terms],
+               query_type: 'all' #todo query_type: params[:search_type]
+           ).search
   end
 
   def create
-    member = User.create(user_params)
+    member = User.where(:uid => params[:uid]).first
+    member = User.create(user_params) unless member
     @group.add_user(member)
     respond_to do |format|
       if @group.user?(member)
