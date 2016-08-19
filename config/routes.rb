@@ -34,6 +34,10 @@ Rails.application.routes.draw do
     # urls/create	urls	create	put
     # urls/destroy	urls	destroy	delete
     resources :urls do
+      get 'keyword_filter/(:destination)/(:keyword)',
+          on: :collection,
+          to: 'urls#keyword_filter',
+          as: 'keyword_filter'
       get 'download_qrcode', to: 'url_barcodes#show'
     end
 
@@ -43,8 +47,9 @@ Rails.application.routes.draw do
     # transfer_requests/create	transfer_requests	create	put
     # transfer_requests/:id/:key/:status	transfer_requests	update	post
     # transfer_requests/:id/show	transfer_requests	show	get
+    # transfer_requests/:id/edit	transfer_requests	edit	get
     # transfer_requests/:id/withdraw	transfer_requests	destroy	delete
-    resources :transfer_requests, except: :edit do
+    resources :transfer_requests do
       post 'confirm', on: :member
     end
 

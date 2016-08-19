@@ -1,1 +1,1 @@
-$(document).find("tr#url-<%= @url.id %>").remove();
+$('table.data-table').DataTable().row("tr#url-<%= @url.id %>").remove().draw();

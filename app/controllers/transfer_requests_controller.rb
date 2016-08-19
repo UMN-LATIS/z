@@ -1,33 +1,70 @@
 class TransferRequestsController < ApplicationController
+  before_action :set_transfer_request,
+                only: [:edit, :update, :destroy, :show, :confirm]
   def index
-    #code
+    @transfer_requests_to =
+      TransferRequest.where(to_group_id: current_user.id)
+    @transfer_requests_from =
+      TransferRequest.where(from_group_id: current_user.id)
   end
-  
-  def show
-    #code
-  end
-  
-  def new
-    #code
-  end
-  
+
   def confirm
-    #code
+    redirect_to urls_path if @transfer_request.approve!
   end
-  
+
+  def new
+    @transfer_request = TransferRequest.new
+
+    @urls = Url
+            .created_by_id(current_user.context_group_id)
+            .where(keyword: params[:keywords])
+            .order('created_at DESC')
+
+    @transfer_request.urls = @urls
+
+    respond_to do |format|
+      format.html
+      format.js { render layout: false }
+    end
+  end
+
   def create
-    #code
+    @transfer_request = TransferRequest.new(
+      from_group_id: current_user.context_group_id
+    )
+
+    @to_group = params['transfer_request']['to_group']
+
+    @transfer_request.to_group_id =
+      Group.where(name: @to_group).take.try(:id)
+
+    @urls = Url
+            .created_by_id(current_user.context_group_id)
+            .where(keyword: params[:keywords])
+            .order('created_at DESC')
+
+    @transfer_request.urls = @urls
+
+    respond_to do |format|
+      if @transfer_request.save
+        format.js do
+          redirect_to urls_path if @transfer_request.save
+        end
+      else
+        format.js { render :new }
+      end
+    end
   end
-  
-  def edit
-    #code
-  end
-  
-  def update
-    #code
-  end
-  
+
   def destroy
-    #code
+    redirect_to urls_path if @transfer_request.reject!
   end
+
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_transfer_request
+    @transfer_request = TransferRequest.find(params[:id])
+  end
+
 end

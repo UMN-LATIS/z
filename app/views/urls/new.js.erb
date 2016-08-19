@@ -1,1 +1,1 @@
-$("<%= escape_javascript(render(partial: 'urls/in_row_form', locals: { url: @url, url_identifier: @url_identifier })) %>").appendTo("table tbody");
+$(document).find("#new-url-form").html("<%= escape_javascript(render(partial: 'form', locals: { url: @url })) %>");

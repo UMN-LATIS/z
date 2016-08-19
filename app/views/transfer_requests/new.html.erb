@@ -1,0 +1,35 @@
+<%- model_class = TransferRequest -%>
+<div class="page-header">
+  <h1>Transfer Your URLs</h1>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>URL</th>
+      <th>Keyword</th>
+      <th>Created At</th>
+    </tr>
+  </thead>
+  <tbody id='transfer-request-available-urls'>
+    <%= render 'transfer_requests/urls/url_transfer_table_body', urls: @urls %>
+  </tbody>
+</table>
+
+<a href="#" class='btn btn-primary add-new-url'>Transfer URLs</a>
+
+<h3>URLs To Transfer</h3>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>URL</th>
+      <th>Keyword</th>
+      <th>Created At</th>
+    </tr>
+  </thead>
+  <tbody id='transfer-request-selected-urls'>
+    <%= render 'transfer_requests/urls/url_transfer_table_body', urls: @transfer_request.urls %>
+  </tbody>
+</table>

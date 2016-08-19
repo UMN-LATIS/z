@@ -1,0 +1,3 @@
+t = $('table.data-table').DataTable();
+t.row("tr#url-<%= @url.id %>").remove();
+t.row.add($("<%= escape_javascript(render(partial: 'urls/in_row_show', locals: { url: @url })) %>")).draw( false );

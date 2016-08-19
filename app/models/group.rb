@@ -38,4 +38,10 @@ class Group < ApplicationRecord
   def remove_user(user)
     users.delete(user)
   end
+
+  # Groups for admins will only be one person long and the only user
+  # will be an administrator
+  def admin?
+    users.length == 1 && users.first.admin?
+  end
 end

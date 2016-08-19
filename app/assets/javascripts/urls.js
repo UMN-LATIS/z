@@ -3,6 +3,11 @@ $(document).on("click", ".cancel-new-url", function (e) {
 	$(this).closest("tr").remove();
 });
 
+$(document).on("click", ".cancel-edit-url", function (e) {
+	e.preventDefault();
+	$('table.data-table').DataTable().draw();
+});
+
 $(document).bind('turbolinks:load', function () {
   Holder.run();
 
@@ -35,3 +40,75 @@ $(document).on('shown.bs.tab', function (e) {
         break;
   }
 })
+
+function initializeUrlDataTable(sort_column, sort_order, action_column, keyword_column, transfer_path) {
+  var user_table = $('table.data-table').DataTable({
+    "pageLength": 25,
+    buttons: [
+         {
+            text: 'Select all',
+            action: function ( e, dt, node, config ) {
+                dt.rows({page: 'current'}).select();
+            }
+        },
+         'selectNone'
+     ],
+   language: {
+       buttons: {
+           selectAll: "Select all",
+           selectNone: "Select none"
+       }
+   },
+    "order": [ sort_column, sort_order ],
+    columnDefs: [ {
+            className: 'select-checkbox',
+            targets:   0
+        },
+        {
+            orderable: false,
+            searchable: false,
+            targets: [0, action_column]
+    }],
+    select: {
+            style:    'multi',
+            selector: 'td:first-child'
+    },
+  });
+
+  user_table.buttons().container()
+        .appendTo( '.dataTables_wrapper .col-sm-6:eq(0)' );
+
+  new $.fn.dataTable.Buttons( user_table, {
+        buttons: [
+          {
+             extend: 'selected',
+             text: 'Transfer to user',
+             action: function ( e, dt, node, config ) {
+               var table = $('table.data-table').DataTable();
+               var keywords = [];
+
+               table.rows('.selected').data().map(function (row) {
+                 keywords.push(row[keyword_column])
+               });
+
+               $.ajax({
+                 url: transfer_path,
+                 data: {keywords: keywords},
+                 dataType: 'script'
+               });
+             }
+         },
+         {
+            extend: 'selected',
+            text: 'Move to group',
+            action: function ( e, dt, node, config ) {
+              $("#index-modal .modal-body").html("Move")
+                $("#index-modal").modal()
+            }
+        }
+        ]
+    } );
+
+    user_table.buttons(1, null).container()
+          .appendTo( '.dataTables_wrapper .col-sm-6:eq(0)' );
+}

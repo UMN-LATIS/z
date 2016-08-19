@@ -33,62 +33,6 @@ describe 'as a valid admin user' do
         visit admin_urls_path
       end
 
-      describe 'filtering for a URL' do
-        before do
-          find('#url_filter_owner').set @url.group.name
-          find('#url_filter_keyword').set @url.keyword
-          find('.js-url-filter-submit').click
-        end
-        it 'should display the URL keyword' do
-          expect(page).to have_content @url.keyword
-        end
-
-        it 'should display the URL owner' do
-          expect(page).to have_content @url.group.name
-        end
-
-        it 'should display the URL click count' do
-          expect(page).to have_css('td', text: @url.total_clicks)
-        end
-
-        describe 'with a filter that does not match' do
-          describe 'owner' do
-            before do
-              find('#url_filter_owner').set "#{@url.group.name}123"
-              find('.js-url-filter-submit').click
-            end
-            it 'should not display the URL keyword' do
-              expect(page).to_not have_content @url.keyword
-            end
-
-            it 'should not display the URL owner' do
-              expect(page).to_not have_content @url.group.name
-            end
-
-            it 'should not display the URL click count' do
-              expect(page).to_not have_css('td', text: @url.total_clicks)
-            end
-          end
-          describe 'keyword' do
-            before do
-              find('#url_filter_keyword').set "#{@url.keyword}123"
-              find('.js-url-filter-submit').click
-            end
-            it 'should not display the URL keyword' do
-              expect(page).to_not have_content @url.keyword
-            end
-
-            it 'should not display the URL owner' do
-              expect(page).to_not have_content @url.group.name
-            end
-
-            it 'should not display the URL click count' do
-              expect(page).to_not have_css('td', text: @url.total_clicks)
-            end
-          end
-        end
-      end
-
       it 'should display an edit button' do
         expect(page).to have_content 'Edit'
       end

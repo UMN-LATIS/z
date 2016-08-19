@@ -49,6 +49,34 @@ class Url < ApplicationRecord
     self.keyword = keyword.gsub(/[^0-9a-z\\s]/i, '')
   end
 
+  scope :created_by_id, ->(group_id) do
+    where('group_id = ?', group_id)
+  end
+
+  scope :created_by_name, ->(group_name) do
+    owner_to_search = "%#{group_name}%"
+    possible_groups = Group.where('name LIKE ?', owner_to_search).map(&:id)
+    where('group_id IN (?)', possible_groups)
+  end
+
+  scope :by_keyword, ->(keyword) do
+    where('keyword LIKE ?', "%#{keyword.try(:downcase)}%")
+  end
+
+  scope :by_keywords, ->(keywords) do
+    where('keyword IN (?)', "%#{keywords.map(&:downcase)}%")
+  end
+
+  scope :not_in_transfer_request, ->(transfer_request) do
+    url_ids = transfer_request.urls.pluck(:id)
+    where.not('id IN (?)', url_ids) if url_ids.present?
+  end
+
+  scope :not_in_any_transfer_request, -> do
+    url_ids = TransferRequestUrl.all.pluck(:url_id)
+    where.not('id IN (?)', url_ids) if url_ids.present?
+  end
+
   def add_click!
     clicks << Click.create(country_code: 'US')
     self.total_clicks = total_clicks + 1

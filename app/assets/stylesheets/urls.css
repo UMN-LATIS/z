@@ -14,3 +14,13 @@
 #chart_div {
   margin-top: 15px;
 }
+
+/* Give some space to the transfer buttons on the URL page */
+.dataTables_wrapper .col-sm-6 > :last-child {
+  margin-left:10px;
+}
+
+ /* Fix bootstrap modal padding issue  */
+.modal-open {
+  padding-right: 0 !important;
+}

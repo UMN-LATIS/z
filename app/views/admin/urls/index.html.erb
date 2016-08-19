@@ -3,23 +3,10 @@
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
 </div>
 
-<form class="form-inline " action="<%= admin_urls_path %>">
-  <div class="form-group">
-    <label for="url_filter_owner">Owner</label>
-    <input type="text" class="form-control" placeholder="Owner" name="url_filter_owner" id="url_filter_owner" value="<%= params[:url_filter_owner] %>">
-  </div>
-
-  <div class="form-group">
-    <label for="url_filter_keyword">Keyword</label>
-    <input type="text" class="form-control" placeholder="Keyword" name="url_filter_keyword" id="url_filter_keyword" value="<%= params[:url_filter_keyword] %>">
-  </div>
-
-<input type="submit" value="Filter" class='btn btn-primary js-url-filter-submit'>
-</form>
-
-<table class="table table-striped">
+<table class="table admin-table table-striped table-bordered data-table">
   <thead>
     <tr>
+      <th></th>
       <th><%= model_class.human_attribute_name(:owner) %></th>
       <th><%= model_class.human_attribute_name(:url) %></th>
       <th><%= model_class.human_attribute_name(:keyword) %></th>
@@ -32,9 +19,15 @@
     <% if @urls.blank? %>
     <% else %>
       <% @urls.each do |url| %>
-        <%= render '/urls/in_row_show', url: url, admin_view: true %>
+        <%= render '/urls/in_row_show', url: url %>
       <% end %>
     <% end %>
 
   </tbody>
 </table>
+
+<script type="text/javascript">
+  <%= render 'datatable.js' %>
+</script>
+
+<%= render 'modal' %>

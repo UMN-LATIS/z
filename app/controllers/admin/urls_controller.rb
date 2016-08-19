@@ -1,17 +1,15 @@
 class Admin::UrlsController < ApplicationController
   before_action :set_url, only: [:show, :edit, :update, :destroy]
   before_action :ensure_signed_in
+  before_action :set_admin_view
 
   def index
     # Filter URLs based on keyword
-    keyword_to_search = "%#{params[:url_filter_keyword].try(:downcase)}%"
-    @urls = Url.where('keyword LIKE ?', keyword_to_search)
+    @urls = Url.by_keyword(params[:url_filter_keyword])
 
     # If owner filter present, filter further
     if params[:url_filter_owner].present?
-      owner_to_search = "%#{params[:url_filter_owner]}%"
-      possible_groups = Group.where('name LIKE ?', owner_to_search).map(&:id)
-      @urls = @urls.where('group_id IN (?)', possible_groups)
+      @urls = @urls.created_by_name('params[:url_filter_owner]')
     end
   end
 
@@ -39,7 +37,7 @@ class Admin::UrlsController < ApplicationController
     respond_to do |format|
       if @url.update(url_params)
         format.json { render :show, status: :ok, location: @url }
-        format.js   { render :show }
+        format.js   { render :update }
       else
         format.json { render json: @url.errors, status: :unprocessable_entity }
         format.js   { render :edit }

@@ -1,0 +1,5 @@
+$(document).bind('turbolinks:load', function () {
+  if ($('.admin-table.data-table').length && !$.fn.DataTable.isDataTable( '.admin-table.data-table' ) ) {
+    initializeUrlDataTable(1, "asc", 6, 3, "<%= new_admin_transfer_request_path %>");
+  }
+});

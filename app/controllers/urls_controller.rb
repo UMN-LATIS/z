@@ -7,7 +7,14 @@ class UrlsController < ApplicationController
   # GET /urls
   # GET /urls.json
   def index
-    @urls = Url.where(group: current_user.context_group)
+    @urls =
+      Url.created_by_id(current_user.context_group_id).not_in_any_transfer_request
+
+    @pending_transfer_requests_to =
+      TransferRequest.where(to_group_id: current_user.context_group_id)
+
+    @pending_transfer_requests_from =
+      TransferRequest.where(from_group_id: current_user.context_group_id)
     @url = Url.new
   end
 
@@ -32,6 +39,7 @@ class UrlsController < ApplicationController
     }
 
     @best_day = @url.best_day
+
     respond_to do |format|
       format.html
       format.js { render layout: false }
@@ -40,6 +48,7 @@ class UrlsController < ApplicationController
 
   def edit
     @url_identifier = @url.id
+
     respond_to do |format|
       format.html
       format.js { render layout: false }
@@ -61,15 +70,16 @@ class UrlsController < ApplicationController
     @url_identifier = params[:new_identifier]
     @url = Url.new(url_params)
     @url.group = current_user.context_group
+    @empty_url = Url.new
 
     respond_to do |format|
       if @url.save
         format.html do
           redirect_to urls_path, notice: 'Url was successfully created.'
         end
-        format.js { render :show }
+        format.js { render :create }
       else
-        format.js { render :edit }
+        format.js { render :new }
       end
     end
   end
@@ -79,7 +89,7 @@ class UrlsController < ApplicationController
   def update
     respond_to do |format|
       if @url.update(url_params)
-        format.js   { render :show }
+        format.js   { render :update }
       else
         format.js   { render :edit }
       end
@@ -96,6 +106,16 @@ class UrlsController < ApplicationController
       end
       format.js { render layout: false }
     end
+  end
+
+  # GET /urls/:keyword/:destination
+  # Get /urls/ryan/transfer_request
+  def keyword_filter
+    @keyword = params[:keyword]
+    @destination = params[:destination]
+    @urls = Url
+            .by_keyword(@keyword)
+            .created_by_id(current_user.context_group_id)
   end
 
   private

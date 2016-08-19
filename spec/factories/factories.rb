@@ -20,5 +20,11 @@ FactoryGirl.define do
     description 'first group of urls'
   end
 
+  factory :transfer_request do
+    to_group { FactoryGirl.create(:group) }
+    from_group { FactoryGirl.create(:group) }
+    urls {[FactoryGirl.create(:url, group: from_group)]}
+  end
+
 
 end

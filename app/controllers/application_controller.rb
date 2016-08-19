@@ -8,4 +8,16 @@ class ApplicationController < ActionController::Base
   def ensure_signed_in
     redirect_to signin_path unless signed_in?
   end
+
+  def urls_by_keyword(keyword)
+    Url.where(
+      'keyword LIKE ? AND group_id = ?',
+      "%#{keyword.try(:downcase)}%",
+      current_user.context_group
+    )
+  end
+
+  def set_admin_view
+    @admin_view = true
+  end
 end

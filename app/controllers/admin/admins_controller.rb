@@ -1,4 +1,6 @@
 class Admin::AdminsController < ApplicationController
+	before_action :set_admin_view
+
 	def index
 		#code
 	end
@@ -6,7 +8,7 @@ class Admin::AdminsController < ApplicationController
 	def create
 	  #code
 	end
-	
+
 	def destroy
 		#code
 	end

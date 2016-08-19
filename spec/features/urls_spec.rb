@@ -89,10 +89,8 @@ describe 'urls index page' do
     let(:keyword) { 'goog' }
     before do
       visit urls_path
-      find('.add-new-url').click
-      wait_for_ajax
-      find('#url_url').set url
-      find('#url_keyword').set keyword
+      find('.js-new-url-url').set url
+      find('.js-new-url-keyword').set keyword
     end
     describe 'with valid information' do
       describe 'when both fields are filled in' do
@@ -177,14 +175,14 @@ describe 'urls index page' do
 
       describe 'with new valid content' do
         it 'should update the url in the db' do
-          find('#url_url').set new_url
-          find('.js-url-submit').click
+          find('table #url_url').set new_url
+          find('table .js-url-submit').click
           wait_for_ajax
           expect(@url.reload.url).to eq(new_url)
         end
         it 'should update the keyword in the db' do
-          find('#url_keyword').set new_keyword
-          find('.js-url-submit').click
+          find('table #url_keyword').set new_keyword
+          find('table .js-url-submit').click
           wait_for_ajax
           expect(@url.reload.keyword).to eq(new_keyword)
         end

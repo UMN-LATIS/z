@@ -1,0 +1,5 @@
+$(document).bind('turbolinks:load', function () {
+  if ($('.user-table.data-table').length && !$.fn.DataTable.isDataTable( '.user-table.data-table' ) ) {
+    initializeUrlDataTable(4, "desc", 5, 2, "<%= new_transfer_request_path %>");
+  }
+});

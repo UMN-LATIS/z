@@ -3,9 +3,22 @@
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
 </div>
 
-<table class="table table-striped">
+<div id="pending-transfer-requests-to">
+  <%= render 'transfer_requests_to' %>
+</div>
+
+<div id="pending-transfer-requests-from">
+  <%= render 'transfer_requests_from' %>
+</div>
+
+<div id="new-url-form">
+  <%= render 'form', url: @url %>
+</div>
+
+<table class="table user-table table-striped table-bordered data-table">
   <thead>
     <tr>
+      <th></th>
       <th><%= model_class.human_attribute_name(:url) %></th>
       <th><%= model_class.human_attribute_name(:keyword) %></th>
       <th><%= model_class.human_attribute_name(:total_clicks) %></th>
@@ -20,6 +33,8 @@
   </tbody>
 </table>
 
-<%= link_to t('.new', :default => t("helpers.links.new")),
-            new_url_path,
-            :class => 'btn btn-primary add-new-url', remote: true %>
+<script type="text/javascript">
+  <%= render 'datatable.js' %>
+</script>
+
+<%= render 'modal' %>
