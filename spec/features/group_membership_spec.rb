@@ -32,6 +32,7 @@ describe 'groups members index page' do
           visit group_member_path(group, @user)
           puts page.body
           delete :destroy, {:group_id => group.id, :id => @user.id}
+          wait_for_ajax
         end.to change(group.users, :count).by(-1)
 
       end
