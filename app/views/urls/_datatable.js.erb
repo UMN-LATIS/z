@@ -1,5 +1,3 @@
-$(document).bind('turbolinks:load', function () {
-  if ($('.user-table.data-table').length && !$.fn.DataTable.isDataTable( '.user-table.data-table' ) ) {
-    initializeUrlDataTable(4, "desc", 5, 2, "<%= new_transfer_request_path %>");
-  }
-});
+if ($('.user-table.data-table').length && !$.fn.DataTable.isDataTable( '.user-table.data-table' ) ) {
+  initializeUrlDataTable(4, "desc", 5, 2, "<%= new_transfer_request_path %>", "<%= new_move_to_group_path %>", <%= current_user.reload.groups.count > 1 %>);
+}

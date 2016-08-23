@@ -67,6 +67,7 @@ group :development, :test do
   gem 'launchy'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
+  gem 'fuubar'
 
   # Add some pry/rails console helpers for development
   gem 'pry-coolline'

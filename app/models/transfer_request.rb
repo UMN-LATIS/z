@@ -32,10 +32,7 @@ class TransferRequest < ApplicationRecord
   end
 
   def approve!
-    urls.each do |url|
-      url.group_id = to_group_id
-      url.save
-    end
+    urls.update_all(group_id: to_group_id)
     destroy
     destroyed?
   end

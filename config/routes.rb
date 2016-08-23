@@ -53,6 +53,7 @@ Rails.application.routes.draw do
       post 'confirm', on: :member
     end
 
+    resources :move_to_group, only: [:new, :create]
 
     # groups	groups	index	get
     # groups/:id	groups	show	get

@@ -41,74 +41,101 @@ $(document).on('shown.bs.tab', function (e) {
   }
 })
 
-function initializeUrlDataTable(sort_column, sort_order, action_column, keyword_column, transfer_path) {
-  var user_table = $('table.data-table').DataTable({
+function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColumn, transferPath, movePath, showMoveButton) {
+  var transferText = 'Transfer to user';
+  var moveText = 'Move to group';
+  var selectAllText = 'Select all';
+  var selectNoneText = 'Select none'
+
+  var userTable = $('table.data-table').DataTable({
     "pageLength": 25,
     buttons: [
-         {
-            text: 'Select all',
-            action: function ( e, dt, node, config ) {
-                dt.rows({page: 'current'}).select();
-            }
-        },
-         'selectNone'
-     ],
-   language: {
-       buttons: {
-           selectAll: "Select all",
-           selectNone: "Select none"
-       }
-   },
-    "order": [ sort_column, sort_order ],
-    columnDefs: [ {
-            className: 'select-checkbox',
-            targets:   0
-        },
-        {
-            orderable: false,
-            searchable: false,
-            targets: [0, action_column]
-    }],
+      {
+        text: selectAllText,
+        action: function ( e, dt, node, config ) {
+          dt.rows({page: 'current'}).select();
+        }
+      },
+      'selectNone'
+    ],
+    language: {
+      buttons: {
+        selectAll: selectAllText,
+        selectNone: selectNoneText
+      }
+    },
+    "order": [
+      sortColumn,
+      sortOrder
+    ],
+    columnDefs: [
+      {
+        className: 'select-checkbox',
+        targets:   0
+      },{
+        orderable: false,
+        searchable: false,
+        targets: [0, actionColumn]
+      }
+    ],
     select: {
-            style:    'multi',
-            selector: 'td:first-child'
+      style:    'multi',
+      selector: 'td:first-child'
     },
   });
 
-  user_table.buttons().container()
-        .appendTo( '.dataTables_wrapper .col-sm-6:eq(0)' );
+  userTable
+    .buttons()
+    .container()
+    .appendTo('.dataTables_wrapper .col-sm-6:eq(0)');
 
-  new $.fn.dataTable.Buttons( user_table, {
-        buttons: [
-          {
-             extend: 'selected',
-             text: 'Transfer to user',
-             action: function ( e, dt, node, config ) {
-               var table = $('table.data-table').DataTable();
-               var keywords = [];
+  var transfer_button = {
+    extend: 'selected',
+    text: transferText,
+    action: function ( e, dt, node, config ) {
+      var keywords = [];
+      userTable.rows('.selected').data().map(function (row) {
+        keywords.push(row[keywordColumn])
+      });
 
-               table.rows('.selected').data().map(function (row) {
-                 keywords.push(row[keyword_column])
-               });
+      $.ajax({
+        url: transferPath,
+        data: {keywords: keywords},
+        dataType: 'script'
+      });
+    }
+  }
 
-               $.ajax({
-                 url: transfer_path,
-                 data: {keywords: keywords},
-                 dataType: 'script'
-               });
-             }
-         },
-         {
-            extend: 'selected',
-            text: 'Move to group',
-            action: function ( e, dt, node, config ) {
-              $("#index-modal .modal-body").html("Move")
-                $("#index-modal").modal()
-            }
-        }
-        ]
-    } );
+  var move_button = {
+    extend: 'selected',
+    text: moveText,
+    action: function ( e, dt, node, config ) {
+      var keywords = [];
+      userTable.rows('.selected').data().map(function (row) {
+        keywords.push(row[keywordColumn])
+      });
 
-    user_table.buttons(1, null).container()
-          .appendTo( '.dataTables_wrapper .col-sm-6:eq(0)' );
+      $.ajax({
+        url: movePath,
+        data: {keywords: keywords},
+        dataType: 'script'
+      });
+    }
+  }
+
+  buttons = []
+  if (showMoveButton) {
+    buttons = [transfer_button, move_button]
+  } else {
+    buttons = [transfer_button]
+  }
+
+  new $.fn.dataTable.Buttons( userTable, {
+    buttons: buttons
+  });
+
+  userTable
+    .buttons(1, null)
+    .container()
+    .appendTo('.dataTables_wrapper .col-sm-6:eq(0)');
 }

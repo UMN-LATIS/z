@@ -2,21 +2,18 @@
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <h4 class="modal-title" id="myModalLabel">New Transfer</h4>
+      <h4 class="modal-title" id="myModalLabel">Move to Group</h4>
     </div>
-    <%= form_for_transfer_admin @admin_view, @transfer_request do |f| %>
+    <%= form_tag move_to_group_index_path, data: {remote: true}, id: 'move_group' do |f| %>
       <div class="modal-body">
-        <div class="error-space"><%= @transfer_request.errors.full_messages.join('. ') %></div>
-
-        <h5>X500 to transfer to</h5>
-        <%= f.text_field :to_group, class: 'form-control js-new-transfer-to-group', value: @to_group %>
-
+        <h5>Group to move URLs to</h5>
+          <%= select_tag "Group", options_from_collection_for_select(@groups, "id", "name"), class: 'js-move-group-group form-control' %>
         <h5>URLs you want to transfer:</h5>
         <%= render 'transfer_requests/transfer_urls' %>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <input type="submit" class="btn btn-primary" value="Send URLs" data-confirm="Are you sure you want to transfer these URLs?">
+        <input type="submit" class="btn btn-primary" value="Send URLs" data-confirm="Are you sure you want to move these URLs?">
       </div>
     <% end %>
   </div>

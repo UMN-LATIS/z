@@ -1,9 +1,0 @@
-<% urls.each do |url| %>
-  <tr id='url-<%= url.id %>'>
-    <input type="hidden" name="transfer_request[url_ids][]" value="<%= url.id %>">
-    <td><a href="#" class='btn btn-xs btn-default move-transfer-request-url'>Move</a></td>
-    <td><%= url.url %></td>
-    <td><%= url.keyword %></td>
-    <td><%=l url.created_at %></td>
-  </tr>
-<% end %>
