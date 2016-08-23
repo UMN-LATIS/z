@@ -9,14 +9,15 @@
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             remote: {
-                url: "http://localhost:3000/shortener/groups/<%= @group.id %>/members/new/%QUERY",
+                url: "<%= request.base_url %>/shortener/groups/<%= @group.id %>/members/new/%QUERY",
                 wildcard: '%QUERY'
             }
         });
 
-        $('#people_search').typeahead({minLength: 4}, {
+        $('#people_search').typeahead({minLength: 2}, {
             name: 'people_search',
             display: 'value',
+            limit: 1000,
             source: peopleSearch
         });
 
