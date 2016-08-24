@@ -13,7 +13,7 @@
                     admin_member_path(member),
                     :method => :delete,
                     :data => {confirm: t('.confirm', default: 'Delete ' + member.user_full_name) + "?"},
-                    class: 'btn btn-xs btn-danger delete-group-member', remote: true %>
+                    class: 'btn btn-xs btn-danger delete-admin-member', remote: true %>
 
     <% end %>
   </td>
