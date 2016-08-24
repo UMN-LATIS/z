@@ -1,0 +1,20 @@
+<tr id='user-<%= member.id %>'>
+  <td><%= member.user_full_name %></td>
+  <td><%= member.uid %></td>
+  <% if member.email %>
+      <td><%= member.email %></td>
+  <% else %>
+      <td><i>No Email </i></td>
+  <% end %>
+  <td><%= member.created_at %></td>
+  <td>
+    <% unless current_user.uid.eql? member.uid %>
+        <%= link_to t('.destroy', default: t("helpers.links.destroy")),
+                    admin_member_path(member),
+                    :method => :delete,
+                    :data => {confirm: t('.confirm', default: 'Delete ' + member.user_full_name) + "?"},
+                    class: 'btn btn-xs btn-danger delete-group-member', remote: true %>
+
+    <% end %>
+  </td>
+</tr>

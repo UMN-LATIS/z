@@ -102,6 +102,14 @@ Rails.application.routes.draw do
       # admin/urls/create	admin::urls	create	put
       resources :urls, only: [:index, :edit, :show, :update, :destroy, :create]
 
+      # admin/members/:search	admin::members	index	get
+      # admin/members/:id	admin::members	show	get
+      # admin/members/delete	admin::members	destroy	delete
+      # admin/members/create	admin::members	create	put
+      resources :members, only: [:index, :new, :create, :destroy], controller: 'members' do
+        get 'new/:search_terms', to: 'members#new', on: :collection
+      end
+
       # admin/admins	admin::admins	index	get
       # admin/admins/delete	admin::admins	destroy	delete
       # admin/admins/create	admin::admins	create	put
