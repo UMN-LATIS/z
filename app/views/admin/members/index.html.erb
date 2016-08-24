@@ -1,0 +1,51 @@
+<div class="page-header">
+  <h1> Members of the Administration </h1>
+</div>
+
+<script type="text/javascript">
+
+    $(function () {
+        var peopleSearch = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+                url: "<%= request.base_url %>/shortener/admin/members/new/%QUERY",
+                wildcard: '%QUERY'
+            }
+        });
+
+        $('#people_search').typeahead({minLength: 2}, {
+            name: 'people_search',
+            display: 'value',
+            limit: 1000,
+            source: peopleSearch
+        });
+
+        $('#people_search').bind('typeahead:selected', function (obj, datum, name) {
+            $("#uid").val(datum.uid);
+        });
+
+    });
+</script>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Admin Name</th>
+    <th>ID</th>
+    <th>Email</th>
+    <th>Created On</th>
+    <th><%= t '.actions', :default => t("helpers.actions") %></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @admins.each do |member| %>
+      <%= render 'in_row_show', member: member %>
+  <% end %>
+  <%= render 'in_row_form'%>
+  </tbody>
+</table>
+
+<%= link_to t('.groups', :default => t("helpers.links.groups")),
+            groups_path,
+            :class => 'btn btn-primary btn-xs group' %>

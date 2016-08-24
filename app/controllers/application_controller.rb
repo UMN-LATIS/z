@@ -9,6 +9,10 @@ class ApplicationController < ActionController::Base
     redirect_to signin_path unless signed_in?
   end
 
+  def ensure_is_admin
+    current_user.admin
+  end
+
   def urls_by_keyword(keyword)
     Url.where(
       'keyword LIKE ? AND group_id = ?',
