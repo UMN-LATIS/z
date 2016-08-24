@@ -1,11 +1,10 @@
 class Admin::MembersController < ApplicationController
-  before_action :set_params, only: [:show, :index, :update, :create, :destroy]
   before_action :ensure_signed_in
   before_action :ensure_is_admin
 
 
   def index
-    @admins = User.where(:admin => true)
+    @admins = User.where(admin: true)
   end
 
   def new
@@ -16,7 +15,7 @@ class Admin::MembersController < ApplicationController
   end
 
   def create
-    member = User.where(:uid => params[:uid]).first
+    member = User.where(uid: params[:uid]).first
     member = User.create(user_params) unless member
     member.admin = true
     member.save
@@ -45,12 +44,6 @@ class Admin::MembersController < ApplicationController
   end
 
   private
-
-  def set_params
-    #@group = Group.find(params[:group_id])
-    #@group_identifier = @group.id
-    #@members = @group.users
-  end
 
   def user_params
     params.permit(:uid)
