@@ -18,6 +18,7 @@ class User < ApplicationRecord
              foreign_key: 'context_group_id',
              class_name: 'Group'
   validates :context_group, presence: true
+  validates :uid, presence: true
   validate :user_belongs_to_context_group_validation
 
   before_validation(on: :create) do
