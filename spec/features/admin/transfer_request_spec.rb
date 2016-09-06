@@ -89,7 +89,7 @@ describe 'admin urls index page' do
               end
 
               describe 'user does not exist' do
-                let(:new_uid) {'notauser123456'}
+                let(:new_uid) { 'notauser123456' }
                 before do
                   find('.js-new-transfer-to-group').set new_uid
                 end
@@ -100,16 +100,16 @@ describe 'admin urls index page' do
                   end.to change(User, :count).by(1)
                 end
                 it 'should give the user a url' do
-                    find('#new_transfer_request input[type="submit"]').click
-                    wait_for_ajax
-                    user = User.find_by(uid: new_uid)
-                    expect(user.context_group.urls).to_not be_nil
+                  find('#new_transfer_request input[type="submit"]').click
+                  wait_for_ajax
+                  user = User.find_by(uid: new_uid)
+                  expect(user.context_group.urls).to_not be_nil
                 end
               end
             end
 
             describe 'with invalid information' do
-              let(:new_uid) {''}
+              let(:new_uid) { '' }
               describe 'uid is blank' do
                 before do
                   find('.js-new-transfer-to-group').set new_uid
