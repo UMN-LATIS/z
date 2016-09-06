@@ -29,4 +29,8 @@ module ClicksHelper
 
     { cols: cols, rows: rows }
   end
+
+  def region_data_formatter(clicks)
+    clicks.unshift %w(Country Clicks)
+  end
 end

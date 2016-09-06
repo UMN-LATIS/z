@@ -15,9 +15,10 @@ $(document).bind('turbolinks:load', function () {
   // load the hrs24 chart
   if ($("body.urls.show")[0]){
     if (google.charts.Bar === undefined){
-      google.charts.load('current', {'packages':['bar']});
+      google.charts.load('current', {'packages':['bar', 'geochart']});
     }
     google.charts.setOnLoadCallback(drawChartHrs24);
+    google.charts.setOnLoadCallback(drawRegionsMap);
   }
 });
 

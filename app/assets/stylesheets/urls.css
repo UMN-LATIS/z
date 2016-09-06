@@ -24,3 +24,7 @@
 .modal-open {
   padding-right: 0 !important;
 }
+
+#regions-div {
+  height: 350px;
+}
