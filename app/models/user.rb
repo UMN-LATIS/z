@@ -22,13 +22,14 @@ class User < ApplicationRecord
   belongs_to :context_group,
              foreign_key: 'context_group_id',
              class_name: 'Group'
+
   validates :context_group, presence: true
   validates :default_group, presence: true
   validates :uid, presence: true
   validate :user_belongs_to_context_group_validation
 
   before_validation(on: :create) do
-    if context_group.blank?
+    if context_group_id.blank?
       new_context = Group.create(
         name: uid,
         description: uid
@@ -42,7 +43,7 @@ class User < ApplicationRecord
   before_save { generate_token(:remember_token) }
 
   def reset_context!
-    update_context_group!(groups.first)
+    update_context_group!(default_group_id)
   end
 
   def in_group?(group)
@@ -65,19 +66,19 @@ class User < ApplicationRecord
     "#{last_name}, #{first_name}"
   end
 
-  def update_context_group(group)
-    self.context_group = group
+  def update_context_group_id(group_id)
+    self.context_group_id = group_id
   end
 
-  def update_context_group!(group)
-    update_context_group(group)
+  def update_context_group_id!(group_id)
+    update_context_group_id(group_id)
     save
   end
 
   private
 
   def user_belongs_to_context_group_validation
-    unless in_group?(context_group) || context_group.nil? || new_record?
+    unless new_record? || context_group.nil? || in_group?(context_group)
       errors.add(
         :context_group,
         "#{uid} is not a member of #{context_group.name}: #{context_group.description} and so cannot switch contexts to it."
