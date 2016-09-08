@@ -13,6 +13,23 @@ class Admin::UrlsController < ApplicationController
     end
   end
 
+
+  def to_csv
+    @stat_id = params[:stat_id]
+    if current_user.admin?
+      @urls = Url.all
+      respond_to do |format|
+        format.csv {send_data Url.to_csv(@stat_id, @urls)}
+      end
+    else
+      # user not authorized
+      redirect_to root_url
+    end
+  end
+
+
+
+
   # GET /urls/1
   # GET /urls/1.json
   def show

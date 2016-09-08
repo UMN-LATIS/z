@@ -106,7 +106,12 @@ Rails.application.routes.draw do
       # admin/urls/update	admin::urls	update	post
       # admin/urls/delete	admin::urls	destroy	delete
       # admin/urls/create	admin::urls	create	put
-      resources :urls, only: [:index, :edit, :show, :update, :destroy, :create]
+      resources :urls, only: [:index, :edit, :show, :update, :destroy, :create] do
+        get 'csv/:stat_id',
+            on: :collection,
+            to: 'urls#to_csv',
+            as: 'csv'
+      end
 
       # admin/members/:search	admin::members	index	get
       # admin/members/:id	admin::members	show	get
