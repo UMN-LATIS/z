@@ -39,6 +39,11 @@ Rails.application.routes.draw do
           to: 'urls#keyword_filter',
           as: 'keyword_filter'
       get 'download_qrcode', to: 'url_barcodes#show'
+      get 'csv/:stat_id', to: 'url_csvs#show'
+      get 'csv/:stat_id',
+          on: :collection,
+          to: 'url_csvs#show_all',
+          as: 'csv'
     end
 
     # transfer_requests	transfer_requests	index	get

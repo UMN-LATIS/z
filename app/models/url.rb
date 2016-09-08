@@ -113,5 +113,18 @@ class Url < ApplicationRecord
   # End click groups
   #
 
+  def self.to_csv stat_id, urls
+    col_names = nil
+    data = CSV.generate(headers: true) do |csv|
+      urls.each do |url|
+        res = url.send(stat_id)
+        col_names = res.keys
+        col_values = res.values
+        csv << col_values
+      end
+    end
+    return col_names.to_csv + data
+  end
+
 
 end
