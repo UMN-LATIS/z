@@ -3,7 +3,10 @@ function drawRegionsMap() {
   var data = google.visualization.arrayToDataTable(<%= region_data_formatter(@clicks[:regions]).to_json.html_safe %>);
 
   var options = {
-    colorAxis: {colors: ['#EBE4E4', '#650014']}
+    colorAxis: {colors: ['#EBE4E4', '#650014']},
+    projection: {
+     name: 'kavrayskiy-vii'
+   }
   };
 
   var chart = new google.visualization.GeoChart(document.getElementById('regions-div'));
