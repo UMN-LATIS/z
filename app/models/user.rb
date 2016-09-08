@@ -14,10 +14,16 @@ class User < ApplicationRecord
 
   has_many :groups_users, dependent: :destroy
   has_many :groups, through: :groups_users
+
+  belongs_to :default_group,
+             foreign_key: 'default_group_id',
+             class_name: 'Group'
+
   belongs_to :context_group,
              foreign_key: 'context_group_id',
              class_name: 'Group'
   validates :context_group, presence: true
+  validates :default_group, presence: true
   validates :uid, presence: true
   validate :user_belongs_to_context_group_validation
 
@@ -28,7 +34,8 @@ class User < ApplicationRecord
         description: uid
       )
       groups << new_context
-      self.context_group = new_context
+      self.context_group_id = new_context.id
+      self.default_group_id = new_context.id
     end
   end
 

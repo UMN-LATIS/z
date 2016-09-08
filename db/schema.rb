@@ -85,4 +85,5 @@ ActiveRecord::Schema.define(version: 20160721210808) do
   add_foreign_key "transfer_requests", "groups", column: "to_group_id"
   add_foreign_key "urls", "groups"
   add_foreign_key "users", "groups", column: "context_group_id"
+  add_foreign_key "users", "groups", column: "default_group_id"
 end
