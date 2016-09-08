@@ -13,7 +13,6 @@ class Admin::UrlsController < ApplicationController
     end
   end
 
-
   def to_csv
     @stat_id = params[:stat_id]
     if current_user.admin?
@@ -26,9 +25,6 @@ class Admin::UrlsController < ApplicationController
       redirect_to root_url
     end
   end
-
-
-
 
   # GET /urls/1
   # GET /urls/1.json
