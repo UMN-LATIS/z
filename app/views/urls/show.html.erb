@@ -1,4 +1,3 @@
-<%- model_class = Url -%>
 <div class="page-header">
     <h3>Information about your link</h3>
 </div>
@@ -37,6 +36,15 @@
           <div role="tabpanel" class='tab-pane fade' id="chart-div-days30"></div>
           <div role="tabpanel" class='tab-pane fade' id="chart-div-all"></div>
         </div>
+      </div>
+    </div>
+    <h3>Traffic Location</h3>
+    <div class="row">
+      <div id="regions-div" class="col-md-12">
+      </div>
+    </div>
+    <div class="row">
+      <div id="regions-pie-div" class="col-md-12">
       </div>
     </div>
   </div>
@@ -120,4 +128,6 @@
   <%= render partial: 'urls/show_js/days7.js' %>
   <%= render partial: 'urls/show_js/days30.js' %>
   <%= render partial: 'urls/show_js/alltime.js' %>
+  <%= render partial: 'urls/show_js/country_map.js' %>
+  <%= render partial: 'urls/show_js/country_pie.js' %>
 </script>

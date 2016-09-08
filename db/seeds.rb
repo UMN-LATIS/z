@@ -44,16 +44,16 @@ Url.create(
 )
 
 Click.create(
-  [{ country_code: 'US', url_id: Url.first },
-   { country_code: 'US', url_id: Url.first },
-   { country_code: 'US', url_id: Url.first },
-   { country_code: 'CA', url_id: Url.first },
-   { country_code: 'UZ', url_id: Url.first },
-   { country_code: 'CA', url_id: Url.first },
-   { country_code: 'RU', url_id: Url.first },
-   { country_code: 'CU', url_id: Url.first },
-   { country_code: 'RU', url_id: Url.first },
-   { country_code: 'CN', url_id: Url.last },
-   { country_code: 'CN', url_id: Url.last },
-   { country_code: 'CN', url_id: Url.last }]
+  [{ country_code: 'US', url_id: Url.first.id },
+   { country_code: 'US', url_id: Url.first.id },
+   { country_code: 'US', url_id: Url.first.id },
+   { country_code: 'CA', url_id: Url.first.id },
+   { country_code: 'UZ', url_id: Url.first.id },
+   { country_code: 'CA', url_id: Url.first.id },
+   { country_code: 'RU', url_id: Url.first.id },
+   { country_code: 'CU', url_id: Url.first.id },
+   { country_code: 'RU', url_id: Url.first.id },
+   { country_code: 'CN', url_id: Url.last.id },
+   { country_code: 'CN', url_id: Url.last.id },
+   { country_code: 'CN', url_id: Url.last.id }]
 )

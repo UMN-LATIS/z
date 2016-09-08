@@ -35,7 +35,8 @@ class UrlsController < ApplicationController
       hrs24: @url.clicks_hrs24,
       days7: @url.clicks_days7,
       days30: @url.clicks_days30,
-      alltime: @url.clicks_alltime
+      alltime: @url.clicks_alltime,
+      regions: @url.clicks_regions
     }
 
     @best_day = @url.best_day
