@@ -80,21 +80,41 @@ describe 'urls index page' do
                 visit urls_path
                 expect(page).to have_content 'You have pending transfer requests'
               end
+
+              describe 'user does not exist' do
+                let(:new_uid) { 'notauser123456' }
+                before do
+                  find('.js-new-transfer-to-group').set new_uid
+                end
+                it 'should create a new user' do
+                  expect do
+                    find('#new_transfer_request input[type="submit"]').click
+                    wait_for_ajax
+                  end.to change(User, :count).by(1)
+                end
+                it 'should create a transfer request' do
+                  expect do
+                    find('#new_transfer_request  input[type="submit"]').click
+                    wait_for_ajax
+                  end.to change(TransferRequest, :count).by(1)
+                end
+              end
             end
 
             describe 'with invalid information' do
-              describe 'user does not exist' do
+              let(:new_uid) { '' }
+              describe 'uid is blank' do
                 before do
-                  find('.js-new-transfer-to-group').set 'notauser123456'
+                  find('.js-new-transfer-to-group').set new_uid
                 end
                 it 'should display an error' do
-                  find('#new_transfer_request  input[type="submit"]').click
+                  find('#new_transfer_request input[type="submit"]').click
                   wait_for_ajax
                   expect(page).to have_content 'To group must exist'
                 end
                 it 'should not create a transfer request' do
                   expect do
-                    find('#new_transfer_request  input[type="submit"]').click
+                    find('#new_transfer_request input[type="submit"]').click
                     wait_for_ajax
                   end.to change(TransferRequest, :count).by(0)
                 end

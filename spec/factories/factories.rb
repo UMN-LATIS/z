@@ -2,7 +2,6 @@ FactoryGirl.define do
   factory :user do
     sequence(:uid)
     admin false
-    provider 'developer'
 
     factory :admin do
       admin true

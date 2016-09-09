@@ -68,12 +68,13 @@ ActiveRecord::Schema.define(version: 20160721210808) do
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "uid"
     t.integer  "context_group_id"
+    t.integer  "default_group_id"
     t.boolean  "admin"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.string   "remember_token"
-    t.string   "provider"
     t.index ["context_group_id"], name: "index_users_on_context_group_id", using: :btree
+    t.index ["default_group_id"], name: "index_users_on_default_group_id", using: :btree
   end
 
   add_foreign_key "clicks", "urls"
@@ -85,4 +86,5 @@ ActiveRecord::Schema.define(version: 20160721210808) do
   add_foreign_key "transfer_requests", "groups", column: "to_group_id"
   add_foreign_key "urls", "groups"
   add_foreign_key "users", "groups", column: "context_group_id"
+  add_foreign_key "users", "groups", column: "default_group_id"
 end
