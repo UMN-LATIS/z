@@ -77,8 +77,8 @@ class Url < ApplicationRecord
     where.not('id IN (?)', url_ids) if url_ids.present?
   end
 
-  def add_click!
-    clicks << Click.create(country_code: 'US')
+  def add_click!(location)
+    clicks << Click.create(country_code: location.try(:country_code))
     self.total_clicks = total_clicks + 1
     save
   end
@@ -107,6 +107,10 @@ class Url < ApplicationRecord
 
   def best_day
     clicks.group_by_day(:created_at).count.max_by { |_k, v| v }
+  end
+
+  def clicks_regions
+    clicks.group(:country_code).count.to_a
   end
 
   #

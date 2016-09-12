@@ -24,3 +24,11 @@
 .modal-open {
   padding-right: 0 !important;
 }
+
+#regions-div {
+  height: 350px;
+}
+
+#regions-pie-div {
+  height: 350px;
+}

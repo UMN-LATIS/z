@@ -9,15 +9,16 @@ $(document).on("click", ".cancel-edit-url", function (e) {
 });
 
 $(document).bind('turbolinks:load', function () {
-  Holder.run();
 
   // If going to the show page, load the google charts JS and
   // load the hrs24 chart
   if ($("body.urls.show")[0]){
     if (google.charts.Bar === undefined){
-      google.charts.load('current', {'packages':['bar']});
+      google.charts.load('current', {'packages':['bar', 'geochart', 'corechart']});
     }
     google.charts.setOnLoadCallback(drawChartHrs24);
+    google.charts.setOnLoadCallback(drawRegionsMap);
+    google.charts.setOnLoadCallback(drawRegionsPie);
   }
 });
 

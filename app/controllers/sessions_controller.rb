@@ -11,7 +11,6 @@ class SessionsController < ApplicationController
 
   def create
     @user = User.find_or_create_by(
-      provider: auth_hash[:provider],
       uid:      auth_hash[:uid]
     )
 
