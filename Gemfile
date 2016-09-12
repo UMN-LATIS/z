@@ -44,16 +44,12 @@ gem 'net-ldap'
 # Use bootstrap for styling
 gem 'twitter-bootstrap-rails'
 
-# Use for easy grouping by times
-gem 'groupdate'
-
 # Use barby to generate QR codes
 gem 'rqrcode'
 gem 'barby'
 gem 'chunky_png'
 
 group :development, :test do
-
   # Use holderjs for placeholders
   gem 'rails-assets-holderjs', source: 'https://rails-assets.org'
 

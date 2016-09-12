@@ -8,43 +8,47 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #
-
 class Click < ApplicationRecord
   belongs_to :url
 
-  scope :within_hours, ->(hours_ago) do
-    where('created_at >= ?', hours_ago.hours.ago)
+  scope :within, ->(time) do
+    where('created_at >= ?', time.ago)
   end
 
-  scope :within_days, ->(days_ago) do
-    where('created_at >= ?', days_ago.days.ago)
-  end
-
-  def self.group_by_hour_new(last=24)
+  # Click.group_by_time_ago
+  # Purpose: Group the clicks by a specified time period
+  #          and count the number of clicks over that period
+  # Arguments:
+  #   time   - a Duration object (e.g. 5.days)
+  #   format - a string used to determine the grouping of the clicks.
+  #            For instance, to group by day, the format string could
+  #            be '%m/%d'
+  def self.group_by_time_ago(time, format)
+    duration_type = time.parts[0][0]
     # Initialize the return array
     click_counts = {}
-    (0..last-1).reverse_each do |hour_ago|
-      click_counts[hour_ago.hours.ago.strftime("%I:00 %p")] = 0
+    (0..time.parts[0][1] - 1).reverse_each do |time_ago|
+      click_counts[time_ago.send(duration_type).ago.strftime(format)] = 0
     end
 
-    all.within_hours(last).group("date_format(created_at, '%Y%m%d %H')").count.each do |result|
-      click_counts[DateTime.parse(result[0]).in_time_zone(Time.zone).strftime("%I:00 %p")] = result[1]
+    all.within(time).group("date_format(created_at, '%Y%m%d %H')").count.each do |result|
+      click_counts[DateTime.parse(result[0]).in_time_zone(Time.zone).strftime(format)] = result[1]
     end
 
     click_counts
   end
 
-  def self.group_by_day_new(last=30)
-    # Initialize the return array
+  def self.max_by_day
     click_counts = {}
-    (0..last-1).reverse_each do |days_ago|
-      click_counts[days_ago.days.ago.strftime("%m/%d")] = 0
-    end
 
-    all.within_days(last).group("date_format(created_at, '%Y%m%d %H')").count.each do |result|
-      click_counts[DateTime.parse(result[0]).in_time_zone(Time.zone).strftime("%m/%d")] += result[1]
+    all.group("date_format(created_at, '%Y%m%d %H')").count.each do |result|
+      time_label = Date.parse(result[0])
+      if click_counts[time_label].present?
+        click_counts[time_label] += result[1]
+      else
+        click_counts[time_label] = result[1]
+      end
     end
-
-    click_counts
+    click_counts.max_by { |_k, v| v }
   end
 end

@@ -82,36 +82,4 @@ class Url < ApplicationRecord
     self.total_clicks = total_clicks + 1
     save
   end
-
-  #
-  # Click group by times
-  # These methods are used to count the number of clicks in a given time period
-  # Used mostly for the show page -- reporting and charting
-  # Gem used: 'groupdate'
-  #
-  def clicks_hrs24
-    clicks.group_by_hour(:created_at, last: 24, format: '%I:%M%p').count
-  end
-
-  def clicks_days7
-    clicks.group_by_day(:created_at, last: 7, format: '%m/%d').count
-  end
-
-  def clicks_days30
-    clicks.group_by_day(:created_at, last: 30, format: '%m/%d').count
-  end
-
-  def clicks_alltime
-    clicks.group_by_month(:created_at, format: '%m/%Y').count
-  end
-
-  def best_day
-    clicks.group_by_day(:created_at).count.max_by { |_k, v| v }
-  end
-
-  #
-  # End click groups
-  #
-
-
 end

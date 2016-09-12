@@ -32,13 +32,20 @@ class UrlsController < ApplicationController
     @url_identifier = @url.id
 
     @clicks = {
-      hrs24: @url.clicks_hrs24,
-      days7: @url.clicks_days7,
-      days30: @url.clicks_days30,
-      alltime: @url.clicks_alltime
+      hrs24:
+        @url.clicks.group_by_time_ago(24.hours, '%I:%M%p'),
+      days7:
+        @url.clicks.group_by_time_ago(7.days, '%m/%d'),
+      days30:
+        @url.clicks.group_by_time_ago(30.days, '%m/%d'),
+      alltime:
+        @url.clicks.group_by_time_ago(
+          ((Time.now - @url.created_at) / 60 / 60 / 24).days,
+          '%m/%Y'
+        )
     }
 
-    @best_day = @url.best_day
+    @best_day = @url.clicks.max_by_day
 
     respond_to do |format|
       format.html
