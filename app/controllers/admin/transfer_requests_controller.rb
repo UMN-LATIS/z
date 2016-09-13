@@ -1,6 +1,5 @@
 class Admin::TransferRequestsController < ApplicationController
   before_action :set_admin_view
-
   def new
     @transfer_request = TransferRequest.new
 
@@ -21,10 +20,10 @@ class Admin::TransferRequestsController < ApplicationController
       from_group_id: current_user.context_group_id
     )
 
-    @to_group = params['transfer_request']['to_group']
-
     @transfer_request.to_group_id =
-      Group.where(name: @to_group).take.try(:id)
+      User.find_or_create_by(
+        uid: params['transfer_request']['to_group']
+      ).default_group_id
 
     @urls = Url
             .where(keyword: params[:keywords])

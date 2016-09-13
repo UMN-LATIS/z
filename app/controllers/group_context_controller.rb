@@ -3,7 +3,7 @@ class GroupContextController < ApplicationController
 
   def show
     set_group
-    current_user.update_context_group!(@group)
+    current_user.update_context_group_id!(@group.id)
 
     # Updating the user causes the user to sign out
     # Automatically sign them back in

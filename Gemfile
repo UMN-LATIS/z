@@ -49,6 +49,9 @@ gem 'rqrcode'
 gem 'barby'
 gem 'chunky_png'
 
+# For country information
+gem 'geocoder'
+
 group :development, :test do
   # Use holderjs for placeholders
   gem 'rails-assets-holderjs', source: 'https://rails-assets.org'

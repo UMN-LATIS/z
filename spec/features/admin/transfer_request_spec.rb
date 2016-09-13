@@ -87,21 +87,41 @@ describe 'admin urls index page' do
                   @admins_url.reload
                 end.to change(@admins_url, :group_id).to(@other_user.context_group_id)
               end
+
+              describe 'user does not exist' do
+                let(:new_uid) { 'notauser123456' }
+                before do
+                  find('.js-new-transfer-to-group').set new_uid
+                end
+                it 'should create a new user' do
+                  expect do
+                    find('#new_transfer_request input[type="submit"]').click
+                    wait_for_ajax
+                  end.to change(User, :count).by(1)
+                end
+                it 'should give the user a url' do
+                  find('#new_transfer_request input[type="submit"]').click
+                  wait_for_ajax
+                  user = User.find_by(uid: new_uid)
+                  expect(user.context_group.urls).to_not be_nil
+                end
+              end
             end
 
             describe 'with invalid information' do
-              describe 'user does not exist' do
+              let(:new_uid) { '' }
+              describe 'uid is blank' do
                 before do
-                  find('.js-new-transfer-to-group').set 'notauser123456'
+                  find('.js-new-transfer-to-group').set new_uid
                 end
                 it 'should display an error' do
-                  find('#new_transfer_request  input[type="submit"]').click
+                  find('#new_transfer_request input[type="submit"]').click
                   wait_for_ajax
                   expect(page).to have_content 'To group must exist'
                 end
                 it 'should not create a transfer request' do
                   expect do
-                    find('#new_transfer_request  input[type="submit"]').click
+                    find('#new_transfer_request input[type="submit"]').click
                     wait_for_ajax
                   end.to change(TransferRequest, :count).by(0)
                 end

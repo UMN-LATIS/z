@@ -33,10 +33,10 @@ class TransferRequestsController < ApplicationController
       from_group_id: current_user.context_group_id
     )
 
-    @to_group = params['transfer_request']['to_group']
-
     @transfer_request.to_group_id =
-      Group.where(name: @to_group).take.try(:id)
+      User.find_or_create_by(
+        uid: params['transfer_request']['to_group']
+      ).default_group_id
 
     @urls = Url
             .created_by_id(current_user.context_group_id)

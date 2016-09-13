@@ -77,8 +77,8 @@ class Url < ApplicationRecord
     where.not('id IN (?)', url_ids) if url_ids.present?
   end
 
-  def add_click!
-    clicks << Click.create(country_code: 'US')
+  def add_click!(location)
+    clicks << Click.create(country_code: location.try(:country_code))
     self.total_clicks = total_clicks + 1
     save
   end
