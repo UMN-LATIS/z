@@ -42,7 +42,9 @@ class UrlsController < ApplicationController
         @url.clicks.group_by_time_ago(
           ((Time.now - @url.created_at) / 60 / 60 / 24).days,
           '%m/%Y'
-        )
+        ),
+      regions:
+        @url.clicks.group(:country_code).count.to_a
     }
 
     @best_day = @url.clicks.max_by_day
