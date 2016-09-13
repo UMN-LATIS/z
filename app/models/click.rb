@@ -31,8 +31,15 @@ class Click < ApplicationRecord
       click_counts[time_ago.send(duration_type).ago.strftime(format)] = 0
     end
 
-    all.within(time).group("date_format(created_at, '%Y%m%d %H')").count.each do |result|
-      click_counts[DateTime.parse(result[0]).in_time_zone(Time.zone).strftime(format)] = result[1]
+    all.within(time)
+       .group("date_format(created_at, '%Y%m%d %H')")
+       .count
+       .each do |result|
+      time_label = DateTime.parse(result[0])
+                           .in_time_zone(Time.zone)
+                           .strftime(format)
+
+      click_counts[time_label] = result[1]
     end
 
     click_counts
