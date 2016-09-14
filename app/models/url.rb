@@ -88,8 +88,8 @@ class Url < ApplicationRecord
     data = CSV.generate(headers: true) do |csv|
       urls.each do |url|
         res = url.clicks.group_by_time_ago(duration.to_i.send(time_unit), '%m/%d')
-        col_names = res.keys
-        col_values = res.values
+        col_names = ['url', 'keyword'] + res.keys
+        col_values = [url.url, url.keyword] + res.values
         csv << col_values
       end
     end
