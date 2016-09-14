@@ -83,45 +83,11 @@ class Url < ApplicationRecord
     save
   end
 
-  #
-  # Click group by times
-  # These methods are used to count the number of clicks in a given time period
-  # Used mostly for the show page -- reporting and charting
-  # Gem used: 'groupdate'
-  #
-  def clicks_hrs24
-    clicks.group_by_hour(:created_at, last: 24, format: '%I:%M%p').count
-  end
-
-  def clicks_days7
-    clicks.group_by_day(:created_at, last: 7, format: '%m/%d').count
-  end
-
-  def clicks_days30
-    clicks.group_by_day(:created_at, last: 30, format: '%m/%d').count
-  end
-
-  def clicks_alltime
-    clicks.group_by_month(:created_at, format: '%m/%Y').count
-  end
-
-  def best_day
-    clicks.group_by_day(:created_at).count.max_by { |_k, v| v }
-  end
-
-  def clicks_regions
-    clicks.group(:country_code).count.to_a
-  end
-
-  #
-  # End click groups
-  #
-
-  def self.to_csv stat_id, urls
+  def self.to_csv duration, time_unit, urls
     col_names = nil
     data = CSV.generate(headers: true) do |csv|
       urls.each do |url|
-        res = url.send(stat_id)
+        res = url.clicks.group_by_time_ago(duration.to_i.send(time_unit), '%m/%d')
         col_names = res.keys
         col_values = res.values
         csv << col_values
