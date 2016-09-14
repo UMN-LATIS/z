@@ -3,7 +3,6 @@ class UrlCsvsController < ApplicationController
   def show
     @duration = params[:duration]
     @time_unit = params[:time_unit]
-
     if params[:url_id].present?
       @urls = [Url.find(params[:url_id])]
     else
@@ -13,7 +12,6 @@ class UrlCsvsController < ApplicationController
     respond_to do |format|
       format.csv { send_data Url.to_csv(@duration, @time_unit, @urls) }
     end
-
   end
 
   private
@@ -21,7 +19,7 @@ class UrlCsvsController < ApplicationController
   # Never trust parameters from the scary internet,
   # only allow the white list through.
   def url_csv_paramss
-    params.require(:duration).permit(:time_unit, :url_id)
+    params.require(:duration, :time_unit).permit(:url_id)
   end
 
 
