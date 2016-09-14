@@ -13,19 +13,6 @@ class Admin::UrlsController < ApplicationController
     end
   end
 
-  def to_csv
-    @stat_id = params[:stat_id]
-    if current_user.admin?
-      @urls = Url.all
-      respond_to do |format|
-        format.csv {send_data Url.to_csv(@stat_id, @urls)}
-      end
-    else
-      # user not authorized
-      redirect_to root_url
-    end
-  end
-
   # GET /urls/1
   # GET /urls/1.json
   def show
@@ -68,6 +55,20 @@ class Admin::UrlsController < ApplicationController
     end
   end
 
+  def to_csv
+    if current_user.admin?
+      @duration = params[:duration]
+      @time_unit = params[:time_unit]
+      @urls = Url.all
+      respond_to do |format|
+        format.csv { send_data Url.to_csv(@duration, @time_unit, @urls) }
+      end
+    else
+      # user not authorized
+      redirect_to root_url
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -79,6 +80,6 @@ class Admin::UrlsController < ApplicationController
   # Never trust parameters from the scary internet
   # only allow the white list through.
   def url_params
-    params.require(:url).permit(:url, :keyword, :group_id, :modified_by)
+    params.require(:url).permit(:url, :keyword, :group_id, :modified_by, :duration, :time_unit)
   end
 end

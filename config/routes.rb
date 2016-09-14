@@ -107,7 +107,7 @@ Rails.application.routes.draw do
       # admin/urls/delete	admin::urls	destroy	delete
       # admin/urls/create	admin::urls	create	put
       resources :urls, only: [:index, :edit, :show, :update, :destroy, :create] do
-        get 'csv/:stat_id',
+        get 'csv/:duration/:time_unit',
             on: :collection,
             to: 'urls#to_csv',
             as: 'csv'
