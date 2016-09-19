@@ -31,7 +31,7 @@ class User < ApplicationRecord
   before_validation(on: :create) do
     if context_group_id.blank?
       new_context = Group.create(
-        name: uid,
+        name: internet_id,
         description: uid
       )
       groups << new_context
