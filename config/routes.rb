@@ -109,7 +109,7 @@ Rails.application.routes.draw do
       resources :urls, only: [:index, :edit, :show, :update, :destroy, :create] do
         get 'csv/:duration/:time_unit',
             on: :collection,
-            to: 'urls#to_csv',
+            to: 'url_csvs#show' ,
             as: 'csv'
       end
 
