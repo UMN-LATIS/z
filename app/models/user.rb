@@ -10,7 +10,7 @@
 #  updated_at       :datetime         not null
 #
 class User < ApplicationRecord
-  attr_accessor :email, :first_name, :last_name
+  attr_accessor :email, :first_name, :last_name, :internet_id
 
   has_many :groups_users, dependent: :destroy
   has_many :groups, through: :groups_users
@@ -42,6 +42,10 @@ class User < ApplicationRecord
 
   before_save { generate_token(:remember_token) }
 
+  after_initialize do
+    load_user_data unless Rails.env.test?
+  end
+
   def reset_context!
     update_context_group!(default_group_id)
   end
@@ -53,12 +57,13 @@ class User < ApplicationRecord
   def load_user_data
     # sets this objects UserData attrs
     me = UserLookupService.new(
-        query: self.uid,
-        query_type: "mail"
+      query: uid,
+      query_type: 'umndid'
     ).search
     self.first_name = me[0][:first_name][0] unless me[0][:first_name].blank?
     self.last_name = me[0][:last_name][0] unless me[0][:last_name].blank?
     self.email = me[0][:email][0] unless me[0][:email].blank?
+    self.internet_id = me[0][:uid][0] unless me[0][:uid].blank?
   end
 
   def user_full_name
