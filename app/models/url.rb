@@ -82,4 +82,20 @@ class Url < ApplicationRecord
     self.total_clicks = total_clicks + 1
     save
   end
+
+  def self.to_csv(duration, time_unit, urls)
+    col_names = nil
+    formats = {days: '%m/%d', hours: '%I:%M%p'}
+    data = CSV.generate(headers: true) do |csv|
+      urls.each do |url|
+        res = url.clicks.group_by_time_ago(duration.to_i.send(time_unit), formats[time_unit.to_sym])
+        col_names = %w{url keyword} + res.keys
+        col_values = [url.url, url.keyword] + res.values
+        csv << col_values
+      end
+    end
+    return col_names.to_csv + data
+  end
+
+
 end
