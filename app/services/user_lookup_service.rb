@@ -19,7 +19,11 @@ class UserLookupService
         filter: get_filter,
         return_result: true
       )
+      results = results.promote(results.detect { |x| x[:uid] == ['andersen'] })
       results = results.map { |x| { umndid: x.try(:umndid), value: display_name(x), uid: x.try(:uid), first_name: x.try(:givenname), last_name: x.try(:sn), email: x.try(:mail) } }.flatten unless results.blank?
+      # Promote Internet id match
+      # Promote emplid match
+
       return results
     else
       # authentication has failed
