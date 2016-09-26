@@ -74,7 +74,7 @@ Rails.application.routes.draw do
 
     # users/:id/show	user	show	put
     resources :users, only: [:show]
-
+    resources :lookup_users, only: [:index]
     # api_keys	api_keys	index	get
     # api_keys/new	api_keys	new	get
     # api_keys/:id	api_keys	show	get
