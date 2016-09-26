@@ -1,3 +1,28 @@
+<script type="text/javascript">
+    $(function () {
+        var peopleSearch = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+                url: "<%= request.base_url %>/shortener/lookup_users?search_terms=%QUERY",
+                wildcard: '%QUERY'
+            }
+        });
+
+        $('#people_search').typeahead({minLength: 2}, {
+            name: 'people_search',
+            display: 'value',
+            limit: 1000,
+            source: peopleSearch
+        });
+
+        $('#people_search').bind('typeahead:selected', function (obj, datum, name) {
+            $("#transfer_request_to_group").val(datum.umndid);
+        });
+
+    });
+</script>
+
 <div class="modal-dialog" role="document">
   <div class="modal-content">
     <div class="modal-header">
@@ -9,7 +34,8 @@
         <div class="error-space"><%= @transfer_request.errors.full_messages.join('. ') %></div>
 
         <h5>X500 to transfer to</h5>
-        <%= f.text_field :to_group, class: 'form-control js-new-transfer-to-group', value: @to_group %>
+        <%= text_field_tag "people_search", nil, class: 'js-new-transfer-to-group', :placeholder => "Search by Last Name or Email"  %>
+        <%= f.hidden_field "to_group" %>
 
         <h5>URLs you want to transfer:</h5>
         <%= render 'transfer_requests/transfer_urls' %>
