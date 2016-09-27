@@ -70,7 +70,7 @@ class User < ApplicationRecord
       self.first_name = me[:first_name][0]
       self.last_name = me[:last_name][0]
       self.email = me[:email][0]
-      self.internet_id =  me[:internet_id][0]
+      self.internet_id = me[:uid][0]
     end
   end
 
