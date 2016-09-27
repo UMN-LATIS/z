@@ -6,7 +6,7 @@ class UrlBarcodesController < ApplicationController
       require 'barby'
       require 'barby/barcode/qr_code'
       require 'barby/outputter/png_outputter'
-      barcode = Barby::QrCode.new(url.url)
+      barcode = Barby::QrCode.new("#{request.base_url}/#{url.keyword}")
 
       barcode_png = Barby::PngOutputter.new(barcode)
       barcode_png.xdim = 10
