@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'passenger'
+
 # Use OmniAuth to support any type of auth
 gem 'omniauth'
 
@@ -96,6 +98,7 @@ group :development do
   gem 'capistrano'
   gem 'capistrano-bundler'
   gem 'capistrano-passenger', '>= 0.1.1'
+  gem 'capistrano-rbenv'
   gem 'capistrano-rails'
 end
 

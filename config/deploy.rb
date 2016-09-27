@@ -3,6 +3,7 @@
 
 set :application, 'z'
 set :repo_url, 'git@github.umn.edu:latis-sw/z.git'
+set :rbenv_ruby, File.read('.ruby-version').strip
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
