@@ -49,7 +49,10 @@ describe 'urls index page' do
         end
 
         describe 'clicking the tranfser button' do
-          before { click_link 'Transfer to user' }
+          before do
+            click_link 'Transfer to user'
+            wait_for_ajax
+          end
 
           it 'should display the modal' do
             expect(page).to have_selector('#index-modal', visible: true)
@@ -59,7 +62,7 @@ describe 'urls index page' do
             describe 'with valid information' do
               before do
                 @other_user = FactoryGirl.create(:user)
-                find('.js-new-transfer-to-group').set @other_user.uid
+                first('input#transfer_request_to_group', visible: false).set @other_user.uid
               end
               it 'should create a transfer request' do
                 expect do
@@ -84,7 +87,7 @@ describe 'urls index page' do
               describe 'user does not exist' do
                 let(:new_uid) { 'notauser123456' }
                 before do
-                  find('.js-new-transfer-to-group').set new_uid
+                  first('input#transfer_request_to_group', visible: false).set new_uid
                 end
                 it 'should create a new user' do
                   expect do
@@ -105,7 +108,7 @@ describe 'urls index page' do
               let(:new_uid) { '' }
               describe 'uid is blank' do
                 before do
-                  find('.js-new-transfer-to-group').set new_uid
+                  first('input#transfer_request_to_group', visible: false).set new_uid
                 end
                 it 'should display an error' do
                   find('#new_transfer_request input[type="submit"]').click
