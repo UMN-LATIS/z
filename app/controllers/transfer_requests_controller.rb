@@ -66,5 +66,4 @@ class TransferRequestsController < ApplicationController
   def set_transfer_request
     @transfer_request = TransferRequest.find(params[:id])
   end
-
 end

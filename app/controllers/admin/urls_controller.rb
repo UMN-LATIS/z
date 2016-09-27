@@ -66,6 +66,6 @@ class Admin::UrlsController < ApplicationController
   # Never trust parameters from the scary internet
   # only allow the white list through.
   def url_params
-    params.require(:url).permit(:url, :keyword, :group_id, :modified_by)
+    params.require(:url).permit(:url, :keyword, :group_id, :modified_by, :duration, :time_unit)
   end
 end
