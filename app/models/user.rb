@@ -43,6 +43,11 @@ class User < ApplicationRecord
   before_save { generate_token(:remember_token) }
 
   after_initialize do
+    self.first_name = 'Unknown'
+    self.last_name = 'Unknown'
+    self.email = 'Unknown'
+    self.internet_id = 'Unknown'
+    
     load_user_data unless Rails.env.test?
   end
 
@@ -59,11 +64,15 @@ class User < ApplicationRecord
     me = UserLookupService.new(
       query: uid,
       query_type: 'umndid'
-    ).search
-    self.first_name = me[0][:first_name][0] unless me[0][:first_name].blank?
-    self.last_name = me[0][:last_name][0] unless me[0][:last_name].blank?
-    self.email = me[0][:email][0] unless me[0][:email].blank?
-    self.internet_id = me[0][:uid][0] unless me[0][:uid].blank?
+    ).search.first
+
+    if me.present?
+      self.first_name = me[:first_name].blank? ? 'Unknown' : me[:first_name][0]
+      self.last_name = me[:last_name].blank? ? 'Unknown' : me[:last_name][0]
+      self.email = me[:email].blank? ? 'Unknown' : me[:email][0]
+      self.internet_id =
+        me[:internet_id].blank? ? 'Unknown' : me[:internet_id][0]
+    end
   end
 
   def user_full_name
