@@ -92,6 +92,11 @@ group :development do
 
   # Use annotate to list the attributes of models
   gem 'annotate'
+
+  gem 'capistrano'
+  gem 'capistrano-bundler'
+  gem 'capistrano-passenger', '>= 0.1.1'
+  gem 'capistrano-rails'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
