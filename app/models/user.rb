@@ -47,7 +47,7 @@ class User < ApplicationRecord
     self.last_name = 'Unknown'
     self.email = 'Unknown'
     self.internet_id = 'Unknown'
-    
+
     load_user_data unless Rails.env.test?
   end
 
@@ -67,11 +67,10 @@ class User < ApplicationRecord
     ).search.first
 
     if me.present?
-      self.first_name = me[:first_name].blank? ? 'Unknown' : me[:first_name][0]
-      self.last_name = me[:last_name].blank? ? 'Unknown' : me[:last_name][0]
-      self.email = me[:email].blank? ? 'Unknown' : me[:email][0]
-      self.internet_id =
-        me[:internet_id].blank? ? 'Unknown' : me[:internet_id][0]
+      self.first_name = me[:first_name][0]
+      self.last_name = me[:last_name][0]
+      self.email = me[:email][0]
+      self.internet_id =  me[:internet_id][0]
     end
   end
 
