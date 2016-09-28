@@ -19,7 +19,7 @@ class UserLookupService
         filter: get_filter,
         return_result: true
       )
-      results = results.promote(results.detect { |x| x[:uid] == ['andersen'] })
+      results = results.promote(results.detect { |x| x[:uid] == [@query] })
       results = results.map { |x| { umndid: x.try(:umndid), value: display_name(x), uid: x.try(:uid), first_name: x.try(:givenname), last_name: x.try(:sn), email: x.try(:mail) } }.flatten unless results.blank?
       # Promote Internet id match
       # Promote emplid match
@@ -44,7 +44,7 @@ class UserLookupService
     sn_filter = Net::LDAP::Filter.eq('sn', "#{@query}*")
     uid_filter = Net::LDAP::Filter.eq('uid', "#{@query}*")
     mail_filter = Net::LDAP::Filter.eq('mail', "#{@query}*")
-    umndid_filter = Net::LDAP::Filter.eq('umndid', "#{@query}*")
+    umndid_filter = Net::LDAP::Filter.eq('umndid', "#{@query}")
     if @query_type.eql? 'last_name'
       return sn_filter
     elsif @query_type.eql? 'uid'
