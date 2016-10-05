@@ -34,8 +34,10 @@
         <div class="error-space"><%= @transfer_request.errors.full_messages.join('. ') %></div>
 
         <h5>X500 to transfer to</h5>
-        <%= text_field_tag "people_search", nil, class: 'js-new-transfer-to-group', :placeholder => "Search by Last Name or Email"  %>
-        <%= f.hidden_field "to_group" %>
+        <div class="form-group people-search">
+          <%= text_field_tag "people_search", nil, class: 'form-control js-new-transfer-to-group', placeholder: "Search by Last Name or Email" %>
+          <%= f.hidden_field "to_group" %>
+        </div>
 
         <h5>URLs you want to transfer:</h5>
         <%= render 'transfer_requests/transfer_urls' %>
