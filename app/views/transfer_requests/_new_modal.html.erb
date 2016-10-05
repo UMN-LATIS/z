@@ -12,7 +12,8 @@
         $('#people_search').typeahead({minLength: 2}, {
             name: 'people_search',
             display: 'value',
-            limit: 1000,
+            displayKey: 'value',
+            limit: 25,
             source: peopleSearch
         })
         .on('typeahead:asyncrequest', function() {
