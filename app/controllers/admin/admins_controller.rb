@@ -1,4 +1,5 @@
 class Admin::AdminsController < ApplicationController
+	include Pundit
 	before_action :set_admin_view
 
 	def index
