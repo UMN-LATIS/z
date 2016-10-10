@@ -5,7 +5,7 @@
         <div class="form-group">
           <%= text_field_tag "people_search", nil, :placeholder => "Search by Last Name or Email", class: 'form-control'  %>
         </div>
-        <%= hidden_field_tag "uid" %>
+        <%= hidden_field_tag "umndid" %>
         <%= submit_tag t('search-users', :default => t("helpers.links.search-users")), :class => 'btn btn-primary btn-xs add-new-group-member', :data => { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) } %>
     <% end %>
   </td>

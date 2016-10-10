@@ -14,8 +14,9 @@ class GroupMembershipsController < ApplicationController
   end
 
   def create
-    member = User.where(:uid => params[:uid]).first
-    member = User.create(user_params) unless member
+    member = User.find_or_create_by(
+      uid: params['umndid']
+    )
     @group.add_user(member)
     respond_to do |format|
       if @group.user?(member)
