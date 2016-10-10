@@ -40,7 +40,7 @@
       <div class="modal-body">
         <div class="error-space"><%= @transfer_request.errors.full_messages.join('. ') %></div>
 
-        <h5>Person to transfer to <span class="hidden glyphicon glyphicon-refresh glyphicon-refresh-animate" aria-hidden="true"></span></h5>
+        <h5>Person to transfer to: <span class="hidden glyphicon glyphicon-refresh glyphicon-refresh-animate" aria-hidden="true"></span></h5>
 
         <div class="form-group people-search">
           <%= text_field_tag "people_search", nil, class: 'form-control js-new-transfer-to-group', placeholder: "Search by Last Name or Email" %>
