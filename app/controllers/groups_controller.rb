@@ -9,6 +9,7 @@ class GroupsController < ApplicationController
     # This group will always be your first group.
     @groups =
       current_user.groups - [current_user.groups.first]
+    authorize @groups
     @group = Group.new
   end
 
@@ -82,6 +83,7 @@ class GroupsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_group
     @group = Group.find(params[:id])
+    authorize @group
     @group_identifier = @group.id
   end
 

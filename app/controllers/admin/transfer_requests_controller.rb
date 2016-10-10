@@ -3,6 +3,8 @@ class Admin::TransferRequestsController < ApplicationController
   def new
     @transfer_request = TransferRequest.new
 
+    authorize @transfer_request
+
     @urls = Url
             .where(keyword: params[:keywords])
             .order('created_at DESC')
@@ -19,6 +21,8 @@ class Admin::TransferRequestsController < ApplicationController
     @transfer_request = TransferRequest.new(
       from_group_id: current_user.context_group_id
     )
+
+    authorize @transfer_request
 
     @transfer_request.to_group_id =
       User.find_or_create_by(

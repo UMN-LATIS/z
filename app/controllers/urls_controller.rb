@@ -9,7 +9,7 @@ class UrlsController < ApplicationController
   def index
     @urls =
       Url.created_by_id(current_user.context_group_id).not_in_any_transfer_request
-
+    authorize @urls
     @pending_transfer_requests_to =
       TransferRequest.where(to_group_id: current_user.context_group_id)
 
@@ -132,11 +132,13 @@ class UrlsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_url
     @url = Url.find(params[:id])
+    authorize @url
     @url_identifier = @url.id
   end
 
   def set_url_friendly
     @url = Url.find_by(keyword: params[:id])
+    authorize @url
     @url_identifier = @url.id
   end
 

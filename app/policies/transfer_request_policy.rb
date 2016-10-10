@@ -1,5 +1,26 @@
 class TransferRequestPolicy < ApplicationPolicy
-  def update?
-    user.admin? or not record.published?
+
+  def destroy?
+    can_crud?
   end
+
+  def update?
+    can_crud?
+  end
+
+  def show?
+    can_crud?
+  end
+
+  def confirm?
+    can_crud?
+  end
+
+  private
+
+  def can_crud?
+    user.admin? || user.in_group?(Group.find(record.from_group_id))
+  end
+
+
 end

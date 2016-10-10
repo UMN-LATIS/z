@@ -84,6 +84,7 @@ class Url < ApplicationRecord
   end
 
   def self.to_csv(duration, time_unit, urls)
+    # ex: http://localhost:3000/shortener/urls/csv/24/days.csv
     col_names = nil
     formats = {days: '%m/%d', hours: '%I:%M%p'}
     data = CSV.generate(headers: true) do |csv|

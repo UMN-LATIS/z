@@ -65,5 +65,6 @@ class TransferRequestsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_transfer_request
     @transfer_request = TransferRequest.find(params[:id])
+    authorize @transfer_request
   end
 end
