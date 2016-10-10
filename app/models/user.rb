@@ -67,10 +67,12 @@ class User < ApplicationRecord
     ).search.first
 
     if me.present?
-      self.first_name = me[:first_name][0]
-      self.last_name = me[:last_name][0]
-      self.email = me[:email][0]
-      self.internet_id = me[:uid][0]
+      # Sometimes this data is not present
+      # so we try for it
+      self.first_name = me[:first_name].try(:first)
+      self.last_name = me[:last_name].try(:first)
+      self.email = me[:email].try(:first)
+      self.internet_id = me[:uid].try(:first)
     end
   end
 
