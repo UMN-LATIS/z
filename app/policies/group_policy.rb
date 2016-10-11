@@ -19,7 +19,7 @@ class GroupPolicy < ApplicationPolicy
   private
 
   def user_has_access?
-    user.admin? || (record.is_a?(Group) && record.user?(user)) || record.all? { |rec| rec.user?(user) }
+    user.admin? || (record.is_a?(Group) && record.users.exists?(user.id)) || (record.is_a?(Array) && record.all? { |rec| rec.users.exists?(user.id) })
   end
 
 end

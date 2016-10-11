@@ -27,7 +27,7 @@ class UrlPolicy < ApplicationPolicy
   private
 
   def user_has_access?
-    user.admin? || (record.is_a?(Url) && record.group.user?(user)) || record.all? { |rec| rec.group.user?(user)}
+    user.admin? || (record.is_a?(Url) && record.group.user?(user)) || (record.is_a?(Array) && record.all? { |rec| rec.group.user?(user)})
   end
 
 end
