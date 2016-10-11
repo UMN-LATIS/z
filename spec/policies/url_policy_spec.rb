@@ -11,7 +11,7 @@ describe UrlPolicy do
     @admin_user = FactoryGirl.create(:user, admin: true, uid: 'wozniak')
     @url = FactoryGirl.create(
         :url,
-        group: @user.context_group,
+        group: @good_user.context_group,
         keyword: 'keyword',
         url: 'google.com',
         created_at: 'created_at'
