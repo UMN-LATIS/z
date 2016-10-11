@@ -6,7 +6,7 @@ describe UrlPolicy do
   subject { described_class }
 
   before do
-    @user = FactoryGirl.create(:user)
+    @good_user = FactoryGirl.create(:user)
     @bad_user = FactoryGirl.create(:user)
     @admin_user = FactoryGirl.create(:user, admin: true, uid: 'wozniak')
     @url = FactoryGirl.create(
@@ -20,7 +20,7 @@ describe UrlPolicy do
 
   permissions :update?, :edit?, :show?, :transfer_requests?, :csvs?, :index? do
     it 'allows access if user is part of the Urls group' do
-      expect(subject).to permit(@user, @url)
+      expect(subject).to permit(@good_user, @url)
     end
     it 'allows access if user is an admin' do
       expect(subject).to permit(@admin_user, @url)

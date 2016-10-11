@@ -19,7 +19,9 @@ class TransferRequestPolicy < ApplicationPolicy
   private
 
   def can_crud?
-    user.admin? || user.in_group?(Group.find(record.from_group_id))
+    return true if user.admin?
+    return true if user.in_group?(Group.find(record.from_group_id))
+    false
   end
 
 
