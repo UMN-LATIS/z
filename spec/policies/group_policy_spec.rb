@@ -20,7 +20,7 @@ describe GroupPolicy do
     it 'denies access if user is not part of the group' do
       expect(subject).not_to permit(@bad_user, @group)
     end
-    it 'allowds access if user is part of the group' do
+    it 'allows access if user is part of the group' do
       expect(subject).to permit(@good_user, @group)
     end
   end

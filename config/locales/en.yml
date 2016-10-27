@@ -20,4 +20,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  pundit:
+    default: "You cannot perform this action"
+    error_with_help: "You are not authorized to perform this action. Please contact help@umn.edu for assistance."
   hello: "Hello world"

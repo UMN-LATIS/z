@@ -9,7 +9,7 @@ class GroupsController < ApplicationController
     # This group will always be your first group.
     @groups =
       current_user.groups - [current_user.groups.first]
-    authorize @groups
+    authorize @groups unless @groups.nil?
     @group = Group.new
   end
 

@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
   private
 
   def user_not_authorized
-    flash[:alert] = "You are not authorized to perform this action."
+    flash[:error] = I18n.t :error_with_help, scope: 'pundit', default: :default
     redirect_to(request.referrer || root_path)
   end
 
