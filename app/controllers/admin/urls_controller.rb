@@ -6,7 +6,7 @@ class Admin::UrlsController < ApplicationController
   def index
     # Filter URLs based on keyword
     @urls = Url.by_keyword(params[:url_filter_keyword])
-    authorize @urls
+    authorize @urls unless @urls.nil?
     # If owner filter present, filter further
     if params[:url_filter_owner].present?
       @urls = @urls.created_by_name('params[:url_filter_owner]')
@@ -60,7 +60,7 @@ class Admin::UrlsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_url
     @url = Url.find(params[:id])
-    authorize @url
+    authorize @url unless @url.nil?
     @url_identifier = @url.id
   end
 

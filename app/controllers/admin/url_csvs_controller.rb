@@ -7,7 +7,7 @@ class Admin::UrlCsvsController < ApplicationController
 
       # Sneaky bad guy figures out url of target website and wants the good stuff
       # logs in only to find he is not in the group to which this url(s) belong?
-      authorize @urls, :csvs?
+      authorize @urls, :csvs? unless @urls.nil?
 
       respond_to do |format|
         format.csv { send_data Url.to_csv(@duration, @time_unit, @urls) }

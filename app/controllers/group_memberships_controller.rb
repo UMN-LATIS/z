@@ -44,7 +44,7 @@ class GroupMembershipsController < ApplicationController
 
   def set_params
     @group = Group.find(params[:group_id])
-    authorize @group
+    authorize @group unless @group.nil?
     @group_identifier = @group.id
     @members = @group.users
   end

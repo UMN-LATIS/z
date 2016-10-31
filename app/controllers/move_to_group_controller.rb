@@ -4,8 +4,8 @@ class MoveToGroupController < ApplicationController
             .where(keyword: params[:keywords])
             .order('created_at DESC')
     @groups = current_user.groups - [current_user.context_group]
-    authorize @urls
-    authorize @groups
+    authorize @urls unless @urls.nil?
+    authorize @groups unless @groups.nil?
 
     respond_to do |format|
       format.html

@@ -2,15 +2,11 @@ class Admin::TransferRequestsController < ApplicationController
   before_action :set_admin_view
   def new
     @transfer_request = TransferRequest.new
-
     authorize @transfer_request
-
     @urls = Url
             .where(keyword: params[:keywords])
             .order('created_at DESC')
-
     @transfer_request.urls = @urls
-
     respond_to do |format|
       format.html
       format.js { render 'transfer_requests/new', layout: false }
@@ -21,9 +17,7 @@ class Admin::TransferRequestsController < ApplicationController
     @transfer_request = TransferRequest.new(
       from_group_id: current_user.context_group_id
     )
-
     authorize @transfer_request
-
     @transfer_request.to_group_id =
       User.find_or_create_by(
         uid: params['transfer_request']['to_group']

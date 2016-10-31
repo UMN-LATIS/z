@@ -83,7 +83,7 @@ class GroupsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_group
     @group = Group.find(params[:id])
-    authorize @group
+    authorize @group unless @group.nil?
     @group_identifier = @group.id
   end
 
