@@ -9,7 +9,6 @@ class UrlsController < ApplicationController
   def index
     @urls =
       Url.created_by_id(current_user.context_group_id).not_in_any_transfer_request
-    authorize @urls unless @urls.nil?
     @pending_transfer_requests_to =
       TransferRequest.where(to_group_id: current_user.context_group_id)
 

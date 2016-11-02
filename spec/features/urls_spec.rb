@@ -28,7 +28,12 @@ describe 'urls show page' do
 
     # add 5 clicks to today
     5.times do
-      @url.add_click!
+      @url.clicks << Click.create(
+          country_code: 'US',
+          created_at: Time.now
+      )
+      @url.total_clicks += 1
+      @url.save
     end
 
     visit url_path(@url.keyword)
@@ -199,5 +204,19 @@ describe 'urls index page' do
         end
       end
     end
+
+    describe 'when attempting to edit someone elses url' do
+      before do
+        @new_user = FactoryGirl.create(:user)
+        @new_url = FactoryGirl.create(:url, group: @new_user.context_group)
+        visit "urls/#{@new_url.id}/edit"
+      end
+      describe 'page content' do
+        it 'should display the not authorized message' do
+          expect(page).to have_content 'You are not authorized to perform this action.'
+        end
+      end
+    end
+
   end
 end

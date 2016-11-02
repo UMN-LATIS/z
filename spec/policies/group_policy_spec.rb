@@ -28,23 +28,3 @@ describe GroupPolicy do
 end
 
 
-describe 'groups members index page' do
-  before do
-    @user = FactoryGirl.create(:user, uid: 'wozniak')
-    sign_in(@user)
-    group.users << @user
-    group.save
-    visit group_members_path(group)
-  end
-
-  describe 'visiting the group membership page' do
- #   let(:group) { FactoryGirl.create(:group) }
- #   let(:user) { User.where(:uid => @user.uid).first }
-    describe 'page content' do
- #     it 'should display the group name' do
-        expect(page).to have_content group.name
-      end
- #   end
-  end
-end
-
