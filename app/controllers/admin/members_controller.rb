@@ -5,6 +5,7 @@ class Admin::MembersController < ApplicationController
 
   def index
     @admins = User.where(admin: true)
+    authorize :admin_membership
   end
 
   def new
@@ -15,6 +16,7 @@ class Admin::MembersController < ApplicationController
   end
 
   def create
+    authorize :admin_membership
     member = User.where(uid: params[:uid]).first
     member = User.create(user_params) unless member
     member.admin = true
@@ -33,6 +35,7 @@ class Admin::MembersController < ApplicationController
 
   def destroy
     @member = User.find(params[:id])
+    authorize :admin_membership
     @member.admin = false
     @member.save
     respond_to do |format|

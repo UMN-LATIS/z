@@ -49,3 +49,15 @@ describe 'admin members index page' do
     end
   end
 end
+describe 'visiting the admin member list as a non-admin' do
+  before do
+    bad_user = FactoryGirl.create(:user, uid: 'jones')
+    sign_in(bad_user)
+    visit admin_members_path(bad_user)
+  end
+  describe 'page content' do
+    it 'should display the authorization error' do
+      expect(page).to have_content 'You are not authorized to perform this action.'
+    end
+  end
+end

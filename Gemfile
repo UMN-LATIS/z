@@ -49,6 +49,10 @@ gem 'rqrcode'
 gem 'barby'
 gem 'chunky_png'
 
+# authorization lugin
+gem "pundit"
+
+
 # For country information
 gem 'geocoder'
 
