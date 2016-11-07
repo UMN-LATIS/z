@@ -8,6 +8,10 @@ class GroupPolicy < ApplicationPolicy
     user_has_access?
   end
 
+  def create?
+    user_has_access?
+  end
+
   def update?
     user_has_access?
   end
