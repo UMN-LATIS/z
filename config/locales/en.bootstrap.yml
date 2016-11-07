@@ -13,6 +13,7 @@ en:
       back: "Back"
       cancel: "Cancel"
       confirm: "Are you sure?"
+      confirm-delete: "Are you sure want to delete <b>%{to_delete}</b>?"
       destroy: "Delete"
       new: "New"
       edit: "Edit"
