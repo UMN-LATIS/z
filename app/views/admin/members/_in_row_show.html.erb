@@ -12,7 +12,7 @@
         <%= link_to t('.destroy', default: t("helpers.links.destroy")),
                     admin_member_path(member),
                     :method => :delete,
-                    :data => {confirm: t('.confirm', default: 'Delete ' + member.user_full_name) + "?"},
+                    :data => { confirm: t('.confirm-delete', default: t('helpers.links.confirm-delete', to_delete: member.user_full_name, default: 'Are you sure?')) },
                     class: 'btn btn-xs btn-danger delete-admin-member', remote: true %>
 
     <% end %>
