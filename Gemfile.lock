@@ -76,6 +76,8 @@ GEM
     concurrent-ruby (1.0.2)
     coolline (0.5.0)
       unicode_utils (~> 1.4)
+    data-confirm-modal (1.2.0)
+      railties (>= 3.0)
     database_cleaner (1.5.3)
     debug_inspector (0.0.2)
     diff-lcs (1.2.5)
@@ -154,6 +156,8 @@ GEM
     pry-rails (0.3.4)
       pry (>= 0.9.10)
     puma (3.6.0)
+    pundit (1.1.0)
+      activesupport (>= 3.0.0)
     rack (2.0.1)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -281,6 +285,7 @@ DEPENDENCIES
   capybara
   chunky_png
   coffee-rails (~> 4.1.0)
+  data-confirm-modal
   database_cleaner
   factory_girl_rails
   fuubar
@@ -297,6 +302,7 @@ DEPENDENCIES
   pry-coolline
   pry-rails
   puma (~> 3.0)
+  pundit
   rails (>= 5.0.0, < 5.1)
   rails-assets-holderjs!
   rqrcode
@@ -314,4 +320,4 @@ DEPENDENCIES
   web-console
 
 BUNDLED WITH
-   1.12.5
+   1.13.6

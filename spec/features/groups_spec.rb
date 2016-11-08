@@ -129,4 +129,18 @@ describe 'groups index page' do
       end
     end
   end
+
+  describe 'when attempting to edit someone elses group' do
+    before do
+      new_group = FactoryGirl.create(:group)
+      visit "groups/#{new_group.id}/edit"
+    end
+    describe 'page content' do
+      it 'should display the not authorized message' do
+        expect(page).to have_content 'You are not authorized to perform this action.'
+      end
+    end
+  end
+
+
 end
