@@ -64,6 +64,7 @@ describe 'urls index page' do
                 @other_user = FactoryGirl.create(:user)
                 first('input#transfer_request_to_group', visible: false).set @other_user.uid
               end
+
               it 'should create a transfer request' do
                 expect do
                   find('#new_transfer_request  input[type="submit"]').click
