@@ -11,21 +11,21 @@
      <div class="navbar-collapse collapse">
        <ul class="nav navbar-nav navbar-left">
          <li>
-           <a href="<%= root_path %>">Home</a>
+           <a href="<%= root_path %>"><%= t('helpers.links.home') %> </a>
          </li>
          <% if signed_in? and current_user.admin? %>
          <li>
-           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
+           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= t('helpers.links.admin')%> <span class="caret"></span></a>
            <ul class="dropdown-menu">
-             <li><a href="<%= admin_urls_path %>">Search by URL</a></li>
-             <li><a href="<%= admin_members_path %>">Manage Admins</a></li>
+             <li><a href="<%= admin_urls_path %>"><%=t('helpers.links.search_by_url')%> </a></li>
+             <li><a href="<%= admin_members_path %>"><%=t('helpers.links.manage_admins')%></a></li>
 
            </ul>
          </li>
          <% end %>
          <% if signed_in? %>
-         <li><%= link_to 'URLs', urls_path %></li>
-         <li><%= link_to 'Groups', groups_path %></li>
+         <li><%= link_to t('helpers.links.urls'), urls_path %></li>
+         <li><%= link_to t('helpers.links.groups'), groups_path %></li>
          <% end %>
        </ul>
        <div id="nav_context_switcher">
@@ -34,9 +34,9 @@
        <ul class="nav navbar-nav sign-in-out">
          <li>
          <% if signed_in? %>
-           <%= link_to 'Sign Out', signout_path %>
+           <%= link_to t('helpers.links.sign_out'), signout_path %>
          <% else %>
-           <%= link_to "Sign In", signin_path %>
+           <%= link_to t('helpers.links.sign_in'), signin_path %>
          <% end %>
          </li>
        </ul>

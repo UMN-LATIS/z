@@ -1,11 +1,11 @@
 <%= form_for_url_admin @admin_view, url do |f| %>
-  <%= f.text_field :url, class: 'form-control js-new-url-url', placeholder: "url" %>
-  <%= f.text_field :keyword, class: 'form-control js-new-url-keyword',  placeholder: "keyword" %>
+  <%= f.text_field :url, class: 'form-control js-new-url-url', placeholder: t('helpers.placeholders.url') %>
+  <%= f.text_field :keyword, class: 'form-control js-new-url-keyword',  placeholder: t('helpers.placeholders.keyword') %>
   <%= f.submit nil, class: 'btn btn-primary js-url-submit' %>
 <% end %>
 
 <% unless url.new_record? %>
-  <a href="#" class='btn btn-default cancel-edit-url'>Cancel</a>
+  <a href="#" class='btn btn-default cancel-edit-url'><%= t('helpers.buttons.cancel')%>></a>
 <% end %>
 
 <%= render 'urls/in_row_errors', url: url %>

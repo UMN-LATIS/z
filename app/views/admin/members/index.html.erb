@@ -31,11 +31,11 @@
 <table class="table table-striped">
   <thead>
   <tr>
-    <th>Admin Name</th>
-    <th>ID</th>
-    <th>Email</th>
-    <th>Created On</th>
-    <th><%= t '.actions', :default => t("helpers.actions") %></th>
+    <th><%= t('helpers.table_headers.admin_name')%></th>
+    <th><%= t('helpers.table_headers.id')%></th>
+    <th><%= t('helpers.table_headers.email') %></th>
+    <th><%= t('helpers.table_headers.created_on') %> </th>
+    <th><%= t '.actions', :default => t('helpers.actions') %></th>
   </tr>
   </thead>
   <tbody>
@@ -46,6 +46,6 @@
   </tbody>
 </table>
 
-<%= link_to t('.groups', :default => t("helpers.links.groups")),
+<%= link_to t('.groups', :default => t('helpers.links.groups')),
             groups_path,
             :class => 'btn btn-primary btn-xs group' %>
