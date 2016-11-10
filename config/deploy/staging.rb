@@ -1,3 +1,7 @@
+# Default branch is :master
+#set :branch, :develop
+ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
+
 # server-based syntax
 # ======================
 # Defines a single server with a list of roles and multiple properties.
@@ -17,10 +21,9 @@
 # property set. Specify the username and a domain or IP for the server.
 # Don't use `:all`, it's a meta role.
 
-# role :app, %w{deploy@example.com}, my_property: :my_value
-# role :web, %w{user1@primary.com user2@additional.com}, other_property: :other_value
-# role :db,  %w{deploy@example.com}
-
+role :app, %w{swadm@cla-z-dev.oit.umn.edu}
+role :web, %w{swadm@cla-z-dev.oit.umn.edu}
+role :db,  %w{swadm@cla-z-dev.oit.umn.edu}
 
 
 # Configuration
@@ -30,8 +33,6 @@
 # For available Capistrano configuration variables see the documentation page.
 # http://capistranorb.com/documentation/getting-started/configuration/
 # Feel free to add new variables to customise your setup.
-
-
 
 # Custom SSH Options
 # ==================
