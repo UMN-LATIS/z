@@ -1,3 +1,35 @@
+<script type="text/javascript">
+    $(function () {
+        var peopleSearch = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+                url: "<%= request.base_url %>/shortener/lookup_users?search_terms=%QUERY",
+                wildcard: '%QUERY'
+            }
+        });
+
+        $('#people_search').typeahead({minLength: 2}, {
+            name: 'people_search',
+            display: 'value',
+            displayKey: 'value',
+            limit: 10,
+            source: peopleSearch
+        })
+        .on('typeahead:asyncrequest', function() {
+          $('.glyphicon-refresh').removeClass("hidden");
+        })
+        .on('typeahead:asynccancel typeahead:asyncreceive', function() {
+          $('.glyphicon-refresh').addClass("hidden");
+        });
+
+        $('#people_search').bind('typeahead:selected', function (obj, datum, name) {
+            $("#transfer_request_to_group").val(datum.umndid);
+        });
+
+    });
+</script>
+
 <div class="modal-dialog" role="document">
   <div class="modal-content">
     <div class="modal-header">
@@ -8,8 +40,12 @@
       <div class="modal-body">
         <div class="error-space"><%= @transfer_request.errors.full_messages.join('. ') %></div>
 
-        <h5>X500 to transfer to</h5>
-        <%= f.text_field :to_group, class: 'form-control js-new-transfer-to-group', value: @to_group %>
+        <h5>Person to transfer to: <span class="hidden glyphicon glyphicon-refresh glyphicon-refresh-animate" aria-hidden="true"></span></h5>
+
+        <div class="form-group people-search">
+          <%= text_field_tag "people_search", nil, class: 'form-control js-new-transfer-to-group', placeholder: "Search by Last Name or Email" %>
+          <%= f.hidden_field "to_group" %>
+        </div>
 
         <h5>URLs you want to transfer:</h5>
         <%= render 'transfer_requests/transfer_urls' %>

@@ -10,7 +10,7 @@
 #  updated_at       :datetime         not null
 #
 class User < ApplicationRecord
-  attr_accessor :email, :first_name, :last_name
+  attr_accessor :email, :first_name, :last_name, :internet_id
 
   has_many :groups_users, dependent: :destroy
   has_many :groups, through: :groups_users
@@ -31,7 +31,7 @@ class User < ApplicationRecord
   before_validation(on: :create) do
     if context_group_id.blank?
       new_context = Group.create(
-        name: uid,
+        name: internet_id,
         description: uid
       )
       groups << new_context
@@ -41,6 +41,15 @@ class User < ApplicationRecord
   end
 
   before_save { generate_token(:remember_token) }
+
+  after_initialize do
+    self.first_name = 'Unknown'
+    self.last_name = 'Unknown'
+    self.email = 'Unknown'
+    self.internet_id = 'Unknown'
+
+    load_user_data unless Rails.env.test?
+  end
 
   def reset_context!
     update_context_group!(default_group_id)
@@ -53,12 +62,18 @@ class User < ApplicationRecord
   def load_user_data
     # sets this objects UserData attrs
     me = UserLookupService.new(
-        query: self.uid,
-        query_type: "mail"
-    ).search
-    self.first_name = me[0][:first_name][0] unless me[0][:first_name].blank?
-    self.last_name = me[0][:last_name][0] unless me[0][:last_name].blank?
-    self.email = me[0][:email][0] unless me[0][:email].blank?
+      query: uid,
+      query_type: 'umndid'
+    ).search.first
+
+    if me.present?
+      # Sometimes this data is not present
+      # so we try for it
+      self.first_name = me[:first_name].try(:first)
+      self.last_name = me[:last_name].try(:first)
+      self.email = me[:email].try(:first)
+      self.internet_id = me[:uid].try(:first)
+    end
   end
 
   def user_full_name
