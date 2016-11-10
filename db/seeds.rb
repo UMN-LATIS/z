@@ -13,10 +13,11 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 User.create(
-  [{ uid: 'wozniak' },
-   { uid: 'ebf' },
-   { uid: 'andersen' },
-   { uid: 'admin', admin: true }]
+  [{ uid: 'zx8gky5wf' },
+   { uid: '2qggnq4v3' },
+   { uid: '46suz2aru' },
+   { uid: '3dci3yxub' },
+   { uid: '5scyi59j8', admin: true }]
 )
 
 Group.create(
