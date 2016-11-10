@@ -46,10 +46,18 @@ gem 'net-ldap'
 # Use bootstrap for styling
 gem 'twitter-bootstrap-rails'
 
+# better confirm dialogs
+gem 'data-confirm-modal'
+
+
 # Use barby to generate QR codes
 gem 'rqrcode'
 gem 'barby'
 gem 'chunky_png'
+
+# authorization lugin
+gem "pundit"
+
 
 # For country information
 gem 'geocoder'

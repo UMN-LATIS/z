@@ -28,7 +28,7 @@
       <%= link_to t('.destroy', default: t("helpers.links.destroy")),
                   admin_url_path(url),
                   :method => :delete,
-                  :data => { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) },
+                  :data => { confirm: t('.confirm-delete', default: t("helpers.links.confirm-delete", to_delete: url.keyword,  default: 'Are you sure?')) },
                   class: 'btn btn-xs btn-danger delete-url', remote: true %>
     <% else %>
       <%= link_to t('.edit', default: t("helpers.links.edit")),
@@ -37,7 +37,7 @@
       <%= link_to t('.destroy', default: t("helpers.links.destroy")),
                   url_path(url),
                   :method => :delete,
-                  :data => { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) },
+                  :data => { confirm: t('.confirm-delete', default: t("helpers.links.confirm-delete", to_delete: url.keyword, default: 'Are you sure?')) },
                   class: 'btn btn-xs btn-danger delete-url', remote: true %>
     <% end %>
   </td>
