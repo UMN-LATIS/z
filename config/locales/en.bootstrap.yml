@@ -90,6 +90,7 @@ en:
       transfer_urls: "Transfer URLs"
       transfer_requests_to_others: "Your Transfer Requests to Others"
       transfer_requests_pending: "You have pending transfer requests"
+      person_to_transfer_to: "Person to transfer to:"
       information_about_your_link: "Information about your link"
       traffic_statistics: "Traffic Statistics"
       traffic_location: "Traffic Location"
