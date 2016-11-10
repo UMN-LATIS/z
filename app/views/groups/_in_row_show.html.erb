@@ -4,16 +4,16 @@
   <td><%= group.description%></td>
   <td><%=l group.created_at %></td>
   <td>
-    <%= link_to t('.edit', default: t("helpers.links.edit")),
+    <%= link_to t('.edit', default: t('helpers.links.edit')),
                 edit_group_path(group),
                 class: 'btn btn-xs btn-default edit-group', remote: true %>
-    <%= link_to t('.group-members', default: t("helpers.links.group-members")),
+    <%= link_to t('.group-members', default: t('helpers.links.group_members')),
                 group_members_path(group),
                 class: 'btn btn-xs btn-default group-members' %>
-    <%= link_to t('.destroy', default: t("helpers.links.destroy")),
+    <%= link_to t('.destroy', default: t('helpers.links.destroy')),
                 group_path(group),
                 :method => :delete,
-                :data => { confirm: t('.confirm-delete', default: t('helpers.links.confirm-delete', to_delete: group.name, default: 'Are you sure?')) },
+                :data => { confirm: t('.confirm-delete', default: t('helpers.links.confirm_delete', to_delete: group.name, default: t('helpers.links.confirm_default'))) },
                 class: 'btn btn-xs btn-danger delete-group', remote: true %>
   </td>
 </tr>

@@ -1,6 +1,6 @@
 <% if @pending_transfer_requests_from.present? %>
     <div class="bs-callout bs-callout-warning" id="callout-badges-ie8-empty">
-      <h4>Your transfer requests to others</h4>
+      <h4><%= t('helpers.header_tags.transfer_requests_to_others')%> </h4>
       <p>
         <% @pending_transfer_requests_from.each do |transfer_request| %>
         <div class="trasnfer-request-item">

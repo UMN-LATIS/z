@@ -18,26 +18,26 @@
     <%= l url.created_at %>
   </td>
   <td>
-    <%= link_to t('.show', default: t("helpers.links.show")),
+    <%= link_to t('.show', default: t('helpers.links.show')),
                 url_path(url.keyword),
                 class: 'btn btn-xs btn-default show-url' %>
     <% if @admin_view %>
-      <%= link_to t('.edit', default: t("helpers.links.edit")),
+      <%= link_to t('.edit', default: t('helpers.links.edit')),
                   edit_admin_url_path(url),
                   class: 'btn btn-xs btn-default edit-url', remote: true %>
-      <%= link_to t('.destroy', default: t("helpers.links.destroy")),
+      <%= link_to t('.destroy', default: t('helpers.links.destroy')),
                   admin_url_path(url),
                   :method => :delete,
-                  :data => { confirm: t('.confirm-delete', default: t("helpers.links.confirm-delete", to_delete: url.keyword,  default: 'Are you sure?')) },
+                  :data => { confirm: t('.confirm-delete', default: t('helpers.links.confirm_delete', to_delete: url.keyword,  default: t('helpers.links.confirm_default'))) },
                   class: 'btn btn-xs btn-danger delete-url', remote: true %>
     <% else %>
-      <%= link_to t('.edit', default: t("helpers.links.edit")),
+      <%= link_to t('.edit', default: t('helpers.links.edit')),
                   edit_url_path(url),
                   class: 'btn btn-xs btn-default edit-url', remote: true %>
-      <%= link_to t('.destroy', default: t("helpers.links.destroy")),
+      <%= link_to t('.destroy', default: t('helpers.links.destroy')),
                   url_path(url),
                   :method => :delete,
-                  :data => { confirm: t('.confirm-delete', default: t("helpers.links.confirm-delete", to_delete: url.keyword, default: 'Are you sure?')) },
+                  :data => { confirm: t('.confirm-delete', default: t('helpers.links.confirm_delete', to_delete: url.keyword, default: t('helpers.links.confirm_default'))) },
                   class: 'btn btn-xs btn-danger delete-url', remote: true %>
     <% end %>
   </td>

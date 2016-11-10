@@ -15,6 +15,6 @@
   <%= request.urls.map(&:keyword).join(", ") %>
 <% end %>
 
-<%= link_to t('.new', :default => t("helpers.links.new")),
+<%= link_to t('.new', :default => t('helpers.links.new')),
             new_transfer_request_path,
             :class => 'btn btn-primary add-new-transfer-request' %>
