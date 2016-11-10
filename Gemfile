@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'passenger'
+
 # Use OmniAuth to support any type of auth
 gem 'omniauth'
 
@@ -61,8 +63,6 @@ gem "pundit"
 gem 'geocoder'
 
 group :development, :test do
-  # Use holderjs for placeholders
-  gem 'rails-assets-holderjs', source: 'https://rails-assets.org'
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
@@ -100,6 +100,12 @@ group :development do
 
   # Use annotate to list the attributes of models
   gem 'annotate'
+
+  gem 'capistrano'
+  gem 'capistrano-bundler'
+  gem 'capistrano-passenger', '>= 0.1.1'
+  gem 'capistrano-rbenv'
+  gem 'capistrano-rails'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
