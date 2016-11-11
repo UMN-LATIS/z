@@ -83,6 +83,16 @@ class Url < ApplicationRecord
     save
   end
 
+  def raw_csv
+    data = CSV.generate(headers: true) do |csv|
+      csv << Click.attribute_names
+      clicks.each do | click|
+        csv <<  click.attributes.values
+      end
+    end
+    return data
+  end
+
   def self.to_csv(duration, time_unit, urls)
     # ex: http://localhost:3000/shortener/urls/csv/24/days.csv
     col_names = nil

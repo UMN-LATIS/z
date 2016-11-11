@@ -18,4 +18,13 @@ class UrlCsvsController < ApplicationController
       format.csv { send_data Url.to_csv(@duration, @time_unit, @urls) }
     end
   end
+
+  def raw
+    url = Url.find(params[:url_id])
+#    url.raw_csv
+    respond_to do |format|
+      format.csv { send_data url.raw_csv }
+    end
+  end
+
 end
