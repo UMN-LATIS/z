@@ -83,7 +83,7 @@ class Url < ApplicationRecord
     save
   end
 
-  def raw_csv
+  def click_data_to_csv
     # ex: http://localhost:3000/shortener/urls/3/csv/raw.csv
     data = CSV.generate(headers: true) do |csv|
       clicks.select(:country_code,:created_at, :updated_at).each do | click|

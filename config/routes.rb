@@ -39,11 +39,11 @@ Rails.application.routes.draw do
           to: 'urls#keyword_filter',
           as: 'keyword_filter'
       get 'download_qrcode', to: 'url_barcodes#show'
-      get 'csv/raw', to: 'url_csvs#raw'
-      get 'csv/:duration/:time_unit', to: 'url_csvs#show'
+      get 'csv/click_data', to: 'url_csvs#show'
+      get 'csv/:duration/:time_unit', to: 'url_csvs#show_aggregated'
       get 'csv/:duration/:time_unit',
           on: :collection,
-          to: 'url_csvs#show',
+          to: 'url_csvs#show_aggregated',
           as: 'csv'
     end
 

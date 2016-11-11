@@ -69,11 +69,11 @@
       </div>
       <div class="col-md-5">
         <div class="panel panel-default">
-          <div class="panel-heading"><%= t('helpers.download') %></div>
+          <div class="panel-heading"><%= t('helpers.download_click_data') %></div>
           <div class="panel-body text-center">
             <div class="row">
               <div class="col-md-12">
-                <a class='btn btn-default js-qrcode-download' href="<%= url_csv_raw_path(@url, format: :csv) %>">CSV</a>
+                <a class='btn btn-default js-qrcode-download' href="<%= url_csv_click_data_path(@url, format: :csv) %>">CSV</a>
               </div>
             </div>
           </div>
