@@ -1,5 +1,8 @@
 <div class="page-header">
-    <h3><%= t('helpers.header_tags.information_about_your_link')%></h3>
+  <h3>
+    <%= t('helpers.header_tags.information_about_your_link') %>
+    <a class='btn btn-default js-qrcode-download' href="<%= url_csv_raw_path(@url) %>.csv">CSV</a>
+  </h3>
 </div>
 <div class="row">
   <div class="col-md-7">
