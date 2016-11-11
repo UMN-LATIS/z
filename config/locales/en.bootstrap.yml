@@ -15,6 +15,7 @@ en:
     short_url: "Short URL"
     long_url: "Long URL"
     qr_code: "QR Code"
+    download: "Download"
     historical_click_count: "Historical Click Count"
     best_day: "Best Day"
     last_24_hours: "Last 24 hours"
