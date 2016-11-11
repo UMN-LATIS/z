@@ -21,7 +21,7 @@ class UrlCsvsController < ApplicationController
 
   def raw
     url = Url.find(params[:url_id])
-#    url.raw_csv
+    authorize([url], :csvs?) unless @urls.nil?
     respond_to do |format|
       format.csv { send_data url.raw_csv }
     end
