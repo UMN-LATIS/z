@@ -84,6 +84,7 @@ class Url < ApplicationRecord
   end
 
   def raw_csv
+    # ex: http://localhost:3000/shortener/urls/3/csv/raw.csv
     data = CSV.generate(headers: true) do |csv|
       csv << Click.attribute_names
       clicks.each do | click|
