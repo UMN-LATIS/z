@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def new
-    if Rails.env.production?
+    if Rails.env.production? || Rails.env.staging?
       redirect_to '/auth/shibboleth'
     else
       redirect_to '/auth/developer'
