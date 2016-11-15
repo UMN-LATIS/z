@@ -3,7 +3,9 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   provider :shibboleth, {
     uid_field: 'umnDID'
   }
-
+  provider :shibboleth_passive, {
+    uid_field: 'umnDID'
+  }
 end
 
 OmniAuth.config.logger = Rails.logger
