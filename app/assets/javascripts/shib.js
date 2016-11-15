@@ -17,7 +17,7 @@ if(document.cookie && document.cookie.search(/_check_is_passive=/) >= 0){
           if (!re.test(navigator.userAgent)) {
           document.cookie = "_check_is_passive=" + window.location + ";path=/";
           // Redirect to Shibboleth handler
-          window.location.href = "https://" + window.location.hostname + "/Shibboleth.sso/Login?isPassive=true&target=" + encodeURIComponent(window.location.href);
+          window.location.href = "http://" + window.location.hostname + "/Shibboleth.sso/Login?isPassive=true&target=" + encodeURIComponent(window.location.href);
   }
 }
 //-->
