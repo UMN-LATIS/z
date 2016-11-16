@@ -10,7 +10,7 @@ en:
   helpers:
     actions: "Actions"
     no_email: "No EmaIL"
-    hello: "Hello!"
+    hello: "hello"
     switch_to: "Switch To:"
     short_url: "Short URL"
     long_url: "Long URL"
