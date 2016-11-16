@@ -6,6 +6,10 @@ Rails.application.routes.draw do
   post '/auth/:provider/callback', to: 'sessions#create'
   get '/auth/:provider/callback', to: 'sessions#create'
 
+  get '/auth/failure' do
+    redirect '/'
+  end
+
   root 'home#index'
   get 'shortener', to: 'urls#index'
 
@@ -110,7 +114,7 @@ Rails.application.routes.draw do
       resources :urls, only: [:index, :edit, :show, :update, :destroy, :create] do
         get 'csv/:duration/:time_unit',
             on: :collection,
-            to: 'url_csvs#show' ,
+            to: 'url_csvs#show',
             as: 'csv'
       end
 
@@ -130,5 +134,5 @@ Rails.application.routes.draw do
   end
 
   # /:keyword	redirect index	get
-  # get '/*keyword', to: 'redirect#index'
+  get '/*keyword', to: 'redirect#index'
 end

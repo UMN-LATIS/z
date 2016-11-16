@@ -4,7 +4,8 @@ Rails.application.config.middleware.use OmniAuth::Builder do
     uid_field: 'umnDID'
   }
   provider :shibboleth_passive, {
-    uid_field: 'umnDID'
+    uid_field: 'umnDID',
+    debug: true
   }
 end
 
