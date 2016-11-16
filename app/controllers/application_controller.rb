@@ -7,14 +7,14 @@ class ApplicationController < ActionController::Base
   include Pundit
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
-  before_filter :passive_login, unless: signed_in?
+  before_filter :passive_login
 
   def ensure_signed_in
     redirect_to signin_path unless signed_in?
   end
 
   def passive_login
-    redirect_to '/auth/shibboleth_passive'
+    redirect_to '/auth/shibboleth_passive' unless signed_in?
   end
 
   def ensure_is_admin
