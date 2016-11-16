@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   end
 
   def passive_login
-    redirect_to '/auth/shibboleth_passive' 
+    redirect_to '/auth/shibboleth_passive'
   end
 
   def ensure_is_admin

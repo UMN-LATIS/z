@@ -33,6 +33,6 @@ module SessionsHelper
        redirect_url='https://login.umn.edu/idp/profile/Logout'
      end
      encoded_redirect_url = ERB::Util.url_encode(redirect_url)
-     "https://#{request.host}/Shibboleth.sso/Logout?return=#{encoded_redirect_url}"
+     "http://#{request.host}/Shibboleth.sso/Logout?return=#{encoded_redirect_url}"
    end
 end
