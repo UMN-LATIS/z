@@ -107,6 +107,7 @@ describe 'admin urls index page' do
                 end
                 it 'should give the user a url' do
                   find('#new_transfer_request input[type="submit"]').click
+                  click_button 'Confirm'
                   wait_for_ajax
                   user = User.find_by(uid: new_uid)
                   expect(user.context_group.urls).to_not be_nil
