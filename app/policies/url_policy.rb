@@ -24,6 +24,10 @@ class UrlPolicy < ApplicationPolicy
     user_has_access?
   end
 
+  def destroy?
+    user_has_access?
+  end
+
   private
 
   def user_has_access?

@@ -1,5 +1,17 @@
 class TransferRequestPolicy < ApplicationPolicy
 
+  def edit?
+    can_crud?
+  end
+
+  def show?
+    can_crud?
+  end
+
+  def create?
+    can_crud?
+  end
+
   def destroy?
     can_crud?
   end
@@ -20,6 +32,8 @@ class TransferRequestPolicy < ApplicationPolicy
 
   def can_crud?
     return true if user.admin?
+
+    p "gid: #{record.from_group_id}"
     return true if user.in_group?(Group.find(record.from_group_id))
     false
   end

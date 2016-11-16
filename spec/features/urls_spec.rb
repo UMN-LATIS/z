@@ -199,6 +199,7 @@ describe 'urls index page' do
         it 'should delete the url' do
           expect do
             find('.delete-url').click
+            click_button "Confirm"
             wait_for_ajax
           end.to change(Url, :count).by(-1)
         end
