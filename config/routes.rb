@@ -130,5 +130,5 @@ Rails.application.routes.draw do
   end
 
   # /:keyword	redirect index	get
-  get '/*keyword', to: 'redirect#index'
+  # get '/*keyword', to: 'redirect#index'
 end
