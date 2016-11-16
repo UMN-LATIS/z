@@ -20,7 +20,7 @@ class SessionsController < ApplicationController
 
   def destroy
     sign_out
-    redirect_to root_url
+    redirect_to shib_logout_url
   end
 
   protected
@@ -28,4 +28,6 @@ class SessionsController < ApplicationController
   def auth_hash
     request.env['omniauth.auth']
   end
+
+
 end
