@@ -9,7 +9,6 @@ class TransferRequestsController < ApplicationController
   end
 
   def confirm
-    p "sdlkfjsldkfjsdf"
     redirect_to urls_path if @transfer_request.approve!
   end
 
