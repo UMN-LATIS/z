@@ -22,8 +22,6 @@ module SessionsHelper
   def sign_out
     self.current_user = nil
     cookies.delete(:remember_token)
-    # if shib, then redirect_to shib logout
-
   end
 
   def shib_logout_url

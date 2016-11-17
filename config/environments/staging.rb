@@ -53,5 +53,5 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   # Set the omniauth provider
-  config.omniauth_provider = 'developer'
+  config.omniauth_provider = 'shibboleth'
 end

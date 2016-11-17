@@ -2,11 +2,7 @@ class SessionsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def new
-    if Rails.env.production? || Rails.env.staging?
-      redirect_to '/auth/shibboleth'
-    else
-      redirect_to '/auth/developer'
-    end
+    redirect_to "/auth/#{Rails.application.config.omniauth_provider}"
   end
 
   def create
@@ -28,6 +24,5 @@ class SessionsController < ApplicationController
   def auth_hash
     request.env['omniauth.auth']
   end
-
 
 end

@@ -11,10 +11,6 @@ class ApplicationController < ActionController::Base
     redirect_to signin_path unless signed_in?
   end
 
-  def passive_login
-    redirect_to '/auth/shibboleth_passive'
-  end
-
   def ensure_is_admin
     current_user.admin
   end
