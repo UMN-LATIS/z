@@ -3,6 +3,10 @@ module UrlHelper
     "#{request.base_url}/#{url.keyword}"
   end
 
+  def crap(url)
+    view_context.full_url(url)
+  end
+
   def best_day_formatter(best_day)
     if best_day.blank?
       t('helpers.url_has_never_been_clicked')
