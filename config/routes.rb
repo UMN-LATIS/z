@@ -6,10 +6,6 @@ Rails.application.routes.draw do
   post '/auth/:provider/callback', to: 'sessions#create'
   get '/auth/:provider/callback', to: 'sessions#create'
 
-  get '/auth/failure' do
-    redirect '/'
-  end
-
   root 'home#index'
   get 'shortener', to: 'urls#index'
 
