@@ -137,6 +137,6 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
   userTable
     .buttons(1, null)
     .container()
-		.prependTo('.dataTables_wrapper >.row:eq(0) > .col-sm-6:eq(0)');;
+		.prependTo('.dataTables_wrapper >.row:eq(0) > .col-sm-6:eq(0)');
 
 }
