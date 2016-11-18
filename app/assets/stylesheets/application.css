@@ -13,10 +13,7 @@
  *= require_self
  *= require_tree .
  */
- 
- /*
-  *= require font-awesome
-  */
+
 
 .tt-input, /* UPDATE: newer versions use tt-input instead of tt-input */
 .tt-hint {

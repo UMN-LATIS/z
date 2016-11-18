@@ -2,11 +2,7 @@ class SessionsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def new
-    if Rails.env.production?
-      redirect_to '/auth/shibboleth'
-    else
-      redirect_to '/auth/developer'
-    end
+    redirect_to "/auth/#{Rails.application.config.omniauth_provider}"
   end
 
   def create
@@ -20,7 +16,7 @@ class SessionsController < ApplicationController
 
   def destroy
     sign_out
-    redirect_to root_url
+    redirect_to shib_logout_url
   end
 
   protected
@@ -28,4 +24,5 @@ class SessionsController < ApplicationController
   def auth_hash
     request.env['omniauth.auth']
   end
+
 end

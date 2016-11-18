@@ -15,6 +15,5 @@
 //= require twitter/bootstrap
 //= require twitter/typeahead.min
 //= require turbolinks
-//= require holderjs
 //= require data-confirm-modal
 //= require_tree .

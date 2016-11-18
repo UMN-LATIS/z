@@ -6,10 +6,10 @@
 <table class="table table-striped">
   <thead>
   <tr>
-    <th><%= model_class.human_attribute_name(:name) %></th>
-    <th><%= model_class.human_attribute_name(:description) %></th>
-    <th><%= model_class.human_attribute_name(:created_at) %></th>
-    <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    <th><%= t('helpers.table_headers.name') %></th>
+    <th><%= t('helpers.table_headers.description') %></th>
+    <th><%= t('helpers.table_headers.created_on') %></th>
+    <th><%=t '.actions', :default => t('helpers.actions') %></th>
   </tr>
   </thead>
   <tbody>

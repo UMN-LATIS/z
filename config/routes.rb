@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   # Handle Auth
   post '/auth/:provider/callback', to: 'sessions#create'
+  get '/auth/:provider/callback', to: 'sessions#create'
 
   root 'home#index'
   get 'shortener', to: 'urls#index'
@@ -79,7 +80,7 @@ Rails.application.routes.draw do
 
     # users/:id/show	user	show	put
     resources :users, only: [:show]
-
+    resources :lookup_users, only: [:index]
     # api_keys	api_keys	index	get
     # api_keys/new	api_keys	new	get
     # api_keys/:id	api_keys	show	get
@@ -109,7 +110,7 @@ Rails.application.routes.draw do
       resources :urls, only: [:index, :edit, :show, :update, :destroy, :create] do
         get 'csv/:duration/:time_unit',
             on: :collection,
-            to: 'url_csvs#show' ,
+            to: 'url_csvs#show',
             as: 'csv'
       end
 

@@ -2,12 +2,11 @@
 require 'net/ldap' # gem install net-ldap
 
 class UserLookupService
-
   def initialize(params)
     @connection = Net::LDAP.new(
-        host: 'ldap.umn.edu',
-        port: 389,
-        base: 'o=University of Minnesota, c=US'
+      host: 'ldap.umn.edu',
+      port: 389,
+      base: 'o=University of Minnesota, c=US'
     )
     @query = params[:query]
     @query_type = params[:query_type]
@@ -17,13 +16,17 @@ class UserLookupService
     return nil unless @query.present? && @query_type.present?
     if @connection.bind
       results = @connection.search(
-          filter: get_filter,
-          return_result: true
+        filter: get_filter,
+        return_result: true
       )
-      results = results.map { |x| {value: display_name(x), uid: x.try(:uid), first_name: x.try(:givenname), last_name: x.try(:sn), email: x.try(:mail)} }.flatten unless results.blank?
+      results = results.promote(results.detect { |x| x[:uid] == [@query] })
+      results = results.map { |x| { umndid: x.try(:umndid), value: display_name(x), uid: x.try(:uid), first_name: x.try(:givenname), last_name: x.try(:sn), email: x.try(:mail) } }.flatten unless results.blank?
+      # Promote Internet id match
+      # Promote emplid match
+
       return results
     else
-      #authentication has failed
+      # authentication has failed
       puts "Result: #{@connection.get_operation_result.code}"
       puts "Message: #{@connection.get_operation_result.message}"
     end
@@ -32,7 +35,7 @@ class UserLookupService
   private
 
   def display_name(x)
-    name = x.try(:displayname)[0] ?  x.try(:displayname)[0] : 'No Name'
+    name = x.try(:displayname)[0] ? x.try(:displayname)[0] : 'No Name'
     mail = x.try(:mail) ? x.try(:mail)[0] : 'No Email'
     "#{name} (#{mail})"
   end
@@ -41,10 +44,13 @@ class UserLookupService
     sn_filter = Net::LDAP::Filter.eq('sn', "#{@query}*")
     uid_filter = Net::LDAP::Filter.eq('uid', "#{@query}*")
     mail_filter = Net::LDAP::Filter.eq('mail', "#{@query}*")
+    umndid_filter = Net::LDAP::Filter.eq('umndid', "#{@query}")
     if @query_type.eql? 'last_name'
       return sn_filter
     elsif @query_type.eql? 'uid'
       return uid_filter
+    elsif @query_type.eql? 'umndid'
+      return umndid_filter
     elsif @query_type.eql? 'mail'
       return mail_filter
     elsif @query_type.eql? 'all'
@@ -52,5 +58,4 @@ class UserLookupService
       return Net::LDAP::Filter.intersect(x, mail_filter)
     end
   end
-
 end

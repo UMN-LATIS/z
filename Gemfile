@@ -1,7 +1,11 @@
 source 'https://rubygems.org'
 
+gem 'passenger'
+
 # Use OmniAuth to support any type of auth
 gem 'omniauth'
+gem 'omniauth-shibboleth'
+gem 'omniauth-shibboleth-passive'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '>= 5.0.0', '< 5.1'
@@ -50,24 +54,20 @@ gem "font-awesome-rails"
 # better confirm dialogs
 gem 'data-confirm-modal'
 
-
 # Use barby to generate QR codes
 gem 'rqrcode'
 gem 'barby'
 gem 'chunky_png'
 
 # authorization lugin
-gem "pundit"
-
+gem 'pundit'
 
 # For country information
 gem 'geocoder'
 
 group :development, :test do
-  # Use holderjs for placeholders
-  gem 'rails-assets-holderjs', source: 'https://rails-assets.org'
-
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  # Call 'byebug' anywhere in the code to stop execution and get a
+  # debugger console
   gem 'byebug', platform: :mri
 
   # Use Rspec, capybara, and poltergeist for testing
@@ -87,10 +87,12 @@ group :development, :test do
 end
 
 group :development do
-  # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
+  # Access an IRB console on exception pages or by using <%= console %> anywhere
+  # in the code.
   gem 'web-console'
   gem 'listen', '~> 3.0.5'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  # Spring speeds up development by keeping your application running in the
+  # background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 
@@ -103,6 +105,12 @@ group :development do
 
   # Use annotate to list the attributes of models
   gem 'annotate'
+
+  gem 'capistrano'
+  gem 'capistrano-bundler'
+  gem 'capistrano-passenger', '>= 0.1.1'
+  gem 'capistrano-rbenv'
+  gem 'capistrano-rails'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

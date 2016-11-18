@@ -19,10 +19,10 @@
   <thead>
     <tr>
       <th></th>
-      <th><%= model_class.human_attribute_name(:url) %></th>
-      <th><%= model_class.human_attribute_name(:keyword) %></th>
-      <th><%= model_class.human_attribute_name(:total_clicks) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%= t('helpers.table_headers.url')  %></th>
+      <th><%= t('helpers.table_headers.keyword') %></th>
+      <th><%= t('helpers.table_headers.total_clicks') %></th>
+      <th><%= t('helpers.table_headers.created_on') %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
