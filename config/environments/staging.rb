@@ -88,5 +88,5 @@ Rails.application.configure do
 
   # Set the omniauth provider
   config.omniauth_provider = 'shibboleth'
-  config.shib_logout_url = 'https://login.umn.edu/idp/profile/Logout'
+  config.shib_return_url = 'https://login.umn.edu/idp/profile/Logout'
 end
