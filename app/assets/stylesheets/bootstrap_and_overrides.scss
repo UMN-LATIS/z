@@ -63,3 +63,12 @@
   .bs-callout-info h4 {
       color: #5bc0de;
   }
+  .page-header{
+    margin:0;
+    h4, h3{
+      margin-top:0;
+    }
+  }
+  .panel-body{
+      word-break: break-word;
+  }
