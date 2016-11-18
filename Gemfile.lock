@@ -89,6 +89,8 @@ GEM
       factory_girl (~> 4.7.0)
       railties (>= 3.0.0)
     ffi (1.9.14)
+    font-awesome-rails (4.7.0.0)
+      railties (>= 3.2, < 5.1)
     fuubar (2.1.1)
       rspec (~> 3.0)
       ruby-progressbar (~> 1.4)
@@ -288,6 +290,7 @@ DEPENDENCIES
   data-confirm-modal
   database_cleaner
   factory_girl_rails
+  font-awesome-rails
   fuubar
   geocoder
   jbuilder (~> 2.0)

@@ -44,6 +44,9 @@ gem 'net-ldap'
 # Use bootstrap for styling
 gem 'twitter-bootstrap-rails'
 
+#Use font awesome for icons
+gem "font-awesome-rails"
+
 # better confirm dialogs
 gem 'data-confirm-modal'
 
