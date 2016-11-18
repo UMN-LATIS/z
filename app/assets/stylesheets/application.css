@@ -14,7 +14,10 @@
  *= require_tree .
  */
 
-
+ /*
+  *= require font-awesome
+  */
+  
 .tt-input, /* UPDATE: newer versions use tt-input instead of tt-input */
 .tt-hint {
     width: 596px;
