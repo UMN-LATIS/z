@@ -2,18 +2,21 @@ default: &default
   adapter: mysql2
   host: localhost
   username: root
-  password: 
+  password:
   pool: 5
   timeout: 5000
 
 development:
   <<: *default
   database: z_development
-  
+
 staging:
   <<: *default
-  database: z_test
-  
+  host: mysql-dev1.oit.umn.edu
+  database: cla_z_staging
+  username: clazstaging
+  password: ew8xsQ$hxs4
+
 production:
   <<: *default
   database: z_production

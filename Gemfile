@@ -4,8 +4,13 @@ gem 'passenger'
 
 # Use OmniAuth to support any type of auth
 gem 'omniauth'
+
+# Use shibboleth for U of M integration
 gem 'omniauth-shibboleth'
 gem 'omniauth-shibboleth-passive'
+gem 'umn_shib_auth',
+  git: 'git@github.umn.edu:latis-sw/cla-gem-umn-shib-auth.git',
+  tag: 'v3.0.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '>= 5.0.0', '< 5.1'
