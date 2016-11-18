@@ -9,7 +9,7 @@ gem 'omniauth'
 gem 'omniauth-shibboleth'
 gem 'omniauth-shibboleth-passive'
 gem 'umn_shib_auth',
-  git: 'https://github.umn.edu/latis-sw/cla-gem-umn-shib-auth.git',
+  git: 'git@github.umn.edu:latis-sw/cla-gem-umn-shib-auth.git',
   tag: 'v3.0.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
