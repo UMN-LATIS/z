@@ -32,3 +32,32 @@
 #regions-pie-div {
   height: 350px;
 }
+
+#new-url-form{
+	text-align:center;
+	display:block;
+	margin:10px 0;
+	border-radius:5px;
+
+	form{
+		// background-color: #eee;
+		padding: 15px 43px;
+    border: 1px solid #dcdcdc;
+	}
+	#new_url{
+		display:inline-block;
+		text-align:initial;
+	}
+}
+#button-bar{
+	text-align:center;
+	// margin-top:30px;
+	.button-bar-inner{
+		text-align:initial;
+		display:inline-block;
+		margin:20px 0;
+	}
+}
+table.dataTable{
+	margin-bottom: 100px !important;
+}
