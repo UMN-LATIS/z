@@ -1,5 +1,5 @@
 GIT
-  remote: git@github.umn.edu:latis-sw/cla-gem-umn-shib-auth.git
+  remote: https://github.umn.edu/latis-sw/cla-gem-umn-shib-auth.git
   revision: b869febda2695a8c61b90a511759ad1b25bf2fe0
   tag: v3.0.1
   specs:
