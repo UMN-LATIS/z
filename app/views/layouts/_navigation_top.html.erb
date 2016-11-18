@@ -16,7 +16,6 @@
            <ul class="dropdown-menu">
              <li><a href="<%= admin_urls_path %>">Search by URL</a></li>
              <li><a href="<%= admin_members_path %>">Manage Admins</a></li>
-
            </ul>
          </li>
          <% end %>
@@ -29,7 +28,6 @@
                <span > URLs </span>
              </span>
            <% end %>
-
          </li>
          <li class="<%= current_page?(groups_path) ? "selected" : "" %>">
            <%= link_to (groups_path) do  %>
@@ -44,15 +42,6 @@
        <div id="nav_context_switcher">
          <%= render 'layouts/nav/context_switcher' %>
        </div>
-       <!-- <ul class="nav navbar-nav sign-in-out">
-         <li>
-         <% if signed_in? %>
-           <%= link_to 'Sign Out', signout_path %>
-         <% else %>
-           <%= link_to "Sign In", signin_path %>
-         <% end %>
-         </li>
-       </ul> -->
      </div>
    </div>
  </nav>
