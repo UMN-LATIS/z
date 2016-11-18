@@ -365,15 +365,26 @@ div.container {
   margin-bottom:60px;
 }
 
-.dataTables_wrapper{
-  tbody{
-    a{
-      margin-bottom:5px;
-    }
-    td{
-      word-break: break-word;
+div.dataTables_wrapper{
+  table{
+    tbody{
+      a{
+        margin-bottom:5px;
+      }
+      td{
+        word-break: break-word;
+      }
+      tr.selected{
+        a{
+          color:white;
+        }
+        a.btn-default{
+          color:black;
+        }
+      }
     }
   }
+
 }
 .dataTables_length{
   display:none;
@@ -409,7 +420,8 @@ div.container {
   }
   >label{
     font-size:14px;
-    font-weight:400;
+    font-weight:600;
+    color:#999;
   }
 }
 
