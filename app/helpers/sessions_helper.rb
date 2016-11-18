@@ -23,4 +23,14 @@ module SessionsHelper
     self.current_user = nil
     cookies.delete(:remember_token)
   end
+
+  def shib_logout_url
+     if request.env['Shib-Identity-Provider'].to_s.match(/login-test.umn.edu/)
+       redirect_url='https://login-test.umn.edu/idp/profile/Logout'
+     else
+       redirect_url='https://login.umn.edu/idp/profile/Logout'
+     end
+     encoded_redirect_url = ERB::Util.url_encode(redirect_url)
+     "http://#{request.host}/Shibboleth.sso/Logout?return=#{encoded_redirect_url}"
+   end
 end
