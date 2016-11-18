@@ -1,6 +1,18 @@
 <%= form_for_url_admin @admin_view, url do |f| %>
-  <%= f.text_field :url, class: 'form-control js-new-url-url', placeholder: "url" %>
-  <%= f.text_field :keyword, class: 'form-control js-new-url-keyword',  placeholder: "keyword" %>
+
+  <div class="input-wrapper">
+    <%= f.label :name, 'URL' %>
+    <%= f.text_field :url, class: 'form-control js-new-url-url', placeholder: "http://yourwebsite.com" %>
+  </div>
+  <div class="keyword-input-wrapper">
+    <%= f.label :name, 'https://z.umn.edu/' %>
+
+    <div class="input-wrapper">
+      <%= f.label :name, 'keyword' %>
+
+        <%= f.text_field :keyword, class: 'form-control js-new-url-keyword',  placeholder: "keyword" %>
+    </div>
+  </div>
   <%= f.submit nil, class: 'btn btn-primary js-url-submit' %>
 <% end %>
 
