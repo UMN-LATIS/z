@@ -7,7 +7,6 @@ class ApplicationController < ActionController::Base
   include Pundit
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
-
   def ensure_signed_in
     redirect_to signin_path unless signed_in?
   end
@@ -27,7 +26,6 @@ class ApplicationController < ActionController::Base
   def set_admin_view
     @admin_view = true
   end
-
 
   private
 
