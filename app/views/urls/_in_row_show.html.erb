@@ -18,7 +18,7 @@
     <%= l url.created_at %>
   </td>
   <td>
-    <%= link_to t('.show', default: t('helpers.links.show')),
+    <%= link_to t('.show', default: t("helpers.links.details")),
                 url_path(url.keyword),
                 class: 'btn btn-xs btn-default show-url' %>
     <% if @admin_view %>

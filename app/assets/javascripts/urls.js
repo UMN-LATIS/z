@@ -51,13 +51,7 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
   var userTable = $('table.data-table').DataTable({
     "pageLength": 25,
     buttons: [
-      {
-        text: selectAllText,
-        action: function ( e, dt, node, config ) {
-          dt.rows({page: 'current'}).select();
-        }
-      },
-      'selectNone'
+
     ],
     language: {
       buttons: {
@@ -72,8 +66,10 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
     columnDefs: [
       {
         className: 'select-checkbox',
-        targets:   0
-      },{
+        targets:   0,
+				title:"<input type='checkbox' id='select-all' class='select-checkbox'/>"
+      },
+			{
         orderable: false,
         searchable: false,
         targets: [0, actionColumn]
@@ -85,14 +81,14 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
     },
   });
 
-  userTable
-    .buttons()
-    .container()
-    .appendTo('.dataTables_wrapper .col-sm-6:eq(0)');
+	$("#select-all").click(function(e){
+			$(e.target).prop("checked") === true ? userTable.rows().select() : userTable.rows().deselect();
+	});
 
   var transfer_button = {
     extend: 'selected',
     text: transferText,
+			className:'btn-primary',
     action: function ( e, dt, node, config ) {
       var keywords = [];
       userTable.rows('.selected').data().map(function (row) {
@@ -107,8 +103,10 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
     }
   }
 
+
   var move_button = {
     extend: 'selected',
+		className:'btn-primary',
     text: moveText,
     action: function ( e, dt, node, config ) {
       var keywords = [];
@@ -135,8 +133,10 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
     buttons: buttons
   });
 
+	window.userTable = userTable;
   userTable
     .buttons(1, null)
     .container()
-    .appendTo('.dataTables_wrapper .col-sm-6:eq(0)');
+		.prependTo('.dataTables_wrapper >.row:eq(0) > .col-sm-6:eq(0)');
+
 }

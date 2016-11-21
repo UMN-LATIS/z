@@ -1,14 +1,26 @@
-<% if signed_in? and current_user.groups.length > 1 %>
+<% if signed_in? %>
 <ul class='nav navbar-nav navbar-right'>
   <li class="dropdown">
     <a href="#" class="dropdown-toggle js-viewing-as" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= t('helpers.links.viewing_as') %> <%= current_user.context_group.try(:name) %> <span class="caret"></span></a>
     <ul class="dropdown-menu">
-      <li><a href="#"><%= t('helpers.switch_to')%></a></li>
-      <li role="separator" class="divider"></li>
-      <% (current_user.groups - [current_user.context_group]).each do |user_group| %>
-      <li><%= link_to user_group.name, group_context_path(user_group) %></li>
+      <%if current_user.groups.length > 1 %>
+        <li><a href="#">Switch to:</a></li>
+        <li role="separator" class="divider"></li>
+        <% (current_user.groups - [current_user.context_group]).each do |user_group| %>
+        <li><%= link_to user_group.name, group_context_path(user_group) %></li>
+        <% end %>
+        <li role="separator" class="divider"></li>
+      <%end%>
+      <li>
+      <% if signed_in? %>
+        <%= link_to 'Sign Out', signout_path %>
+      <% else %>
+        <%= link_to "Sign In", signin_path %>
       <% end %>
+      </li>
     </ul>
   </li>
 </ul>
+<%else%>
+  <%= link_to "Sign In", signin_path %>
 <% end %>
