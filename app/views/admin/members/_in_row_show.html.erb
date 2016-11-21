@@ -8,13 +8,11 @@
   <% end %>
   <td><%= member.created_at %></td>
   <td>
-    <% unless current_user.uid.eql? member.uid %>
-        <%= link_to t('.destroy', default: t('helpers.links.destroy')),
-                    admin_member_path(member),
-                    :method => :delete,
-                    :data => { confirm: t('.confirm-delete', default: t('helpers.links.confirm_delete', to_delete: member.user_full_name, default: t('helpers.links.confirm_default'))) },
-                    class: 'btn btn-xs btn-danger delete-admin-member', remote: true %>
+    <%= link_to t('.destroy', default: t('helpers.links.destroy')),
+                admin_member_path(member),
+                :method => :delete,
+                :data => {confirm: t('.confirm-delete', default: t('helpers.links.confirm_delete', to_delete: member.user_full_name, default: t('helpers.links.confirm_default')))},
+                class: 'btn btn-xs btn-danger delete-admin-member', remote: true %>
 
-    <% end %>
   </td>
 </tr>

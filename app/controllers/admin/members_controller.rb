@@ -39,9 +39,15 @@ class Admin::MembersController < ApplicationController
     @member.admin = false
     @member.save
     respond_to do |format|
-      format.html { redirect_to admins_url, notice: 'Admin membership was successfully updated, user removed.' }
-      format.json { head :no_content }
-      format.js { render :layout => false }
+      if current_user.uid.eql? @member.uid
+        ####
+        # current user is redirect to signin page if they remove their own admin status,
+        # resigning the current user in allows the redirect to urls work properly
+        sign_in current_user
+        format.html { redirect_to shortener_url, notice: 'Admin Membership: You have successfully removed your administrative privileges and have been routed back to your home page.' }
+      else
+        format.html { redirect_to admin_members_url, notice: "Admin Membership: #{@member.user_full_name} (#{@member.uid}) has been removed." }
+      end
     end
 
   end
