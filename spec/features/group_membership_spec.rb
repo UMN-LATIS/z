@@ -3,16 +3,18 @@ require 'rails_helper'
 
 describe 'groups members index page' do
   before do
-    @user = FactoryGirl.create(:user, uid:'wozniak')
-    sign_in(@user)
-    group.users << @user
-    group.save
-    visit group_members_path(group)
+    @user = FactoryGirl.create(:user, uid: 'wozniak')
   end
 
   describe 'visiting the group membership page' do
     let(:group) { FactoryGirl.create(:group) }
-    let(:user) {User.where(:uid => @user.uid).first}
+    let(:user) { User.where(:uid => @user.uid).first }
+    before do
+      group.users << @user
+      group.save
+      sign_in(@user)
+      visit group_members_path(group)
+    end
     describe 'page content' do
       it 'should display the group name' do
         expect(page).to have_content group.name
@@ -35,22 +37,29 @@ describe 'groups members index page' do
   describe 'creating and deleting a group member', js: true do
     describe 'to an existing group' do
       let(:group) { FactoryGirl.create(:group) }
+      before do
+        group.users << @user
+        group.save
+        sign_in(@user)
+        visit group_members_path(group)
+        #       p page.body
+      end
       it 'adding should increase the user count of the group by 1' do
         expect do
-          find("#uid", :visible => false).set 'andersen'
+          find("#umndid", :visible => false).set '5scyi59j8'
           click_button 'Add'
+          click_button 'Confirm'
           wait_for_ajax
           group.reload
         end.to change(group.users, :count).by(1)
 
       end
-      describe 'clicking delete' do
-        it 'should delete the group member' do
-          expect do
-            find('.delete-group-member').click
-            wait_for_ajax
-          end.to change(group.users, :count).by(-1)
-        end
+      it 'clicking delete decrease the user count by one' do
+        expect do
+          find('.delete-group-member').click
+          click_button 'Confirm'
+          wait_for_ajax
+        end.to change(group.users, :count).by(-1)
       end
 
     end

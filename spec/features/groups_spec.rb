@@ -123,6 +123,7 @@ describe 'groups index page' do
         it 'should delete the group' do
           expect do
             find('.delete-group').click
+            click_button "Confirm"
             wait_for_ajax
           end.to change(Group, :count).by(-1)
         end

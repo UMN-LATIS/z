@@ -83,6 +83,16 @@ class Url < ApplicationRecord
     save
   end
 
+  def click_data_to_csv
+    # ex: http://localhost:3000/shortener/urls/3/csv/raw.csv
+    data = CSV.generate(headers: true) do |csv|
+      clicks.select(:country_code,:created_at, :updated_at).each do | click|
+        csv <<  [url, keyword, click.country_code, click.created_at, click.updated_at]
+      end
+    end
+    return %w{url keyword country_code created_at updated_at}.to_csv + data
+  end
+
   def self.to_csv(duration, time_unit, urls)
     # ex: http://localhost:3000/shortener/urls/csv/24/days.csv
     col_names = nil

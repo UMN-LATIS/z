@@ -68,18 +68,21 @@ describe 'urls index page' do
               it 'should create a transfer request' do
                 expect do
                   find('#new_transfer_request  input[type="submit"]').click
+                  click_button "Confirm"
                   wait_for_ajax
                 end.to change(TransferRequest, :count).by(1)
               end
 
               it 'should display the pending request on your screen' do
                 find('#new_transfer_request  input[type="submit"]').click
+                click_button "Confirm"
                 wait_for_ajax
-                expect(page).to have_content 'Your transfer requests to others'
+                expect(page).to have_content 'Your Transfer Requests to Others'
               end
 
               it 'should display the pending request on their screen' do
                 find('#new_transfer_request  input[type="submit"]').click
+                click_button "Confirm"
                 sign_in(@other_user)
                 visit urls_path
                 expect(page).to have_content 'You have pending transfer requests'
@@ -93,12 +96,14 @@ describe 'urls index page' do
                 it 'should create a new user' do
                   expect do
                     find('#new_transfer_request input[type="submit"]').click
+                    click_button "Confirm"
                     wait_for_ajax
                   end.to change(User, :count).by(1)
                 end
                 it 'should create a transfer request' do
                   expect do
                     find('#new_transfer_request  input[type="submit"]').click
+                    click_button "Confirm"
                     wait_for_ajax
                   end.to change(TransferRequest, :count).by(1)
                 end
@@ -113,6 +118,7 @@ describe 'urls index page' do
                 end
                 it 'should display an error' do
                   find('#new_transfer_request input[type="submit"]').click
+                  click_button "Confirm"
                   wait_for_ajax
                   expect(page).to have_content 'To group must exist'
                 end
@@ -167,6 +173,7 @@ describe 'urls index page' do
       it 'should delete the transfer request' do
         expect do
           find('.js-reject-transfer').click
+          click_button "Confirm"
           wait_for_ajax
         end.to change(TransferRequest, :count).by(-1)
       end

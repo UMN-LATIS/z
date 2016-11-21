@@ -68,6 +68,13 @@ describe 'urls show page' do
     barcode_svg = Barby::SvgOutputter.new(barcode)
     barcode_svg.xdim = 5
 
+
+     p barcode_svg.to_svg.html_safe
+    p "and"
+    p "thids"
+
+    p page.html
+
     expect(page.html).to include(barcode_svg.to_svg.html_safe)
   end
 
@@ -199,6 +206,7 @@ describe 'urls index page' do
         it 'should delete the url' do
           expect do
             find('.delete-url').click
+            click_button "Confirm"
             wait_for_ajax
           end.to change(Url, :count).by(-1)
         end

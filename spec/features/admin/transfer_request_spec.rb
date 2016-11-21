@@ -78,6 +78,7 @@ describe 'admin urls index page' do
               it 'should transfer admins url immediately' do
                 expect do
                   find('#new_transfer_request  input[type="submit"]').click
+                  click_button "Confirm"
                   wait_for_ajax
                   @users_url.reload
                 end.to change(@users_url, :group_id).to(@other_user.context_group_id)
@@ -86,6 +87,7 @@ describe 'admin urls index page' do
               it 'should transfer users url immediately' do
                 expect do
                   find('#new_transfer_request  input[type="submit"]').click
+                  click_button "Confirm"
                   wait_for_ajax
                   @admins_url.reload
                 end.to change(@admins_url, :group_id).to(@other_user.context_group_id)
@@ -99,11 +101,13 @@ describe 'admin urls index page' do
                 it 'should create a new user' do
                   expect do
                     find('#new_transfer_request input[type="submit"]').click
+                    click_button "Confirm"
                     wait_for_ajax
                   end.to change(User, :count).by(1)
                 end
                 it 'should give the user a url' do
                   find('#new_transfer_request input[type="submit"]').click
+                  click_button 'Confirm'
                   wait_for_ajax
                   user = User.find_by(uid: new_uid)
                   expect(user.context_group.urls).to_not be_nil
@@ -119,6 +123,7 @@ describe 'admin urls index page' do
                 end
                 it 'should display an error' do
                   find('#new_transfer_request input[type="submit"]').click
+                  click_button "Confirm"
                   wait_for_ajax
                   expect(page).to have_content 'To group must exist'
                 end

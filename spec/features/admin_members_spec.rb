@@ -29,6 +29,7 @@ describe 'admin members index page' do
       it 'add and then set the new member admin flag to true' do
         find("#uid", :visible => false).set 'andersen'
         click_button 'Add'
+        click_button 'Confirm'
         wait_for_ajax
         visit admin_members_path(@user)
         expect(User.where(uid: 'andersen', admin: true)).to exist
@@ -37,9 +38,11 @@ describe 'admin members index page' do
         it 'should first add a new member and then delete it' do
           find("#uid", :visible => false).set 'andersen'
           click_button 'Add'
+          click_button 'Confirm'
           wait_for_ajax
           visit admin_members_path(@user)
           find('.delete-admin-member').click
+          click_button 'Confirm'
           wait_for_ajax
           visit admin_members_path(@user)
           expect(User.where(uid: 'andersen', admin: true)).not_to exist

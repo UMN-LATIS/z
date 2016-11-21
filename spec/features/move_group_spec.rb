@@ -84,6 +84,7 @@ describe 'urls index page' do
                 it 'should move url immediately' do
                   expect do
                     find('#move_group  input[type="submit"]').click
+                    click_button 'Confirm'
                     wait_for_ajax
                     @url.reload
                   end.to change(@url, :group_id).to(@other_group.id)
