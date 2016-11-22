@@ -35,20 +35,31 @@ describe 'admin members index page' do
         expect(User.where(uid: 'andersen', admin: true)).to exist
       end
       describe 'clicking delete' do
-        it 'should first add a new member and then delete it' do
+        it 'should first add a new member and then delete it with notification' do
           find("#uid", :visible => false).set 'andersen'
           click_button 'Add'
           click_button 'Confirm'
           wait_for_ajax
           visit admin_members_path(@user)
-          find('.delete-admin-member').click
+          page.all(:css, '.delete-admin-member')[1].click
           click_button 'Confirm'
           wait_for_ajax
           visit admin_members_path(@user)
           expect(User.where(uid: 'andersen', admin: true)).not_to exist
+          expect(page).to have_content '(andersen) has been removed.'
         end
       end
-
+      describe 'clicking delete on oneself' do
+        it 'should delete oneself and not allow deleted user to view admin pages' do
+          visit admin_members_path(@user)
+          page.all(:css, '.delete-admin-member')[0].click
+          click_button 'Confirm'
+          wait_for_ajax
+          visit admin_members_path(@user)
+          expect(User.where(uid: 'wozniak', admin: true)).not_to exist
+          expect(page).to have_content 'You are not authorized to perform this action. '
+        end
+      end
     end
   end
 end
