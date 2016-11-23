@@ -3,14 +3,13 @@
 <head>
   <title>Z</title>
   <%= csrf_meta_tags %>
-
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   <%= yield :head %>
   <%= favicon_link_tag 'https://langtest.umn.edu/static/images/favicon.ico' %>
   <%= render 'layouts/shim' %>
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Molengo">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="initial-scale=0.6, maximum-scale=0.6">
   <meta name="turbolinks-cache-control" content="no-cache">
   <!--  Change stylesheet link depending on which search option you are using:
     Dropdown: umnhf-dd.css (minified version at umnhf-dd.min.css)
@@ -22,7 +21,7 @@
 <%= render 'layouts/header' %>
 <div class="container">
   <%= render 'layouts/navigation_top' %>
-  
+
   <%= flash_messages %>
   <%= yield %>
 </div>
