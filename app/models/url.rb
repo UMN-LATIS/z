@@ -31,8 +31,12 @@ class Url < ApplicationRecord
 
   before_validation do
     # Add http:// if necessary
-    unless url =~ /\A#{URI.regexp(%w(http https))}\z/ || url.blank?
-      self.url = "http://#{url}"
+    uri = URI(url)
+
+    if uri.scheme.blank?
+      self.url = "http://#{uri.to_s}"
+    else
+      self.url = uri.to_s
     end
 
     # Set keyword if it's blank
