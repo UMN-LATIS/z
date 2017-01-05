@@ -37,14 +37,6 @@ gem 'twitter-typeahead-rails'
 # Use net-ldap for LDAP lookup integration
 gem 'net-ldap'
 
-# Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 3.0'
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
 # Use bootstrap for styling
 gem 'twitter-bootstrap-rails'
 
