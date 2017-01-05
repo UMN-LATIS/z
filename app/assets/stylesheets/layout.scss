@@ -479,3 +479,11 @@ div.dataTables_wrapper{
     font-size:12px !important;
   }
 }
+.btn.fa{
+  font:inherit !important;
+  -webkit-font-smoothing: auto;
+  &::before{
+    font:normal normal normal 14px/1 FontAwesome;
+    margin-right:3px;
+  }
+}
