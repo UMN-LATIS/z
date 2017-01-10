@@ -3,9 +3,9 @@
     <%= form_tag(group_members_path, :remote => true, :method => 'post', id: 'search-form') do %>
         <i><%= t '.title', :default => t('helpers.links.add_someone') %> </i>
         <div class="form-group">
-          <%= text_field_tag "people_search", nil, :placeholder => t('helpers.placeholders.search_by_last_name_or_email'), class: 'form-control'  %>
+          <%= text_field_tag 'people_search', nil, :placeholder => t('helpers.placeholders.search_by_last_name_or_email'), class: 'form-control'  %>
         </div>
-        <%= hidden_field_tag "umndid" %>
+        <%= hidden_field_tag 'umndid' %>
         <%= submit_tag t('search-users', :default => t('helpers.links.search_users')), :class => 'btn btn-primary btn-xs add-new-group-member', :data => { confirm: t('.confirm', default: t('helpers.links.confirm_add_someone', default: t('helpers.links.confirm_default'))) } %>
     <% end %>
   </td>
