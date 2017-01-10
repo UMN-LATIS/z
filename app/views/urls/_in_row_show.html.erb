@@ -6,10 +6,10 @@
     <td><%= url.group.name %></td>
   <% end %>
 	<td>
-    <%= url.url %>
+    <%= link_to url.url, url.url, target: '_blank' %>
   </td>
 	<td>
-    <%= url.keyword %>
+    <%= link_to url.keyword, full_url(url), target: '_blank' %>
   </td>
 	<td>
     <%= url.total_clicks %>
