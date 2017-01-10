@@ -35,6 +35,7 @@ en:
       back: "Back"
       cancel: "Cancel"
       confirm: "Are you sure?"
+      confirm_add_someone: "Are you sure you want to add this person?"
       confirm_delete: "Are you sure want to delete <b>%{to_delete}</b>?"
       confirm_default: "Are you sure?"
       confirm_url_move: "Are you sure you want to move these URLs?"
