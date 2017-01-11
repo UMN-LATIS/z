@@ -43,8 +43,8 @@ $(document).on('shown.bs.tab', function (e) {
 })
 
 function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColumn, transferPath, movePath, showMoveButton) {
-  var transferText = 'Transfer to user';
-  var moveText = 'Move to group';
+  var transferText = 'Transfer to a different user';
+  var moveText = 'Move to a different group';
   var selectAllText = 'Select all';
   var selectNoneText = 'Select none'
 
