@@ -1,20 +1,36 @@
 <tr id="group-<%= group_identifier %>">
-  <td colspan=4>
-    <%= form_for group, :html => { class: 'form-inline group', remote: true } do |f| %>
-        <%= hidden_field_tag :new_identifier, group_identifier %>
-        <%= f.text_field :name, class: 'form-control', placeholder: t('helpers.placeholders.name') %>
-        <%= f.text_field :description, class: 'form-control',  placeholder: t('helpers.placeholders.description') %>
-        <%= f.submit nil, class: 'btn btn-primary js-group-submit' %>
-    <% end %>
+  <td colspan=4 class="info">
+    <%= form_for group, :html => {class: 'form-inline group', remote: true} do |f| %>
+        <table>
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><%= hidden_field_tag :new_identifier, group_identifier %>
+              <%= f.text_field :name, class: 'form-control', placeholder: t('helpers.placeholders.name') %>
+            </td>
 
-    <% if group.new_record? %>
-        <a href="#" class='btn btn-default cancel-new-group'><%= t('helpers.buttons.cancel')%></a>
-    <% else %>
-        <%= link_to t('.cancel', default: t('helpers.links.cancel')),
-                    group_path(group),
-                    class: 'btn btn-default cancel-group', remote: true %>
+            <td>
+              <%= f.text_field :description, class: 'form-control', placeholder: t('helpers.placeholders.description') %>
+            </td>
+            <td>
+              <%= f.submit nil, class: 'btn btn-primary js-group-submit' %>
+              <% if group.new_record? %>
+                  <a href="#" class='btn btn-default cancel-new-group'><%= t('helpers.buttons.cancel') %></a>
+              <% else %>
+                  <%= link_to t('.cancel', default: t('helpers.links.cancel')),
+                              group_path(group),
+                              class: 'btn btn-default cancel-group', remote: true %>
+              <% end %>
+            </td>
+          </tr>
+          </tbody>
+        </table>
     <% end %>
-
     <%= render 'groups/in_row_errors', group: group %>
   </td>
 </tr>
