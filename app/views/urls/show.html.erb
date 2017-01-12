@@ -86,7 +86,7 @@
           <!-- Default panel contents -->
           <div class="panel-heading"><%= t('helpers.historical_click_count') %>  </div>
           <div class="panel-body">
-           <%= t('helpers.short_url_created_on')%> <%= @url.created_at.strftime("%B %d, %Y at %I:%M%p") %> (<%= time_ago_in_words(@url.created_at) %> ago)
+           <%= t('helpers.short_url_created_on')%> <%= @url.created_at.to_s(:created_on_formatted) %> (<%= time_ago_in_words(@url.created_at) %> ago)
           </div>
           <table class="table table-hover">
             <tbody>

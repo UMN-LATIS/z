@@ -48,7 +48,7 @@ describe 'urls show page' do
   end
 
   it 'should display created date' do
-    expect(page).to have_content created_at.strftime('%B %d, %Y at %I:%M%p')
+    expect(page).to have_content created_at.to_s(:created_on_formatted)
   end
 
   it 'should display best day' do
