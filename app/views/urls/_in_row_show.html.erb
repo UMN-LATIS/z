@@ -15,7 +15,7 @@
     <%= url.total_clicks %>
   </td>
 	<td>
-    <%= l url.created_at %>
+    <%= url.created_at.to_s(:created_on_formatted)  %>
   </td>
   <td>
     <%= link_to t('.show', default: t("helpers.links.stats")),

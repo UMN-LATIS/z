@@ -6,7 +6,7 @@
   <% else %>
       <td><i>No Email </i></td>
   <% end %>
-  <td><%= member.created_at %></td>
+  <td><%= member.created_at.to_s(:created_on_formatted)  %></td>
   <td>
     <%= link_to t('.destroy', default: t('helpers.links.destroy')),
                 admin_member_path(member),
