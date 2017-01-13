@@ -21,7 +21,7 @@ Rails.application.routes.draw do
 
 
     # faq	faq	index	get
-    get '/faq', to: 'faq#index'
+    get '/faq', to: 'faq#index', as: 'faq'
 
     # sessions sessions destroy get
     get '/signin', to: 'sessions#new'
