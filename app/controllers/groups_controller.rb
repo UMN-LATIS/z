@@ -31,7 +31,6 @@ class GroupsController < ApplicationController
     @group_identifier = params[:new_identifier]
     @group = Group.new(group_params)
     @group.users << current_user
-
     respond_to do |format|
       if @group.save
         # Since user gets updated (with a new group), a
