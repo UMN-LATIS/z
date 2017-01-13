@@ -10,14 +10,14 @@
           </thead>
           <tbody>
           <tr>
-            <td><%= hidden_field_tag :new_identifier, group_identifier %>
-              <%= f.text_field :name, class: 'form-control', placeholder: t('helpers.placeholders.name') %>
+            <td class="input-spacing">
+              <%= hidden_field_tag :new_identifier, group_identifier %>
+              <%= f.text_field :name, :maxlength => 20, size: 20, class: 'form-control', placeholder: t('helpers.placeholders.name') %>
             </td>
-
-            <td>
-              <%= f.text_field :description, class: 'form-control', placeholder: t('helpers.placeholders.description') %>
+            <td class="input-spacing">
+              <%= f.text_field :description, :maxlength => 65, size: 65, class: 'form-control', placeholder: t('helpers.placeholders.description') %>
             </td>
-            <td>
+            <td class="input-spacing">
               <%= f.submit nil, class: 'btn btn-primary js-group-submit' %>
               <% if group.new_record? %>
                   <a href="#" class='btn btn-default cancel-new-group'><%= t('helpers.buttons.cancel') %></a>
