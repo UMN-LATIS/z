@@ -52,7 +52,7 @@ class User < ApplicationRecord
   end
 
   def reset_context!
-    update_context_group!(default_group_id)
+    update_context_group_id!(default_group_id)
   end
 
   def in_group?(group)
