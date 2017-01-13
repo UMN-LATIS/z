@@ -115,6 +115,8 @@ Rails.application.routes.draw do
             as: 'csv'
       end
 
+      resources :groups, only: [:index]
+      
       # admin/members/:search	admin::members	index	get
       # admin/members/:id	admin::members	show	get
       # admin/members/delete	admin::members	destroy	delete
