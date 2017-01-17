@@ -10,7 +10,7 @@ en:
   helpers:
     actions: "Actions"
     no_email: "No EmaIL"
-    hello: "hello"
+    hello: "z.umn.edu"
     switch_to: "Switch To:"
     short_url: "Short URL"
     long_url: "Long URL"

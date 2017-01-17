@@ -33,7 +33,7 @@
   height: 350px;
 }
 
-#new-url-form{
+#new-url-form, #new-admin-form{
 	text-align:center;
 	display:block;
 	margin:40px 0;
@@ -43,10 +43,13 @@
 		padding: 15px 43px;
     border: 1px solid #dcdcdc;
 	}
-	#new_url{
+	#new_url, .new_admin{
 		display:inline-block;
 		text-align:initial;
 	}
+}
+.new_admin input[type='text'] {
+	width: 400px;
 }
 
 table.dataTable{

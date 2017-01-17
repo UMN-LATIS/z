@@ -17,7 +17,11 @@
  /*
   *= require font-awesome
   */
-  
+
+.input-spacing {
+    padding-right: 10px;
+}
+
 .tt-input, /* UPDATE: newer versions use tt-input instead of tt-input */
 .tt-hint {
     width: 596px;
