@@ -81,8 +81,13 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
     },
   });
 
+	$('table.data-table').on("page.dt", function(e){
+			userTable.rows().deselect();
+			$("#select-all").prop("checked", false);
+	});
+
 	$("#select-all").click(function(e){
-			$(e.target).prop("checked") === true ? userTable.rows().select() : userTable.rows().deselect();
+			$(e.target).prop("checked") === true ? userTable.rows({page:"current"}).select() : userTable.rows().deselect();
 	});
 
   var transfer_button = {
