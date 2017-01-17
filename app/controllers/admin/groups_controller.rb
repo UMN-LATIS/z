@@ -4,7 +4,7 @@ class Admin::GroupsController < ApplicationController
   before_action :ensure_is_admin
 
   def index
-    @groups = Group.all_that_arent_default
+    @groups = Group.not_default
   end
 
 end

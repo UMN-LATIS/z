@@ -24,6 +24,11 @@ class Group < ApplicationRecord
     User.where(context_group_id: group.id).find_each(&:reset_context!)
   end
 
+  # all groups that arent the default group for a user
+  scope :not_default, -> do
+    where('id not in ( select default_group_id from users )')
+  end
+
   def user?(user)
     users.exists?(user.id)
   end
@@ -45,8 +50,4 @@ class Group < ApplicationRecord
     users.length == 1 && users.first.admin?
   end
 
-  #all groups that arent the default group for a user
-  def self.all_that_arent_default
-    Group.where("id not in ( select default_group_id from users)")
-  end
 end
