@@ -19,7 +19,13 @@
             display: 'value',
             limit: 1000,
             source: peopleSearch
-        });
+        })
+        .on('typeahead:asyncrequest', function() {
+          $('.glyphicon-refresh').removeClass("hidden");
+        })
+        .on('typeahead:asynccancel typeahead:asyncreceive', function() {
+          $('.glyphicon-refresh').addClass("hidden");
+        });;
 
         $('#people_search').bind('typeahead:selected', function (obj, datum, name) {
             $("#umndid").val(datum.umndid);
@@ -27,6 +33,10 @@
 
     });
 </script>
+
+<div id="new-member-form">
+  <%= render 'form' %>
+</div>
 
 <table class="table table-striped">
   <thead>
@@ -40,7 +50,6 @@
   <% @members.each do |member| %>
       <%= render 'in_row_show', member: member, group: @group %>
   <% end %>
-  <%= render 'in_row_form', group: @group %>
   </tbody>
 </table>
 
