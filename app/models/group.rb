@@ -44,4 +44,9 @@ class Group < ApplicationRecord
   def admin?
     users.length == 1 && users.first.admin?
   end
+
+  #all groups that arent the default group for a user
+  def self.all_that_arent_default
+    Group.where("id not in ( select default_group_id from users)")
+  end
 end
