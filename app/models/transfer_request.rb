@@ -14,6 +14,7 @@
 class TransferRequest < ApplicationRecord
   belongs_to :from_group, foreign_key: 'from_group_id', class_name: 'Group'
   belongs_to :to_group, foreign_key: 'to_group_id', class_name: 'Group'
+  belongs_to :user, foreign_key: 'from_group_requestor_id', class_name: 'User'
 
   has_and_belongs_to_many :urls,
                           join_table: :transfer_request_urls,

@@ -30,7 +30,8 @@ class TransferRequestsController < ApplicationController
 
   def create
     @transfer_request = TransferRequest.new(
-      from_group_id: current_user.context_group_id
+      from_group_id: current_user.context_group_id,
+      from_group_requestor_id: current_user.id
     )
 
     @transfer_request.to_group_id =
