@@ -2,7 +2,7 @@
   <td><%= group.name %>
   </td>
   <td><%= group.description %></td>
-  <td><%= group.created_at.to_s(:created_on_formatted)  %></td>
+  <td><%=l group.created_at %></td>
   <td>
     <%= link_to t('.edit', default: t('helpers.links.edit')),
                 edit_group_path(group),
