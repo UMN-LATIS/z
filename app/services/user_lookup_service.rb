@@ -41,7 +41,8 @@ class UserLookupService
   end
 
   def get_filter
-    sn_filter = Net::LDAP::Filter.eq('sn', "#{@query}*")
+    sn_filter = Net::LDAP::Filter.eq('sn', "#{@query.squish.gsub(/\s/,'*')}*")
+    cn_filter = Net::LDAP::Filter.eq('cn', "#{@query.squish.gsub(/\s/,'* ')}*")
     uid_filter = Net::LDAP::Filter.eq('uid', "#{@query}*")
     mail_filter = Net::LDAP::Filter.eq('mail', "#{@query}*")
     umndid_filter = Net::LDAP::Filter.eq('umndid', "#{@query}")
@@ -54,7 +55,7 @@ class UserLookupService
     elsif @query_type.eql? 'mail'
       return mail_filter
     elsif @query_type.eql? 'all'
-      x = Net::LDAP::Filter.intersect(sn_filter, uid_filter)
+      x = Net::LDAP::Filter.intersect(cn_filter, uid_filter)
       return Net::LDAP::Filter.intersect(x, mail_filter)
     end
   end
