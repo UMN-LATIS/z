@@ -43,7 +43,10 @@
         <h5> <%=t('helpers.header_tags.person_to_transfer_to')%> <span class="hidden glyphicon glyphicon-refresh glyphicon-refresh-animate" aria-hidden="true"></span></h5>
 
         <div class="form-group people-search">
-          <%= text_field_tag "people_search", nil, class: 'form-control js-new-transfer-to-group', placeholder: t('helpers.placeholders.search_by_last_name_or_email') %>
+          <%= text_field_tag "people_search", nil, class: 'form-control js-new-transfer-to-group'  %>
+          <span id="passwordHelpInline" class="text-muted">
+            <%= t('helpers.placeholders.search_by_name_or_email') %>.
+          </span>
           <%= f.hidden_field "to_group" %>
         </div>
 
