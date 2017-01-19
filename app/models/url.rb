@@ -21,8 +21,12 @@ class Url < ApplicationRecord
   before_destroy { |url| url.transfer_requests.clear }
 
   validates :keyword, uniqueness: true, presence: true
-
   validates :url, presence: true
+  validates :keyword, format: {
+    with: /^[a-zA-Z0-9\-]*$/,
+    multiline: true,
+    message: 'special characters are not permitted. Only letters, and numbers and dashes("-")'
+  }
 
   before_validation(on: :create) do
     # Set clicks to zero
@@ -48,9 +52,6 @@ class Url < ApplicationRecord
 
     # Downcase the keyword
     self.keyword = keyword.downcase
-
-    # Strip URL of any invalid characters, only allow alphanumeric
-    self.keyword = keyword.gsub(/[^0-9a-z\\s]/i, '')
   end
 
   scope :created_by_id, ->(group_id) do
@@ -111,6 +112,5 @@ class Url < ApplicationRecord
     end
     return col_names.to_csv + data
   end
-
 
 end
