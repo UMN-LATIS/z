@@ -93,7 +93,7 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
   var transfer_button = {
     extend: 'selected',
     text: transferText,
-			className:'btn-primary',
+			className:'btn-primary js-transfer-urls',
     action: function ( e, dt, node, config ) {
       var keywords = [];
       userTable.rows('.selected').data().map(function (row) {
@@ -111,7 +111,7 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
 
   var move_button = {
     extend: 'selected',
-		className:'btn-primary',
+		className:'btn-primary js-move-urls',
     text: moveText,
     action: function ( e, dt, node, config ) {
       var keywords = [];
