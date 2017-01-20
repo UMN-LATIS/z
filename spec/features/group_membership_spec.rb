@@ -19,9 +19,6 @@ describe 'groups members index page' do
       it 'should display the group name' do
         expect(page).to have_content group.name
       end
-      it 'should display the group member uid' do
-        expect(page).to have_content @user.uid
-      end
       it 'should display the group member full name' do
         expect(page).to have_content user.user_full_name
       end
