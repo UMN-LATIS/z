@@ -1,19 +1,35 @@
+db_srv: &db_srv
+  adapter: mysql2
+  host: db-srv.cla.umn.edu
+  username: andersen
+  password: oath178-huge#6doozy
+  pool: 5
+  timeout: 5000
+
+legacy_z:
+  <<: *db_srv
+  database: CLA_Z
+
+legacy_data_center:
+  <<: *db_srv
+  database: CLA_DATA_CENTER
+
 default: &default
   adapter: mysql2
   host: localhost
   username: root
-  password: 
+  password:
   pool: 5
   timeout: 5000
 
 development:
   <<: *default
   database: z_development
-  
+
 staging:
   <<: *default
   database: z_test
-  
+
 production:
   <<: *default
   database: z_production
@@ -24,3 +40,5 @@ production:
 test:
   <<: *default
   database: z_test
+
+
