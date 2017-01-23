@@ -23,6 +23,8 @@ class Admin::TransferRequestsController < ApplicationController
         uid: params['transfer_request']['to_group']
       ).default_group_id
 
+    @transfer_request.from_group_requestor_id = current_user.id
+
     @urls = Url
             .where(keyword: params[:keywords])
             .order('created_at DESC')
