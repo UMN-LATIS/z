@@ -2,33 +2,25 @@
   <td colspan=4 class="info">
     <%= form_for group, :html => {class: 'form-inline group', remote: true} do |f| %>
         <table>
-          <thead>
           <tr>
-            <th>Name</th>
-            <th>Description</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td class="input-spacing">
+            <td>
               <%= hidden_field_tag :new_identifier, group_identifier %>
-              <%= f.text_field :name, :maxlength => 20, size: 20, class: 'form-control', placeholder: t('helpers.placeholders.name') %>
+              <%= f.text_field :name, :maxlength => 20, size: 15, class: 'form-control', placeholder: t('helpers.placeholders.name') %>
             </td>
             <td class="input-spacing">
               <%= f.text_field :description, :maxlength => 65, size: 65, class: 'form-control', placeholder: t('helpers.placeholders.description') %>
             </td>
-            <td class="input-spacing">
-              <%= f.submit nil, class: 'btn btn-primary js-group-submit' %>
+            <td>
+              <%= f.submit nil, class: 'btn btn-xs btn-primary js-group-submit' %>
               <% if group.new_record? %>
-                  <a href="#" class='btn btn-default cancel-new-group'><%= t('helpers.buttons.cancel') %></a>
+                  <a href="#" class='btn btn-xs  btn-default cancel-new-group'><%= t('helpers.buttons.cancel') %></a>
               <% else %>
                   <%= link_to t('.cancel', default: t('helpers.links.cancel')),
                               group_path(group),
-                              class: 'btn btn-default cancel-group', remote: true %>
+                              class: 'btn btn-xs btn-default cancel-group', remote: true %>
               <% end %>
             </td>
           </tr>
-          </tbody>
         </table>
     <% end %>
     <%= render 'groups/in_row_errors', group: group %>
