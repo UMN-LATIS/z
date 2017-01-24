@@ -14,7 +14,7 @@ describe 'urls index page' do
     describe 'with no extra groups' do
       describe 'the move group button' do
         it 'should not be visible' do
-          expect(page).to_not have_link 'Move to group'
+          expect(page).to_not have_link 'Move to a different group'
         end
       end
     end
@@ -28,10 +28,10 @@ describe 'urls index page' do
       describe 'without urls' do
         describe 'the move group button' do
           it 'should be visible' do
-            expect(page).to have_link 'Move to group'
+            expect(page).to have_link 'Move to a different group'
           end
           it 'should be disabled' do
-            expect(page.find_link('Move to group')[:class]).to(
+            expect(page.find_link('Move to a different group')[:class]).to(
               have_content('disabled')
             )
           end
@@ -47,10 +47,10 @@ describe 'urls index page' do
         describe 'none selected' do
           describe 'the move group button' do
             it 'should be visible' do
-              expect(page).to have_link 'Move to group'
+              expect(page).to have_link 'Move to a different group'
             end
             it 'should be disabled' do
-              expect(page.find_link('Move to group')[:class]).to(
+              expect(page.find('.js-move-urls')[:class]).to(
                 have_content('disabled')
               )
             end
@@ -64,14 +64,14 @@ describe 'urls index page' do
 
           describe 'the move group button' do
             it 'should be enabled' do
-              expect(page.find_link('Move to group')[:class]).to_not(
+              expect(page.find('.js-move-urls')[:class]).to_not(
                 have_content('disabled')
               )
             end
           end
 
           describe 'clicking the move group button' do
-            before { click_link 'Move to group' }
+            before { click_link 'Move to a different group' }
             it 'should display the modal' do
               expect(page).to have_selector('#index-modal', visible: true)
             end

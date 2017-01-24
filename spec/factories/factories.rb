@@ -26,6 +26,7 @@ FactoryGirl.define do
   factory :transfer_request do
     to_group { FactoryGirl.create(:group) }
     from_group { FactoryGirl.create(:group) }
+    user { FactoryGirl.create(:user) }
     urls { [FactoryGirl.create(:url, group: from_group)] }
   end
 end
