@@ -32,14 +32,6 @@ RSpec.describe Url, type: :model do
   it { should respond_to 'updated_at' }
 
   describe 'invalid Url' do
-    describe '[url]' do
-      describe "doesn't exist" do
-        before { @url.url = '' }
-        it 'should not be valid' do
-          expect(@url).to_not be_valid
-        end
-      end
-    end
     describe '[keyword]' do
       describe 'already exists' do
         before do

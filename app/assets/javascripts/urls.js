@@ -116,7 +116,7 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
     action: function ( e, dt, node, config ) {
       var keywords = [];
       userTable.rows('.selected').data().map(function (row) {
-        keywords.push(row[keywordColumn])
+        keywords.push(row[keywordColumn]['@data-search'])
       });
 
       $.ajax({

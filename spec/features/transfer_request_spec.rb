@@ -143,6 +143,7 @@ describe 'urls index page' do
         :transfer_request,
         to_group_id: @user.context_group_id,
         from_group_id: @other_url.group_id,
+        user: @other_url.group.users.first,
         urls: [@other_url]
       )
       visit urls_path

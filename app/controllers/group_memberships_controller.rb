@@ -15,7 +15,7 @@ class GroupMembershipsController < ApplicationController
 
   def create
     member = User.find_or_create_by(
-      uid: params['umndid']
+      uid: params['uid']
     )
     @group.add_user(member)
     respond_to do |format|
