@@ -5,7 +5,7 @@
         <% @pending_transfer_requests_to.each do |transfer_request| %>
         <div class="transfer-request-item">
           <b><%= transfer_request.urls.map(&:keyword).join(',') %></b>
-          (From: <b><%= transfer_request.user.user_full_name %></b>)
+          (From: <b><%= transfer_request.from_user.user_full_name %></b>)
           <a href="<%= transfer_request_path(transfer_request) %>" data-method="delete" data-confirm="Are you sure you want to reject these URLs?" class='btn btn-default btn-xs js-reject-transfer'><%= t('helpers.links.reject')%></a>
           <a href="<%= confirm_transfer_request_path(transfer_request) %>" data-method="post" class='btn btn-primary btn-xs js-approve-transfer'><%= t('helpers.links.approve')%></a>
         </div>
