@@ -64,16 +64,10 @@ describe 'urls show page' do
     require 'barby/barcode/qr_code'
     require 'barby/outputter/svg_outputter'
 
-    barcode = Barby::QrCode.new(view_context.full_url(@url))
+    barcode = Barby::QrCode.new("http://www.example.com/#{@url.keyword}")
+
     barcode_svg = Barby::SvgOutputter.new(barcode)
     barcode_svg.xdim = 5
-
-
-     p barcode_svg.to_svg.html_safe
-    p "and"
-    p "thids"
-
-    p page.html
 
     expect(page.html).to include(barcode_svg.to_svg.html_safe)
   end

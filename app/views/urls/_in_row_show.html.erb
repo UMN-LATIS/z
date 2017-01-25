@@ -8,13 +8,13 @@
 	<td>
     <%= link_to url.url, url.url, target: '_blank' %>
   </td>
-	<td>
+	<td data-search="<%= url.keyword %>">
     <%= link_to url.keyword, full_url(url), target: '_blank' %>
   </td>
 	<td>
     <%= url.total_clicks %>
   </td>
-	<td>
+	<td data-order="<%= url.created_at %>">
     <%= url.created_at.to_s(:created_on_formatted)  %>
   </td>
   <td>

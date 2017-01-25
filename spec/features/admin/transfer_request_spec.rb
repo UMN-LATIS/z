@@ -14,7 +14,7 @@ describe 'admin urls index page' do
     describe 'with no urls' do
       describe 'the trasnfer button' do
         it 'should be disabled' do
-          expect(page.find_link('Transfer to user')[:class]).to(
+          expect(page.find('.js-transfer-urls')[:class]).to(
             have_content('disabled')
           )
         end
@@ -33,7 +33,7 @@ describe 'admin urls index page' do
       describe 'with no urls selected' do
         describe 'the trasnfer button' do
           it 'should be disabled' do
-            expect(page.find_link('Transfer to user')[:class]).to(
+            expect(page.find('.js-transfer-urls')[:class]).to(
               have_content('disabled')
             )
           end
@@ -47,7 +47,7 @@ describe 'admin urls index page' do
         end
         describe 'the transfer button' do
           it 'should be enabled' do
-            expect(page.find_link('Transfer to user')[:class]).to_not(
+            expect(page.find('.js-transfer-urls')[:class]).to_not(
               have_content('disabled')
             )
           end
@@ -55,7 +55,7 @@ describe 'admin urls index page' do
 
         describe 'clicking the tranfser button' do
           before do
-            click_link 'Transfer to user'
+            page.find('.js-transfer-urls').click
             wait_for_ajax
           end
 

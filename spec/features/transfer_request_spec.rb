@@ -14,7 +14,7 @@ describe 'urls index page' do
     describe 'with no urls' do
       describe 'the trasnfer button' do
         it 'should be disabled' do
-          expect(page.find_link('Transfer to user')[:class]).to(
+          expect(page.find('.js-transfer-urls')[:class]).to(
             have_content('disabled')
           )
         end
@@ -31,7 +31,7 @@ describe 'urls index page' do
       describe 'with no urls selected' do
         describe 'the trasnfer button' do
           it 'should be disabled' do
-            expect(page.find_link('Transfer to user')[:class]).to(
+            expect(page.find('.js-transfer-urls')[:class]).to(
               have_content('disabled')
             )
           end
@@ -42,7 +42,7 @@ describe 'urls index page' do
         before { find("#url-#{@selected_url.id} > .select-checkbox").click }
         describe 'the transfer button' do
           it 'should be enabled' do
-            expect(page.find_link('Transfer to user')[:class]).to_not(
+            expect(page.find('.js-transfer-urls')[:class]).to_not(
               have_content('disabled')
             )
           end
@@ -50,7 +50,7 @@ describe 'urls index page' do
 
         describe 'clicking the tranfser button' do
           before do
-            click_link 'Transfer to user'
+            page.find('.js-transfer-urls').click
             wait_for_ajax
           end
 
@@ -78,6 +78,7 @@ describe 'urls index page' do
                 click_button "Confirm"
                 wait_for_ajax
                 expect(page).to have_content 'Your Transfer Requests to Others'
+                expect(page).to have_content '(To: '
               end
 
               it 'should display the pending request on their screen' do
@@ -85,7 +86,8 @@ describe 'urls index page' do
                 click_button "Confirm"
                 sign_in(@other_user)
                 visit urls_path
-                expect(page).to have_content 'You have pending transfer requests'
+                expect(page).to have_content 'You Have Pending Transfer Requests'
+                expect(page).to have_content '(From: '
               end
 
               describe 'user does not exist' do
@@ -143,6 +145,7 @@ describe 'urls index page' do
         :transfer_request,
         to_group_id: @user.context_group_id,
         from_group_id: @other_url.group_id,
+        from_user: @other_url.group.users.first,
         urls: [@other_url]
       )
       visit urls_path

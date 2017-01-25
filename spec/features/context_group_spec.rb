@@ -16,8 +16,8 @@ describe 'context switching' do
       visit '/'
     end
 
-    it 'should not have a Viewing as section' do
-      expect(page).to_not have_content 'Viewing as:'
+    it 'should have a Viewing as section' do
+      expect(page).to have_content 'Viewing as:'
     end
     describe 'when user has multiple groups' do
       let(:group) { FactoryGirl.create(:group) }
