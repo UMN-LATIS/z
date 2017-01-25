@@ -31,8 +31,8 @@ describe 'the layout' do
     it 'should have a URLs link' do
       expect(page).to have_link 'URLs'
     end
-    it 'should have a Groups link' do
-      expect(page).to have_link 'Groups'
+    it 'should have a Collections link' do
+      expect(page).to have_link 'Collections'
     end
   end
 end

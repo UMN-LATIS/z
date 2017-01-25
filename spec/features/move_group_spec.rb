@@ -26,12 +26,12 @@ describe 'urls index page' do
       end
 
       describe 'without urls' do
-        describe 'the move group button' do
+        describe 'the move collection button' do
           it 'should be visible' do
-            expect(page).to have_link 'Move to a different group'
+            expect(page).to have_link 'Move to a different collection'
           end
           it 'should be disabled' do
-            expect(page.find_link('Move to a different group')[:class]).to(
+            expect(page.find_link('Move to a different collection')[:class]).to(
               have_content('disabled')
             )
           end
@@ -47,7 +47,7 @@ describe 'urls index page' do
         describe 'none selected' do
           describe 'the move group button' do
             it 'should be visible' do
-              expect(page).to have_link 'Move to a different group'
+              expect(page).to have_link 'Move to a different collection'
             end
             it 'should be disabled' do
               expect(page.find('.js-move-urls')[:class]).to(
@@ -71,7 +71,7 @@ describe 'urls index page' do
           end
 
           describe 'clicking the move group button' do
-            before { click_link 'Move to a different group' }
+            before { click_link 'Move to a different collection' }
             it 'should display the modal' do
               expect(page).to have_selector('#index-modal', visible: true)
             end
