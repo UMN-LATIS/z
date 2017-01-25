@@ -11,10 +11,13 @@
               <%= f.text_field :description, :maxlength => 65, size: 65, class: 'form-control', placeholder: t('helpers.placeholders.description') %>
             </td>
             <td>
-              <%= f.submit nil, class: 'btn btn-xs btn-primary js-group-submit' %>
               <% if group.new_record? %>
+                  <%= f.submit "Create Collection", class: 'btn btn-xs btn-primary js-group-submit' %>
+
                   <a href="#" class='btn btn-xs  btn-default cancel-new-group'><%= t('helpers.buttons.cancel') %></a>
               <% else %>
+                  <%= f.submit "Edit Collection", class: 'btn btn-xs btn-primary js-group-submit' %>
+
                   <%= link_to t('.cancel', default: t('helpers.links.cancel')),
                               group_path(group),
                               class: 'btn btn-xs btn-default cancel-group', remote: true %>
@@ -26,4 +29,3 @@
     <%= render 'groups/in_row_errors', group: group %>
   </td>
 </tr>
-

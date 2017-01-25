@@ -1,7 +1,13 @@
 <% if signed_in? %>
 <ul class='nav navbar-nav navbar-right'>
   <li class="dropdown">
-    <a href="#" class="dropdown-toggle js-viewing-as" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= t('helpers.links.viewing_as') %> <%= current_user.context_group.try(:name) %> <span class="caret"></span></a>
+    <a href="#" class="dropdown-toggle js-viewing-as" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+      <span class="bold">
+        <%= t('helpers.links.viewing_as:') %>
+      </span>
+      <%= current_user.context_group.try(:name) %>
+      <span class="caret"></span>
+    </a>
     <ul class="dropdown-menu">
       <%if current_user.groups.length > 1 %>
         <li><a href="#">Switch to:</a></li>

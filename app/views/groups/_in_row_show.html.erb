@@ -1,5 +1,6 @@
 <tr id='group-<%= group.id %>'>
-  <td><%= group.name %>
+  <td>
+    <%= link_to group.name, group_context_path(group) %></li>
   </td>
   <td><%= group.description %></td>
   <td><%= group.created_at.to_s(:created_on_formatted)  %></td>
