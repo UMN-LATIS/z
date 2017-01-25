@@ -78,6 +78,7 @@ describe 'urls index page' do
                 click_button "Confirm"
                 wait_for_ajax
                 expect(page).to have_content 'Your Transfer Requests to Others'
+                expect(page).to have_content '(To: '
               end
 
               it 'should display the pending request on their screen' do
@@ -85,7 +86,8 @@ describe 'urls index page' do
                 click_button "Confirm"
                 sign_in(@other_user)
                 visit urls_path
-                expect(page).to have_content 'You have pending transfer requests'
+                expect(page).to have_content 'You Have Pending Transfer Requests'
+                expect(page).to have_content '(From: '
               end
 
               describe 'user does not exist' do
@@ -143,7 +145,7 @@ describe 'urls index page' do
         :transfer_request,
         to_group_id: @user.context_group_id,
         from_group_id: @other_url.group_id,
-        user: @other_url.group.users.first,
+        from_user: @other_url.group.users.first,
         urls: [@other_url]
       )
       visit urls_path
