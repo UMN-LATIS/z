@@ -306,6 +306,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  addressable
   annotate
   awesome_print
   barby

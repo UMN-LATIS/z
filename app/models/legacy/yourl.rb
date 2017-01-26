@@ -1,5 +1,4 @@
 class Legacy::Yourl < ApplicationRecord
-  establish_connection :legacy_z
 
   self.table_name = 'yourls_url'
 

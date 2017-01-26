@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170120205321) do
+ActiveRecord::Schema.define(version: 20170126170109) do
 
   create_table "clicks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "country_code"
@@ -60,13 +60,13 @@ ActiveRecord::Schema.define(version: 20170120205321) do
   end
 
   create_table "urls", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "url"
+    t.text     "url",          limit: 65535
     t.string   "keyword"
     t.integer  "total_clicks"
     t.integer  "group_id"
     t.integer  "modified_by"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.index ["group_id"], name: "index_urls_on_group_id", using: :btree
     t.index ["keyword"], name: "index_urls_on_keyword", unique: true, using: :btree
   end
