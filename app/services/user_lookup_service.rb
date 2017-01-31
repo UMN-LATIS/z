@@ -3,13 +3,27 @@ require 'net/ldap' # gem install net-ldap
 
 class UserLookupService
   def initialize(params)
+    # @connection = Net::LDAP.new(
+    #   host: 'ldap.umn.edu',
+    #   port: 389,
+    #   base: 'o=University of Minnesota, c=US'
+    # )
+
     @connection = Net::LDAP.new(
-      host: 'ldap.umn.edu',
-      port: 389,
-      base: 'o=University of Minnesota, c=US'
+      host: 'ldapauth.umn.edu',
+      port: 4636,
+      encryption: :simple_tls,
+      base: 'o=University of Minnesota, c=US',
+      auth: {
+       method: :simple,
+       username: 'cn=CLAOIT Elevator LDAP Access,ou=Organizations,o=University of Minnesota,c=US',
+       password: 'vise587\item'
+      }
     )
+
     @query = params[:query]
     @query_type = params[:query_type]
+
   end
 
   def search

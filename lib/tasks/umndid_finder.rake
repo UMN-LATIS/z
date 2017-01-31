@@ -1,26 +1,15 @@
-# lib/tasks/db.rake
+# lib/tasks/umndid_finder.rake
 namespace :user do
   desc 'Find umndid for the per ids'
   task update_umndids: :environment do
     PeridUmndid.where('umndid IS ?', nil).each do |perid_umndid|
-      puts "--------------------------------"
-      puts "looking for #{perid_umndid.perid}"
-      person = Legacy::Person.where(PER_ID:perid_umndid.perid).take
-      if person.present?
-        perid_umndid.umndid = UserLookupService.new(
-                       query: person,
-                       query_type: 'uid' #todo query_type: params[:search_type]
-                   ).search.try(:first).try(:first).try(:last).try(:first)
-        puts "found person"
-        if perid_umndid.umndid.present?
-          perid_umndid.save
-          puts "found umndid DING DING DING"
-        else
-          puts "could not find umndid for this person"
-        end
-      else
-        puts "not able to find this person in CLA DATA CENTER"
-      end
+      person = Legacy::Person.where(PER_ID: perid_umndid.perid).take
+      next unless person.present?
+      perid_umndid.umndid = UserLookupService.new(
+        query: person.UID,
+        query_type: 'uid'
+      ).search.try(:first).try(:first).try(:last).try(:first)
+      perid_umndid.save if perif perid_umndid.umndid.present?
     end
   end
 end
@@ -59,6 +48,19 @@ namespace :urls do
           group_id: user.default_group_id
         )
       end
+    end
+  end
+  task update_clicks: :environment do
+    Url.all.each do |url|
+      clicks = Legacy::Click.where(shorturl: url.keyword)
+      puts "---------------------------------"
+      puts "adding clicks for #{url.keyword}"
+      click_count = 0
+      clicks.each_with_index do |legacy_click, index|
+        Click.find_or_create_by(url_id: url.id, country_code: legacy_click.country_code, created_at: legacy_click.click_time)
+        click_count = index + 1
+      end
+      puts "added #{click_count} clicks"
     end
   end
 end
