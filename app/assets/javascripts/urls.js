@@ -104,7 +104,7 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
 
     }
   }
-	
+
   var move_button = {
     extend: 'selected',
 		className:'btn-primary js-move-urls',
@@ -136,4 +136,5 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
     .container()
 		.prependTo('.dataTables_wrapper >.row:eq(0) > .col-sm-6:eq(0)');
 
+	$(".col-sm-6 .dt-buttons").removeClass("btn-group");
 }
