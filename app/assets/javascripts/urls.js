@@ -100,15 +100,11 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
         keywords.push(row[keywordColumn]['@data-search'])
       });
 
-      $.ajax({
-        url: transferPath,
-        data: {keywords: keywords},
-        dataType: 'script'
-      });
+			transferUrl(transferPath, keywords);
+
     }
   }
-
-
+	
   var move_button = {
     extend: 'selected',
 		className:'btn-primary js-move-urls',
@@ -119,11 +115,7 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
         keywords.push(row[keywordColumn]['@data-search'])
       });
 
-      $.ajax({
-        url: movePath,
-        data: {keywords: keywords},
-        dataType: 'script'
-      });
+    	moveUrl(movePath, keywords);
     }
   }
 
