@@ -1,4 +1,3 @@
-
 $(".stats-actions .js-transfer-urls").click(function(e){
   transferUrl("<%= new_transfer_request_path %>", "<%= @url.keyword %>");
 })
@@ -9,22 +8,3 @@ function transferUrl(transferPath, keywords){
     dataType: 'script'
   });
 }
-
-//
-// var move_button = {
-//   extend: 'selected',
-//   className:'btn-primary js-move-urls',
-//   text: moveText,
-//   action: function ( e, dt, node, config ) {
-//     var keywords = [];
-//     userTable.rows('.selected').data().map(function (row) {
-//       keywords.push(row[keywordColumn]['@data-search'])
-//     });
-//
-//     $.ajax({
-//       url: movePath,
-//       data: {keywords: keywords},
-//       dataType: 'script'
-//     });
-//   }
-// }
