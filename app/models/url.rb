@@ -11,6 +11,7 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #
+require 'uri'
 class Url < ApplicationRecord
   belongs_to :group
   has_many :clicks, dependent: :destroy
@@ -23,10 +24,15 @@ class Url < ApplicationRecord
   validates :keyword, uniqueness: true, presence: true
   validates :url, presence: true
   validates :keyword, format: {
-    with: /^[a-zA-Z0-9\-]*$/,
-    multiline: true,
-    message: 'special characters are not permitted. Only letters, and numbers and dashes("-")'
-  }
+                        with: /^[a-zA-Z0-9\-]*$/,
+                        multiline: true,
+                        message: 'special characters are not permitted. Only letters, and numbers and dashes("-")'
+                    }
+  validates :url, format: {
+                    with: URI::regexp,
+                    message: "is not in a valid format. Please use 'http://yoursite.com'"
+                }
+
 
   before_validation(on: :create) do
     # Set clicks to zero
@@ -34,24 +40,16 @@ class Url < ApplicationRecord
   end
 
   before_validation do
-    # Add http:// if necessary
-    uri = URI(url)
+      # Set keyword if it's blank
+      if keyword.blank?
+        index = Url.maximum(:id).to_i.next
+        index += 1 while Url.exists?(keyword: index.to_s(36))
+        self.keyword = index.to_s(36)
+      end
 
-    if uri.scheme.blank?
-      self.url = "http://#{uri.to_s}"
-    else
-      self.url = uri.to_s
-    end
-
-    # Set keyword if it's blank
-    if keyword.blank?
-      index = Url.maximum(:id).to_i.next
-      index += 1 while Url.exists?(keyword: index.to_s(36))
-      self.keyword = index.to_s(36)
-    end
-
-    # Downcase the keyword
-    self.keyword = keyword.downcase
+      # Downcase the keyword
+      self.keyword = keyword.downcase
+#    else
   end
 
   scope :created_by_id, ->(group_id) do
@@ -91,8 +89,8 @@ class Url < ApplicationRecord
   def click_data_to_csv
     # ex: http://localhost:3000/shortener/urls/3/csv/raw.csv
     data = CSV.generate(headers: true) do |csv|
-      clicks.select(:country_code,:created_at).each do | click|
-        csv <<  [url, keyword, click.country_code, click.created_at, click.updated_at]
+      clicks.select(:country_code, :created_at).each do |click|
+        csv << [url, keyword, click.country_code, click.created_at, click.updated_at]
       end
     end
     return %w{url keyword country_code url_created_on}.to_csv + data
