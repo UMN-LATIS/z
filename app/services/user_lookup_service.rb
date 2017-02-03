@@ -43,6 +43,7 @@ class UserLookupService
       # authentication has failed
       puts "Result: #{@connection.get_operation_result.code}"
       puts "Message: #{@connection.get_operation_result.message}"
+
     end
   end
 
