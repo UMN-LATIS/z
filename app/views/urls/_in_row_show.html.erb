@@ -10,6 +10,9 @@
   </td>
 	<td data-search="<%= url.keyword %>">
     <%= link_to url.keyword, full_url(url), target: '_blank' %>
+    <button class='btn btn-default clipboard-btn' data-clipboard-text="<%= full_url(url) %>">
+      <i class=" fa fa-files-o"></i>
+    </button>
   </td>
 	<td>
     <%= url.total_clicks %>
