@@ -1,6 +1,9 @@
-$(".stats-actions .js-transfer-urls").click(function(e){
-  transferUrl("<%= new_transfer_request_path %>", "<%= @url.keyword %>");
-})
+<% unless @url.blank? %>
+  $(".stats-actions .js-transfer-urls").click(function(e){
+    transferUrl("<%= new_transfer_request_path %>", "<%= @url.keyword %>");
+  })
+<% end %>
+
 function transferUrl(transferPath, keywords){
   $.ajax({
     url: transferPath,
