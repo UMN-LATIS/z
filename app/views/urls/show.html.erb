@@ -21,6 +21,16 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-9 stats-actions">
+        <button class="btn btn-primary js-transfer-urls ">
+          Transfer to a different user
+        </button>
+        <button class="btn btn-primary js-move-urls ">
+          Move to a different collection
+        </button>
+      </div>
+    </div>
     <h3><%= t('helpers.header_tags.traffic_statistics')%></h3>
     <div class="row">
       <div class="col-md-12">
@@ -129,10 +139,9 @@
 
 <div class="row">
 
-
-
-
 </div>
+
+<%= render 'modal' %>
 
 <script type="text/javascript">
   // Load the data functions for the Google Charts
@@ -142,4 +151,6 @@
   <%= render partial: 'urls/show_js/alltime.js' %>
   <%= render partial: 'urls/show_js/country_map.js' %>
   <%= render partial: 'urls/show_js/country_pie.js' %>
+  <%= render partial: 'urls/show_js/move.js' %>
+  <%= render partial: 'urls/show_js/transfer.js' %>
 </script>
