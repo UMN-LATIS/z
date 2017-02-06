@@ -1,6 +1,7 @@
 $(".stats-actions .js-move-urls").click(function(e){
   moveUrl("<%= new_move_to_group_path %>", "<%= @url.keyword %>");
 })
+
 function moveUrl(movePath, keywords){
   $.ajax({
     url: movePath,
