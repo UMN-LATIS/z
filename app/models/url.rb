@@ -21,6 +21,11 @@ class Url < ApplicationRecord
   # table
   before_destroy { |url| url.transfer_requests.clear }
 
+  before_save do
+    # Add http:// if necessary
+    self.url = "http://#{url}" if URI.parse(url).scheme.nil?
+  end
+
   validates :keyword, uniqueness: true, presence: true
   validates :url, presence: true
   validates :keyword, format: {
@@ -28,6 +33,7 @@ class Url < ApplicationRecord
                         multiline: true,
                         message: 'special characters are not permitted. Only letters, and numbers and dashes("-")'
                     }
+  validate :check_for_valid_url
 
   before_validation(on: :create) do
     # Set clicks to zero
@@ -35,8 +41,8 @@ class Url < ApplicationRecord
   end
 
   before_validation do
-    # Add http:// if necessary
-    self.url = "http://#{url}" if URI.parse(url).scheme.nil? #unless url =~ /\A#{URI.regexp(%w(http https))}\z/
+    # remove leading and trailing whitespaces for validation
+    url.strip!
 
     # Set keyword if it's blank
     if keyword.blank?
@@ -107,6 +113,14 @@ class Url < ApplicationRecord
       end
     end
     return col_names.to_csv + data
+  end
+
+  def check_for_valid_url
+    begin
+      URI.parse(url)
+    rescue URI::InvalidURIError
+      errors.add(:url, 'is not valid.')
+    end
   end
 
 end
