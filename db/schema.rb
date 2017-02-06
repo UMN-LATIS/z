@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170117151420) do
+ActiveRecord::Schema.define(version: 20170206214947) do
 
   create_table "clicks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "country_code"
@@ -47,9 +47,9 @@ ActiveRecord::Schema.define(version: 20170117151420) do
     t.integer  "from_group_id"
     t.integer  "from_group_requestor_id"
     t.string   "key"
-    t.string   "status"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.string   "status",                  default: "pending"
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
     t.index ["from_group_id"], name: "index_transfer_requests_on_from_group_id", using: :btree
     t.index ["to_group_id"], name: "index_transfer_requests_on_to_group_id", using: :btree
   end
