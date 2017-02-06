@@ -2,25 +2,33 @@
 require 'net/ldap' # gem install net-ldap
 
 class UserLookupService
-  def initialize(params)
+  def initialize(params=nil)
     @connection = Net::LDAP.new(
-      host: 'ldap.umn.edu',
-      port: 389,
-      base: 'o=University of Minnesota, c=US'
+        host: 'ldap.umn.edu',
+        port: 389,
+        base: 'o=University of Minnesota, c=US'
     )
-    @query = params[:query]
-    @query_type = params[:query_type]
+    @query = params[:query] if params
+    @query_type = params[:query_type] if params
+  end
+
+  def ping
+    if @connection.bind
+      true
+    else
+      false
+    end
   end
 
   def search
     return nil unless @query.present? && @query_type.present?
     if @connection.bind
       results = @connection.search(
-        filter: get_filter,
-        return_result: true
+          filter: get_filter,
+          return_result: true
       )
       results = results.promote(results.detect { |x| x[:uid] == [@query] })
-      results = results.map { |x| { umndid: x.try(:umndid), value: display_name(x), uid: x.try(:uid), first_name: x.try(:givenname), last_name: x.try(:sn), email: x.try(:mail) } }.flatten unless results.blank?
+      results = results.map { |x| {umndid: x.try(:umndid), value: display_name(x), uid: x.try(:uid), first_name: x.try(:givenname), last_name: x.try(:sn), email: x.try(:mail)} }.flatten unless results.blank?
       # Promote Internet id match
       # Promote emplid match
 
@@ -41,8 +49,8 @@ class UserLookupService
   end
 
   def get_filter
-    sn_filter = Net::LDAP::Filter.eq('sn', "#{@query.squish.gsub(/\s/,'*')}*")
-    cn_filter = Net::LDAP::Filter.eq('cn', "#{@query.squish.gsub(/\s/,'* ')}*")
+    sn_filter = Net::LDAP::Filter.eq('sn', "#{@query.squish.gsub(/\s/, '*')}*")
+    cn_filter = Net::LDAP::Filter.eq('cn', "#{@query.squish.gsub(/\s/, '* ')}*")
     uid_filter = Net::LDAP::Filter.eq('uid', "#{@query}*")
     mail_filter = Net::LDAP::Filter.eq('mail', "#{@query}*")
     umndid_filter = Net::LDAP::Filter.eq('umndid', "#{@query}")
