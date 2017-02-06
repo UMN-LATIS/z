@@ -74,12 +74,12 @@ RSpec.describe Url, type: :model do
 
       it 'should not be valid' do
         @url.url = 'fun.com'
-        expect(@url).to_not be_valid
+        expect(@url).to be_valid
       end
 
       it 'should not be valid' do
         @url.url = 'fun'
-        expect(@url).to_not be_valid
+        expect(@url).to be_valid
       end
 
     end

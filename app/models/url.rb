@@ -28,11 +28,6 @@ class Url < ApplicationRecord
                         multiline: true,
                         message: 'special characters are not permitted. Only letters, and numbers and dashes("-")'
                     }
-  validates :url, format: {
-                    with: URI::regexp,
-                    message: "is not in a valid format. Please use 'http://yoursite.com'"
-                }
-
 
   before_validation(on: :create) do
     # Set clicks to zero
@@ -40,16 +35,19 @@ class Url < ApplicationRecord
   end
 
   before_validation do
-      # Set keyword if it's blank
-      if keyword.blank?
-        index = Url.maximum(:id).to_i.next
-        index += 1 while Url.exists?(keyword: index.to_s(36))
-        self.keyword = index.to_s(36)
-      end
+    # Add http:// if necessary
+    self.url = "http://#{url}" if URI.parse(url).scheme.nil? #unless url =~ /\A#{URI.regexp(%w(http https))}\z/
 
-      # Downcase the keyword
-      self.keyword = keyword.downcase
-#    else
+    # Set keyword if it's blank
+    if keyword.blank?
+      index = Url.maximum(:id).to_i.next
+      index += 1 while Url.exists?(keyword: index.to_s(36))
+      self.keyword = index.to_s(36)
+    end
+
+    # Downcase the keyword
+    self.keyword = keyword.downcase
+    #    else
   end
 
   scope :created_by_id, ->(group_id) do
