@@ -5,7 +5,7 @@
   <% if @admin_view %>
     <td><%= url.group.name %></td>
   <% end %>
-	<td>
+	<td class="long-url">
     <%= link_to url.url, url.url, target: '_blank' %>
   </td>
 	<td data-search="<%= url.keyword %>">
