@@ -41,7 +41,7 @@ class TransferRequest < ApplicationRecord
   end
 
   def approve
-    urls.update_all(group_id: to_group_id)
+    Url.where(id: urls.map(&:id)).update_all(group_id: to_group_id)
     self.status = 'approved'
   end
 
