@@ -152,11 +152,18 @@ describe 'urls index page' do
     end
 
     describe 'accepting' do
-      it 'should delete the transfer request' do
+      it 'should update the status of the transfer request' do
         expect do
           find('.js-approve-transfer').click
           wait_for_ajax
-        end.to change(TransferRequest, :count).by(-1)
+        end.to change(TransferRequest.pending, :count).by(-1)
+      end
+      it 'should change the status of the transfer to approved' do
+        expect do
+          find('.js-approve-transfer').click
+          wait_for_ajax
+          @transfer.reload
+        end.to change(@transfer, :status).to('approved')
       end
       it 'should change the owner of the url' do
         expect do
@@ -173,12 +180,20 @@ describe 'urls index page' do
     end
 
     describe 'rejecting' do
-      it 'should delete the transfer request' do
+      it 'should change the status of the the transfer request' do
         expect do
           find('.js-reject-transfer').click
           click_button "Confirm"
           wait_for_ajax
-        end.to change(TransferRequest, :count).by(-1)
+        end.to change(TransferRequest.pending, :count).by(-1)
+      end
+      it 'should change the status of the transfer to rejected' do
+        expect do
+          find('.js-reject-transfer').click
+          click_button "Confirm"
+          wait_for_ajax
+          @transfer.reload
+        end.to change(@transfer, :status).to('rejected')
       end
       it 'should not change the owner of the url' do
         expect do
