@@ -17,3 +17,4 @@
 //= require turbolinks
 //= require data-confirm-modal
 //= require_tree .
+//= require clipboard
