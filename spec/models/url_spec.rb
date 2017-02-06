@@ -71,11 +71,6 @@ RSpec.describe Url, type: :model do
         @url.url = 'https://fun.com'
         expect(@url).to be_valid
       end
-
-      it 'should be valid' do
-        @url.url = 'fun.com'
-        expect(@url).to be_valid
-      end
     end
   end
 end
