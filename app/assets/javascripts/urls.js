@@ -116,7 +116,7 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
       });
 
     	moveUrl(movePath, keywords);
-			
+
     }
   }
 
