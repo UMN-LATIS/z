@@ -100,14 +100,10 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
         keywords.push(row[keywordColumn]['@data-search'])
       });
 
-      $.ajax({
-        url: transferPath,
-        data: {keywords: keywords},
-        dataType: 'script'
-      });
+			transferUrl(transferPath, keywords);
+
     }
   }
-
 
   var move_button = {
     extend: 'selected',
@@ -119,11 +115,8 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
         keywords.push(row[keywordColumn]['@data-search'])
       });
 
-      $.ajax({
-        url: movePath,
-        data: {keywords: keywords},
-        dataType: 'script'
-      });
+    	moveUrl(movePath, keywords);
+			
     }
   }
 
@@ -144,4 +137,5 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
     .container()
 		.prependTo('.dataTables_wrapper >.row:eq(0) > .col-sm-6:eq(0)');
 
+	$(".col-sm-6 .dt-buttons").removeClass("btn-group");
 }
