@@ -72,13 +72,307 @@ RSpec.describe Url, type: :model do
         expect(@url).to be_valid
       end
 
-      it 'should not be valid' do
+      it 'should be valid' do
         @url.url = 'fun.com'
         expect(@url).to be_valid
       end
 
-      it 'should not be valid' do
+      it 'should be valid' do
         @url.url = 'fun'
+        expect(@url).to be_valid
+      end
+
+      it 'should not be valid' do
+        @url.url = ':'
+        expect(@url).to_not be_valid
+      end
+
+      it 'should not be valid' do
+        @url.url = '\\'
+        expect(@url).to_not be_valid
+      end
+
+      it 'should not be valid' do
+        @url.url = '%'
+        expect(@url).to_not be_valid
+      end
+
+=begin
+Berners-Lee, et al.         Standards Track                    [Page 36]
+
+RFC 3986                   URI Generic Syntax               January 2005
+
+5.4.1.  Normal Examples
+
+      "g:h"           =  "g:h"
+      "g"             =  "http://a/b/c/g"
+      "./g"           =  "http://a/b/c/g"
+      "g/"            =  "http://a/b/c/g/"
+      "/g"            =  "http://a/g"
+      "//g"           =  "http://g"
+      "?y"            =  "http://a/b/c/d;p?y"
+      "g?y"           =  "http://a/b/c/g?y"
+      "#s"            =  "http://a/b/c/d;p?q#s"
+      "g#s"           =  "http://a/b/c/g#s"
+      "g?y#s"         =  "http://a/b/c/g?y#s"
+      ";x"            =  "http://a/b/c/;x"
+      "g;x"           =  "http://a/b/c/g;x"
+      "g;x?y#s"       =  "http://a/b/c/g;x?y#s"
+      ";x"              =  "http://a/b/c/d;p?q"
+      "."             =  "http://a/b/c/"
+      "./"            =  "http://a/b/c/"
+      ".."            =  "http://a/b/"
+      "../"           =  "http://a/b/"
+      "../g"          =  "http://a/b/g"
+      "../.."         =  "http://a/"
+      "../../"        =  "http://a/"
+      "../../g"       =  "http://a/g"
+=end
+
+      it 'should be valid' do
+        @url.url = 'g:h'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = 'g'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = './g'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = 'g/'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = '/g'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = '//g'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = '?y'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = 'g?y'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = '#s'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = 'g#s'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = 'g?y#s'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = ';x'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = '.'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = '/'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = '..'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = '../'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = '../g'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = '../..'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = '../../'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = '../../g'
+        expect(@url).to be_valid
+      end
+
+=begin
+Berners-Lee, et al.         Standards Track                    [Page 36]
+
+RFC 3986                   URI Generic Syntax               January 2005
+
+
+5.4.2.  Abnormal Examples
+
+   Although the following abnormal examples are unlikely to occur in
+   normal practice, all URI parsers should be capable of resolving them
+   consistently.  Each example uses the same base as that above.
+
+   Parsers must be careful in handling cases where there are more ".."
+   segments in a relative-path reference than there are hierarchical
+   levels in the base URI's path.  Note that the ".." syntax cannot be
+   used to change the authority component of a URI.
+
+      "../../../g"    =  "http://a/g"
+      "../../../../g" =  "http://a/g"
+=end
+
+      it 'should be valid' do
+        @url.url = '../../../g'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = '../../../../g'
+        expect(@url).to be_valid
+      end
+
+=begin
+   Similarly, parsers must remove the dot-segments "." and ".." when
+   they are complete components of a path, but not when they are only
+   part of a segment.
+
+      "/./g"          =  "http://a/g"
+      "/../g"         =  "http://a/g"
+      "g."            =  "http://a/b/c/g."
+      ".g"            =  "http://a/b/c/.g"
+      "g.."           =  "http://a/b/c/g.."
+      "..g"           =  "http://a/b/c/..g"
+=end
+
+      it 'should be valid' do
+        @url.url = '/./g'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = '/../g'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = 'g.'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = '.g'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = 'g..'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = '..g'
+        expect(@url).to be_valid
+      end
+
+=begin
+   Less likely are cases where the relative reference uses unnecessary
+   or nonsensical forms of the "." and ".." complete path segments.
+
+      "./../g"        =  "http://a/b/g"
+      "./g/."         =  "http://a/b/c/g/"
+      "g/./h"         =  "http://a/b/c/g/h"
+      "g/../h"        =  "http://a/b/c/h"
+      "g;x=1/./y"     =  "http://a/b/c/g;x=1/y"
+      "g;x=1/../y"    =  "http://a/b/c/y"
+=end
+      it 'should be valid' do
+        @url.url = './../g'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = './g/'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = 'g/./h'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = 'g/../h'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = 'g;x=1/./y'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = 'g;x=1/../y'
+        expect(@url).to be_valid
+      end
+=begin
+   Some applications fail to separate the reference's query and/or
+   fragment components from the path component before merging it with
+   the base path and removing dot-segments.  This error is rarely
+   noticed, as typical usage of a fragment never includes the hierarchy
+   ("/") character and the query component is not normally used within
+   relative references.
+
+      "g?y/./x"       =  "http://a/b/c/g?y/./x"
+      "g?y/../x"      =  "http://a/b/c/g?y/../x"
+      "g#s/./x"       =  "http://a/b/c/g#s/./x"
+      "g#s/../x"      =  "http://a/b/c/g#s/../x"
+=end
+      it 'should be valid' do
+        @url.url = 'g?y/./x'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = 'g?y/../x'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = 'g#s/./x'
+        expect(@url).to be_valid
+      end
+
+      it 'should be valid' do
+        @url.url = 'g#s/../x'
         expect(@url).to be_valid
       end
 

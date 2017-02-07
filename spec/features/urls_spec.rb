@@ -108,13 +108,13 @@ describe 'urls index page' do
         end
       end
       describe 'when the url is not valid' do
-        before { find('#url_url').set 'welcome.to.hell' }
+        before { find('#url_url').set ':' }
         it 'should not save upon clicking Create with an error msg' do
           expect do
             find('.js-url-submit').click
             wait_for_ajax
           end.to change(Url, :count).by(0)
-          expect(page).to have_content 'Url is not in a valid format. Please use'
+          expect(page).to have_content 'Url is not valid.'
         end
       end
       describe 'when the keyword is blank' do
