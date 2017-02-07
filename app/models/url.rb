@@ -21,6 +21,11 @@ class Url < ApplicationRecord
   # table
   before_destroy { |url| url.transfer_requests.clear }
 
+  before_save do
+    # Add http:// if necessary
+    self.url = "http://#{url}" if URI.parse(url).scheme.nil?
+  end
+
   validates :keyword, uniqueness: true, presence: true
   validates :url, presence: true
   validates :keyword, format: {
@@ -28,11 +33,7 @@ class Url < ApplicationRecord
                         multiline: true,
                         message: 'special characters are not permitted. Only letters, and numbers and dashes("-")'
                     }
-  validates :url, format: {
-                    with: URI::regexp,
-                    message: "is not in a valid format. Please use 'http://yoursite.com'"
-                }
-
+  validate :check_for_valid_url
 
   before_validation(on: :create) do
     # Set clicks to zero
@@ -40,16 +41,19 @@ class Url < ApplicationRecord
   end
 
   before_validation do
-      # Set keyword if it's blank
-      if keyword.blank?
-        index = Url.maximum(:id).to_i.next
-        index += 1 while Url.exists?(keyword: index.to_s(36))
-        self.keyword = index.to_s(36)
-      end
+    # remove leading and trailing whitespaces for validation
+    url.strip!
 
-      # Downcase the keyword
-      self.keyword = keyword.downcase
-#    else
+    # Set keyword if it's blank
+    if keyword.blank?
+      index = Url.maximum(:id).to_i.next
+      index += 1 while Url.exists?(keyword: index.to_s(36))
+      self.keyword = index.to_s(36)
+    end
+
+    # Downcase the keyword
+    self.keyword = keyword.downcase
+    #    else
   end
 
   scope :created_by_id, ->(group_id) do
@@ -109,6 +113,14 @@ class Url < ApplicationRecord
       end
     end
     return col_names.to_csv + data
+  end
+
+  def check_for_valid_url
+    begin
+      URI.parse(url)
+    rescue URI::InvalidURIError
+      errors.add(:url, 'is not valid.')
+    end
   end
 
 end
