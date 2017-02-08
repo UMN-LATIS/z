@@ -13,11 +13,13 @@ class UserLookupService
   end
 
   def ping
-    if @connection.bind
-      true
-    else
-      false
+# @connection.get_operation_result.code == 0
+    begin
+      @connection.bind
+    rescue Net::LDAP::ConnectionRefusedError
+      return false
     end
+    return true
   end
 
   def search

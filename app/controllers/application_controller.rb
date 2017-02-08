@@ -37,7 +37,8 @@ class ApplicationController < ActionController::Base
 
   def ping_lookup_service
     unless UserLookupService.new.ping
-      flash[:error] = I18n.t 'helpers.lookup_service_down'
+      flash.now[:error] = I18n.t 'helpers.lookup_service_down'
+      render file: 'public/lookup_service_down.html', layout: false
     end
   end
 
