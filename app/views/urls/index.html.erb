@@ -11,6 +11,14 @@
   <%= render 'transfer_requests_from' %>
 </div>
 
+<h2>
+  Viewing URLs for the <%= link_to @group.name, group_members_path(@group) %> Collection
+  <br/>
+  <i>
+    <%= @group.description %>
+  </i>
+</h2>
+
 <div id="new-url-form">
   <!-- <div class="new-url-form-hint">Shorten a URL</div> -->
   <!-- <h1>Should you plan a meetin to talk over UI changes and GROUPS?</h1> -->
