@@ -53,17 +53,26 @@
 }
 
 table.dataTable{
+	width: 100%;
 	margin-bottom: 100px !important;
-	td{
-		.form-inline.url{
-			white-space:nowrap;;
+	tbody{
+		td{
+			.form-inline.url{
+				white-space:nowrap;;
+			}
+			//adds ellipses to text thats too long, but gets rid of responsiveness, so needs work.
+			// &.long-url{
+			// 	text-overflow: ellipsis;
+			// 	//  max-width: 0;
+			// 	white-space: nowrap;
+			// 	overflow: hidden;
+			// }
 		}
 	}
 }
 
 #button-bar{
 	text-align:center;
-	// margin-top:30px;
 	.button-bar-inner{
 		text-align:initial;
 		display:inline-block;
@@ -84,4 +93,9 @@ table.dataTable{
 	.btn{
 		margin:3px;
 	}
+}
+
+.btn.clipboard-btn{
+	padding:1px 7px;
+	margin-left:5px;
 }

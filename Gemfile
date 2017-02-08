@@ -43,6 +43,9 @@ gem 'twitter-bootstrap-rails'
 #Use font awesome for icons
 gem "font-awesome-rails"
 
+#Use clipboard js plugin
+gem 'clipboard-rails'
+
 # better confirm dialogs
 gem 'data-confirm-modal'
 
