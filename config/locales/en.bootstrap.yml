@@ -8,6 +8,7 @@ en:
     pages:
       pages: "Pages"
   helpers:
+    lookup_service_down: "Could not establish a connection to the LDAP server. Please notify help@umn.edu"
     actions: "Actions"
     no_email: "No EmaIL"
     hello: "z.umn.edu"

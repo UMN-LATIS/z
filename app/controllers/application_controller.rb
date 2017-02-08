@@ -2,10 +2,11 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-
   include SessionsHelper
   include Pundit
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
+  before_action :ping_lookup_service
 
   def ensure_signed_in
     redirect_to signin_path unless signed_in?
@@ -34,5 +35,11 @@ class ApplicationController < ActionController::Base
     redirect_to(request.referrer || root_path)
   end
 
+  def ping_lookup_service
+    unless UserLookupService.new.ping
+      flash.now[:error] = I18n.t 'helpers.lookup_service_down'
+      render file: 'public/lookup_service_down.html', layout: false
+    end
+  end
 
 end
