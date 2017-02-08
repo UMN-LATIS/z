@@ -74,13 +74,8 @@ class Url < ApplicationRecord
     where('keyword IN (?)', "%#{keywords.map(&:downcase)}%")
   end
 
-  scope :not_in_transfer_request, ->(transfer_request) do
-    url_ids = transfer_request.urls.pluck(:id)
-    where.not('id IN (?)', url_ids) if url_ids.present?
-  end
-
-  scope :not_in_any_transfer_request, -> do
-    url_ids = TransferRequestUrl.all.pluck(:url_id)
+  scope :not_in_pending_transfer_request, -> do
+    url_ids = TransferRequest.pending.joins(:urls).pluck(:url_id)
     where.not('id IN (?)', url_ids) if url_ids.present?
   end
 

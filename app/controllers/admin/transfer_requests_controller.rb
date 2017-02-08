@@ -15,15 +15,13 @@ class Admin::TransferRequestsController < ApplicationController
 
   def create
     @transfer_request = TransferRequest.new(
-      from_group_id: current_user.context_group_id
+      from_group_id: current_user.context_group_id,
+      to_group_id: User.find_or_create_by(
+        uid: params['transfer_request']['to_group']
+      ).default_group_id,
+      from_group_requestor_id: current_user.id
     )
     authorize @transfer_request
-    @transfer_request.to_group_id =
-      User.find_or_create_by(
-        uid: params['transfer_request']['to_group']
-      ).default_group_id
-
-    @transfer_request.from_group_requestor_id = current_user.id
 
     @urls = Url
             .where(keyword: params[:keywords])
@@ -32,7 +30,7 @@ class Admin::TransferRequestsController < ApplicationController
     @transfer_request.urls = @urls
 
     respond_to do |format|
-      if @transfer_request.save && @transfer_request.approve!
+      if @transfer_request.save 
         format.js do
           redirect_to admin_urls_path
         end

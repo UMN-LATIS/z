@@ -30,13 +30,13 @@ Group.create(
 Url.create(
   [
     {
-      url: 'google.com',
+      url: 'http://www.google.com',
       keyword: 'goog',
       total_clicks: 9,
       group: User.first.context_group
     },
     {
-      url: 'umn.edu',
+      url: 'http://www.umn.edu',
       keyword: 'umn',
       total_clicks: 3,
       group: User.last.context_group
