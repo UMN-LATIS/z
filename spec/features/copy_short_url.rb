@@ -18,7 +18,7 @@ describe 'copy url button ' do
 
       describe 'the copy button' do
         it 'should be present' do
-          expect(page).to have_selector('.clipboard-btn', visible: true)
+          expect(page).to have_selector('.clipboard-btn')
         end
       end
     end
@@ -26,12 +26,12 @@ describe 'copy url button ' do
     describe 'details page', js: true do
       before do
         @new_url = FactoryGirl.create(:url, group: @user.context_group)
-        visit "urls/#{@new_url.keyword}"
+        visit url_path(@new_url.keyword)
       end
 
       describe 'the copy button' do
         it 'should be present' do
-          expect(page).to have_selector('.clipboard-btn', visible: true)
+          expect(page).to have_selector('.clipboard-btn')
         end
       end
     end
