@@ -92,7 +92,6 @@ describe 'urls index page' do
 
   describe 'page content' do
     it 'should display the group info' do
-      puts page.body
       expect(page).to have_content 'Viewing URLs for the'
     end
   end
