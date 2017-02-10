@@ -90,6 +90,12 @@ describe 'urls index page' do
     sign_in(@user)
   end
 
+  describe 'page content' do
+    it 'should display the group info' do
+      puts page.body
+      expect(page).to have_content 'Viewing URLs for the'
+    end
+  end
   describe 'creating new url', js: true do
     let(:url) { 'http://www.google.com' }
     let(:keyword) { 'goog' }
