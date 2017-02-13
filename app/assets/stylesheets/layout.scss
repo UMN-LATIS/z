@@ -194,6 +194,11 @@ though the color below doesn't improve much.
   color: #fff;
 }
 
+.btn-primary.disabled{
+  background-color: $grayLight;
+  border-color: $grayDarker;
+}
+
 /* tables */
 
 .table {
