@@ -1,12 +1,15 @@
 require 'rails_helper'
 
-describe 'urls index page' do
+describe 'moving urls to a group', js: true do
   before do
     @user = FactoryGirl.create(:user)
     sign_in(@user)
+
+    @other_group = FactoryGirl.create(:group)
+    @user.groups << @other_group
   end
 
-  describe 'moving urls to a group', js: true do
+  describe 'on the urls index page' do
     before do
       visit urls_path
     end
@@ -18,10 +21,9 @@ describe 'urls index page' do
         end
       end
     end
+
     describe 'with extra groups' do
       before do
-        @other_group = FactoryGirl.create(:group)
-        @user.groups << @other_group
         visit urls_path
       end
 
@@ -91,6 +93,42 @@ describe 'urls index page' do
                 end
               end
             end
+          end
+        end
+      end
+    end
+  end
+
+  describe 'on the urls index page' do
+    before do
+      @url = FactoryGirl.create(:url, group: @user.context_group)
+      visit url_path(@url.keyword)
+    end
+
+    describe 'the move group button' do
+      it 'should be visible' do
+        expect(page).to have_selector('.js-move-urls')
+      end
+    end
+
+    describe 'clicking the move group button' do
+      before { click_button 'Move to a different collection' }
+      it 'should display the modal' do
+        expect(page).to have_selector('#index-modal', visible: true)
+      end
+
+      describe 'filling out the form' do
+        describe 'with valid information' do
+          before do
+            find('.js-move-group-group').set @other_group.id
+          end
+          it 'should move url immediately' do
+            expect do
+              find('#move_group  input[type="submit"]').click
+              click_button 'Confirm'
+              wait_for_ajax
+              @url.reload
+            end.to change(@url, :group_id).to(@other_group.id)
           end
         end
       end
