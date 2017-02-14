@@ -3,7 +3,7 @@
       <h4><%= t('helpers.header_tags.transfer_requests_to_others')%> </h4>
       <p>
         <% @pending_transfer_requests_from.each do |transfer_request| %>
-          <div class="trasnfer-request-item">
+          <div class="transfer-request-item">
             <div class="transfer-details">
               <div class="to">
                 To: <b><%= transfer_request.to_user.user_full_name %></b>
