@@ -26,6 +26,8 @@
   </tbody>
 </table>
 
-<%= link_to t('.new', :default => t("helpers.links.new")),
-            new_group_path,
-            :class => 'btn btn-primary btn-xs add-new-group', remote: true %>
+<%= link_to  new_group_path,
+            :class => 'btn btn-primary btn-xs add-new-group', remote: true  do %>
+              <i class="fa fa-plus-circle"></i>
+              <%= t('.new', :default => t("helpers.links.new")) %>
+            <% end %>

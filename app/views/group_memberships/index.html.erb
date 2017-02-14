@@ -53,6 +53,10 @@
   </tbody>
 </table>
 
-<%= link_to t('.groups', :default => t('helpers.links.back_to_collections')),
-            groups_path,
-            :class => 'btn btn-primary btn-xs group' %>
+<%= link_to groups_path,
+            :class => 'btn btn-primary btn-xs group' do %>
+
+              <i class="fa fa-arrow-circle-lef"></i>
+              <%= t('.groups', :default => t('helpers.links.back_to_collections')) %>
+
+            <% end %>
