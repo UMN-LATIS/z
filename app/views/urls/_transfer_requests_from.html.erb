@@ -3,11 +3,22 @@
       <h4><%= t('helpers.header_tags.transfer_requests_to_others')%> </h4>
       <p>
         <% @pending_transfer_requests_from.each do |transfer_request| %>
-        <div class="trasnfer-request-item">
-          <b><%= transfer_request.urls.map(&:keyword).join(',') %></b>
-          (To: <b><%= transfer_request.to_user.user_full_name %></b>)
-          <a href="<%= transfer_request_path(transfer_request) %>" data-method="delete" data-confirm="Are you sure you want to take back these URLs?" class='btn btn-default btn-xs'>Take back</a>
-        </div>
+          <div class="transfer-request-item">
+            <div class="transfer-details">
+              <div class="to">
+                To: <b><%= transfer_request.to_user.user_full_name %></b>
+              </div>
+              <% transfer_request.urls.each do |url| %>
+                <div class="keyword">
+                  Keyword: <b><%= url.keyword %></b>
+                </div>
+                <div class="url">
+                  URL: <%= link_to url.url, url.url, target: 'blank' %>
+                </div>
+              <% end %>
+            </div>
+            <a href="<%= transfer_request_path(transfer_request) %>" data-method="delete" data-confirm="Are you sure you want to take back these URLs?" class='btn btn-default btn-xs'>Take back</a>
+          </div>
         <% end %>
       </p>
     </div>

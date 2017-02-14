@@ -12,7 +12,7 @@ describe 'admin urls index page' do
     end
 
     describe 'with no urls' do
-      describe 'the trasnfer button' do
+      describe 'the transfer button' do
         it 'should be disabled' do
           expect(page.find('.js-transfer-urls')[:class]).to(
             have_content('disabled')
@@ -31,7 +31,7 @@ describe 'admin urls index page' do
       end
 
       describe 'with no urls selected' do
-        describe 'the trasnfer button' do
+        describe 'the transfer button' do
           it 'should be disabled' do
             expect(page.find('.js-transfer-urls')[:class]).to(
               have_content('disabled')

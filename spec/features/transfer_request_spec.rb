@@ -12,7 +12,7 @@ describe 'urls index page' do
     end
 
     describe 'with no urls' do
-      describe 'the trasnfer button' do
+      describe 'the transfer button' do
         it 'should be disabled' do
           expect(page.find('.js-transfer-urls')[:class]).to(
             have_content('disabled')
@@ -29,7 +29,7 @@ describe 'urls index page' do
       end
 
       describe 'with no urls selected' do
-        describe 'the trasnfer button' do
+        describe 'the transfer button' do
           it 'should be disabled' do
             expect(page.find('.js-transfer-urls')[:class]).to(
               have_content('disabled')
@@ -138,7 +138,7 @@ describe 'urls index page' do
     end
   end
 
-  describe 'intereacting with trasnfer request', js: true do
+  describe 'intereacting with transfer request', js: true do
     before do
       @other_url = FactoryGirl.create(:url)
       @transfer = FactoryGirl.create(
