@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-describe 'urls index page' do
+describe 'creating a transfer request' do
   before do
     @user = FactoryGirl.create(:user)
     sign_in(@user)
   end
 
-  describe 'creating a transfer request', js: true do
+  describe 'on the urls index page', js: true do
     before do
       visit urls_path
     end
@@ -137,8 +137,32 @@ describe 'urls index page' do
       end
     end
   end
+  
+  describe 'on the urls details', js: true do
+    before do
+      @url = FactoryGirl.create(:url, group: @user.context_group)
+      visit url_path(@url.keyword)
+    end
 
-  describe 'intereacting with trasnfer request', js: true do
+    describe 'the trasnfer button' do
+      it 'should be present' do
+        expect(page).to have_selector('.js-transfer-urls')
+      end
+
+      describe "when clicked" do
+        before do
+          page.find('.js-transfer-urls').click
+          wait_for_ajax
+        end
+
+        it 'should display the modal' do
+          expect(page).to have_selector('#index-modal', visible: true)
+        end
+      end
+    end
+  end
+
+  describe 'intereacting with transfer request', js: true do
     before do
       @other_url = FactoryGirl.create(:url)
       @transfer = FactoryGirl.create(
