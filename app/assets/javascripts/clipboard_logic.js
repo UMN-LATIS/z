@@ -23,7 +23,7 @@ $(document).bind('turbolinks:load', function(){
   }
 
   clipboard.on('success', function(e) {
-    setTooltip(e.trigger, 'Copied!');
+    setTooltip(e.trigger, 'Copied shortlink to clipboard');
     hideTooltip(e.trigger);
   });
 
