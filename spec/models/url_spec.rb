@@ -46,6 +46,26 @@ RSpec.describe Url, type: :model do
   end
 
   describe 'valid url' do
+    describe 'various keywords' do
+      it ' dashes should be valid' do
+        @url.keyword = '-'
+        expect(@url).to be_valid
+      end
+      it ' underscores should be valid' do
+        @url.keyword = '_'
+        expect(@url).to be_valid
+      end
+      it ' letters and number should be valid' do
+        @url.keyword = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890'
+        expect(@url).to be_valid
+      end
+      it ' anything but a-zA-Z0-9\-_ chars should not be valid' do
+        %w(! @ # $ $ % ^ & * ( ) ,).each do |x|
+          @url.keyword = x
+          expect(@url).to_not be_valid
+        end
+      end
+    end
     describe 'various urls' do
       it 'should be valid' do
         @url.url = 'http://fun.com'
