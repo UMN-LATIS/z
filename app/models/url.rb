@@ -22,6 +22,7 @@ class Url < ApplicationRecord
   before_destroy { |url| url.transfer_requests.clear }
 
   before_save do
+    #
     # Add http:// if necessary
     self.url = "http://#{url}" if URI.parse(url).scheme.nil?
   end
