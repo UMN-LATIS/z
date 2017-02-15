@@ -120,12 +120,24 @@ describe 'groups index page' do
 
     describe 'deleting an existing group', js: true do
       describe 'clicking delete' do
-        it 'should delete the group' do
-          expect do
-            find('.delete-group').click
-            click_button "Confirm"
-            wait_for_ajax
-          end.to change(Group, :count).by(-1)
+        describe 'on a group with urls' do
+          before { group.urls << FactoryGirl.create(:url) }
+          it 'should not delete the group' do
+            expect do
+              find('.delete-group').click
+              click_button "Confirm"
+              wait_for_ajax
+            end.to change(Group, :count).by(0)
+          end
+        end
+        describe 'on a group without urls' do
+          it 'should delete the group' do
+            expect do
+              find('.delete-group').click
+              click_button "Confirm"
+              wait_for_ajax
+            end.to change(Group, :count).by(-1)
+          end
         end
       end
     end
