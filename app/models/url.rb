@@ -29,7 +29,7 @@ class Url < ApplicationRecord
   validates :keyword, uniqueness: true, presence: true
   validates :url, presence: true
   validates :keyword, format: {
-                        with: /^[a-zA-Z0-9\-]*$/,
+                        with: /^[a-zA-Z0-9\-_]*$/,
                         multiline: true,
                         message: 'special characters are not permitted. Only letters, and numbers and dashes("-")'
                     }
