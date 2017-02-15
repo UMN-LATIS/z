@@ -12,15 +12,23 @@
             </td>
             <td>
               <% if group.new_record? %>
-                  <%= f.submit "Create Collection", class: 'btn btn-xs btn-primary js-group-submit' %>
+                <%= button_tag  type:"submit", class: 'btn btn-xs btn-primary js-group-submit' do %>
+                  <i class="fa fa-plus-circle"></i>
 
-                  <a href="#" class='btn btn-xs  btn-default cancel-new-group'><%= t('helpers.buttons.cancel') %></a>
+                  Create Collection
+                <% end %>
+
+                <a href="#" class='btn btn-xs  btn-default cancel-new-group'><%= t('helpers.buttons.cancel') %></a>
               <% else %>
-                  <%= f.submit "Edit Collection", class: 'btn btn-xs btn-primary js-group-submit' %>
+                <%= button_tag  type:"submit", class: 'btn btn-xs btn-primary js-group-submit' do %>
+                  <i class="fa fa-pencil"></i>
 
-                  <%= link_to t('.cancel', default: t('helpers.links.cancel')),
-                              group_path(group),
-                              class: 'btn btn-xs btn-default cancel-group', remote: true %>
+                  Edit Collection
+                <% end %>
+
+                <%= link_to t('.cancel', default: t('helpers.links.cancel')),
+                            group_path(group),
+                            class: 'btn btn-xs btn-default cancel-group', remote: true %>
               <% end %>
             </td>
           </tr>
