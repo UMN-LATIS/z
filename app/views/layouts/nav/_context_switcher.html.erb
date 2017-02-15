@@ -10,7 +10,7 @@
     </a>
     <ul class="dropdown-menu">
       <%if current_user.groups.length > 1 %>
-        <li><a href="#">Switch to:</a></li>
+        <li><div class="dropdown-menu-text">Switch to:</div></li>
         <li role="separator" class="divider"></li>
         <% (current_user.groups - [current_user.context_group]).each do |user_group| %>
         <li><%= link_to user_group.name, group_context_path(user_group) %></li>
