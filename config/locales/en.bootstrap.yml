@@ -10,7 +10,7 @@ en:
   helpers:
     lookup_service_down: "Could not establish a connection to the LDAP server. Please notify help@umn.edu"
     actions: "Actions"
-    no_email: "No EmaIL"
+    no_email: "No Email"
     hello: "z.umn.edu"
     switch_to: "Switch To:"
     short_url: "Short URL"
