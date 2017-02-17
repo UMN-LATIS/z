@@ -31,8 +31,8 @@ class User < ApplicationRecord
   before_validation(on: :create) do
     if context_group_id.blank?
       new_context = Group.create(
-        name: internet_id,
-        description: uid
+          name: internet_id,
+          description: uid
       )
       groups << new_context
       self.context_group_id = new_context.id
@@ -60,11 +60,13 @@ class User < ApplicationRecord
   end
 
   def load_user_data
-    # sets this objects UserData attrs
-    me = UserLookupService.new(
-      query: uid,
-      query_type: 'umndid'
-    ).search.first
+    me = Rails.cache.fetch("#{uid}/load_user_data", expires_in: 12.hours) do
+      # sets this objects UserData attrs
+      UserLookupService.new(
+          query: uid,
+          query_type: 'umndid'
+      ).search.first
+    end
 
     if me.present?
       # Sometimes this data is not present
@@ -95,8 +97,8 @@ class User < ApplicationRecord
   def user_belongs_to_context_group_validation
     unless new_record? || context_group.nil? || in_group?(context_group)
       errors.add(
-        :context_group,
-        "#{uid} is not a member of #{context_group.name}: #{context_group.description} and so cannot switch contexts to it."
+          :context_group,
+          "#{uid} is not a member of #{context_group.name}: #{context_group.description} and so cannot switch contexts to it."
       )
     end
   end
