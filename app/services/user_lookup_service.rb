@@ -24,7 +24,7 @@ class UserLookupService
 
   def search
     return nil unless @query.present? && @query_type.present?
-    results = Rails.cache.fetch("#{@query}/search", expires_in: 12.hours) do
+    results = Rails.cache.fetch("#{@query}/#{get_filter}/search", expires_in: 12.hours) do
       if @connection.bind
         @connection.search(
             filter: get_filter,
