@@ -24,22 +24,24 @@ class UserLookupService
 
   def search
     return nil unless @query.present? && @query_type.present?
-    if @connection.bind
-      results = @connection.search(
-          filter: get_filter,
-          return_result: true
-      )
-      results = results.promote(results.detect { |x| x[:uid] == [@query] })
-      results = results.map { |x| {umndid: x.try(:umndid), value: display_name(x), uid: x.try(:uid), first_name: x.try(:givenname), last_name: x.try(:sn), email: x.try(:mail)} }.flatten unless results.blank?
-      # Promote Internet id match
-      # Promote emplid match
-
-      return results
-    else
-      # authentication has failed
-      puts "Result: #{@connection.get_operation_result.code}"
-      puts "Message: #{@connection.get_operation_result.message}"
+    results = Rails.cache.fetch("#{@query}/search", expires_in: 12.hours) do
+      if @connection.bind
+        @connection.search(
+            filter: get_filter,
+            return_result: true
+        )
+      else
+        # authentication has failed
+        puts "Result: #{@connection.get_operation_result.code}"
+        puts "Message: #{@connection.get_operation_result.message}"
+      end
     end
+    return nil unless results
+    results = results.promote(results.detect { |x| x[:uid] == [@query] })
+    results = results.map { |x| {umndid: x.try(:umndid), value: display_name(x), uid: x.try(:uid), first_name: x.try(:givenname), last_name: x.try(:sn), email: x.try(:mail)} }.flatten unless results.blank?
+    # Promote Internet id match
+    # Promote emplid match
+    return results
   end
 
   private

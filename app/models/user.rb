@@ -60,13 +60,11 @@ class User < ApplicationRecord
   end
 
   def load_user_data
-    me = Rails.cache.fetch("#{uid}/load_user_data", expires_in: 12.hours) do
-      # sets this objects UserData attrs
-      UserLookupService.new(
-          query: uid,
-          query_type: 'umndid'
-      ).search.first
-    end
+    # sets this objects UserData attrs
+    me = UserLookupService.new(
+        query: uid,
+        query_type: 'umndid'
+    ).search.first
 
     if me.present?
       # Sometimes this data is not present
