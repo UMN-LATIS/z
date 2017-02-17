@@ -14,6 +14,7 @@
     <%= link_to t('.destroy', default: t('helpers.links.destroy')),
                 group_path(group),
                 :method => :delete,
+                :disabled => group.urls.present?,
                 :data => { confirm: t('.confirm-delete', default: t('helpers.links.confirm_delete', to_delete: group.name, default: t('helpers.links.confirm_default'))) },
                 class: 'btn btn-xs btn-danger delete-group fa fa-trash-o', remote: true %>
   </td>
