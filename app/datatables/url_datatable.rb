@@ -1,5 +1,7 @@
 class UrlDatatable < AjaxDatatablesRails::Base
 
+  def_delegators :@view, :link_to, :full_url
+
   def sortable_columns
     # Declare strings in this format: ModelName.column_name
     @sortable_columns ||= [
@@ -22,14 +24,16 @@ class UrlDatatable < AjaxDatatablesRails::Base
 
   def data
     records.map do |record|
-      [
+      {
         # comma separated list of the values for each cell of a table row
         # example: record.attribute,
-        record.url,
-        record.keyword,
-        record.total_clicks,
-        record.created_at
-      ]
+        '0' => nil,
+        '1' => link_to(record.url, record.url, target: '_blank'),
+        '2' => link_to(record.keyword, full_url(record), target: '_blank'),
+        '3' => record.total_clicks,
+        '4' => record.created_at.to_s(:created_on_formatted),
+        'DT_RowData' => {'url' => record.url, 'keyword' => record.keyword}
+      }
     end
   end
 
