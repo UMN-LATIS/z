@@ -25,28 +25,33 @@
   <%= render 'form', url: @url %>
 </div>
 
-<table class="table user-table table-striped table-bordered data-table">
+<table id="urls-table" class="table user-table table-striped table-bordered data-table" data-source="<%= datatable_urls_path(format: :json) %>">
   <thead>
     <tr>
-      <th></th>
       <th><%= t('helpers.table_headers.url')  %></th>
       <th><%= t('helpers.table_headers.keyword') %></th>
       <th><%= t('helpers.table_headers.total_clicks') %></th>
       <th><%= t('helpers.table_headers.created_on') %></th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
-    <% @urls.each do |url| %>
-      <%= render 'in_row_show', url: url %>
-    <% end %>
   </tbody>
 </table>
 
+
 <script type="text/javascript">
-  <%= render 'datatable.js' %>
   <%= render partial: 'urls/show_js/move.js' %>
   <%= render partial: 'urls/show_js/transfer.js' %>
+  jQuery(document).ready(function() {
+    $('#urls-table').dataTable({
+      "processing": true,
+      "serverSide": true,
+      "ajax": $('#urls-table').data('source'),
+      "pagingType": "full_numbers",
+
+    });
+  });
 </script>
+
 
 <%= render 'modal' %>

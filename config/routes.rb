@@ -18,8 +18,6 @@ Rails.application.routes.draw do
     # / user_lookup/:search_terms
     get '/user_lookup/:search_terms', to: 'user_lookup#index'
 
-
-
     # faq	faq	index	get
     get '/faq', to: 'faq#index', as: 'faq'
 
@@ -35,6 +33,7 @@ Rails.application.routes.draw do
     # urls/create	urls	create	put
     # urls/destroy	urls	destroy	delete
     resources :urls do
+      get 'datatable', to: 'urls#datatables', on: :collection
       get 'keyword_filter/(:destination)/(:keyword)',
           on: :collection,
           to: 'urls#keyword_filter',
@@ -116,7 +115,7 @@ Rails.application.routes.draw do
       end
 
       resources :groups, only: [:index]
-      
+
       # admin/members/:search	admin::members	index	get
       # admin/members/:id	admin::members	show	get
       # admin/members/delete	admin::members	destroy	delete
