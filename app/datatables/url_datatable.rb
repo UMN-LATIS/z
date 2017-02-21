@@ -32,7 +32,10 @@ class UrlDatatable < AjaxDatatablesRails::Base
         '2' => link_to(record.keyword, full_url(record), target: '_blank'),
         '3' => record.total_clicks,
         '4' => record.created_at.to_s(:created_on_formatted),
-        'DT_RowData' => {'url' => record.url, 'keyword' => record.keyword}
+        '5' =>
+          ApplicationController.renderer.render(partial: 'urls/in_row_actions', locals: { url: record }),
+        'DT_RowData' => {'url' => record.url, 'keyword' => record.keyword},
+        'DT_RowId' => record.id
       }
     end
   end

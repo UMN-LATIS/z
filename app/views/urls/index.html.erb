@@ -33,6 +33,7 @@
       <th><%= t('helpers.table_headers.keyword') %></th>
       <th><%= t('helpers.table_headers.total_clicks') %></th>
       <th><%= t('helpers.table_headers.created_on') %></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -66,7 +67,8 @@
             {data: '1' },
             {data: '2' },
             {data: '3' },
-            {data: '4' }
+            {data: '4' },
+            {data: '5' }
           ],
       "processing": true,
       "serverSide": true,
@@ -85,7 +87,7 @@
         {
           orderable: false,
           searchable: false,
-          targets: [0]
+          targets: [0, 5]
         }
       ],
       select: {
