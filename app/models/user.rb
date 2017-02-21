@@ -10,8 +10,6 @@
 #  updated_at       :datetime         not null
 #
 class User < ApplicationRecord
-  #attr_accessor :email, :first_name, :last_name, :internet_id
-
   has_many :groups_users, dependent: :destroy
   has_many :groups, through: :groups_users
 
@@ -43,13 +41,6 @@ class User < ApplicationRecord
   before_save { generate_token(:remember_token) }
 
   after_initialize do
-=begin
-    self.first_name = 'Unknown'
-    self.last_name = 'Unknown'
-    self.email = 'Unknown'
-    self.internet_id = 'Unknown'
-    load_user_data unless Rails.env.test?
-=end
     @first_name_loaded = nil
     @last_name_loaded = nil
     @email_loaded = nil
@@ -103,10 +94,6 @@ class User < ApplicationRecord
     if me.present?
       # Sometimes this data is not present
       # so we try for it
-      #      self.first_name = me[:first_name].try(:first)
-      #      self.last_name = me[:last_name].try(:first)
-      #      self.email = me[:email].try(:first)
-      #      self.internet_id = me[:uid].try(:first)
       @first_name_loaded = me[:first_name].try(:first) || 'Unknown'
       @last_name_loaded = me[:last_name].try(:first) || 'Unknown'
       @email_loaded = me[:email].try(:first) || 'Unknown'
