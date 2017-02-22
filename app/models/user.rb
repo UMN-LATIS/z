@@ -10,6 +10,8 @@
 #  updated_at       :datetime         not null
 #
 class User < ApplicationRecord
+  has_paper_trail
+
   has_many :groups_users, dependent: :destroy
   has_many :groups, through: :groups_users
 
