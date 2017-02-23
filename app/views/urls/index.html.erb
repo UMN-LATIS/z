@@ -40,116 +40,12 @@
   </tbody>
 </table>
 
+<%= content_tag :div, class: "route-info", data: {new_transfer_request_path: new_transfer_request_path, new_move_to_group_path: new_move_to_group_path} do %>
+<% end %>
 
-<script type="text/javascript">
-  <%= render partial: 'urls/show_js/move.js' %>
-  <%= render partial: 'urls/show_js/transfer.js' %>
-  $(document).ready(function() {
-    var transferText = '<i class="fa fa-exchange"></i> Transfer to a different user';
-    var moveText = '<i class="fa fa-share-square-o "></i> Move to a different collection';
-    var selectAllText = 'Select all';
-    var selectNoneText = 'Select none'
-    var keywordColumn = 2;
+<%= content_tag :div, class: "collection-count", data: {collection_count: current_user.groups.length} do %>
+<% end %>
 
-    var userTable = $('#urls-table').DataTable({
-      "pageLength": 25,
-      buttons: [
-
-      ],
-      language: {
-        buttons: {
-          selectAll: selectAllText,
-          selectNone: selectNoneText
-        }
-      },
-      columns: [
-            {data: '0' },
-            {data: '1' },
-            {data: '2' },
-            {data: '3' },
-            {data: '4' },
-            {data: '5' }
-          ],
-      "processing": true,
-      "serverSide": true,
-      "ajax": $('#urls-table').data('source'),
-      "pagingType": "full_numbers",
-      "order": [
-        4,
-        "desc"
-      ],
-      columnDefs: [
-        {
-          className: 'select-checkbox',
-          targets:   0,
-          title:"<input type='checkbox' id='select-all' class='select-checkbox'/>"
-        },
-        {
-          orderable: false,
-          searchable: false,
-          targets: [0, 5]
-        }
-      ],
-      select: {
-        style:    'multi',
-        selector: 'td:first-child'
-      },
-
-    });
-    $('table.data-table').on("page.dt", function(e){
-        userTable.rows().deselect();
-        $("#select-all").prop("checked", false);
-    });
-    $("#select-all").click(function(e){
-        $(e.target).prop("checked") === true ? userTable.rows({page:"current"}).select() : userTable.rows().deselect();
-    });
-
-      var transfer_button = {
-        extend: 'selected',
-        text: transferText,
-          className:'btn-primary js-transfer-urls',
-        action: function ( e, dt, node, config ) {
-          var keywords = [];
-          userTable.rows('.selected').data().map(function (row) {
-            keywords.push(row['DT_RowData']['keyword'])
-          });
-
-          transferUrl('<%= new_transfer_request_path %>', keywords);
-
-        }
-      }
-
-      var move_button = {
-        extend: 'selected',
-        className:'btn-primary js-move-urls',
-        text: moveText,
-        action: function ( e, dt, node, config ) {
-          var keywords = [];
-          userTable.rows('.selected').data().map(function (row) {
-            keywords.push(row['DT_RowData']['keyword'])
-          });
-
-          moveUrl('<%= new_move_to_group_path %>', keywords);
-
-        }
-      }
-
-      buttons = []
-      buttons = [transfer_button, move_button]
-
-      new $.fn.dataTable.Buttons( userTable, {
-        buttons: buttons
-      });
-
-      window.userTable = userTable;
-      userTable
-        .buttons(0, null)
-        .container()
-        .prependTo('.dataTables_wrapper >.row:eq(0) > .col-sm-6:eq(0)');
-
-      $(".col-sm-6 .dt-buttons").removeClass("btn-group");
-  });
-</script>
 
 
 <%= render 'modal' %>
