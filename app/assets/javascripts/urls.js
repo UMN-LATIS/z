@@ -31,6 +31,14 @@ $(document).bind('turbolinks:load', function () {
   initializeUrlDataTable(4, "desc", 5, 2, $('.collection-count').data('collection-count') > 1);
 });
 
+// Load Javascript for the admin-index page
+$(document).bind('turbolinks:load', function () {
+  if ($("body.admin\\/urls.index").length == 0) {
+    return;
+  }
+  initializeUrlDataTable(5, "desc", 6, 3, false);
+});
+
 // The rest of the charts need to be loaded upon showing the tab
 // preloading the charts ruins their formatting
 $(document).on('shown.bs.tab', function (e) {
@@ -73,7 +81,6 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
 
   var userTable = $('#urls-table').DataTable({
      "pageLength": 25,
-
      columns: [
            {data: '0' },
            {data: '1' },
@@ -128,13 +135,12 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
 
          console.log("LOG:","trying to transfer");
          transferUrl($('.route-info').data('new-transfer-request-path'), keywords);
-
        }
      }
 
      var move_button = {
        extend: 'selected',
-       className:'btn-primary js-move-urls',
+       className: 'btn-primary js-move-urls',
        text: moveText,
        action: function ( e, dt, node, config ) {
          var keywords = [];
@@ -143,7 +149,6 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
          });
 
          moveUrl($('.route-info').data('new-move-to-group-path'), keywords);
-
        }
      }
 
@@ -158,7 +163,6 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
        buttons: buttons
      });
 
-     window.userTable = userTable;
      userTable
        .buttons(0, null)
        .container()
