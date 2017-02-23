@@ -33,7 +33,7 @@ Rails.application.routes.draw do
     # urls/create	urls	create	put
     # urls/destroy	urls	destroy	delete
     resources :urls do
-      get 'datatable', to: 'urls#datatables', on: :collection
+      get 'datatable', to: 'urls_datatable#index', on: :collection
       get 'keyword_filter/(:destination)/(:keyword)',
           on: :collection,
           to: 'urls#keyword_filter',

@@ -130,11 +130,6 @@ class UrlsController < ApplicationController
             .created_by_id(current_user.context_group_id)
   end
 
-  def datatables
-    respond_to do |format|
-      format.json { render json: UrlDatatable.new(view_context, current_user: current_user) }
-    end
-  end
 
   private
 
