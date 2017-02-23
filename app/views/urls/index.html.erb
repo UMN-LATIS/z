@@ -21,8 +21,7 @@
 
 <div id="new-url-form">
   <!-- <div class="new-url-form-hint">Shorten a URL</div> -->
-  <!-- <h1>Should you plan a meetin to talk over UI changes and GROUPS?</h1> -->
-  <%= render 'form', url: @url %>
+  <%= render 'sleek_form', url: @url %>
 </div>
 
 <table class="table user-table table-striped table-bordered data-table">
@@ -31,8 +30,8 @@
       <th></th>
       <th><%= t('helpers.table_headers.url')  %></th>
       <th><%= t('helpers.table_headers.keyword') %></th>
-      <th><%= t('helpers.table_headers.total_clicks') %></th>
-      <th><%= t('helpers.table_headers.created_on') %></th>
+      <th><%= t('helpers.table_headers.clicks') %></th>
+      <th><%= t('helpers.table_headers.created') %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
