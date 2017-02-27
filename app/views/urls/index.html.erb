@@ -1,7 +1,4 @@
 <%- model_class = Url -%>
-<!-- <div class="page-header">
-  <h4><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h3>
-</div> -->
 
 <div id="pending-transfer-requests-to">
   <%= render 'transfer_requests_to' %>
@@ -20,8 +17,6 @@
 </h2>
 
 <div id="new-url-form">
-  <!-- <div class="new-url-form-hint">Shorten a URL</div> -->
-  <!-- <h1>Should you plan a meetin to talk over UI changes and GROUPS?</h1> -->
   <%= render 'form', url: @url %>
 </div>
 
@@ -45,7 +40,5 @@
 
 <%= content_tag :div, class: "collection-count", data: {collection_count: current_user.groups.length} do %>
 <% end %>
-
-
 
 <%= render 'modal' %>
