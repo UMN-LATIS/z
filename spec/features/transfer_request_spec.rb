@@ -78,7 +78,6 @@ describe 'creating a transfer request' do
                 click_button "Confirm"
                 wait_for_ajax
                 expect(page).to have_content 'Your Transfer Requests to Others'
-                expect(page).to have_content '(To: '
               end
 
               it 'should display the pending request on their screen' do
@@ -87,7 +86,6 @@ describe 'creating a transfer request' do
                 sign_in(@other_user)
                 visit urls_path
                 expect(page).to have_content 'You Have Pending Transfer Requests'
-                expect(page).to have_content '(From: '
               end
 
               describe 'user does not exist' do
@@ -137,7 +135,7 @@ describe 'creating a transfer request' do
       end
     end
   end
-  
+
   describe 'on the urls details', js: true do
     before do
       @url = FactoryGirl.create(:url, group: @user.context_group)

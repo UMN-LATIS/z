@@ -156,7 +156,7 @@ describe 'urls index page' do
     end
   end
 
-  describe 'with an existing url' do
+  describe 'with an existing url', js: true do
     let(:new_url) { 'http://www.facebook.com' }
     let(:new_keyword) { 'face' }
     before do
@@ -217,7 +217,7 @@ describe 'urls index page' do
       before do
         @new_user = FactoryGirl.create(:user)
         @new_url = FactoryGirl.create(:url, group: @new_user.context_group)
-        visit "urls/#{@new_url.id}/edit"
+        visit edit_url_path(@new_url)
       end
       describe 'page content' do
         it 'should display the not authorized message' do
@@ -225,6 +225,5 @@ describe 'urls index page' do
         end
       end
     end
-
   end
 end

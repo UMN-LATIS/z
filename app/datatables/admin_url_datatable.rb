@@ -40,7 +40,7 @@ class AdminUrlDatatable < AjaxDatatablesRails::Base
               locals: { url: record }
             ),
           'DT_RowData' => { 'url' => record.url, 'keyword' => record.keyword },
-          'DT_RowId' => record.id
+          'DT_RowId' => "url-#{record.id}"
         }
       end
     end

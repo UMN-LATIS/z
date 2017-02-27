@@ -132,8 +132,6 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
          userTable.rows('.selected').data().map(function (row) {
            keywords.push(row['DT_RowData']['keyword'])
          });
-
-         console.log("LOG:","trying to transfer");
          transferUrl($('.route-info').data('new-transfer-request-path'), keywords);
        }
      }
