@@ -1,0 +1,23 @@
+<%= form_for_url_admin @admin_view, url do |f| %>
+  <div class="super-input">
+
+    <%= f.text_field :url, class: 'js-new-url-url', placeholder: "source URL" %>
+
+    <div class="divider">
+    </div>
+
+    <div class="keyword-wrapper">
+      <div class="keyword-static-text">
+        z.umn.edu /
+      </div>
+      <%= f.text_field :keyword, class: 'js-new-url-keyword', placeholder: "keyword (optional)" %>
+    </div>
+
+    <button type="submit" class="js-url-submit"> Z-link it! </button>
+  </div>
+  <div id="url-blurb-container">
+
+  </div>
+<% end %>
+
+<%= render 'urls/in_row_errors', url: url %>
