@@ -169,7 +169,8 @@ table.dataTable tr.selected td.select-checkbox:after{
 
 $superInputHeight: 50px;
 .super-input{
-  // border:1px solid rgba(0,0,0,0.1);
+	border:1px solid #cfcfcf;
+	margin-bottom:15px;
   display:inline-block;
   border-radius:5px;
   overflow:hidden;
@@ -197,7 +198,7 @@ $superInputHeight: 50px;
 	.divider{
 		height:40%;
 		width:1px;
-		background-color:#bbb;
+		background-color:#ddd;
 		margin:0 15px;
 	}
 
@@ -276,4 +277,83 @@ $superInputHeight: 50px;
 			width:100%;
 		}
 	}
+}
+
+.url-blurb{
+	transition:height 0.3s, padding 0.3s;
+  width:100%;
+  border-radius:5px;
+  box-shadow:1px 1px 2px rgba(0,0,0,0.1);
+  height:55px;
+  background-color:white;
+  padding:10px 20px;
+  box-sizing:border-box;
+	border:1px solid #e6e6e6;
+	overflow:hidden;
+	&.off{
+		height:0;
+		padding-top:0px;
+		padding-bottom:0px;
+	}
+
+  .url-blurb-details{
+    .url-blurb-source{
+      font-size:9px;
+      color:#777;
+    }
+    .url-blurb-short-url{
+      font-size:14px;
+    }
+  }
+
+	.url-blurb-close-button{
+		background: none;
+    border: none;
+    float: right;
+    border-radius: 100%;
+    font-size: 12px;
+    margin-top: 7px;
+    margin-left: 20px;
+		opacity:0.6;
+		&:hover{
+			opacity:1;
+		}
+	}
+
+  .url-blurb-actions{
+    float:right;
+    .url-blurb-actions-header{
+      font-size:9px;
+      text-transform:uppercase;
+      color:#777;
+    }
+
+    .url-blurb-action-buttons{
+      .url-blurb-action-button{
+        font-size:10px;
+        padding:2px 15px;
+        background:none;
+
+        color:blue;
+        border-radius:3px;
+        font-weight:500;
+				&:hover{
+					background:#eaeaea;
+				}
+        &.url-blurb-action-button-facebook{
+          color:#385a97;
+          border:1px solid #385a97;
+        }
+          &.url-blurb-action-button-twitter{
+          color:#51adec;
+          border:1px solid #51adec;
+        }
+         &.url-blurb-action-button-qr{
+          color:#333;
+          border:1px solid #333;
+        }
+      }
+    }
+
+  }
 }
