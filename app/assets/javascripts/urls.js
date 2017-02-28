@@ -140,19 +140,19 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
 	$(".col-sm-6 .dt-buttons").removeClass("btn-group");
 }
 
-//url blurb actions
-$(document).bind('turbolinks:load', function(){
-	$("body").on("click", ".url-blurb-action-button-twitter",function(e){
+//url share actions
+$(document).ready(function(){
+	$("body").on("click", ".url-share-button-twitter",function(e){
 		e.preventDefault();
 		var shortUrl = $(this).data("shortUrl");
 		window.open("https://twitter.com/intent/tweet?text=" + shortUrl, '', 'menubar=no, toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
 	})
-	$("body").on("click", ".url-blurb-action-button-facebook",function(e){
+	$("body").on("click", ".url-share-button-facebook",function(e){
 		e.preventDefault();
 		var shortUrl = $(this).data("shortUrl");
 		// window.open("https://twitter.com/intent/tweet?text=" + shortUrl, '', 'menubar=no, toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
 	})
-	$("body").on("click", ".url-blurb-action-button-qr", function(e){
+	$("body").on("click", ".url-share-button-qr", function(e){
 		e.preventDefault();
 		window.open($(this).data("path"))
 
@@ -165,4 +165,8 @@ $(document).bind('turbolinks:load', function(){
 			$(this).remove();
 		})
 	});
+	$(".share-url").popover({html:true, trigger:"click", placement:"top"})
+		.click(function(e){
+			e.preventDefault();
+		});
 });
