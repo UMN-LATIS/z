@@ -1,6 +1,16 @@
 <%= link_to t('.show', default: t("helpers.links.stats")),
             url_path(url.keyword),
             class: 'btn btn-xs btn-default show-url fa fa-bar-chart' %>
+<% if admin_view %>
+  <%= link_to t('.edit', default: t('helpers.links.edit')),
+              edit_admin_url_path(url),
+              class: 'btn btn-xs btn-default edit-url fa fa-pencil', remote: true %>
+  <%= link_to t('.destroy', default: t('helpers.links.destroy')),
+              admin_url_path(url),
+              :method => :delete,
+              :data => { confirm: t('.confirm-delete', default: t('helpers.links.confirm_delete', to_delete: url.keyword,  default: t('helpers.links.confirm_default'))) },
+              class: 'btn btn-xs btn-danger delete-url fa fa-trash-o', remote: true %>
+<% else %>
   <%= link_to t('.edit', default: t('helpers.links.edit')),
               edit_url_path(url),
               class: 'btn btn-xs btn-default edit-url fa fa-pencil', remote: true %>
@@ -9,3 +19,4 @@
               :method => :delete,
               :data => { confirm: t('.confirm-delete', default: t('helpers.links.confirm_delete', to_delete: url.keyword, default: t('helpers.links.confirm_default'))) },
               class: 'btn btn-xs btn-danger delete-url fa fa-trash-o', remote: true %>
+<% end %>

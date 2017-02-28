@@ -37,7 +37,7 @@ class AdminUrlDatatable < AjaxDatatablesRails::Base
           '6' =>
             ApplicationController.renderer.render(
               partial: 'urls/in_row_actions',
-              locals: { url: record }
+              locals: { url: record, admin_view: true }
             ),
           'DT_RowData' => { 'url' => record.url, 'keyword' => record.keyword },
           'DT_RowId' => "url-#{record.id}"
