@@ -43,7 +43,11 @@ class UrlDatatable < AjaxDatatablesRails::Base
   end
 
   def get_raw_records
-    Url.created_by_id(current_user.context_group_id).not_in_pending_transfer_request
+    if current_user.blank?
+      Url.none
+    else
+      Url.created_by_id(current_user.context_group_id).not_in_pending_transfer_request
+    end
   end
 
   # ==== Insert 'presenter'-like methods below if necessary

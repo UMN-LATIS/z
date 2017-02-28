@@ -74,7 +74,6 @@ describe 'as a valid admin user' do
                     wait_for_ajax
                   end.to change(Url, :count).by(0)
                 end
-
                 it 'should display an error' do
                   find('.js-url-submit').click
                   wait_for_ajax

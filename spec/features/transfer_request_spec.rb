@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-describe 'creating a transfer request' do
+describe 'creating a transfer request', js: true do
   before do
     @user = FactoryGirl.create(:user)
     sign_in(@user)
   end
 
-  describe 'on the urls index page', js: true do
+  describe 'on the urls index page' do
     before do
       visit urls_path
     end
@@ -29,7 +29,7 @@ describe 'creating a transfer request' do
       end
 
       describe 'with no urls selected' do
-        describe 'the transfer button' do
+        describe 'the transfer button', js: true do
           it 'should be disabled' do
             expect(page.find('.js-transfer-urls')[:class]).to(
               have_content('disabled')
