@@ -92,6 +92,7 @@ describe 'urls index page' do
 
   describe 'page content' do
     it 'should display the group info' do
+
       expect(page).to have_content 'Viewing URLs for the'
     end
   end
@@ -108,6 +109,18 @@ describe 'urls index page' do
         find('.js-url-submit').click
         wait_for_ajax
         expect(page).to have_content('http://www.googjgjgjgj...')
+      end
+    end
+    describe 'visiting page with one url' do
+      it ' should not display pagination Next button' do
+        find('.js-url-submit').click
+        wait_for_ajax
+        expect(page).to_not have_content('Next')
+      end
+      it ' should not display pagination Previous button' do
+        find('.js-url-submit').click
+        wait_for_ajax
+        expect(page).to_not have_content('Previous')
       end
     end
   end
