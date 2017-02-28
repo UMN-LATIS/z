@@ -1,9 +1,13 @@
-<button class="url-share-button url-share-button-twitter" data-short-url="<%= full_url(url) %>">
- Tweet
+<% is_large = (defined?(large) && large == true) ? 'url-share-button-large' : '' %>
+<button class="url-share-button url-share-button-twitter <%= is_large %>" data-short-url="<%= full_url(url) %>">
+  <i class="fa fa-twitter"></i>
+  Tweet
 </button>
-<button class="url-share-button url-share-button-facebook">
- Post
+<button class="url-share-button url-share-button-facebook <%= is_large %>">
+  <i class="fa fa-facebook"></i>
+  Post
 </button>
-<button class="url-share-button url-share-button-qr" data-path="<%= url_download_qrcode_path(url.keyword) %>">
- QR Code
+<button class="url-share-button url-share-button-qr <%= is_large %>" data-path="<%= url_download_qrcode_path(url.keyword) %>">
+  <i class="fa fa-qrcode"></i>
+  QR Code
 </button>
