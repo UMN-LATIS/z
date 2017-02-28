@@ -117,7 +117,12 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
        style:    'multi',
        selector: 'td:first-child'
      },
-
+		 fnDrawCallback: function(){
+			 $(".share-url").popover({html:true, trigger:"click", placement:"top"})
+			 .click(function(e){
+				 e.preventDefault();
+			 });
+		 }
    });
    $('table.data-table').on("page.dt", function(e){
        userTable.rows().deselect();
