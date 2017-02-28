@@ -43,7 +43,7 @@ describe 'urls show page' do
     expect(page).to have_content url
   end
 
-  it 'should display short url' do
+  it 'should display the keyword' do
     expect(page).to have_content keyword
   end
 
@@ -172,7 +172,7 @@ describe 'urls index page' do
     end
   end
 
-  describe 'with an existing url' do
+  describe 'with an existing url', js: true do
     let(:new_url) { 'http://www.facebook.com' }
     let(:new_keyword) { 'face' }
     before do
@@ -183,6 +183,9 @@ describe 'urls index page' do
     describe 'page content' do
       it 'should display the url\'s url' do
         expect(page).to have_content @url.url
+      end
+      it 'should display short url host' do
+        expect(page).to have_content page.current_host
       end
       it 'should display the url\'s keyword' do
         expect(page).to have_content @url.keyword
@@ -233,7 +236,7 @@ describe 'urls index page' do
       before do
         @new_user = FactoryGirl.create(:user)
         @new_url = FactoryGirl.create(:url, group: @new_user.context_group)
-        visit "urls/#{@new_url.id}/edit"
+        visit edit_url_path(@new_url)
       end
       describe 'page content' do
         it 'should display the not authorized message' do
@@ -241,6 +244,5 @@ describe 'urls index page' do
         end
       end
     end
-
   end
 end

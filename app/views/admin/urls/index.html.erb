@@ -3,7 +3,7 @@
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
 </div>
 
-<table class="table admin-table table-striped table-bordered data-table">
+<table id="urls-table" class="table admin-table table-striped table-bordered data-table" data-source="<%= datatable_admin_urls_path(format: :json) %>">
   <thead>
     <tr>
       <th></th>
@@ -16,19 +16,13 @@
     </tr>
   </thead>
   <tbody>
-    <% if @urls.blank? %>
-    <% else %>
-      <% @urls.each do |url| %>
-        <%= render '/urls/in_row_show', url: url %>
-      <% end %>
-    <% end %>
 
   </tbody>
 </table>
 
-<script type="text/javascript">
-  <%= render 'datatable.js' %>
-  <%= render partial: 'urls/show_js/transfer.js' %>
-</script>
+
+<%= content_tag :div, class: "route-info", data: {new_transfer_request_path: new_admin_transfer_request_path} do %>
+<% end %>
+
 
 <%= render 'urls/modal' %>
