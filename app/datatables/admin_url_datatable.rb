@@ -31,7 +31,7 @@ class AdminUrlDatatable < AjaxDatatablesRails::Base
           '0' => nil,
           '1' => record.group.name,
           '2' => link_to(display_url(record), record.url, target: '_blank'),
-          '3' => link_to(full_url(record.keyword), full_url(record), target: '_blank'),
+          '3' => link_to(full_url(record), full_url(record), target: '_blank'),
           '4' => record.total_clicks,
           '5' => record.created_at.to_s(:created_on_formatted),
           '6' =>

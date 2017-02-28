@@ -59,20 +59,7 @@ describe 'urls show page' do
     expect(page).to have_content '15 hits'
   end
 
-  it 'should display the qr code' do
-    require 'barby'
-    require 'barby/barcode/qr_code'
-    require 'barby/outputter/svg_outputter'
-
-    barcode = Barby::QrCode.new("http://www.example.com/#{@url.keyword}")
-
-    barcode_svg = Barby::SvgOutputter.new(barcode)
-    barcode_svg.xdim = 5
-
-    expect(page.html).to include(barcode_svg.to_svg.html_safe)
-  end
-
-  describe 'downloading qr code' do
+  describe 'downloading qr code', js: true do
     before { find('.js-qrcode-download').click }
 
     it 'should be a png type' do
