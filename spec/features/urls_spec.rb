@@ -110,6 +110,18 @@ describe 'urls index page' do
         expect(page).to have_content('http://www.googjgjgjgj...')
       end
     end
+    describe 'visiting page with one url' do
+      it ' should not display pagination Next button' do
+        find('.js-url-submit').click
+        wait_for_ajax
+        expect(page).to_not have_content('Next')
+      end
+      it ' should not display pagination Previous button' do
+        find('.js-url-submit').click
+        wait_for_ajax
+        expect(page).to_not have_content('Previous')
+      end
+    end
   end
   describe 'creating new url', js: true do
     let(:url) { 'http://www.google.com' }
