@@ -1,0 +1,9 @@
+<button class="url-share-button url-share-button-twitter" data-short-url="<%= full_url(url) %>">
+ Tweet
+</button>
+<button class="url-share-button url-share-button-facebook">
+ Post
+</button>
+<button class="url-share-button url-share-button-qr" data-path="<%= url_download_qrcode_path(url.keyword) %>">
+ QR Code
+</button>
