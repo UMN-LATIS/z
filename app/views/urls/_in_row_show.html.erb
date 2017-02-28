@@ -9,7 +9,7 @@
     <%= link_to display_url(url), url.url, target: '_blank' %>
   </td>
 	<td data-search="<%= url.keyword %>">
-    <%= link_to url.keyword, full_url(url), target: '_blank' %>
+    <%= link_to full_url(url), full_url(url), target: '_blank' %>
     <button class='btn btn-default clipboard-btn' data-clipboard-text="<%= full_url(url) %>">
       <i class=" fa fa-files-o"></i>
     </button>
@@ -21,27 +21,6 @@
     <%= url.created_at.to_s(:created_on_formatted)  %>
   </td>
   <td>
-    <%= link_to t('.show', default: t("helpers.links.stats")),
-                url_path(url.keyword),
-                class: 'btn btn-xs btn-default show-url fa fa-bar-chart' %>
-    <% if @admin_view %>
-      <%= link_to t('.edit', default: t('helpers.links.edit')),
-                  edit_admin_url_path(url),
-                  class: 'btn btn-xs btn-default edit-url fa fa-pencil', remote: true %>
-      <%= link_to t('.destroy', default: t('helpers.links.destroy')),
-                  admin_url_path(url),
-                  :method => :delete,
-                  :data => { confirm: t('.confirm-delete', default: t('helpers.links.confirm_delete', to_delete: url.keyword,  default: t('helpers.links.confirm_default'))) },
-                  class: 'btn btn-xs btn-danger delete-url fa fa-trash-o', remote: true %>
-    <% else %>
-      <%= link_to t('.edit', default: t('helpers.links.edit')),
-                  edit_url_path(url),
-                  class: 'btn btn-xs btn-default edit-url fa fa-pencil', remote: true %>
-      <%= link_to t('.destroy', default: t('helpers.links.destroy')),
-                  url_path(url),
-                  :method => :delete,
-                  :data => { confirm: t('.confirm-delete', default: t('helpers.links.confirm_delete', to_delete: url.keyword, default: t('helpers.links.confirm_default'))) },
-                  class: 'btn btn-xs btn-danger delete-url fa fa-trash-o', remote: true %>
-    <% end %>
+
   </td>
 </tr>

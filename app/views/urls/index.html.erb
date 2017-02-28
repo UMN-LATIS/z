@@ -1,7 +1,4 @@
 <%- model_class = Url -%>
-<!-- <div class="page-header">
-  <h4><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h3>
-</div> -->
 
 <div id="pending-transfer-requests-to">
   <%= render 'transfer_requests_to' %>
@@ -20,11 +17,10 @@
 </h2>
 
 <div id="new-url-form">
-  <!-- <div class="new-url-form-hint">Shorten a URL</div> -->
   <%= render 'sleek_form', url: @url %>
 </div>
 
-<table class="table user-table table-striped table-bordered data-table">
+<table id="urls-table" class="table user-table table-striped table-bordered data-table" data-source="<%= datatable_urls_path(format: :json) %>">
   <thead>
     <tr>
       <th></th>
@@ -32,20 +28,17 @@
       <th><%= t('helpers.table_headers.keyword') %></th>
       <th><%= t('helpers.table_headers.clicks') %></th>
       <th><%= t('helpers.table_headers.created') %></th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+      <th><%= t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
-    <% @urls.each do |url| %>
-      <%= render 'in_row_show', url: url %>
-    <% end %>
   </tbody>
 </table>
 
-<script type="text/javascript">
-  <%= render 'datatable.js' %>
-  <%= render partial: 'urls/show_js/move.js' %>
-  <%= render partial: 'urls/show_js/transfer.js' %>
-</script>
+<%= content_tag :div, class: "route-info", data: {new_transfer_request_path: new_transfer_request_path, new_move_to_group_path: new_move_to_group_path} do %>
+<% end %>
+
+<%= content_tag :div, class: "collection-count", data: {collection_count: current_user.groups.length} do %>
+<% end %>
 
 <%= render 'modal' %>
