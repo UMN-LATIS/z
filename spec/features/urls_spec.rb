@@ -43,7 +43,7 @@ describe 'urls show page' do
     expect(page).to have_content url
   end
 
-  it 'should display short url' do
+  it 'should display the keyword' do
     expect(page).to have_content keyword
   end
 
@@ -183,6 +183,9 @@ describe 'urls index page' do
     describe 'page content' do
       it 'should display the url\'s url' do
         expect(page).to have_content @url.url
+      end
+      it 'should display short url host' do
+        expect(page).to have_content page.current_host
       end
       it 'should display the url\'s keyword' do
         expect(page).to have_content @url.keyword
