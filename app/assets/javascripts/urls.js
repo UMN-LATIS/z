@@ -80,6 +80,10 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
   var moveText = '<i class="fa fa-share-square-o "></i> Move to a different collection';
 
   var userTable = $('#urls-table').DataTable({
+          drawCallback: function(settings) {
+              var pagination = $(this).closest('.dataTables_wrapper').find('.dataTables_paginate');
+              pagination.toggle(this.api().page.info().pages > 1);
+          },
      "pageLength": 25,
      columns: [
            {data: '0' },
