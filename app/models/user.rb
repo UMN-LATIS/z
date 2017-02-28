@@ -10,6 +10,8 @@
 #  updated_at       :datetime         not null
 #
 class User < ApplicationRecord
+  attr_accessor :first_name, :last_name, :email, :internet_id, :first_name_loaded, :last_name_loaded, :email_loaded, :internet_id_loaded
+
   has_many :groups_users, dependent: :destroy
   has_many :groups, through: :groups_users
 

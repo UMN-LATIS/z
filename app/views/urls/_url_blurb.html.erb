@@ -1,0 +1,31 @@
+<div class="url-blurb">
+  <button class="url-blurb-close-button">
+    <i class="fa fa-close"> </i>
+  </button>
+  <div class="url-blurb-actions">
+    <div class="url-blurb-actions-header">
+        share your new z link
+    </div>
+    <div class="url-blurb-action-buttons">
+      <button class="url-blurb-action-button url-blurb-action-button-twitter" data-short-url="z.umn.edu/testetst">
+       Tweet
+      </button>
+      <button class="url-blurb-action-button url-blurb-action-button-facebook">
+       Post
+      </button>
+      <button class="url-blurb-action-button url-blurb-action-button-qr" data-path="<%= url_download_qrcode_path(@url.keyword) %>">
+       QR Code
+      </button>
+    </div>
+  </div>
+
+
+  <div class="url-blurb-details">
+    <div class="url-blurb-source">
+      <%= @url.url %>
+    </div>
+    <div class="url-blurb-short-url">
+      <%= full_url(@url) %>
+    </div>
+  </div>
+</div>

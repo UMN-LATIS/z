@@ -17,7 +17,7 @@
 </h2>
 
 <div id="new-url-form">
-  <%= render 'form', url: @url %>
+  <%= render 'sleek_form', url: @url %>
 </div>
 
 <table id="urls-table" class="table user-table table-striped table-bordered data-table" data-source="<%= datatable_urls_path(format: :json) %>">
@@ -26,9 +26,9 @@
       <th></th>
       <th><%= t('helpers.table_headers.url')  %></th>
       <th><%= t('helpers.table_headers.keyword') %></th>
-      <th><%= t('helpers.table_headers.total_clicks') %></th>
-      <th><%= t('helpers.table_headers.created_on') %></th>
-      <th></th>
+      <th><%= t('helpers.table_headers.clicks') %></th>
+      <th><%= t('helpers.table_headers.created') %></th>
+      <th><%= t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>

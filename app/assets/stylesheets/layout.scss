@@ -423,17 +423,6 @@ div.dataTables_wrapper{
   }
 }
 
-.keyword-input-wrapper{
-  >*{
-    display:inline-block;
-  }
-  >label{
-    font-size:14px;
-    font-weight:600;
-    color:#999;
-  }
-}
-
 @media (min-width: 768px){
   .keyword-input-wrapper, .input-wrapper{
     display:inline-block;
@@ -493,5 +482,6 @@ div.dataTables_wrapper{
   &::before{
     font:normal normal normal 14px/1 FontAwesome;
     margin-right:3px;
+    font-size:inherit;
   }
 }

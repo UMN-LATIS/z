@@ -10,17 +10,17 @@ describe 'urls show page' do
     sign_in(@user)
 
     @url = FactoryGirl.create(
-      :url,
-      group: @user.context_group,
-      keyword: keyword,
-      url: url,
-      created_at: created_at
+        :url,
+        group: @user.context_group,
+        keyword: keyword,
+        url: url,
+        created_at: created_at
     )
     # add 10 clicks to yesterday
     10.times do
       @url.clicks << Click.create(
-        country_code: 'US',
-        created_at: Time.now - 1.day
+          country_code: 'US',
+          created_at: Time.now - 1.day
       )
       @url.total_clicks += 1
       @url.save
@@ -93,6 +93,22 @@ describe 'urls index page' do
   describe 'page content' do
     it 'should display the group info' do
       expect(page).to have_content 'Viewing URLs for the'
+    end
+  end
+  describe 'creating new url ', js: true do
+    let(:url) { 'http://www.googjgjgjgjgjgjgjgjgjgjgjgjgjgjgjggjgjgjgjgjgjggjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjjggle.com' }
+    let(:keyword) { 'goog' }
+    before do
+      visit urls_path
+      find('.js-new-url-url').set url
+      find('.js-new-url-keyword').set keyword
+    end
+    describe 'that is super long' do
+      it 'should shorten it on the sceen' do
+        find('.js-url-submit').click
+        wait_for_ajax
+        expect(page).to have_content('http://www.googjgjgjgj...')
+      end
     end
   end
   describe 'creating new url', js: true do
