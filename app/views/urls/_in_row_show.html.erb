@@ -22,8 +22,9 @@
   </td>
   <td class="row-url-action-buttons">
     <%= link_to t('.share', default: t("helpers.links.share")),
-                url_path(url.keyword),
-              class: 'btn btn-xs btn-default share-url fa fa-share-square-o' %>
+              '',
+              class: 'btn btn-xs btn-default share-url fa fa-share-square-o',
+              'data-content': render('share_buttons', url: url) %>
 
     <%= link_to t('.show', default: t("helpers.links.stats")),
                 url_path(url.keyword),
