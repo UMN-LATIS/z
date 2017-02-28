@@ -328,32 +328,30 @@ $superInputHeight: 50px;
       color:#777;
     }
 
-    .url-blurb-action-buttons{
-      .url-blurb-action-button{
-        font-size:10px;
-        padding:2px 15px;
-        background:none;
-
-        color:blue;
-        border-radius:3px;
-        font-weight:500;
-				&:hover{
-					background:#eaeaea;
-				}
-        &.url-blurb-action-button-facebook{
-          color:#385a97;
-          border:1px solid #385a97;
-        }
-          &.url-blurb-action-button-twitter{
-          color:#51adec;
-          border:1px solid #51adec;
-        }
-         &.url-blurb-action-button-qr{
-          color:#333;
-          border:1px solid #333;
-        }
-      }
-    }
-
   }
+}
+.url-share-button{
+	font-size:10px;
+	padding:2px 15px;
+	background:none;
+
+	color:blue;
+	border-radius:3px;
+	font-weight:500;
+	&:hover{
+		background:#eaeaea;
+	}
+	&.url-share-button-facebook{
+		color:#385a97;
+		border:1px solid #385a97;
+	}
+	&.url-share-button-twitter{
+		color:#51adec;
+		border:1px solid #51adec;
+	}
+	 &.url-share-button-qr{
+		color:#333;
+		border:1px solid #333;
+	}
+
 }

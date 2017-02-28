@@ -7,15 +7,7 @@
         share your new z link
     </div>
     <div class="url-blurb-action-buttons">
-      <button class="url-blurb-action-button url-blurb-action-button-twitter" data-short-url="z.umn.edu/testetst">
-       Tweet
-      </button>
-      <button class="url-blurb-action-button url-blurb-action-button-facebook">
-       Post
-      </button>
-      <button class="url-blurb-action-button url-blurb-action-button-qr" data-path="<%= url_download_qrcode_path(@url.keyword) %>">
-       QR Code
-      </button>
+        <%= render 'share_buttons', url: @url %>
     </div>
   </div>
 
