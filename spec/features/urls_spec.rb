@@ -180,7 +180,7 @@ describe 'urls index page' do
       visit urls_path
     end
 
-    describe 'page content' do
+    describe 'page content', js: true do
       it 'should display the url\'s url' do
         expect(page).to have_content @url.url
       end
