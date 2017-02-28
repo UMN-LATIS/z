@@ -248,6 +248,9 @@ $superInputHeight: 50px;
 	}
 }
 @media screen and (max-width:640px){
+	#url-blurb-container{
+		display:none;
+	}
 	#new-url-form{
 		form{
 			width:70%;
@@ -334,10 +337,14 @@ $superInputHeight: 50px;
 	font-size:10px;
 	padding:2px 15px;
 	background:none;
-
 	color:blue;
 	border-radius:3px;
 	font-weight:500;
+
+	&.url-share-button-large {
+    font-size: 12px;
+    margin: 0 7px;
+	}
 	&:hover{
 		background:#eaeaea;
 	}
