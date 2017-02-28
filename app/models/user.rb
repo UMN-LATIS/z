@@ -10,8 +10,6 @@
 #  updated_at       :datetime         not null
 #
 class User < ApplicationRecord
-  attr_accessor :email, :first_name, :last_name, :internet_id
-
   has_many :groups_users, dependent: :destroy
   has_many :groups, through: :groups_users
 
@@ -31,8 +29,8 @@ class User < ApplicationRecord
   before_validation(on: :create) do
     if context_group_id.blank?
       new_context = Group.create(
-        name: internet_id,
-        description: uid
+          name: internet_id,
+          description: uid
       )
       groups << new_context
       self.context_group_id = new_context.id
@@ -43,12 +41,10 @@ class User < ApplicationRecord
   before_save { generate_token(:remember_token) }
 
   after_initialize do
-    self.first_name = 'Unknown'
-    self.last_name = 'Unknown'
-    self.email = 'Unknown'
-    self.internet_id = 'Unknown'
-
-    load_user_data unless Rails.env.test?
+    @first_name_loaded = nil
+    @last_name_loaded = nil
+    @email_loaded = nil
+    @internet_id_loaded = nil
   end
 
   def reset_context!
@@ -59,20 +55,50 @@ class User < ApplicationRecord
     group.user?(self)
   end
 
+  def first_name
+    if @first_name_loaded.nil?
+      load_user_data
+    end
+    @first_name_loaded
+  end
+
+  def last_name
+    if @last_name_loaded.nil?
+      load_user_data
+    end
+    @last_name_loaded
+  end
+
+  def email
+    if @email_loaded.nil?
+      load_user_data
+    end
+    @email_loaded
+  end
+
+  def internet_id
+    if @internet_id_loaded.nil?
+      load_user_data
+    end
+    @internet_id_loaded
+  end
+
+
   def load_user_data
     # sets this objects UserData attrs
     me = UserLookupService.new(
-      query: uid,
-      query_type: 'umndid'
+        query: uid,
+        query_type: 'umndid'
     ).search.first
 
     if me.present?
       # Sometimes this data is not present
       # so we try for it
-      self.first_name = me[:first_name].try(:first)
-      self.last_name = me[:last_name].try(:first)
-      self.email = me[:email].try(:first)
-      self.internet_id = me[:uid].try(:first)
+      @first_name_loaded = me[:first_name].try(:first) || 'Unknown'
+      @last_name_loaded = me[:last_name].try(:first) || 'Unknown'
+      @email_loaded = me[:email].try(:first) || 'Unknown'
+      @internet_id_loaded = me[:uid].try(:first) || 'Unknown'
+
     end
   end
 
@@ -95,8 +121,8 @@ class User < ApplicationRecord
   def user_belongs_to_context_group_validation
     unless new_record? || context_group.nil? || in_group?(context_group)
       errors.add(
-        :context_group,
-        "#{uid} is not a member of #{context_group.name}: #{context_group.description} and so cannot switch contexts to it."
+          :context_group,
+          "#{uid} is not a member of #{context_group.name}: #{context_group.description} and so cannot switch contexts to it."
       )
     end
   end
