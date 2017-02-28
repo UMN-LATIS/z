@@ -91,7 +91,12 @@ class User < ApplicationRecord
     me = UserLookupService.new(
         query: uid,
         query_type: 'umndid'
-    ).search.first
+    ).search.try(:first)
+
+    @first_name_loaded = 'Unknown'
+    @last_name_loaded = 'Unknown'
+    @email_loaded = 'Unknown'
+    @internet_id_loaded = 'Unknown'
 
     if me.present?
       # Sometimes this data is not present
