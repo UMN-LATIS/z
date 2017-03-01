@@ -10,7 +10,7 @@
 #  updated_at       :datetime         not null
 #
 class User < ApplicationRecord
-  has_paper_trail
+  attr_accessor :first_name, :last_name, :email, :internet_id, :first_name_loaded, :last_name_loaded, :email_loaded, :internet_id_loaded
 
   has_many :groups_users, dependent: :destroy
   has_many :groups, through: :groups_users
@@ -91,7 +91,12 @@ class User < ApplicationRecord
     me = UserLookupService.new(
         query: uid,
         query_type: 'umndid'
-    ).search.first
+    ).search.try(:first)
+
+    @first_name_loaded = 'Unknown'
+    @last_name_loaded = 'Unknown'
+    @email_loaded = 'Unknown'
+    @internet_id_loaded = 'Unknown'
 
     if me.present?
       # Sometimes this data is not present
