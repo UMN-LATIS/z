@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-describe 'creating a transfer request' do
+describe 'creating a transfer request', js: true do
   before do
     @user = FactoryGirl.create(:user)
     sign_in(@user)
   end
 
-  describe 'on the urls index page', js: true do
+  describe 'on the urls index page' do
     before do
       visit urls_path
     end
@@ -29,7 +29,7 @@ describe 'creating a transfer request' do
       end
 
       describe 'with no urls selected' do
-        describe 'the transfer button' do
+        describe 'the transfer button', js: true do
           it 'should be disabled' do
             expect(page.find('.js-transfer-urls')[:class]).to(
               have_content('disabled')
@@ -78,7 +78,6 @@ describe 'creating a transfer request' do
                 click_button "Confirm"
                 wait_for_ajax
                 expect(page).to have_content 'Your Transfer Requests to Others'
-                expect(page).to have_content '(To: '
               end
 
               it 'should display the pending request on their screen' do
@@ -87,7 +86,6 @@ describe 'creating a transfer request' do
                 sign_in(@other_user)
                 visit urls_path
                 expect(page).to have_content 'You Have Pending Transfer Requests'
-                expect(page).to have_content '(From: '
               end
 
               describe 'user does not exist' do
@@ -137,7 +135,7 @@ describe 'creating a transfer request' do
       end
     end
   end
-  
+
   describe 'on the urls details', js: true do
     before do
       @url = FactoryGirl.create(:url, group: @user.context_group)

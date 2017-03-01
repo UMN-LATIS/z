@@ -48,6 +48,9 @@
 		text-align:initial;
 	}
 }
+#new-url-form form{
+	padding:0;
+}
 .new_admin input[type='text'], .new_member input[type='text'] {
 	width: 400px;
 }
@@ -55,10 +58,22 @@
 table.dataTable{
 	width: 100%;
 	margin-bottom: 100px !important;
+	border-radius: 5px;
+	overflow:hidden;
+	border:none;
+	box-shadow: 1px 1px 2px rgba(0,0,0,0.2), -1px 1px 2px rgba(0,0,0,0.2);
+	font-size:12px;
 	tbody{
-		td{
+		border:1px solid #ddd;
+		tr{
+			// background-color:#efefef;
+			padding:10px 0;
+			td{
+			border:none;
+			padding:15px 5px;
 			.form-inline.url{
 				white-space:nowrap;;
+
 			}
 			//adds ellipses to text thats too long, but gets rid of responsiveness, so needs work.
 			// &.long-url{
@@ -69,6 +84,25 @@ table.dataTable{
 			// }
 		}
 	}
+	}
+	thead{
+		background-color:#3f87c5;
+		color: white;
+
+		tr{
+			th{
+				padding:10px;
+				border:none;
+				font-weight:500;
+			}
+		}
+
+	}
+}
+
+table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:after, table.dataTable thead .sorting_asc_disabled:after, table.dataTable thead .sorting_desc_disabled:after{
+	bottom: 8px !important;
+	right: 18px !important;
 }
 
 #button-bar{
@@ -109,4 +143,222 @@ table.dataTable{
 	padding: 0 15px;
 	font-weight: 500;
 	color: grey;
+}
+
+.row-url-keyword,.row-url-action-buttons{
+	white-space: nowrap;
+	.btn-xs{
+		padding:3px 7px;
+		display:inline;
+		vertical-align: middle;
+	}
+}
+
+table.dataTable td.select-checkbox:before{
+	margin-top:3px;
+}
+table.dataTable tr.selected td.select-checkbox:after{
+	margin-top:0px;
+}
+
+#new-url-form{
+	form{
+		border: none !important;
+	}
+}
+
+$superInputHeight: 50px;
+.super-input{
+	border:1px solid #cfcfcf;
+	margin-bottom:15px;
+  display:inline-block;
+  border-radius:5px;
+  overflow:hidden;
+  height:$superInputHeight;
+  position:relative;
+  box-shadow:1px 1px 3px rgba(0,0,0,0.2);
+	// border:1px solid rgba(0,0,0,0.1);
+  > *{
+    display:inline-block;
+		vertical-align:middle;
+  }
+
+  input{
+    background:white;
+    border:none;
+    font-size:14px;
+    height:$superInputHeight;
+    padding:0 30px;
+    margin:0;
+  }
+	input:focus{
+		outline:none;
+	}
+
+	.divider{
+		height:40%;
+		width:1px;
+		background-color:#ddd;
+		margin:0 15px;
+	}
+
+  button{
+    height:$superInputHeight;
+    margin:0;
+    border:0;
+    padding:0 30px;
+    color:white;
+    font-weight:600;
+    background-color:#3687c5;
+		font-size:13px;
+		font-weight:500;
+  }
+}
+
+.super-input{
+	.js-new-url-url{
+		width:400px;
+	}
+	.keyword-wrapper{
+		height:$superInputHeight;
+		> * {
+			display:inline-block;
+		}
+
+		.keyword-static-text{
+			font-weight:500;
+			color:#555;
+		}
+		.field_with_errors{
+				height:100%;
+		}
+		input{
+			padding-left:0;
+			width:175px;
+			height:100%;
+		}
+	}
+
+}
+@media screen and (max-width:992px){
+	.super-input{
+		.js-new-url-url{
+			width:200px;
+		}
+	}
+}
+@media screen and (max-width:640px){
+	#url-blurb-container{
+		display:none;
+	}
+	#new-url-form{
+		form{
+			width:70%;
+		}
+	}
+	.super-input{
+		height:auto;
+		width:100%;
+		> * {
+			display:block;
+		}
+		.js-new-url-url{
+			width:100%;
+			border-bottom:1px solid #eee;
+		}
+		.keyword-wrapper{
+			width:100%;
+			padding:0 30px;
+			white-space: nowrap;;
+			input{
+				width:auto;
+				height:$superInputHeight;
+				padding:0;
+			}
+		}
+		button{
+			width:100%;
+		}
+	}
+}
+
+.url-blurb{
+	transition:height 0.3s, padding 0.3s;
+  width:100%;
+  border-radius:5px;
+  box-shadow:1px 1px 2px rgba(0,0,0,0.1);
+  height:55px;
+  background-color:white;
+  padding:10px 20px;
+  box-sizing:border-box;
+	border:1px solid #e6e6e6;
+	overflow:hidden;
+	&.off{
+		height:0;
+		padding-top:0px;
+		padding-bottom:0px;
+	}
+
+  .url-blurb-details{
+    .url-blurb-source{
+      font-size:9px;
+      color:#777;
+    }
+    .url-blurb-short-url{
+      font-size:14px;
+    }
+  }
+
+	.url-blurb-close-button{
+		background: none;
+    border: none;
+    float: right;
+    border-radius: 100%;
+    font-size: 12px;
+    margin-top: 7px;
+    margin-left: 20px;
+		opacity:0.6;
+		&:hover{
+			opacity:1;
+		}
+	}
+
+  .url-blurb-actions{
+    float:right;
+    .url-blurb-actions-header{
+      font-size:9px;
+      text-transform:uppercase;
+      color:#777;
+    }
+
+  }
+}
+.url-share-button{
+	font-size:10px;
+	padding:2px 15px;
+	background:none;
+	color:blue;
+	border-radius:3px;
+	font-weight:500;
+
+	&.url-share-button-large {
+    font-size: 12px;
+    margin: 0 7px;
+	}
+	&:hover{
+		background:#eaeaea;
+	}
+	&.url-share-button-facebook{
+		color:#385a97;
+		border:1px solid #385a97;
+	}
+	&.url-share-button-twitter{
+		color:#51adec;
+		border:1px solid #51adec;
+	}
+	 &.url-share-button-qr{
+		color:#333;
+		border:1px solid #333;
+	}
+
 }
