@@ -60,6 +60,10 @@ class Url < ApplicationRecord
     where('group_id = ?', group_id)
   end
 
+  scope :created_by_ids, ->(group_ids) do
+    where('group_id IN (?)', group_ids)
+  end
+
   scope :created_by_name, ->(group_name) do
     owner_to_search = "%#{group_name}%"
     possible_groups = Group.where('name LIKE ?', owner_to_search).map(&:id)

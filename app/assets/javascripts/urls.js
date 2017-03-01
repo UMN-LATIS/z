@@ -28,7 +28,7 @@ $(document).bind('turbolinks:load', function () {
   if ($("body.urls.index").length == 0) {
     return;
   }
-  initializeUrlDataTable(4, "desc", 5, 2, $('.collection-count').data('collection-count') > 1);
+  initializeUrlDataTable(5, "desc", 6, 3, $('.collection-count').data('collection-count') > 1);
 });
 
 // Load Javascript for the admin-index page
@@ -91,7 +91,8 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
            {data: '2' },
            {data: '3' },
            {data: '4' },
-           {data: '5' }
+           {data: '5' },
+           {data: '6' },
          ],
      "processing": true,
      "serverSide": true,
@@ -117,6 +118,25 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
        style:    'multi',
        selector: 'td:first-child'
      },
+     initComplete: function () {
+         this.api().columns([1]).every( function () {
+             var column = this;
+             var select = $('<select><option value="">All Collections</option></select>')
+                 .appendTo( $(".collection_select_spot").empty() )
+                 .on( 'change', function () {
+                     var val = $.fn.dataTable.util.escapeRegex(
+                         $(this).val()
+                     );
+                     column
+                         .search( val ? val : '', true, false )
+                         .draw();
+                 } );
+
+             $('.collection-names').data('collection-names').forEach( function ( d, j ) {
+                 select.append( '<option value="'+d+'">'+d+'</option>' )
+             } );
+         } );
+     }
 
    });
    $('table.data-table').on("page.dt", function(e){

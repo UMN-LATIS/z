@@ -15,6 +15,7 @@ class AdminUrlDatatable < AjaxDatatablesRails::Base
     def searchable_columns
       # Declare strings in this format: ModelName.column_name
       @searchable_columns ||= [
+        nil,
         'Group.name',
         'Url.url',
         'Url.keyword'
