@@ -42,7 +42,7 @@ $(document).bind('turbolinks:load', function () {
   if ($("body.urls.index").length == 0) {
     return;
   }
-  initializeUrlDataTable(5, "desc", 6, 3, $('.collection-count').data('collection-count') > 1);
+  initializeUrlDataTable(6, "desc", 7,4, $('.collection-count').data('collection-count') > 1, true);
 });
 
 // Load Javascript for the admin-index page
@@ -50,7 +50,7 @@ $(document).bind('turbolinks:load', function () {
   if ($("body.admin\\/urls.index").length == 0) {
     return;
   }
-  initializeUrlDataTable(5, "desc", 6, 3, false);
+  initializeUrlDataTable(5, "desc", 6, 3, false, false);
 });
 
 // The rest of the charts need to be loaded upon showing the tab
@@ -89,7 +89,7 @@ function moveUrl(movePath, keywords){
   });
 }
 
-function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColumn, showMoveButton) {
+function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColumn, showMoveButton, collectionSelect) {
   var transferText = '<i class="fa fa-exchange"></i> Transfer to a different user';
   var moveText = '<i class="fa fa-share-square-o "></i> Move to a different collection';
 
@@ -100,13 +100,20 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
           },
      "pageLength": 25,
      columns: [
-           {data: '0' },
-           {data: '1' },
-           {data: '2' },
-           {data: '3' },
-           {data: '4' },
-           {data: '5' },
-           {data: '6' },
+          {
+            defaultContent: "",
+            className: 'select-checkbox',
+            searchable: false,
+            orderable: false,
+            title:"<input type='checkbox' id='select-all' class='select-checkbox'/>"
+          },
+          {data: 'group_id', visible: false, orderable: false},
+          {data: 'group_name' },
+          {data: 'url' },
+          {data: 'keyword' },
+          {data: 'total_clicks' },
+          {data: 'created_at' },
+          {data: 'actions', searchable: false, orderable: false },
          ],
      "processing": true,
      "serverSide": true,
@@ -116,23 +123,12 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
        sortColumn,
        sortOrder
      ],
-     columnDefs: [
-       {
-         className: 'select-checkbox',
-         targets:   0,
-         title:"<input type='checkbox' id='select-all' class='select-checkbox'/>"
-       },
-       {
-         orderable: false,
-         searchable: false,
-         targets: [0, actionColumn]
-       }
-     ],
      select: {
        style:    'multi',
        selector: 'td:first-child'
      },
      initComplete: function () {
+        if(collectionSelect) {
          this.api().columns([1]).every( function () {
              var column = this;
              var select = $('<select id="collection-filter" class="form-control"><option value="">All</option></select>')
@@ -142,17 +138,16 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
                          $(this).val()
                      );
                      column
-                         .search( val ? val : '', true, false )
+                         .search( val ? val : '')
                          .draw();
                  } );
 
              $('.collection-names').data('collection-names').forEach( function ( d, j ) {
-                 select.append( '<option value="'+d+'">'+d+'</option>' )
+                 select.append( '<option value="'+d[0]+'">'+d[1]+'</option>' )
              } );
              select.before('<label>Collection:</label>');
-
-
          } );
+       }
      }
 
    });

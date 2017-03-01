@@ -26,6 +26,7 @@
   <thead>
     <tr>
       <th></th>
+      <th></th>
       <th>Collection</th>
       <th><%= t('helpers.table_headers.url')  %></th>
       <th><%= t('helpers.table_headers.keyword') %></th>
@@ -44,7 +45,7 @@
 <%= content_tag :div, class: "collection-count", data: {collection_count: current_user.groups.length} do %>
 <% end %>
 
-<%= content_tag :div, class: "collection-names", data: {collection_names: current_user.groups.pluck(:name)} do %>
+<%= content_tag :div, class: "collection-names", data: {collection_names: current_user.groups.pluck(:id, :name)} do %>
 <% end %>
 
 <%= render 'modal' %>
