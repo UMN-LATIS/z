@@ -12,7 +12,7 @@ $(document).on("change", "#urls-table select", function (e) {
   select = e.target;
 	var newVal = $(select).val();
   var urlId = $(select).data('url-id');
-  if (!confirm("Are you sure you wish to move shortURL " + $(select).data('keyword') + " to collection " + $(select).find(":selected").text() + "?")) {
+  if (!confirm("Are you sure you wish to move short URL " + $(select).data('keyword') + " to collection " + $(select).find(":selected").text() + "?")) {
     $(select).val($(select).data('group-id')); //set back
         return;
   }
