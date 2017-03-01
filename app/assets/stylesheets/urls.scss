@@ -154,6 +154,10 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, 
 	}
 }
 
+#collection-filter {
+	margin: 0 15px 0 5px;
+}
+
 table.dataTable td.select-checkbox:before{
 	margin-top:3px;
 }

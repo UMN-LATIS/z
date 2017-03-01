@@ -8,8 +8,22 @@ $(document).on("click", ".cancel-edit-url", function (e) {
 	$('table.data-table').DataTable().draw();
 });
 
-$(document).bind('turbolinks:load', function () {
+$(document).on("change", "#urls-table select", function (e) {
+  select = e.target;
+	var newVal = $(select).val();
+  var urlId = $(select).data('url-id');
+  if (!confirm("Are you sure you wish to move shortURL " + $(select).data('keyword') + " to collection " + $(select).find(":selected").text() + "?")) {
+    $(select).val($(select).data('group-id')); //set back
+        return;
+  }
+  $.ajax({
+    url: $(select).data('update-path'),
+    method: 'PATCH',
+    data: {url: {group_id: newVal}}
+  });
+ });
 
+$(document).bind('turbolinks:load', function () {
   // If going to the show page, load the google charts JS and
   // load the hrs24 chart
   if ($("body.urls.show").length > 0) {
@@ -121,8 +135,8 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
      initComplete: function () {
          this.api().columns([1]).every( function () {
              var column = this;
-             var select = $('<select><option value="">All Collections</option></select>')
-                 .appendTo( $(".collection_select_spot").empty() )
+             var select = $('<select id="collection-filter" class="form-control"><option value="">All</option></select>')
+                 .prependTo( $("#urls-table_filter") )
                  .on( 'change', function () {
                      var val = $.fn.dataTable.util.escapeRegex(
                          $(this).val()
@@ -135,6 +149,9 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
              $('.collection-names').data('collection-names').forEach( function ( d, j ) {
                  select.append( '<option value="'+d+'">'+d+'</option>' )
              } );
+             select.before('<label>Collection:</label>');
+
+
          } );
      }
 
