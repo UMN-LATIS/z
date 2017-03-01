@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170214195130) do
+ActiveRecord::Schema.define(version: 20170222161436) do
 
   create_table "clicks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "country_code"
@@ -33,14 +33,6 @@ ActiveRecord::Schema.define(version: 20170214195130) do
     t.boolean "notify_user_changes", default: false, null: false
     t.index ["group_id"], name: "index_groups_users_on_group_id", using: :btree
     t.index ["user_id"], name: "index_groups_users_on_user_id", using: :btree
-  end
-
-  create_table "perid_umndid", unsigned: true, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer "perid"
-    t.string  "umndid", limit: 11
-    t.index ["perid", "umndid"], name: "perid_2", using: :btree
-    t.index ["perid"], name: "perid", using: :btree
-    t.index ["umndid"], name: "umndid", using: :btree
   end
 
   create_table "transfer_request_urls", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -86,15 +78,14 @@ ActiveRecord::Schema.define(version: 20170214195130) do
     t.index ["default_group_id"], name: "index_users_on_default_group_id", using: :btree
   end
 
-  create_table "yourls_url", primary_key: "keyword", id: :string, limit: 200, default: "", force: :cascade, options: "ENGINE=MyISAM DEFAULT CHARSET=utf8" do |t|
-    t.text     "url",       limit: 65535,                                      null: false
-    t.datetime "timestamp",               default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.string   "ip",        limit: 41,    default: "",                         null: false
-    t.integer  "clicks",                  default: 0,                          null: false, unsigned: true
-    t.integer  "per_id"
-    t.index ["ip"], name: "ip", using: :btree
-    t.index ["per_id"], name: "per_id", using: :btree
-    t.index ["timestamp"], name: "timestamp", using: :btree
+  create_table "versions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+    t.string   "item_type",  limit: 191,        null: false
+    t.integer  "item_id",                       null: false
+    t.string   "event",                         null: false
+    t.string   "whodunnit"
+    t.text     "object",     limit: 4294967295
+    t.datetime "created_at"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
   end
 
   add_foreign_key "clicks", "urls"

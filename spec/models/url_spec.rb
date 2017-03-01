@@ -31,6 +31,12 @@ RSpec.describe Url, type: :model do
   it { should respond_to 'created_at' }
   it { should respond_to 'updated_at' }
 
+  describe 'Versioning'do
+    it 's should be enabled' do
+      is_expected.to be_versioned
+    end
+  end
+
   describe 'invalid Url' do
     describe '[keyword]' do
       describe 'already exists' do
