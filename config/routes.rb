@@ -115,6 +115,12 @@ Rails.application.routes.draw do
             as: 'csv'
       end
 
+      # admin/audits/:search	admin::urls	index	get
+      # admin/audits/:id	admin::urls	show	get
+      resources :audits, only: [:index, :show] do
+        get 'datatable', to: 'audits_datatable#index', on: :collection
+      end
+
       resources :groups, only: [:index]
 
       # admin/members/:search	admin::members	index	get
