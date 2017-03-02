@@ -78,6 +78,7 @@ en:
       audit_item: "Audited Item"
       audit_event: "Audited Action"
       audit_whodunnit: "Whodunnit"
+      audit_whodunnit_when: "When"
       admin_name: "Admin Name"
       name: "Name"
       member_name: "Member Name"

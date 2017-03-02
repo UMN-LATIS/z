@@ -5,11 +5,11 @@ class Admin::AuditsController < ApplicationController
   def index
     # Filter URLs based on keyword
     @audits = Audit.all
-#    authorize @urls unless @urls.nil?
+    #    authorize @urls unless @urls.nil?
     # If owner filter present, filter further
-#    if params[:url_filter_owner].present?
-#      @urls = @urls.created_by_name('params[:url_filter_owner]')
-#    end
+    #    if params[:url_filter_owner].present?
+    #      @urls = @urls.created_by_name('params[:url_filter_owner]')
+    #    end
   end
 
   # GET /audits/1
@@ -22,4 +22,4 @@ class Admin::AuditsController < ApplicationController
     end
   end
 
-  end
+end

@@ -28,11 +28,10 @@ class AuditDatatable < AjaxDatatablesRails::Base
       {
           # comma separated list of the values for each cell of a table row
           # example: record.attribute,
-          '0' => nil,
-          '1' => display_audit_item(record),
-          '2' => record.event,
-          '3' => record.whodunit,
-          '4' => record.created_at.to_s(:created_on_formatted),
+          '0' => 'testst', #display_audit_item(record),
+          '1' => record.event,
+          '2' => record.whodunit,
+          '3' => record.created_at.to_s(:created_on_formatted),
           'DT_RowId' => "audit-#{record.id}"
       }
     end

@@ -10,7 +10,7 @@
     <th><%= t('helpers.table_headers.audit_item')  %></th>
     <th><%= t('helpers.table_headers.audit_event')  %></th>
     <th><%= t('helpers.table_headers.audit_whodunnit')  %></th>
-    <th><%= t('helpers.table_headers.created_on') %></th>
+    <th><%= t('helpers.table_headers.audit_whodunnit_when')  %></th>
   </tr>
   </thead>
   <tbody>
@@ -19,8 +19,8 @@
 </table>
 
 
-<%= content_tag :div, class: "route-info", data: {new_transfer_request_path: new_admin_transfer_request_path} do %>
-<% end %>
+<%#= content_tag :div, class: "route-info", data: {new_transfer_request_path: new_admin_transfer_request_path} do %>
+<%# end %>
 
 
-<%= render 'urls/modal' %>
+<%#= render 'urls/modal' %>

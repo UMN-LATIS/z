@@ -18,9 +18,7 @@ function initializeAuditDataTable(sortColumn, sortOrder, actionColumn, keywordCo
             {data: '0' },
             {data: '1' },
             {data: '2' },
-            {data: '3' },
-            {data: '4' },
-            {data: '5' }
+            {data: '3' }
         ],
         "processing": true,
         "serverSide": true,
@@ -31,11 +29,6 @@ function initializeAuditDataTable(sortColumn, sortOrder, actionColumn, keywordCo
             sortOrder
         ],
         columnDefs: [
-            {
-                className: 'select-checkbox',
-                targets:   0,
-                title:"<input type='checkbox' id='select-all' class='select-checkbox'/>"
-            },
             {
                 orderable: false,
                 searchable: false,
