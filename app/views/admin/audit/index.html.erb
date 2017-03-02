@@ -1,0 +1,19 @@
+<%- model_class = Group -%>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th><%= t('helpers.table_headers.name') %></th>
+    <th><%= t('helpers.table_headers.description') %></th>
+    <th><%= t('helpers.table_headers.created_on') %></th>
+    <th><%=t '.actions', :default => t('helpers.actions') %></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @groups.each do |group| %>
+      <%= render 'in_row_show', group: group %>
+  <% end %>
+
+  </tbody>
+</table>
+
