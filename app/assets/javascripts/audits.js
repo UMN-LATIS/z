@@ -3,10 +3,10 @@ $(document).bind('turbolinks:load', function () {
     if ($("body.admin\\/audits.index").length == 0) {
         return;
     }
-    initializeAuditDataTable(5, "desc", 6, 3, false);
+    initializeAuditDataTable(0, "asc");
 });
 
-function initializeAuditDataTable(sortColumn, sortOrder, actionColumn, keywordColumn, showMoveButton) {
+function initializeAuditDataTable(sortColumn, sortOrder) {
 
     var userTable = $('#audits-table').DataTable({
         drawCallback: function(settings) {
@@ -18,7 +18,7 @@ function initializeAuditDataTable(sortColumn, sortOrder, actionColumn, keywordCo
             {data: '0' },
             {data: '1' },
             {data: '2' },
-            {data: '3' }
+            {data: '3' },
         ],
         "processing": true,
         "serverSide": true,
@@ -28,18 +28,12 @@ function initializeAuditDataTable(sortColumn, sortOrder, actionColumn, keywordCo
             sortColumn,
             sortOrder
         ],
-        columnDefs: [
-            {
-                orderable: false,
-                searchable: false,
-                targets: [0, actionColumn]
-            }
-        ],
         select: {
             style:    'multi',
             selector: 'td:first-child'
         }
     });
+    /*
     $('table.data-table').on("page.dt", function(e){
         userTable.rows().deselect();
         $("#select-all").prop("checked", false);
@@ -47,6 +41,7 @@ function initializeAuditDataTable(sortColumn, sortOrder, actionColumn, keywordCo
     $("#select-all").click(function(e){
         $(e.target).prop("checked") === true ? userTable.rows({page:"current"}).select() : userTable.rows().deselect();
     });
+    */
 
  }
 

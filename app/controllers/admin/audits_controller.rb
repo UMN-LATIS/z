@@ -4,7 +4,8 @@ class Admin::AuditsController < ApplicationController
 
   def index
     # Filter URLs based on keyword
-    @audits = Audit.all
+    @audits = Audit.select('id, item_type, item_id, event, whodunnit, created_at')
+    x = @audits
     #    authorize @urls unless @urls.nil?
     # If owner filter present, filter further
     #    if params[:url_filter_owner].present?

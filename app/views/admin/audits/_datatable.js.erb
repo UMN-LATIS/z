@@ -1,3 +1,3 @@
 if ($('.admin-table.data-table').length && !$.fn.DataTable.isDataTable( '.admin-table.data-table' ) ) {
-    initializeUrlDataTable(1, "asc", 6, 3, "<%= new_admin_transfer_request_path %>",  "<%= new_move_to_group_path %>", false);
+    initializeAuditDataTable(0, "asc");
 }
