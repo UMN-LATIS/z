@@ -1,5 +1,5 @@
 class AuditDatatable < AjaxDatatablesRails::Base
-  def_delegators :@view, :link_to, :display_audit_item_url, :display_whodunnit_url
+  def_delegators :@view, :display_audited_item_url, :display_whodunnit_email
 
   def sortable_columns
     # Declare strings in this format: ModelName.column_name
@@ -28,9 +28,9 @@ class AuditDatatable < AjaxDatatablesRails::Base
       {
           # comma separated list of the values for each cell of a table row
           # example: record.attribute,
-          '0' => link_to(record.item_type, display_audit_item_url(record), target: '_blank'),
+          '0' => display_audited_item_url(record),
           '1' => record.event,
-          '2' => display_whodunnit_url(record),
+          '2' => display_whodunnit_email(record),
           '3' => record.created_at.to_s(:created_on_formatted),
           'DT_RowId' => "audit-#{record.id}"
       }
