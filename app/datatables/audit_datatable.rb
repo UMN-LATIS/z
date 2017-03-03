@@ -1,5 +1,5 @@
 class AuditDatatable < AjaxDatatablesRails::Base
-#  def_delegators :@view, :link_to, :full_url, :display_url
+  def_delegators :@view, :link_to, :display_audit_item_url, :display_whodunnit_url
 
   def sortable_columns
     # Declare strings in this format: ModelName.column_name
@@ -24,28 +24,18 @@ class AuditDatatable < AjaxDatatablesRails::Base
   private
 
   def data
-    records.each do |record|
-
-      version = PaperTrail::Version.where_object(id: record.id)
-
-      record.item_type = 'x'
-      who = User.find_by(id: record.whodunnit)
-      record.whodunnit = who ?  who.user_full_name : 'unkknown'
-    end
-
     records.map do |record|
       {
           # comma separated list of the values for each cell of a table row
           # example: record.attribute,
-          '0' => record.item_type,
+          '0' => link_to(record.item_type, display_audit_item_url(record), target: '_blank'),
           '1' => record.event,
-          '2' => record.whodunnit,
+          '2' => display_whodunnit_url(record),
           '3' => record.created_at.to_s(:created_on_formatted),
           'DT_RowId' => "audit-#{record.id}"
       }
     end
   end
-
   def get_raw_records
    Audit.all #select('id, item_type, item_id, event, whodunnit, created_at')
   end
