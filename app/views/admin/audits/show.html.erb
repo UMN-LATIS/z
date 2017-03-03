@@ -1,0 +1,15 @@
+<table>
+  <thead>
+  <% @objs[0].class.column_names.each do |col| %>
+      <th><%= col.to_s %> </th>
+  <% end %>
+  </thead>
+    <% @objs.each do |obj| %>
+      <tr>
+        <% obj.attributes.each_pair do |name, value| %>
+            <td><%= value %></td>
+        <% end %>
+      </tr>
+    <% end %>
+</table>
+

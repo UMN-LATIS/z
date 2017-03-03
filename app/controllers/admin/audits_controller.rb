@@ -9,6 +9,20 @@ class Admin::AuditsController < ApplicationController
   # GET /audits/1
   # GET /audits/1.json
   def show
+
+    a = Audit.find(params[:id])
+    b = a.item_type.constantize.find(a.item_id)
+
+    @objs = [b.versions[0].reify, b.versions[1].reify]
+
+
+
+   # b.versions.each do |version|
+   #   @objs << version.reify
+   # end
+
+
+
     respond_to do |format|
       format.html
       format.js { render layout: false }
