@@ -58,9 +58,18 @@ describe 'urls show page' do
   it 'should display the total clicks' do
     expect(page).to have_content '15 hits'
   end
+  it "should display the share to facebook button" do
+    expect(page).to have_selector('.url-share-button-facebook', visible: true)
+  end
+  it "should display the share to twitter button" do
+    expect(page).to have_selector('.url-share-button-twitter', visible: true)
+  end
+  it "should display the download QR code button" do
+    expect(page).to have_selector('.url-share-button-qr', visible: true)
+  end
 
   describe 'downloading qr code', js: true do
-    before { find('.js-qrcode-download').click }
+    before { find('.url-share-button-qr').click }
 
     it 'should be a png type' do
       expect(page.response_headers['Content-Type']).to eq('image/png')
@@ -125,6 +134,37 @@ describe 'urls index page' do
             find('.js-url-submit').click
             wait_for_ajax
           end.to change(Url, :count).by(1)
+        end
+      end
+      describe 'after submitting, the url blurb' do
+        before do
+          find('.js-url-submit').click
+          wait_for_ajax
+        end
+
+        it 'should be visible' do
+          expect(page).to have_selector('.url-blurb', visible: true)
+        end
+        it "should display the share to facebook button" do
+          expect(page).to have_selector('.url-share-button-facebook', visible: true)
+        end
+        it "should display the share to twitter button" do
+          expect(page).to have_selector('.url-share-button-twitter', visible: true)
+        end
+        it "should display the download QR code button" do
+          expect(page).to have_selector('.url-share-button-qr', visible: true)
+        end
+
+        describe 'downloading qr code', js: true do
+          before { find('.url-share-button-qr').click }
+
+          it 'should be a png type' do
+            expect(page.response_headers['Content-Type']).to eq('image/png')
+          end
+
+          it 'should not be blank' do
+            expect(page.body).to_not be_blank
+          end
         end
       end
       describe 'when the url is not valid' do
@@ -192,6 +232,9 @@ describe 'urls index page' do
       it 'should display the url\'s click count' do
         expect(page).to have_css('td', text: @url.total_clicks)
       end
+      it 'should display the share button' do
+        expect(page).to have_content 'Share'
+      end
       it 'should display an edit button' do
         expect(page).to have_content 'Edit'
       end
@@ -200,6 +243,36 @@ describe 'urls index page' do
       end
     end
 
+    describe 'when sharing existing url', js: true do
+      before { find('.share-url').click }
+
+      describe "when clicking the share button" do
+        it "should display the share popup" do
+          expect(page).to have_selector('.popover .popover-content', visible: true)
+        end
+        it "should display the share to facebook button" do
+          expect(page).to have_selector('.url-share-button-facebook', visible: true)
+        end
+        it "should display the share to twitter button" do
+          expect(page).to have_selector('.url-share-button-twitter', visible: true)
+        end
+        it "should display the download QR code button" do
+          expect(page).to have_selector('.url-share-button-qr', visible: true)
+        end
+
+        describe 'downloading qr code', js: true do
+          before { find('.url-share-button-qr').click }
+
+          it 'should be a png type' do
+            expect(page.response_headers['Content-Type']).to eq('image/png')
+          end
+
+          it 'should not be blank' do
+            expect(page.body).to_not be_blank
+          end
+        end
+      end
+    end
     describe 'when editing existing url', js: true do
       before { find('.edit-url').click }
 
