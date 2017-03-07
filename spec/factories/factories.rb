@@ -6,6 +6,10 @@ FactoryGirl.define do
     sequence(:first_name) { |n| "first_name#{n}" }
     sequence(:email) { |n| "email#{n}@umn.edu" }
     sequence(:internet_id) { |n| "internet_id#{n}" }
+    sequence(:last_name_loaded) { |n| "last_name#{n}" }
+    sequence(:first_name_loaded) { |n| "first_name#{n}" }
+    sequence(:email_loaded) { |n| "email#{n}@umn.edu" }
+    sequence(:internet_id_loaded) { |n| "internet_id#{n}" }
 
     factory :admin do
       admin true
@@ -26,6 +30,8 @@ FactoryGirl.define do
   factory :transfer_request do
     to_group { FactoryGirl.create(:group) }
     from_group { FactoryGirl.create(:group) }
+    from_user { FactoryGirl.create(:user) }
+    to_user { FactoryGirl.create(:user) }
     urls { [FactoryGirl.create(:url, group: from_group)] }
   end
 end

@@ -11,13 +11,24 @@
               <%= f.text_field :description, :maxlength => 65, size: 65, class: 'form-control', placeholder: t('helpers.placeholders.description') %>
             </td>
             <td>
-              <%= f.submit nil, class: 'btn btn-xs btn-primary js-group-submit' %>
               <% if group.new_record? %>
-                  <a href="#" class='btn btn-xs  btn-default cancel-new-group'><%= t('helpers.buttons.cancel') %></a>
+                <%= button_tag  type:"submit", class: 'btn btn-xs btn-primary js-group-submit' do %>
+                  <i class="fa fa-plus-circle"></i>
+
+                  Create Collection
+                <% end %>
+
+                <a href="#" class='btn btn-xs  btn-default cancel-new-group'><%= t('helpers.buttons.cancel') %></a>
               <% else %>
-                  <%= link_to t('.cancel', default: t('helpers.links.cancel')),
-                              group_path(group),
-                              class: 'btn btn-xs btn-default cancel-group', remote: true %>
+                <%= button_tag  type:"submit", class: 'btn btn-xs btn-primary js-group-submit' do %>
+                  <i class="fa fa-pencil"></i>
+
+                  Edit Collection
+                <% end %>
+
+                <%= link_to t('.cancel', default: t('helpers.links.cancel')),
+                            group_path(group),
+                            class: 'btn btn-xs btn-default cancel-group', remote: true %>
               <% end %>
             </td>
           </tr>
@@ -26,4 +37,3 @@
     <%= render 'groups/in_row_errors', group: group %>
   </td>
 </tr>
-

@@ -2,13 +2,7 @@
 require 'net/ldap' # gem install net-ldap
 
 class UserLookupService
-  def initialize(params)
-    # @connection = Net::LDAP.new(
-    #   host: 'ldap.umn.edu',
-    #   port: 389,
-    #   base: 'o=University of Minnesota, c=US'
-    # )
-
+  def initialize(params=nil)
     @connection = Net::LDAP.new(
       host: 'ldapauth.umn.edu',
       port: 4636,
@@ -23,28 +17,38 @@ class UserLookupService
 
     @query = params[:query]
     @query_type = params[:query_type]
+  end
 
+  def ping
+# @connection.get_operation_result.code == 0
+    begin
+      @connection.bind
+    rescue Net::LDAP::ConnectionRefusedError
+      return false
+    end
+    return true
   end
 
   def search
     return nil unless @query.present? && @query_type.present?
-    if @connection.bind
-      results = @connection.search(
-        filter: get_filter,
-        return_result: true
-      )
-      results = results.promote(results.detect { |x| x[:uid] == [@query] })
-      results = results.map { |x| { umndid: x.try(:umndid), value: display_name(x), uid: x.try(:uid), first_name: x.try(:givenname), last_name: x.try(:sn), email: x.try(:mail) } }.flatten unless results.blank?
-      # Promote Internet id match
-      # Promote emplid match
-
-      return results
-    else
-      # authentication has failed
-      puts "Result: #{@connection.get_operation_result.code}"
-      puts "Message: #{@connection.get_operation_result.message}"
-
+    results = Rails.cache.fetch("#{@query}/#{@query_type}/search", expires_in: 12.hours) do
+      if @connection.bind
+        @connection.search(
+            filter: get_filter,
+            return_result: true
+        )
+      else
+        # authentication has failed
+        puts "Result: #{@connection.get_operation_result.code}"
+        puts "Message: #{@connection.get_operation_result.message}"
+      end
     end
+    return nil unless results
+    results = results.promote(results.detect { |x| x[:uid] == [@query] })
+    results = results.map { |x| {umndid: x.try(:umndid), value: display_name(x), uid: x.try(:uid), first_name: x.try(:givenname), last_name: x.try(:sn), email: x.try(:mail)} }.flatten unless results.blank?
+    # Promote Internet id match
+    # Promote emplid match
+    return results
   end
 
   private
@@ -56,8 +60,8 @@ class UserLookupService
   end
 
   def get_filter
-    sn_filter = Net::LDAP::Filter.eq('sn', "#{@query.squish.gsub(/\s/,'*')}*")
-    cn_filter = Net::LDAP::Filter.eq('cn', "#{@query.squish.gsub(/\s/,'* ')}*")
+    sn_filter = Net::LDAP::Filter.eq('sn', "#{@query.squish.gsub(/\s/, '*')}*")
+    cn_filter = Net::LDAP::Filter.eq('cn', "#{@query.squish.gsub(/\s/, '* ')}*")
     uid_filter = Net::LDAP::Filter.eq('uid', "#{@query}*")
     mail_filter = Net::LDAP::Filter.eq('mail', "#{@query}*")
     umndid_filter = Net::LDAP::Filter.eq('umndid', "#{@query}")

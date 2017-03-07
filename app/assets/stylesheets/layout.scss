@@ -63,6 +63,9 @@ p {
   line-height: 1.2em;
 }
 
+.bold{
+  font-weight:bold;
+}
 /* header */
 
 #logo {
@@ -189,6 +192,11 @@ though the color below doesn't improve much.
 
 .btn-primary {
   color: #fff;
+}
+
+.btn-primary.disabled{
+  background-color: $grayLight;
+  border-color: $grayDarker;
 }
 
 /* tables */
@@ -415,17 +423,6 @@ div.dataTables_wrapper{
   }
 }
 
-.keyword-input-wrapper{
-  >*{
-    display:inline-block;
-  }
-  >label{
-    font-size:14px;
-    font-weight:600;
-    color:#999;
-  }
-}
-
 @media (min-width: 768px){
   .keyword-input-wrapper, .input-wrapper{
     display:inline-block;
@@ -485,5 +482,27 @@ div.dataTables_wrapper{
   &::before{
     font:normal normal normal 14px/1 FontAwesome;
     margin-right:3px;
+    font-size:inherit;
   }
+}
+.inline-children{
+  > *{
+    display:inline-block;
+  }
+}
+.inline-children-middle{
+  > *{
+    display:inline-block;
+    vertical-align: middle;
+  }
+}
+.traffic-stats-header{
+  > *{
+    display:inline-block;
+    vertical-align: middle;
+  }
+  h3{
+    margin:0;
+  }
+  margin:15px 0;
 }

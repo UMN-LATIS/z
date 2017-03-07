@@ -7,7 +7,7 @@
     <%= link_to t('.edit', default: t('helpers.links.edit')),
                 edit_group_path(group),
                 class: 'btn btn-xs btn-default edit-group fa fa-pencil', remote: true %>
-    <%= link_to t('.group-members', default: t('helpers.links.group_members')),
+    <%= link_to t('.group-members', default: t('helpers.links.collection_members')),
                 group_members_path(group),
                 class: 'btn btn-xs btn-default group-members fa fa-users' %>
     <%= link_to t('.destroy', default: t('helpers.links.destroy')),

@@ -19,9 +19,6 @@ describe 'groups members index page' do
       it 'should display the group name' do
         expect(page).to have_content group.name
       end
-      it 'should display the group member uid' do
-        expect(page).to have_content @user.uid
-      end
       it 'should display the group member full name' do
         expect(page).to have_content user.user_full_name
       end
@@ -46,7 +43,7 @@ describe 'groups members index page' do
       end
       it 'adding should increase the user count of the group by 1' do
         expect do
-          find("#umndid", :visible => false).set '5scyi59j8'
+          find("#uid", visible: false).set '5scyi59j8'
           click_button 'Add'
           click_button 'Confirm'
           wait_for_ajax

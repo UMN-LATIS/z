@@ -6,6 +6,14 @@ db_srv: &db_srv
   pool: 5
   timeout: 5000
 
+db_hotel: &db_hotel
+  adapter: mysql2
+  host: mysql-dev1.oit.umn.edu
+  username: andersen
+  password: ew8xsQ$3mau
+  pool: 5
+  timeout: 5000
+
 legacy_z:
   <<: *db_srv
   database: CLA_Z
@@ -27,8 +35,8 @@ development:
   database: z_development
 
 staging:
-  <<: *default
-  database: z_test
+  <<: *db_hotel
+  database: cla_z_staging
 
 production:
   <<: *default
@@ -40,5 +48,3 @@ production:
 test:
   <<: *default
   database: z_test
-
-

@@ -11,6 +11,7 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #
+require 'uri'
 class Url < ApplicationRecord
   belongs_to :group
   has_many :clicks, dependent: :destroy
@@ -20,13 +21,19 @@ class Url < ApplicationRecord
   # table
   before_destroy { |url| url.transfer_requests.clear }
 
+  before_save do
+    # Add http:// if necessary
+    self.url = "http://#{url}" if URI.parse(url).scheme.nil?
+  end
+
   validates :keyword, uniqueness: true, presence: true
   validates :url, presence: true
   validates :keyword, format: {
-    with: /^[a-zA-Z0-9\-]*$/,
-    multiline: true,
-    message: 'special characters are not permitted. Only letters, and numbers and dashes("-")'
-  }
+                        with: /^[a-zA-Z0-9\-_]*$/,
+                        multiline: true,
+                        message: 'special characters are not permitted. Only letters, and numbers, dashes ("-") and underscores ("_")'
+                    }
+  validate :check_for_valid_url
 
   before_validation(on: :create) do
     # Set clicks to zero
@@ -34,14 +41,8 @@ class Url < ApplicationRecord
   end
 
   before_validation do
-    # Add http:// if necessary
-    uri = URI(url)
-
-    if uri.scheme.blank?
-      self.url = "http://#{uri.to_s}"
-    else
-      self.url = uri.to_s
-    end
+    # remove leading and trailing whitespaces for validation
+    url.strip!
 
     # Set keyword if it's blank
     if keyword.blank?
@@ -52,6 +53,7 @@ class Url < ApplicationRecord
 
     # Downcase the keyword
     self.keyword = keyword.downcase
+    #    else
   end
 
   scope :created_by_id, ->(group_id) do
@@ -72,13 +74,8 @@ class Url < ApplicationRecord
     where('keyword IN (?)', "%#{keywords.map(&:downcase)}%")
   end
 
-  scope :not_in_transfer_request, ->(transfer_request) do
-    url_ids = transfer_request.urls.pluck(:id)
-    where.not('id IN (?)', url_ids) if url_ids.present?
-  end
-
-  scope :not_in_any_transfer_request, -> do
-    url_ids = TransferRequestUrl.all.pluck(:url_id)
+  scope :not_in_pending_transfer_request, -> do
+    url_ids = TransferRequest.pending.joins(:urls).pluck(:url_id)
     where.not('id IN (?)', url_ids) if url_ids.present?
   end
 
@@ -91,8 +88,8 @@ class Url < ApplicationRecord
   def click_data_to_csv
     # ex: http://localhost:3000/shortener/urls/3/csv/raw.csv
     data = CSV.generate(headers: true) do |csv|
-      clicks.select(:country_code,:created_at).each do | click|
-        csv <<  [url, keyword, click.country_code, click.created_at, click.updated_at]
+      clicks.select(:country_code, :created_at).each do |click|
+        csv << [url, keyword, click.country_code, click.created_at.to_s(:created_on_formatted)]
       end
     end
     return %w{url keyword country_code url_created_on}.to_csv + data
@@ -111,6 +108,14 @@ class Url < ApplicationRecord
       end
     end
     return col_names.to_csv + data
+  end
+
+  def check_for_valid_url
+    begin
+      URI.parse(url)
+    rescue URI::InvalidURIError
+      errors.add(:url, 'is not valid.')
+    end
   end
 
 end

@@ -7,13 +7,17 @@ class UrlsController < ApplicationController
   # GET /urls
   # GET /urls.json
   def index
+    @group = Group.find(current_user.context_group_id)
+
     @urls =
-      Url.created_by_id(current_user.context_group_id).not_in_any_transfer_request
+      Url.created_by_id(current_user.context_group_id)
+         .not_in_pending_transfer_request
     @pending_transfer_requests_to =
-      TransferRequest.where(to_group_id: current_user.context_group_id)
+      TransferRequest.pending.where(to_group_id: current_user.context_group_id)
 
     @pending_transfer_requests_from =
-      TransferRequest.where(from_group_id: current_user.context_group_id)
+      TransferRequest.pending
+                     .where(from_group_id: current_user.context_group_id)
     @url = Url.new
   end
 

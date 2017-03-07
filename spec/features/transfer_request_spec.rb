@@ -1,20 +1,20 @@
 require 'rails_helper'
 
-describe 'urls index page' do
+describe 'creating a transfer request', js: true do
   before do
     @user = FactoryGirl.create(:user)
     sign_in(@user)
   end
 
-  describe 'creating a transfer request', js: true do
+  describe 'on the urls index page' do
     before do
       visit urls_path
     end
 
     describe 'with no urls' do
-      describe 'the trasnfer button' do
+      describe 'the transfer button' do
         it 'should be disabled' do
-          expect(page.find_link('Transfer to user')[:class]).to(
+          expect(page.find('.js-transfer-urls')[:class]).to(
             have_content('disabled')
           )
         end
@@ -29,9 +29,9 @@ describe 'urls index page' do
       end
 
       describe 'with no urls selected' do
-        describe 'the trasnfer button' do
+        describe 'the transfer button', js: true do
           it 'should be disabled' do
-            expect(page.find_link('Transfer to user')[:class]).to(
+            expect(page.find('.js-transfer-urls')[:class]).to(
               have_content('disabled')
             )
           end
@@ -42,7 +42,7 @@ describe 'urls index page' do
         before { find("#url-#{@selected_url.id} > .select-checkbox").click }
         describe 'the transfer button' do
           it 'should be enabled' do
-            expect(page.find_link('Transfer to user')[:class]).to_not(
+            expect(page.find('.js-transfer-urls')[:class]).to_not(
               have_content('disabled')
             )
           end
@@ -50,7 +50,7 @@ describe 'urls index page' do
 
         describe 'clicking the tranfser button' do
           before do
-            click_link 'Transfer to user'
+            page.find('.js-transfer-urls').click
             wait_for_ajax
           end
 
@@ -85,7 +85,7 @@ describe 'urls index page' do
                 click_button "Confirm"
                 sign_in(@other_user)
                 visit urls_path
-                expect(page).to have_content 'You have pending transfer requests'
+                expect(page).to have_content 'You Have Pending Transfer Requests'
               end
 
               describe 'user does not exist' do
@@ -136,24 +136,56 @@ describe 'urls index page' do
     end
   end
 
-  describe 'intereacting with trasnfer request', js: true do
+  describe 'on the urls details', js: true do
+    before do
+      @url = FactoryGirl.create(:url, group: @user.context_group)
+      visit url_path(@url.keyword)
+    end
+
+    describe 'the trasnfer button' do
+      it 'should be present' do
+        expect(page).to have_selector('.js-transfer-urls')
+      end
+
+      describe "when clicked" do
+        before do
+          page.find('.js-transfer-urls').click
+          wait_for_ajax
+        end
+
+        it 'should display the modal' do
+          expect(page).to have_selector('#index-modal', visible: true)
+        end
+      end
+    end
+  end
+
+  describe 'intereacting with transfer request', js: true do
     before do
       @other_url = FactoryGirl.create(:url)
       @transfer = FactoryGirl.create(
         :transfer_request,
         to_group_id: @user.context_group_id,
         from_group_id: @other_url.group_id,
+        from_user: @other_url.group.users.first,
         urls: [@other_url]
       )
       visit urls_path
     end
 
     describe 'accepting' do
-      it 'should delete the transfer request' do
+      it 'should update the status of the transfer request' do
         expect do
           find('.js-approve-transfer').click
           wait_for_ajax
-        end.to change(TransferRequest, :count).by(-1)
+        end.to change(TransferRequest.pending, :count).by(-1)
+      end
+      it 'should change the status of the transfer to approved' do
+        expect do
+          find('.js-approve-transfer').click
+          wait_for_ajax
+          @transfer.reload
+        end.to change(@transfer, :status).to('approved')
       end
       it 'should change the owner of the url' do
         expect do
@@ -170,12 +202,20 @@ describe 'urls index page' do
     end
 
     describe 'rejecting' do
-      it 'should delete the transfer request' do
+      it 'should change the status of the the transfer request' do
         expect do
           find('.js-reject-transfer').click
           click_button "Confirm"
           wait_for_ajax
-        end.to change(TransferRequest, :count).by(-1)
+        end.to change(TransferRequest.pending, :count).by(-1)
+      end
+      it 'should change the status of the transfer to rejected' do
+        expect do
+          find('.js-reject-transfer').click
+          click_button "Confirm"
+          wait_for_ajax
+          @transfer.reload
+        end.to change(@transfer, :status).to('rejected')
       end
       it 'should not change the owner of the url' do
         expect do

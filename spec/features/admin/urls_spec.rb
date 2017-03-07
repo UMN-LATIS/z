@@ -27,7 +27,7 @@ describe 'as a valid admin user' do
       expect(page).to have_content 'Owner'
     end
 
-    describe 'with an existing URL' do
+    describe 'with an existing URL', js: true do
       before do
         @url = FactoryGirl.create(:url)
         visit admin_urls_path
@@ -74,7 +74,6 @@ describe 'as a valid admin user' do
                     wait_for_ajax
                   end.to change(Url, :count).by(0)
                 end
-
                 it 'should display an error' do
                   find('.js-url-submit').click
                   wait_for_ajax

@@ -8,8 +8,9 @@ en:
     pages:
       pages: "Pages"
   helpers:
+    lookup_service_down: "Could not establish a connection to the LDAP server. Please notify help@umn.edu"
     actions: "Actions"
-    no_email: "No EmaIL"
+    no_email: "No Email"
     hello: "z.umn.edu"
     switch_to: "Switch To:"
     short_url: "Short URL"
@@ -93,7 +94,7 @@ en:
       urls_to_transfer: "URLs To Transfer"
       transfer_urls: "Transfer URLs"
       transfer_requests_to_others: "Your Transfer Requests to Others"
-      transfer_requests_pending: "You have pending transfer requests"
+      transfer_requests_pending: "You Have Pending Transfer Requests"
       person_to_transfer_to: "Person to transfer to:"
       information_about_your_link: "Information about your link"
       traffic_statistics: "Traffic Statistics"

@@ -5,8 +5,8 @@ describe 'Visiting root' do
   describe 'not signed in' do
     before { visit '/' }
 
-    it 'should say hello' do
-      expect(page).to have_content 'hello'
+    it 'should say Welcome' do
+      expect(page).to have_content 'Welcome'
     end
   end
 
@@ -17,7 +17,7 @@ describe 'Visiting root' do
     end
 
     it 'should direct you to the home page' do
-      expect(page).to have_content 'hello'
+      expect(page).to have_content 'z.umn.edu'
     end
   end
 end

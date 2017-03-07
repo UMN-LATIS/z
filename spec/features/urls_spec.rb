@@ -10,17 +10,17 @@ describe 'urls show page' do
     sign_in(@user)
 
     @url = FactoryGirl.create(
-      :url,
-      group: @user.context_group,
-      keyword: keyword,
-      url: url,
-      created_at: created_at
+        :url,
+        group: @user.context_group,
+        keyword: keyword,
+        url: url,
+        created_at: created_at
     )
     # add 10 clicks to yesterday
     10.times do
       @url.clicks << Click.create(
-        country_code: 'US',
-        created_at: Time.now - 1.day
+          country_code: 'US',
+          created_at: Time.now - 1.day
       )
       @url.total_clicks += 1
       @url.save
@@ -43,7 +43,7 @@ describe 'urls show page' do
     expect(page).to have_content url
   end
 
-  it 'should display short url' do
+  it 'should display the keyword' do
     expect(page).to have_content keyword
   end
 
@@ -59,26 +59,7 @@ describe 'urls show page' do
     expect(page).to have_content '15 hits'
   end
 
-  it 'should display the qr code' do
-    require 'barby'
-    require 'barby/barcode/qr_code'
-    require 'barby/outputter/svg_outputter'
-
-    barcode = Barby::QrCode.new(view_context.full_url(@url))
-    barcode_svg = Barby::SvgOutputter.new(barcode)
-    barcode_svg.xdim = 5
-
-
-     p barcode_svg.to_svg.html_safe
-    p "and"
-    p "thids"
-
-    p page.html
-
-    expect(page.html).to include(barcode_svg.to_svg.html_safe)
-  end
-
-  describe 'downloading qr code' do
+  describe 'downloading qr code', js: true do
     before { find('.js-qrcode-download').click }
 
     it 'should be a png type' do
@@ -96,6 +77,39 @@ describe 'urls index page' do
     sign_in(@user)
   end
 
+  describe 'page content' do
+    it 'should display the group info' do
+      expect(page).to have_content 'Viewing URLs for the'
+    end
+  end
+  describe 'creating new url ', js: true do
+    let(:url) { 'http://www.googjgjgjgjgjgjgjgjgjgjgjgjgjgjgjggjgjgjgjgjgjggjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjjggle.com' }
+    let(:keyword) { 'goog' }
+    before do
+      visit urls_path
+      find('.js-new-url-url').set url
+      find('.js-new-url-keyword').set keyword
+    end
+    describe 'that is super long' do
+      it 'should shorten it on the sceen' do
+        find('.js-url-submit').click
+        wait_for_ajax
+        expect(page).to have_content('http://www.googjgjgjgj...')
+      end
+    end
+    describe 'visiting page with one url' do
+      it ' should not display pagination Next button' do
+        find('.js-url-submit').click
+        wait_for_ajax
+        expect(page).to_not have_content('Next')
+      end
+      it ' should not display pagination Previous button' do
+        find('.js-url-submit').click
+        wait_for_ajax
+        expect(page).to_not have_content('Previous')
+      end
+    end
+  end
   describe 'creating new url', js: true do
     let(:url) { 'http://www.google.com' }
     let(:keyword) { 'goog' }
@@ -113,17 +127,18 @@ describe 'urls index page' do
           end.to change(Url, :count).by(1)
         end
       end
-      describe 'when the keyword is blank' do
-        before { find('#url_keyword').set '' }
-        it 'should save upon clicking Create' do
+      describe 'when the url is not valid' do
+        before { find('#url_url').set ':' }
+        it 'should not save upon clicking Create with an error msg' do
           expect do
             find('.js-url-submit').click
             wait_for_ajax
-          end.to change(Url, :count).by(1)
+          end.to change(Url, :count).by(0)
+          expect(page).to have_content 'Url is not valid.'
         end
       end
-      describe 'missing http/https' do
-        before { find('#url_url').set 'google.com' }
+      describe 'when the keyword is blank' do
+        before { find('#url_keyword').set '' }
         it 'should save upon clicking Create' do
           expect do
             find('.js-url-submit').click
@@ -156,7 +171,7 @@ describe 'urls index page' do
     end
   end
 
-  describe 'with an existing url' do
+  describe 'with an existing url', js: true do
     let(:new_url) { 'http://www.facebook.com' }
     let(:new_keyword) { 'face' }
     before do
@@ -164,9 +179,12 @@ describe 'urls index page' do
       visit urls_path
     end
 
-    describe 'page content' do
+    describe 'page content', js: true do
       it 'should display the url\'s url' do
         expect(page).to have_content @url.url
+      end
+      it 'should display short url host' do
+        expect(page).to have_content page.current_host
       end
       it 'should display the url\'s keyword' do
         expect(page).to have_content @url.keyword
@@ -217,7 +235,7 @@ describe 'urls index page' do
       before do
         @new_user = FactoryGirl.create(:user)
         @new_url = FactoryGirl.create(:url, group: @new_user.context_group)
-        visit "urls/#{@new_url.id}/edit"
+        visit edit_url_path(@new_url)
       end
       describe 'page content' do
         it 'should display the not authorized message' do
@@ -225,6 +243,5 @@ describe 'urls index page' do
         end
       end
     end
-
   end
 end

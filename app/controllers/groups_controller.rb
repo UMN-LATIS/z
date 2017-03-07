@@ -62,6 +62,8 @@ class GroupsController < ApplicationController
   end
 
   def destroy
+    return if @group.urls.present?
+
     @group.destroy
 
     # It's possible that the current_user in the DB has changed by

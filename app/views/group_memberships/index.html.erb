@@ -28,7 +28,7 @@
         });;
 
         $('#people_search').bind('typeahead:selected', function (obj, datum, name) {
-            $("#umndid").val(datum.umndid);
+            $("#uid").val(datum.umndid);
         });
 
     });
@@ -53,6 +53,10 @@
   </tbody>
 </table>
 
-<%= link_to t('.groups', :default => t('helpers.links.back_to_groups')),
-            groups_path,
-            :class => 'btn btn-primary btn-xs group' %>
+<%= link_to groups_path,
+            :class => 'btn btn-primary btn-xs group' do %>
+
+              <i class="fa fa-arrow-circle-left"></i>
+              <%= t('.groups', :default => t('helpers.links.back_to_collections')) %>
+
+            <% end %>

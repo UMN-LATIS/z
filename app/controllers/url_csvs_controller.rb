@@ -7,7 +7,7 @@ class UrlCsvsController < ApplicationController
       @urls = [Url.find(params[:url_id])]
     else
       @urls =
-          Url.created_by_id(current_user.context_group_id).not_in_any_transfer_request
+          Url.created_by_id(current_user.context_group_id).not_in_pending_transfer_request
     end
 
     # Sneaky bad guy figures out url of target website and wants the good stuff

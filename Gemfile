@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 gem 'passenger'
 
+gem 'ajax-datatables-rails'
+
 # Use OmniAuth to support any type of auth
 gem 'omniauth'
 gem 'omniauth-shibboleth'
@@ -42,6 +44,9 @@ gem 'twitter-bootstrap-rails'
 
 #Use font awesome for icons
 gem "font-awesome-rails"
+
+#Use clipboard js plugin
+gem 'clipboard-rails'
 
 # better confirm dialogs
 gem 'data-confirm-modal'

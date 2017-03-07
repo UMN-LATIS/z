@@ -12,8 +12,17 @@
         <%= f.text_field :keyword, class: 'form-control js-new-url-keyword',  placeholder: "keyword" %>
     </div>
   </div>
-  <%= f.submit nil, class: 'btn btn-primary js-url-submit' %>
-  <% unless url.new_record? %>
+
+  <% if url.new_record? %>
+    <%= button_tag(type: "submit", class: 'btn btn-primary js-url-submit') do %>
+      <i class="fa fa-plus-circle"></i>
+      <%= t('.create_url', :default => t("helpers.links.create_url")) %>
+    <% end %>
+  <% else %>
+    <%= button_tag(type: "submit", class: 'btn btn-primary js-url-submit') do %>
+      <i class="fa fa-plus-circle"></i>
+      <%= t('.edit_url', :default => t("helpers.links.edit_url")) %>
+    <% end %>
     <a href="#" class='btn btn-default cancel-edit-url'><%= t('helpers.buttons.cancel')%></a>
   <% end %>
 <% end %>

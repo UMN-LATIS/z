@@ -5,19 +5,27 @@
   <% if @admin_view %>
     <td><%= url.group.name %></td>
   <% end %>
-	<td>
-    <%= link_to url.url, url.url, target: '_blank' %>
+	<td class="long-url">
+    <%= link_to display_url(url), url.url, target: '_blank' %>
   </td>
-	<td>
-    <%= link_to url.keyword, full_url(url), target: '_blank' %>
+	<td class="row-url-keyword" data-search="<%= url.keyword %>">
+    <%= link_to full_url(url), full_url(url), target: '_blank' %>
+    <button class='btn btn-default clipboard-btn' data-clipboard-text="<%= full_url(url) %>">
+      <i class=" fa fa-files-o"></i>
+    </button>
   </td>
 	<td>
     <%= url.total_clicks %>
   </td>
-	<td>
+	<td data-order="<%= url.created_at %>">
     <%= url.created_at.to_s(:created_on_formatted)  %>
   </td>
-  <td>
+  <td class="row-url-action-buttons">
+    <%= link_to t('.share', default: t("helpers.links.share")),
+              '',
+              class: 'btn btn-xs btn-default share-url fa fa-share-square-o',
+              'data-content': render('share_buttons', url: url) %>
+
     <%= link_to t('.show', default: t("helpers.links.stats")),
                 url_path(url.keyword),
                 class: 'btn btn-xs btn-default show-url fa fa-bar-chart' %>

@@ -1,5 +1,6 @@
 <tr id='group-<%= group.id %>'>
-  <td><%= group.name %>
+  <td>
+    <%= link_to group.name, group_context_path(group) %></li>
   </td>
   <td><%= group.description %></td>
   <td><%= group.created_at.to_s(:created_on_formatted)  %></td>
@@ -13,6 +14,7 @@
     <%= link_to t('.destroy', default: t('helpers.links.destroy')),
                 group_path(group),
                 :method => :delete,
+                :disabled => group.urls.present?,
                 :data => { confirm: t('.confirm-delete', default: t('helpers.links.confirm_delete', to_delete: group.name, default: t('helpers.links.confirm_default'))) },
                 class: 'btn btn-xs btn-danger delete-group fa fa-trash-o', remote: true %>
   </td>

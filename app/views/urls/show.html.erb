@@ -9,6 +9,9 @@
           <div class="panel-heading"><%= t('helpers.short_url')%></div>
           <div class="panel-body">
             <a target='_blank' href="<%= full_url(@url) %>"><%= full_url(@url) %></a>
+            <button class='btn btn-default clipboard-btn' data-clipboard-text="<%= full_url(@url) %>">
+              <i class=" fa fa-files-o"></i>
+            </button>
           </div>
         </div>
       </div>
@@ -21,7 +24,24 @@
         </div>
       </div>
     </div>
-    <h3><%= t('helpers.header_tags.traffic_statistics')%></h3>
+    <div class="row">
+      <div class="col-md-9 stats-actions">
+        <button class="btn btn-primary js-transfer-urls ">
+          <i class="fa fa-exchange"></i>
+
+          Transfer to a different user
+        </button>
+        <button class="btn btn-primary js-move-urls ">
+          <i class="fa fa-share-square-o "></i>
+
+          Move to a different collection
+        </button>
+      </div>
+    </div>
+    <div class="traffic-stats-header">
+      <h3 ><%= t('helpers.header_tags.traffic_statistics')%></h3>
+      <a class='btn btn-default js-csv-download' href="<%= url_csv_click_data_path(@url, format: :csv) %>">Export to CSV</a>
+    </div>
     <div class="row">
       <div class="col-md-12">
         <ul id='show-tabs' class="col-md-12 nav nav-tabs" role='tablist'>
@@ -50,32 +70,11 @@
   </div>
   <div class="col-md-5">
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-12">
         <div class="panel panel-default">
-          <div class="panel-heading"><%= t('helpers.qr_code') %></div>
+          <div class="panel-heading"><%= t('helpers.share') %></div>
           <div class="panel-body text-center">
-            <div class="row">
-              <div class="col-md-12">
-                <%= @barcode_svg.to_svg.html_safe %>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                  <a class='btn btn-default js-qrcode-download' href="<%= url_download_qrcode_path(@url.keyword) %>">Download PNG Image</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-5">
-        <div class="panel panel-default">
-          <div class="panel-heading"><%= t('helpers.download_click_data') %></div>
-          <div class="panel-body text-center">
-            <div class="row">
-              <div class="col-md-12">
-                <a class='btn btn-default js-csv-download' href="<%= url_csv_click_data_path(@url, format: :csv) %>">CSV file format</a>
-              </div>
-            </div>
+              <%= render "/urls/share_buttons", url: @url, large: true %>
           </div>
         </div>
       </div>
@@ -129,10 +128,9 @@
 
 <div class="row">
 
-
-
-
 </div>
+
+<%= render 'modal' %>
 
 <script type="text/javascript">
   // Load the data functions for the Google Charts
@@ -142,4 +140,6 @@
   <%= render partial: 'urls/show_js/alltime.js' %>
   <%= render partial: 'urls/show_js/country_map.js' %>
   <%= render partial: 'urls/show_js/country_pie.js' %>
+  <%= render partial: 'urls/show_js/move.js' %>
+  <%= render partial: 'urls/show_js/transfer.js' %>
 </script>

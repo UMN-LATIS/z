@@ -13,7 +13,7 @@ describe UrlPolicy do
         :url,
         group: @good_user.context_group,
         keyword: 'keyword',
-        url: 'google.com',
+        url: 'http://google.com',
         created_at: 'created_at'
     )
   end

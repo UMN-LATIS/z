@@ -5,8 +5,8 @@ describe 'context switching' do
   describe 'not signed in' do
     before { visit '/' }
 
-    it 'should not have a Viewing as Section' do
-      expect(page).to_not have_content 'Viewing as:'
+    it 'should not have a Viewing As Section' do
+      expect(page).to_not have_content 'Viewing As:'
     end
   end
 
@@ -16,8 +16,8 @@ describe 'context switching' do
       visit '/'
     end
 
-    it 'should not have a Viewing as section' do
-      expect(page).to_not have_content 'Viewing as:'
+    it 'should have a Viewing As section' do
+      expect(page).to have_content 'Viewing As:'
     end
     describe 'when user has multiple groups' do
       let(:group) { FactoryGirl.create(:group) }
@@ -25,16 +25,16 @@ describe 'context switching' do
         user.groups << group
         visit '/'
       end
-      it 'should have a Viewing as section' do
-        expect(page).to have_content "Viewing as: #{user.context_group.name}"
+      it 'should have a Viewing As section' do
+        expect(page).to have_content "Viewing As: #{user.context_group.name}"
       end
       describe 'when switching contexts', js: true do
         before do
-          click_link "Viewing as: #{user.context_group.name}"
+          click_link "Viewing As: #{user.context_group.name}"
           click_link group.name
         end
         it 'should switch the context' do
-          expect(page).to have_content "Viewing as: #{group.name}"
+          expect(page).to have_content "Viewing As: #{group.name}"
         end
       end
     end

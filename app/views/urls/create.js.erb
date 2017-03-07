@@ -1,3 +1,10 @@
-$('table.data-table').DataTable().row.add($("<%= escape_javascript(render(partial: 'urls/in_row_show', locals: { url: @url })) %>")).draw( false );
-$(document).find("#js-new-url-url, js-new-url-keyword").val('');
-$(document).find("#new-url-form").html("<%= escape_javascript(render(partial: 'form', locals: { url: @empty_url })) %>");
+$('table.data-table').DataTable().draw();
+$(document).find("#new-url-form").html("<%= escape_javascript(render(partial: 'sleek_form', locals: { url: @empty_url })) %>");
+
+var $urlBlurb = $("<%= escape_javascript(render(partial: 'urls/url_blurb', locals: { url: @url })) %>");
+$urlBlurb.addClass("off");
+$("#url-blurb-container").append($urlBlurb);
+
+setTimeout(function(){
+  $urlBlurb.removeClass("off")
+},100);
