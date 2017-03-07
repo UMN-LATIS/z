@@ -80,7 +80,7 @@ class Url < ApplicationRecord
 
   scope :not_in_pending_transfer_request, -> do
     url_ids = TransferRequest.pending.joins(:urls).pluck(:url_id)
-    where.not('id IN (?)', url_ids) if url_ids.present?
+    where.not("#{table_name}.id IN (?)", url_ids) if url_ids.present?
   end
 
   def add_click!(location)

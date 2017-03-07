@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'urls show page' do
+describe 'urls show page', js: true do
   let(:keyword) { 'testkeyword' }
   let(:url) { 'http://www.google.com' }
   let(:created_at) { Time.now - 1.day }
@@ -8,6 +8,7 @@ describe 'urls show page' do
   before do
     @user = FactoryGirl.create(:user)
     sign_in(@user)
+    wait_for_ajax
 
     @url = FactoryGirl.create(
         :url,
@@ -71,10 +72,11 @@ describe 'urls show page' do
     end
   end
 end
-describe 'urls index page' do
+describe 'urls index page', js: true do
   before do
     @user = FactoryGirl.create(:user)
     sign_in(@user)
+    wait_for_ajax
   end
 
   describe 'page content' do
@@ -87,6 +89,7 @@ describe 'urls index page' do
     let(:keyword) { 'goog' }
     before do
       visit urls_path
+      wait_for_ajax
       find('.js-new-url-url').set url
       find('.js-new-url-keyword').set keyword
     end
@@ -177,6 +180,7 @@ describe 'urls index page' do
     before do
       @url = FactoryGirl.create(:url, group: @user.context_group)
       visit urls_path
+      wait_for_ajax
     end
 
     describe 'page content', js: true do
@@ -197,6 +201,26 @@ describe 'urls index page' do
       end
       it 'should display a delete button' do
         expect(page).to have_content 'Delete'
+      end
+      it 'should display the urls collection' do
+        expect(page).to have_select("url-collection-#{@url.id}", selected: @url.group.name)
+      end
+
+      describe 'when filtering on collection', js: true do
+        before do
+          new_group = FactoryGirl.create(:group)
+          new_group.users << @user
+          sign_in(@user)
+          @new_url = FactoryGirl.create(:url, group: new_group)
+          wait_for_ajax
+          select new_group.name, from: 'collection-filter'
+        end
+        it 'should display urls from that collection' do
+          expect(page).to have_content @new_url.keyword
+        end
+        it 'should not display urls from another collection' do
+          expect(page).to_not have_content @url.keyword
+        end
       end
     end
 
@@ -241,6 +265,24 @@ describe 'urls index page' do
         it 'should display the not authorized message' do
           expect(page).to have_content 'You are not authorized to perform this action.'
         end
+      end
+    end
+
+    describe 'when changing a URLs collection' do
+      before do
+        @new_group = FactoryGirl.create(:group)
+        @new_group.users << @user
+        sign_in(@user)
+        wait_for_ajax
+        select @new_group.name, from: "url-collection-#{@url.id}"
+        wait_for_ajax
+      end
+      it 'should update the urls collection on the page' do
+        expect(page).to have_select("url-collection-#{@url.id}", selected: @new_group.name)
+      end
+      it 'should update the urls collection in the database' do
+        @url.reload
+        expect(@url.group.id).to eq(@new_group.id)
       end
     end
   end
