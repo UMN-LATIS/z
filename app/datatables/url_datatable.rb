@@ -51,11 +51,11 @@ class UrlDatatable < AjaxDatatablesRails::Base
 
   def get_raw_records
     if current_user.blank?
-      Url.none
+      Url.includes(:group).references(:group).none
     else
       Url
         .created_by_ids(current_user.groups.pluck(:id))
-        .not_in_pending_transfer_request.joins(:group)
+        .not_in_pending_transfer_request.includes(:group).references(:group)
     end
   end
 
