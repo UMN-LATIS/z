@@ -145,14 +145,20 @@ describe 'urls index page' do
         it 'should be visible' do
           expect(page).to have_selector('.url-blurb', visible: true)
         end
+        it 'should have the newly created short url' do
+           expect(page.find(".url-blurb-short-url")).to have_content(keyword)
+        end
+        it 'should have the newly created short url' do
+           expect(page.find(".url-blurb-source")).to have_content(url)
+        end
         it "should display the share to facebook button" do
-          expect(page).to have_selector('.url-share-button-facebook', visible: true)
+          expect(page).to have_selector('.url-blurb .url-share-button-facebook', visible: true)
         end
         it "should display the share to twitter button" do
-          expect(page).to have_selector('.url-share-button-twitter', visible: true)
+          expect(page).to have_selector('.url-blurb .url-share-button-twitter', visible: true)
         end
         it "should display the download QR code button" do
-          expect(page).to have_selector('.url-share-button-qr', visible: true)
+          expect(page).to have_selector('.url-blurb .url-share-button-qr', visible: true)
         end
 
         describe 'downloading qr code', js: true do
