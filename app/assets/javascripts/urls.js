@@ -177,28 +177,27 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
 
 //url share actions
 $(document).ready(function(){
-	$("body").on("click", ".url-share-button-twitter",function(e){
+	$(document).on("click", ".url-share-button-twitter",function(e){
 		e.preventDefault();
 		var shortUrl = $(this).data("shortUrl");
 		window.open("https://twitter.com/intent/tweet?text=" + shortUrl, '', 'menubar=no, toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
 	})
-	$("body").on("click", ".url-share-button-facebook",function(e){
+	$(document).on("click", ".url-share-button-facebook",function(e){
 		e.preventDefault();
 		var shortUrl = $(this).data("shortUrl");
 		// window.open("https://twitter.com/intent/tweet?text=" + shortUrl, '', 'menubar=no, toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
 	})
-	$("body").on("click", ".url-share-button-qr", function(e){
+	$(document).on("click", ".url-share-button-qr", function(e){
 		e.preventDefault();
-		window.open($(this).data("path"))
-
+		window.location = $(this).data("path");
 	});
-	$("body").on("click", ".url-blurb-close-button", function(e){
+	$(document).on("click", ".url-blurb-close-button", function(e){
 		e.preventDefault();
 		$(this).closest(".url-blurb")
 		.addClass("off")
 		.on("transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd", function(){
 			$(this).remove();
-		})
+		});
 	});
 
 	setupPopovers();
