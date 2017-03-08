@@ -4,7 +4,6 @@ module AuditHelper
   end
 
   def display_whodunnit_email(audited_thing)
-    who = User.find_by(id: audited_thing.whodunnit)
-    who ?  mail_to(who.email, who.user_full_name) : 'unknown'
+    audited_thing.user ?  mail_to(audited_thing.user.email, audited_thing.user.user_full_name) : 'unknown'
   end
 end

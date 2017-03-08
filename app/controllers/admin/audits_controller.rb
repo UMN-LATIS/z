@@ -12,14 +12,15 @@ class Admin::AuditsController < ApplicationController
 
     a = Audit.find(params[:id])
     b = a.item_type.constantize.find(a.item_id)
+    @objs = []
 
-    @objs = [b.versions[0].reify, b.versions[1].reify]
+    #@objs = [b.versions[0].reify, b.versions[1].reify]
 
 
 
-   # b.versions.each do |version|
-   #   @objs << version.reify
-   # end
+    b.versions.each do |version|
+      @objs << version.reify
+    end
 
 
 

@@ -4,20 +4,18 @@ class AuditDatatable < AjaxDatatablesRails::Base
   def sortable_columns
     # Declare strings in this format: ModelName.column_name
     @sortable_columns ||= [
-        'item_type',
-        'item_id',
-        'event',
-        'whodunnit'
+        'Audit.item_type',
+        'Audit.event',
+        'Audit.whodunnit'
     ]
   end
 
   def searchable_columns
     # Declare strings in this format: ModelName.column_name
     @searchable_columns ||= [
-        'item_type',
-        'item_id',
-        'event',
-        'whodunnit'
+        'Audit.item_type',
+        'Audit.event',
+        'Audit.whodunnit'
     ]
   end
 
@@ -36,9 +34,11 @@ class AuditDatatable < AjaxDatatablesRails::Base
       }
     end
   end
-  def get_raw_records
-   Audit.all #select('id, item_type, item_id, event, whodunnit, created_at')
-  end
 
-  # ==== Insert 'presenter'-like methods below if necessary
+  def get_raw_records
+    #Audit.select('any_value(id), any_value(item_type), item_id, any_value(event), any_value(whodunnit), max(created_at)').group(:item_id) #.maximum(:created_at)
+    Audit.all.order(created_at: :desc)
+  end
+# max(created_at)
+# ==== Insert 'presenter'-like methods below if necessary
 end
