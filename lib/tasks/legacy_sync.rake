@@ -1,4 +1,4 @@
-# lib/tasks/umndid_finder.rake
+# lib/tasks/legacy_sync.rake
 namespace :user do
   desc 'Find umndid for the per ids'
   task update_umndids: :environment do
