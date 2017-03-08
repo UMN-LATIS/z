@@ -1,5 +1,18 @@
 # lib/tasks/legacy_sync.rake
+
+
 namespace :user do
+  desc 'Load new users into perid_umndid'
+  task load_users: :environment do
+    new_per_ids = Legacy::Yourl.where('per_id NOT IN (?)', PeridUmndid.all.pluck(:perid).uniq).pluck(:per_id).uniq
+    new_user_total = new_per_ids.count
+    puts "New users: #{new_user_total}"
+    new_per_ids.each_with_index do |per_id, index|
+      PeridUmndid.create(perid: per_id)
+      puts "Added #{index + 1}/#{new_user_total}"
+    end
+  end
+
   desc 'Find umndid for the per ids'
   task update_umndids: :environment do
     total = PeridUmndid.where('umndid IS ?', nil).count
