@@ -1,6 +1,4 @@
 # lib/tasks/legacy_sync.rake
-
-
 namespace :user do
   desc 'Load new users into perid_umndid'
   task load_users: :environment do
@@ -60,6 +58,8 @@ namespace :urls do
       )
     end
   end
+
+  desc 'Ensure the URLs click counts are synced and update them accordingly'
   task update_clicks: :environment do
     Url.find_each do |url|
       # Move onto next URL if the click counts match
