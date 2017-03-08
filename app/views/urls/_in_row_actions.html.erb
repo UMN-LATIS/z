@@ -1,3 +1,7 @@
+<%= link_to t('.share', default: t("helpers.links.share")),
+          '',
+          class: 'btn btn-xs btn-default share-url fa fa-share-square-o',
+          'data-content': render('urls/share_buttons', url: url) %>
 <%= link_to t('.show', default: t("helpers.links.stats")),
             url_path(url.keyword),
             class: 'btn btn-xs btn-default show-url fa fa-bar-chart' %>
