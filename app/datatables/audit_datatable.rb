@@ -15,7 +15,8 @@ class AuditDatatable < AjaxDatatablesRails::Base
     @searchable_columns ||= [
         'Audit.item_type',
         'Audit.event',
-        'Audit.whodunnit'
+        'Audit.whodunnit_email',
+        'Audit.whodunnit_name',
     ]
   end
 

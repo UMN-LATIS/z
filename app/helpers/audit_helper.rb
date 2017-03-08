@@ -4,6 +4,6 @@ module AuditHelper
   end
 
   def display_whodunnit_email(audited_thing)
-    audited_thing.user ?  mail_to(audited_thing.user.email, audited_thing.user.user_full_name) : 'unknown'
+    audited_thing.whodunnit_name ?  mail_to(audited_thing.whodunnit_email, audited_thing.whodunnit_name) : 'unknown'
   end
 end

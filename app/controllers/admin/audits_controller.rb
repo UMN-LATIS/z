@@ -17,7 +17,7 @@ class Admin::AuditsController < ApplicationController
     #@objs = [b.versions[0].reify, b.versions[1].reify]
 
 
-
+    @objs << b
     b.versions.each do |version|
       @objs << version.reify
     end
