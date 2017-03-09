@@ -48,11 +48,49 @@
 		text-align:initial;
 	}
 }
+.container-wrapper{
+	position:relative;
+}
+.banner-content{
+	display:inline-block;
+	color:#eee;
+	position:relative;
+}
 #new-url-form form{
 	padding:0;
 	border: 1px solid #cfcfcf;
   border-radius: 5px;
   overflow: hidden;
+}
+#new-url-form{
+	position:absolute;
+	top:0;
+	left:0;
+	margin-top:0;
+	width:100%;
+	border-radius:0;
+	background-color:black;
+	padding:10px 0 40px;
+	&:before{
+		background-color:grey;
+		background-image: image-url("umn-pano.jpg");
+		background-size:cover;
+		background-position:center;
+		display:block;
+		content:' ';
+		position:absolute;
+		top:0;
+		left:0;
+		width:100%;
+		height:100%;
+		opacity:0.3;
+	}
+}
+#urls-table_wrapper{
+	margin-top:140px;
+}
+.url-banner-title{
+	text-align:left;
 }
 .new_admin input[type='text'], .new_member input[type='text'] {
 	width: 400px;
@@ -171,6 +209,7 @@ $superInputHeight: 50px;
   height: 50px;
   position: relative;
   margin: 0;
+	background-color:white;
   > *{
     display:inline-block;
 		vertical-align:middle;
@@ -241,6 +280,12 @@ $superInputHeight: 50px;
 	}
 }
 @media screen and (max-width:640px){
+	.url-banner-title{
+		text-align:center;
+	}
+	#urls-table_wrapper{
+		margin-top:250px;
+	}
 	#url-blurb-container{
 		display:none;
 	}
