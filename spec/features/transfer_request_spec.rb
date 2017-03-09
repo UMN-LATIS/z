@@ -77,7 +77,7 @@ describe 'creating a transfer request', js: true do
                 find('#new_transfer_request  input[type="submit"]').click
                 click_button "Confirm"
                 wait_for_ajax
-                expect(page).to have_content 'Your Transfer Requests to Others'
+                expect(page).to have_content 'URLs you gave that are pending approval'
               end
 
               it 'should display the pending request on their screen' do
@@ -85,7 +85,7 @@ describe 'creating a transfer request', js: true do
                 click_button "Confirm"
                 sign_in(@other_user)
                 visit urls_path
-                expect(page).to have_content 'You Have Pending Transfer Requests'
+                expect(page).to have_content 'URLs you are being given'
               end
 
               describe 'user does not exist' do
