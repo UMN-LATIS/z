@@ -19,10 +19,15 @@
   </i>
 </h2>
 
+
+<div class="collection_select_spot"></div>
+
 <table id="urls-table" class="table user-table table-striped table-bordered data-table" data-source="<%= datatable_urls_path(format: :json) %>">
   <thead>
     <tr>
       <th></th>
+      <th></th>
+      <th>Collection</th>
       <th><%= t('helpers.table_headers.url')  %></th>
       <th><%= t('helpers.table_headers.keyword') %></th>
       <th><%= t('helpers.table_headers.clicks') %></th>
@@ -38,6 +43,9 @@
 <% end %>
 
 <%= content_tag :div, class: "collection-count", data: {collection_count: current_user.groups.length} do %>
+<% end %>
+
+<%= content_tag :div, class: "collection-names", data: {collection_names: current_user.groups.pluck(:id, :name)} do %>
 <% end %>
 
 <%= render 'modal' %>
