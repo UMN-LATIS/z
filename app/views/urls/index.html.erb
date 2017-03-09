@@ -4,13 +4,6 @@
   <%= render 'sleek_form', url: @url %>
 </div>
 
-<div id="pending-transfer-requests-to">
-  <%= render 'transfer_requests_to' %>
-</div>
-
-<div id="pending-transfer-requests-from">
-  <%= render 'transfer_requests_from' %>
-</div>
 
 <h2>
   <br/>
@@ -21,23 +14,32 @@
 
 
 <div class="collection_select_spot"></div>
+<div class="urls-table-container">
+  <div id="pending-transfer-requests-to">
+    <%= render 'transfer_requests_to' %>
+  </div>
 
-<table id="urls-table" class="table user-table table-striped table-bordered data-table" data-source="<%= datatable_urls_path(format: :json) %>">
-  <thead>
-    <tr>
-      <th></th>
-      <th></th>
-      <th>Collection</th>
-      <th><%= t('helpers.table_headers.url')  %></th>
-      <th><%= t('helpers.table_headers.keyword') %></th>
-      <th><%= t('helpers.table_headers.clicks') %></th>
-      <th><%= t('helpers.table_headers.created') %></th>
-      <th><%= t '.actions', :default => t("helpers.actions") %></th>
-    </tr>
-  </thead>
-  <tbody>
-  </tbody>
-</table>
+  <div id="pending-transfer-requests-from">
+    <%= render 'transfer_requests_from' %>
+  </div>
+
+  <table id="urls-table" class="table user-table table-striped table-bordered data-table" data-source="<%= datatable_urls_path(format: :json) %>">
+    <thead>
+      <tr>
+        <th></th>
+        <th></th>
+        <th>Collection</th>
+        <th><%= t('helpers.table_headers.url')  %></th>
+        <th><%= t('helpers.table_headers.keyword') %></th>
+        <th><%= t('helpers.table_headers.clicks') %></th>
+        <th><%= t('helpers.table_headers.created') %></th>
+        <th><%= t '.actions', :default => t("helpers.actions") %></th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>
 
 <%= content_tag :div, class: "route-info", data: {new_transfer_request_path: new_transfer_request_path, new_move_to_group_path: new_move_to_group_path} do %>
 <% end %>
