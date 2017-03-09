@@ -30,18 +30,21 @@ end
 namespace :urls do
   desc 'Add urls for known per_ids'
   task import_urls: :environment do
-    Legacy::Yourl.find_each.with_index do |yourl, index|
+    puts "Syncing #{Legacy::Yourl.count} URLs..."
+    unknown_group = Group.find_or_create_by(
+      name: 'Unknown Owners',
+      description: 'Admin group for unknown URLs fk39wkoim9329jrlsdjfslaj824'
+    )
+    Legacy::Yourl.each_with_index do |yourl, index|
       next unless Url.where(keyword: yourl.keyword).count.blank?
-      puts "Moving yourl #{yourl.keyword}"
+      puts "Moving over yourl #{yourl.keyword}"
       puts '-----------------------------'
       umndid = PeridUmndid.where(perid: yourl.per_id).take.umndid
-      user = if umndid.present?
-               User.find_or_create_by(uid: umndid)
-             else
-               # This should be a generic user / or custom "Unknown" group id
-               User.find_or_create_by(uid: '5scyi59j8')
-             end
-      next unless user.present?
+      group_id = if umndid.present?
+                   User.find_or_create_by(uid: umndid).group_id
+                 else
+                   unknown_group.id
+                 end
       parsed_url = yourl.url.delete("^\u{0000}-\u{007F}")
       parsed_url = 'http://z.umn.edu' unless valid_url?(parsed_url)
       begin
@@ -54,29 +57,27 @@ namespace :urls do
         keyword: yourl.keyword,
         created_at: yourl.timestamp,
         total_clicks: yourl.clicks,
-        group_id: user.default_group_id
+        group_id: group_id
       )
     end
   end
 
   desc 'Ensure the URLs click counts are synced and update them accordingly'
   task update_clicks: :environment do
-    Url.find_each do |url|
+    Url.all.each do |url|
       # Move onto next URL if the click counts match
       legacy_click_total = Legacy::Click.where(shorturl: url.keyword).count
       next if url.clicks.size == legacy_click_total
       puts '---------------------------------'
-      puts "Adding clicks for #{url.keyword}"
-      # Destroy current click count and rebuild
-      url.clicks.destrroy_all
+      puts "Deleting current clicks for #{url.keyword}..."
+      Click.where(url_id: url.id).delete_all
       url_id = url.id
-      index = 1
-      Legacy::Click.where(shorturl: url.keyword).find_each do |legacy_click|
+      puts "Loading #{legacy_click_total} clicks for #{url.keyword}..."
+      Legacy::Click.where(shorturl: url.keyword).each_with_index do |legacy_click, index|
         ActiveRecord::Base.connection.execute(
           "INSERT INTO `clicks` (`country_code`, `url_id`, `created_at`, `updated_at`) VALUES ('#{legacy_click.country_code}', #{url_id}, '#{legacy_click.click_time.to_s(:db)}', '#{Time.now.to_s(:db)}')"
         )
-        puts "[#{url.keyword}: Adding click #{index}/#{legacy_click_total}"
-        index += 1
+        puts "[#{url.keyword}]: Adding click #{index + 1}/#{legacy_click_total}"
       end
     end
   end
