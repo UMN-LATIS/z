@@ -4,26 +4,19 @@ class Admin::AuditsController < ApplicationController
 
   def index
     @audits = Audit.select('id, item_type, item_id, event, whodunnit, created_at')
+    authorize @audits unless @audits.nil?
   end
 
   # GET /audits/1
   # GET /audits/1.json
   def show
-
     a = Audit.find(params[:id])
+    authorize a unless a.nil?
     b = a.item_type.constantize.find(a.item_id)
-    @objs = []
-
-    #@objs = [b.versions[0].reify, b.versions[1].reify]
-
-
-    @objs << b
+    @objs = [b]
     b.versions.each do |version|
       @objs << version.reify
     end
-
-
-
     respond_to do |format|
       format.html
       format.js { render layout: false }
