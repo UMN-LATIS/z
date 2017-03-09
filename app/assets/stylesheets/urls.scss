@@ -48,6 +48,9 @@
 		text-align:initial;
 	}
 }
+.container-force-full-width{
+	width:100% !important;
+}
 .container-wrapper{
 	position:relative;
 }
@@ -70,7 +73,8 @@
 	width:100%;
 	border-radius:0;
 	background-color:black;
-	padding:10px 0 40px;
+	padding-top:10px;
+	height:180px;
 	&:before{
 		background-color:grey;
 		background-image: image-url("umn-pano.jpg");
@@ -87,7 +91,7 @@
 	}
 }
 #urls-table_wrapper{
-	margin-top:140px;
+	margin-top:170px;
 }
 .url-banner-title{
 	text-align:left;
@@ -295,6 +299,7 @@ $superInputHeight: 50px;
 		display:none;
 	}
 	#new-url-form{
+		height:240px;
 		form{
 			width:70%;
 		}
@@ -334,6 +339,7 @@ $superInputHeight: 50px;
 	padding: 10px 20px;
 	box-sizing: border-box;
 	overflow: hidden;
+	color:black;
 	&.off{
 		height:0;
 		padding-top:0px;
