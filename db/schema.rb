@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170214195130) do
+ActiveRecord::Schema.define(version: 20170222161436) do
 
   create_table "clicks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "country_code"
@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(version: 20170214195130) do
     t.datetime "updated_at",                 null: false
     t.index ["group_id"], name: "index_urls_on_group_id", using: :btree
     t.index ["keyword"], name: "index_urls_on_keyword", unique: true, using: :btree
+    t.index ["url"], name: "url", length: { url: 255 }, using: :btree
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -84,6 +85,16 @@ ActiveRecord::Schema.define(version: 20170214195130) do
     t.string   "remember_token"
     t.index ["context_group_id"], name: "index_users_on_context_group_id", using: :btree
     t.index ["default_group_id"], name: "index_users_on_default_group_id", using: :btree
+  end
+
+  create_table "versions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+    t.string   "item_type",  limit: 191,        null: false
+    t.integer  "item_id",                       null: false
+    t.string   "event",                         null: false
+    t.string   "whodunnit"
+    t.text     "object",     limit: 4294967295
+    t.datetime "created_at"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
   end
 
   create_table "yourls_url", primary_key: "keyword", id: :string, limit: 200, default: "", force: :cascade, options: "ENGINE=MyISAM DEFAULT CHARSET=utf8" do |t|

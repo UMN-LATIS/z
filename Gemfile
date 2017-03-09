@@ -50,6 +50,9 @@ gem 'clipboard-rails'
 # better confirm dialogs
 gem 'data-confirm-modal'
 
+# use papertrail for auding or versioning
+gem 'paper_trail'
+
 # Use barby to generate QR codes
 gem 'rqrcode'
 gem 'barby'
