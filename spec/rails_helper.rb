@@ -12,6 +12,8 @@ require 'support/utilities'
 require 'capybara/rspec'
 require 'capybara/poltergeist'
 
+require 'paper_trail/frameworks/rspec'
+
 Capybara.javascript_driver = :poltergeist
 
 # Requires supporting ruby files with custom matchers and macros, etc, in

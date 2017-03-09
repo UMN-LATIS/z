@@ -23,6 +23,12 @@ RSpec.describe Group, type: :model do
   it { should respond_to 'created_at' }
   it { should respond_to 'updated_at' }
 
+  describe 'Versioning'do
+    it 's should be enabled' do
+      is_expected.to be_versioned
+    end
+  end
+
   describe 'invalid Group' do
     describe '[name]' do
       describe 'doesn\'t exist' do
