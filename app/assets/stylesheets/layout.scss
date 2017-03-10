@@ -471,6 +471,7 @@ div.dataTables_wrapper{
 }
 .page-header{
   border-bottom:none;
+  margin:70px 0px 30px;
 }
 @media screen and (max-width: 530px){
   .btn{
@@ -542,5 +543,41 @@ div.dataTables_wrapper{
   }
   .navbar-default .navbar-nav > li.selected {
     border-bottom: 2px solid white;
+  }
+  .panel-pane{
+    height:100%;
+
+  }
+  .pane-cla-glue-logo-pane{
+    .logo-text{
+      display:none;
+      &:before{
+        content:'CLA';
+        display:inline-block;
+        height:57px;
+        line-height:57px;
+        color:#feca45;
+        font-size: 16px;
+        font-weight: bold;
+      }
+    }
+    .logo{
+      // display:none;
+      margin-left:0;
+
+    }
+  }
+}
+
+@media only screen and (max-width:590px){
+  .cla-header{
+    .pane-cla-glue-logo-pane {
+      .logo{
+        display:none;
+      }
+      .logo-text{
+        display: inline-block;
+      }
+    }
   }
 }
