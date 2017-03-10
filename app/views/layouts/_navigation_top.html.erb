@@ -1,53 +1,53 @@
 <header class="cla-header " role="banner">
   <div class="row main-swooshes container">
-    <div class="panel-pane pane-cla-glue-logo-pane right">
+    <nav class="navbar navbar-default" role="navigation">
+       <div class="container-fluid">
 
-      <nav class="navbar navbar-default" role="navigation">
-         <div class="container-fluid">
+           <ul class="nav navbar-nav navbar-left">
+             <% if signed_in? %>
 
-             <ul class="nav navbar-nav navbar-left">
-               <% if signed_in? %>
+               <li class="<%= current_page?(urls_path) ? "selected" : "" %>">
+                 <%= link_to (urls_path) do  %>
+                   <span>
+                     <i class="fa fa-link" aria-hidden="true"></i>
+                     <span > My URLs </span>
+                   </span>
+                 <% end %>
+               </li>
+               <li class="<%= current_page?(groups_path) ? "selected" : "" %>">
+                 <%= link_to (groups_path) do  %>
+                   <span>
+                     <i class="fa fa-users" aria-hidden="true"></i>
+                     <span > My Collections </span>
+                   </span>
+                 <% end %>
+               </li>
 
-                 <li class="<%= current_page?(urls_path) ? "selected" : "" %>">
-                   <%= link_to (urls_path) do  %>
-                     <span>
-                       <i class="fa fa-link" aria-hidden="true"></i>
-                       <span > My URLs </span>
-                     </span>
-                   <% end %>
-                 </li>
-                 <li class="<%= current_page?(groups_path) ? "selected" : "" %>">
-                   <%= link_to (groups_path) do  %>
-                     <span>
-                       <i class="fa fa-users" aria-hidden="true"></i>
-                       <span > My Collections </span>
-                     </span>
-                   <% end %>
-                 </li>
+               <%if current_user.admin? %>
 
-                 <%if current_user.admin? %>
+               <li>
+                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= t('helpers.links.admin')%> <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="<%= admin_urls_path %>">View all URLs</a></li>
+                    <li><a href="<%= admin_groups_path %>">View all Collections</a></li>
+                    <li><a href="<%= admin_members_path %>">Manage Admins</a></li>
+                  </ul>
+                </li>
 
-                 <li>
-                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= t('helpers.links.admin')%> <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                      <li><a href="<%= admin_urls_path %>">View all URLs</a></li>
-                      <li><a href="<%= admin_groups_path %>">View all Collections</a></li>
-                      <li><a href="<%= admin_members_path %>">Manage Admins</a></li>
-                    </ul>
-                  </li>
-
-                 <%end%>
-
-               <% end %>
-             </ul>
-             <div id="nav_context_switcher">
-               <%#= render 'layouts/nav/context_switcher' %>
-             </div>
-         </div>
-       </nav>
-       <div class="panel-pane pane-cla-glue-logo-pane left">
-         <a href="/"><img class="logo" src="<%= asset_path('college_of_liberal_arts.png') %>" alt="College of Liberal Arts"></a>
+               <%end%>
+               <li><%= link_to 'Sign Out', signout_path %></li>
+             <% end %>
+           </ul>
+           <div id="nav_context_switcher">
+             <%#= render 'layouts/nav/context_switcher' %>
+           </div>
        </div>
-    </div>
+     </nav>
+     <div class="panel-pane pane-cla-glue-logo-pane left">
+       <a href="/">
+         <img class="logo" src="<%= asset_path('college_of_liberal_arts.png') %>" alt="College of Liberal Arts">
+         <div class="logo-text"></div>
+       </a>
+     </div>
   </div>
 </header>
