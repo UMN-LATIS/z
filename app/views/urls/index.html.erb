@@ -4,15 +4,6 @@
   <%= render 'sleek_form', url: @url %>
 </div>
 
-
-<h2>
-  <br/>
-  <i>
-    <%= @group.description unless @group.id.eql? current_user.default_group_id%>
-  </i>
-</h2>
-
-
 <div class="collection_select_spot"></div>
 <div class="urls-table-container">
   <div id="pending-transfer-requests-to">
