@@ -62,6 +62,10 @@ class Url < ApplicationRecord
     where('group_id = ?', group_id)
   end
 
+  scope :created_by_ids, ->(group_ids) do
+    where('group_id IN (?)', group_ids)
+  end
+
   scope :created_by_name, ->(group_name) do
     owner_to_search = "%#{group_name}%"
     possible_groups = Group.where('name LIKE ?', owner_to_search).map(&:id)
@@ -78,7 +82,7 @@ class Url < ApplicationRecord
 
   scope :not_in_pending_transfer_request, -> do
     url_ids = TransferRequest.pending.joins(:urls).pluck(:url_id)
-    where.not('id IN (?)', url_ids) if url_ids.present?
+    where.not("#{table_name}.id IN (?)", url_ids) if url_ids.present?
   end
 
   def add_click!(location)

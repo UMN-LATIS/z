@@ -1,9 +1,10 @@
 require 'rails_helper'
 
-describe 'groups index page' do
+describe 'groups index page', js: true do
   before do
     @user = FactoryGirl.create(:user)
     sign_in(@user)
+    wait_for_ajax
   end
 
   describe 'creating a new group', js: true do
@@ -77,6 +78,7 @@ describe 'groups index page' do
       group.users << @user
       group.save
       sign_in @user
+      wait_for_ajax
       visit groups_path
     end
 
@@ -145,8 +147,8 @@ describe 'groups index page' do
 
   describe 'when attempting to edit someone elses group' do
     before do
-      new_group = FactoryGirl.create(:group)
-      visit "groups/#{new_group.id}/edit"
+      unauthed_group = FactoryGirl.create(:group)
+      visit edit_group_path(unauthed_group)
     end
     describe 'page content' do
       it 'should display the not authorized message' do
