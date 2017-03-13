@@ -30,7 +30,6 @@ class AuditDatatable < AjaxDatatablesRails::Base
   end
 
   def get_raw_records
-    #Audit.select('any_value(id), any_value(item_type), item_id, any_value(event), any_value(whodunnit), max(created_at)').group(:item_id) #.maximum(:created_at)
     Audit.order(created_at: :desc)
   end
 # max(created_at)

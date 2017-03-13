@@ -3,7 +3,6 @@ class Admin::AuditsController < ApplicationController
   before_action :set_admin_view
 
   def index
-    @audits = Audit.select('id, item_type, item_id, event, whodunnit, created_at')
     authorize @audits unless @audits.nil?
   end
 

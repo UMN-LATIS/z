@@ -18,8 +18,6 @@ function initializeAuditDataTable(sortColumn, sortOrder) {
             {data: 'item_type' },
             {data: 'event' },
             {data: 'whodunnit' },
-//            {data: 'whodunnit_email', visible: false, orderable: false},
-//            {data: 'whodunnit_name', visible: false, orderable: false},
             {data: 'created_at' },
         ],
         "processing": true,
