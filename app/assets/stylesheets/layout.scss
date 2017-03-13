@@ -564,11 +564,12 @@ div.dataTables_wrapper{
     .logo{
       // display:none;
       margin-left:0;
-
     }
   }
 }
-
+.home-page-content-wrapper{
+  margin-top:280px;
+}
 @media only screen and (max-width:590px){
   .cla-header{
     .pane-cla-glue-logo-pane {
