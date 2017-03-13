@@ -90,7 +90,7 @@ function moveUrl(movePath, keywords){
 }
 
 function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColumn, showMoveButton, collectionSelect) {
-  var transferText = '<i class="fa fa-exchange"></i> Transfer to a different user';
+  var transferText = '<i class="fa fa-exchange"></i> Give to a different user';
   var moveText = '<i class="fa fa-share-square-o "></i> Move to a different collection';
 
   var userTable = $('#urls-table').DataTable({

@@ -311,6 +311,7 @@ footer {
 .cla-header a h1{color:white;}
 .cla-header h1{font-size:2rem;margin-top:.5rem;margin-bottom:.5rem;}
 .cla-header h1 a{color:white;}
+.cla-header .main-swooshes{display:block;height:57px !important;}
 @media only screen and (max-width:20em){.cla-header h1{display:none;}}
 @media only screen and (min-width:20.063em) and (max-width:40em){.cla-header h1{display:none;}}
 @media only screen and (min-width:40.063em) and (max-width:64em){.cla-header h1{display:none;}}
@@ -321,7 +322,7 @@ footer {
 @media only screen and (min-width:64.063em){.cla-header .swooshes .logo,.cla-header .main-swooshes .logo,.cla-header .unit-swooshes .logo{top:15px;width:300px;}}
 .cla-header .swooshes .unit-cla-lead,.cla-header .main-swooshes .unit-cla-lead,.cla-header .unit-swooshes .unit-cla-lead{position:relative;top:12px;margin-right:15px;font-size:.8rem;display:none;}
 @media only screen and (min-width:64.063em){.cla-header .swooshes .unit-cla-lead,.cla-header .main-swooshes .unit-cla-lead,.cla-header .unit-swooshes .unit-cla-lead{display:inline-block;top:15px;}}
-@media only screen{.cla-header .main-swooshes{display:none;width: 100%;}}
+// @media only screen{.cla-header .main-swooshes{display:none;width: 100%;}}
 @media only screen and (min-width:64.063em){.cla-header .main-swooshes{display:block;height:57px;}}
 @media only screen and (max-width:20em){.cla-header .unit-swooshes .unit-cla-lead{display:none;}}
 @media only screen{.cla-header .unit-swooshes{display:block;}.cla-header .unit-swooshes div.right{float:left !important;margin-left:15px;}}
@@ -470,6 +471,7 @@ div.dataTables_wrapper{
 }
 .page-header{
   border-bottom:none;
+  margin:70px 0px 30px;
 }
 @media screen and (max-width: 530px){
   .btn{
@@ -505,4 +507,77 @@ div.dataTables_wrapper{
     margin:0;
   }
   margin:15px 0;
+}
+
+.cla-header{
+  .row{
+    margin:auto;
+  }
+  .main-swooshes{
+    .logo{
+      top:18px !important;
+
+    }
+  }
+  .navbar-nav{
+    margin:0;
+  }
+  .navbar-default{
+    display:inline-block;
+    float:right;
+    background:transparent;
+    color:white;
+    border:none;
+    margin-top:0;
+    margin-bottom:0;
+  }
+  .navbar-default .navbar-nav>li>a{
+    color:white;
+    font-size:12px;
+    padding: 19px 13px 16px;
+
+
+    &:hover{
+      color:#d8d8d8
+    }
+  }
+  .navbar-default .navbar-nav > li.selected {
+    border-bottom: 2px solid white;
+  }
+  .panel-pane{
+    height:100%;
+
+  }
+  .pane-cla-glue-logo-pane{
+    .logo-text{
+      display:none;
+      &:before{
+        content:'CLA';
+        display:inline-block;
+        height:57px;
+        line-height:57px;
+        color:#feca45;
+        font-size: 16px;
+        font-weight: bold;
+      }
+    }
+    .logo{
+      // display:none;
+      margin-left:0;
+
+    }
+  }
+}
+
+@media only screen and (max-width:590px){
+  .cla-header{
+    .pane-cla-glue-logo-pane {
+      .logo{
+        display:none;
+      }
+      .logo-text{
+        display: inline-block;
+      }
+    }
+  }
 }

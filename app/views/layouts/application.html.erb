@@ -19,12 +19,16 @@
 
 <body class='<%= params[:controller] %> <%= params[:action] %>'>
 <%= render 'layouts/header' %>
-<div class="container">
-  <%= render 'layouts/navigation_top' %>
+<%= render 'layouts/navigation_top' %>
 
-  <%= flash_messages %>
-  <%= yield %>
+<div class="container-wrapper">
+  <div class="container">
+
+    <%= flash_messages %>
+    <%= yield %>
+  </div>
 </div>
+
 <%= render 'layouts/footer' %>
 </body>
 </html>
