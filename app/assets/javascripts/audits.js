@@ -15,10 +15,12 @@ function initializeAuditDataTable(sortColumn, sortOrder) {
         },
         "pageLength": 25,
         columns: [
-            {data: '0' },
-            {data: '1' },
-            {data: '2' },
-            {data: '3' },
+            {data: 'item_type' },
+            {data: 'event' },
+            {data: 'whodunnit' },
+//            {data: 'whodunnit_email', visible: false, orderable: false},
+//            {data: 'whodunnit_name', visible: false, orderable: false},
+            {data: 'created_at' },
         ],
         "processing": true,
         "serverSide": true,
@@ -33,15 +35,5 @@ function initializeAuditDataTable(sortColumn, sortOrder) {
             selector: 'td:first-child'
         }
     });
-    /*
-    $('table.data-table').on("page.dt", function(e){
-        userTable.rows().deselect();
-        $("#select-all").prop("checked", false);
-    });
-    $("#select-all").click(function(e){
-        $(e.target).prop("checked") === true ? userTable.rows({page:"current"}).select() : userTable.rows().deselect();
-    });
-    */
-
  }
 
