@@ -44,6 +44,8 @@ en:
       destroy: "Delete"
       new: "New"
       edit: "Edit"
+      edit_url: "Edit URL"
+      create_url: "Create URL"
       group_members: "Members"
       groups: "Groups"
       add:  "Add"

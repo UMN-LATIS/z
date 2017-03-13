@@ -1,6 +1,6 @@
 <%- model_class = Url -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+  <h1><%=t '.title', :default => model_class.model_name.human.upcase.pluralize%></h1>
 </div>
 
 <table id="urls-table" class="table admin-table table-striped table-bordered data-table" data-source="<%= datatable_admin_urls_path(format: :json) %>">
