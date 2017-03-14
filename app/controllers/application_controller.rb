@@ -9,6 +9,10 @@ class ApplicationController < ActionController::Base
   before_action :set_paper_trail_whodunnit
   before_action :ping_lookup_service
 
+  def info_for_paper_trail
+    { :whodunnit_name => current_user.user_full_name, :whodunnit_email => current_user.email }
+  end
+
   def ensure_signed_in
     redirect_to signin_path unless signed_in?
   end

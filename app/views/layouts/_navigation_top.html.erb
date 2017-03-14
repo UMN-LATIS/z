@@ -25,14 +25,15 @@
 
                <%if current_user.admin? %>
 
-                 <li>
-                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= t('helpers.links.admin')%> <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                      <li><a href="<%= admin_urls_path %>">View all URLs</a></li>
-                      <li><a href="<%= admin_groups_path %>">View all Collections</a></li>
-                      <li><a href="<%= admin_members_path %>">Manage Admins</a></li>
-                    </ul>
-                  </li>
+               <li>
+                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= t('helpers.links.admin')%> <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="<%= admin_urls_path %>">View all URLs</a></li>
+                    <li><a href="<%= admin_groups_path %>">View all Collections</a></li>
+                    <li><a href="<%= admin_members_path %>">Manage Admins</a></li>
+                    <li><a href="<%= admin_audits_path %>">Audit Log</a></li>
+                  </ul>
+                </li>
 
                <%end%>
                <li>
