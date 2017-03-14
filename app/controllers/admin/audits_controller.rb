@@ -3,6 +3,7 @@ class Admin::AuditsController < ApplicationController
   before_action :set_admin_view
 
   def index
+    @audits = Audit.first
     authorize @audits unless @audits.nil?
   end
 
