@@ -35,7 +35,14 @@
                 </li>
 
                <%end%>
-               <li><%= link_to 'Sign Out', signout_path %></li>
+               <li>
+                 <%= link_to (signout_path) do %>
+                 <span>
+                   <i class="fa fa-sign-out" aria-hidden="true"></i>
+                   <span > Sign Out </span>
+                 </span>
+                  <% end %>
+               </li>
              <% end %>
            </ul>
            <div id="nav_context_switcher">
