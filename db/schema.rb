@@ -92,6 +92,8 @@ ActiveRecord::Schema.define(version: 20170222161436) do
     t.integer  "item_id",                       null: false
     t.string   "event",                         null: false
     t.string   "whodunnit"
+    t.string   "whodunnit_name"
+    t.string   "whodunnit_email"
     t.text     "object",     limit: 4294967295
     t.datetime "created_at"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
