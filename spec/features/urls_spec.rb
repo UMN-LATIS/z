@@ -103,6 +103,19 @@ describe 'urls index page', js: true do
         expect(page).to have_content('http://www.googjgjgjgj...')
       end
     end
+    describe 'that has a camel case' do
+      before {find('.js-new-url-keyword').set 'aCamelCaseKeyword'}
+      it 'should display the correct case' do
+        find('.js-url-submit').click
+        wait_for_ajax
+        expect(page).to have_content('aCamelCaseKeyword')
+      end
+      it 'should not display the lower case' do
+        find('.js-url-submit').click
+        wait_for_ajax
+        expect(page).to_not have_content('acamelcasekeyword')
+      end
+    end
     describe 'visiting page with one url' do
       it ' should not display pagination Next button' do
         find('.js-url-submit').click
