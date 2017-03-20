@@ -87,12 +87,6 @@ describe 'urls index page', js: true do
     sign_in(@user)
     wait_for_ajax
   end
-
-  describe 'page content' do
-    it 'should display the group info' do
-      expect(page).to have_content 'Viewing URLs for the'
-    end
-  end
   describe 'creating new url ', js: true do
     let(:url) { 'http://www.googjgjgjgjgjgjgjgjgjgjgjgjgjgjgjggjgjgjgjgjgjggjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjjggle.com' }
     let(:keyword) { 'goog' }
@@ -107,6 +101,19 @@ describe 'urls index page', js: true do
         find('.js-url-submit').click
         wait_for_ajax
         expect(page).to have_content('http://www.googjgjgjgj...')
+      end
+    end
+    describe 'that has a camel case' do
+      before {find('.js-new-url-keyword').set 'aCamelCaseKeyword'}
+      it 'should display the correct case' do
+        find('.js-url-submit').click
+        wait_for_ajax
+        expect(page).to have_content('aCamelCaseKeyword')
+      end
+      it 'should not display the lower case' do
+        find('.js-url-submit').click
+        wait_for_ajax
+        expect(page).to_not have_content('acamelcasekeyword')
       end
     end
     describe 'visiting page with one url' do

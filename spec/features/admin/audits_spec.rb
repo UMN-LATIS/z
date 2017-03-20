@@ -13,7 +13,6 @@ describe 'as a non-admin user' do
 end
 
 describe 'as a valid admin user' do
-
   before do
     @admin = FactoryGirl.create(:admin)
     sign_in(@admin)
@@ -39,5 +38,4 @@ describe 'as a valid admin user' do
   it 'should display  When col header' do
     expect(page).to have_content 'When'
   end
-est
 end

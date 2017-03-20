@@ -52,10 +52,6 @@ class Url < ApplicationRecord
       index += 1 while Url.exists?(keyword: index.to_s(36))
       self.keyword = index.to_s(36)
     end
-
-    # Downcase the keyword
-    self.keyword = keyword.downcase
-    #    else
   end
 
   scope :created_by_id, ->(group_id) do
