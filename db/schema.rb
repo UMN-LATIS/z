@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170222161436) do
+ActiveRecord::Schema.define(version: 20170308204626) do
 
   create_table "clicks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "country_code"
@@ -88,14 +88,14 @@ ActiveRecord::Schema.define(version: 20170222161436) do
   end
 
   create_table "versions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
-    t.string   "item_type",  limit: 191,        null: false
-    t.integer  "item_id",                       null: false
-    t.string   "event",                         null: false
+    t.string   "item_type",       limit: 191,        null: false
+    t.integer  "item_id",                            null: false
+    t.string   "event",                              null: false
     t.string   "whodunnit"
-    t.string   "whodunnit_name"
-    t.string   "whodunnit_email"
-    t.text     "object",     limit: 4294967295
+    t.text     "object",          limit: 4294967295
     t.datetime "created_at"
+    t.string   "whodunnit_email"
+    t.string   "whodunnit_name"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
   end
 

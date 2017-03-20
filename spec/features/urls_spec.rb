@@ -87,12 +87,6 @@ describe 'urls index page', js: true do
     sign_in(@user)
     wait_for_ajax
   end
-
-  describe 'page content' do
-    it 'should display the group info' do
-      expect(page).to have_content 'Viewing URLs for the'
-    end
-  end
   describe 'creating new url ', js: true do
     let(:url) { 'http://www.googjgjgjgjgjgjgjgjgjgjgjgjgjgjgjggjgjgjgjgjgjggjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjjggle.com' }
     let(:keyword) { 'goog' }
