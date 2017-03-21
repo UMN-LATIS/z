@@ -14,10 +14,10 @@
 
   <div class="url-blurb-details">
     <div class="url-blurb-source">
-      <%= @url.url %>
+      <%= display_url(@url.url,75) %>
     </div>
     <div class="url-blurb-short-url">
-      <%= full_url(@url) %>
+      <%= display_url(full_url(@url), (full_url(@url).size + 25)) %>
     </div>
   </div>
 </div>

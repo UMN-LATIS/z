@@ -59,13 +59,13 @@ describe 'urls show page', js: true do
   it 'should display the total clicks' do
     expect(page).to have_content '15 hits'
   end
-  it "should display the share to facebook button" do
+  it 'should display the share to facebook button' do
     expect(page).to have_selector('.url-share-button-facebook', visible: true)
   end
-  it "should display the share to twitter button" do
+  it 'should display the share to twitter button' do
     expect(page).to have_selector('.url-share-button-twitter', visible: true)
   end
-  it "should display the download QR code button" do
+  it 'should display the download QR code button' do
     expect(page).to have_selector('.url-share-button-qr', visible: true)
   end
 
@@ -101,6 +101,17 @@ describe 'urls index page', js: true do
       wait_for_ajax
       find('.js-new-url-url').set url
       find('.js-new-url-keyword').set keyword
+    end
+    describe 'that has a super long keyword' do
+      it 'should shorten it on the sceen' do
+        visit urls_path
+        wait_for_ajax
+        find('.js-new-url-url').set url
+        find('.js-new-url-keyword').set 'googgooggooggooggooggooggooggooggooggooggooggooggooggooggoog'
+        find('.js-url-submit').click
+        wait_for_ajax
+        expect(page).to have_content('Keyword is too long')
+      end
     end
     describe 'that is super long' do
       it 'should shorten it on the sceen' do

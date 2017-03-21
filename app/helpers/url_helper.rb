@@ -3,13 +3,11 @@ module UrlHelper
     "#{request.base_url}/#{url.keyword}"
   end
 
-  def display_url(url)
-    # if the length of the url is greater than 50 then chop it off at 47 and add an ellipsis
-    max_length = 25
-    if url.url.length > max_length
-      return url.url[0...(max_length-3)]+'...'
+  def display_url(url, max_length)
+    if url.length > max_length
+      return url[0...(max_length-3)]+'...'
     else
-      url.url
+      url
     end
   end
 
