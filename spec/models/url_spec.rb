@@ -61,8 +61,20 @@ RSpec.describe Url, type: :model do
         @url.keyword = '_'
         expect(@url).to be_valid
       end
-      it ' letters and number should be valid' do
+      it ' number should be valid' do
+        @url.keyword = '1234567890'
+        expect(@url).to be_valid
+      end
+      it ' over 25 chars should not be valid' do
         @url.keyword = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890'
+        expect(@url).to_not be_valid
+      end
+      it ' lowercase letters be valid' do
+        @url.keyword = 'abcdefghijklmnopqrstuv'
+        expect(@url).to be_valid
+      end
+      it ' uppercase letters should be valid' do
+        @url.keyword = 'ABCDEFGHIJKLMN'
         expect(@url).to be_valid
       end
       it ' anything but a-zA-Z0-9\-_ chars should not be valid' do
