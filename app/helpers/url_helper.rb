@@ -12,11 +12,7 @@ module UrlHelper
   end
 
   def display_keyword_url(keyword, max_length=35)
-    if keyword.length > max_length
-      return "#{request.base_url}/#{truncate(keyword, length: max_length)}"
-    else
-      return "#{request.base_url}/#{keyword}"
-    end
+      "#{request.base_url}/#{truncate(keyword, length: max_length)}"
   end
 
   def best_day_formatter(best_day)
