@@ -4,11 +4,7 @@ module UrlHelper
   end
 
   def display_long_url(url, max_length=20)
-    if url.length > max_length
       return truncate(url, length: max_length)
-    else
-      url
-    end
   end
 
   def display_keyword_url(keyword, max_length=35)
