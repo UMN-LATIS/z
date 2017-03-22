@@ -14,7 +14,7 @@ en:
     hello: "z.umn.edu"
     switch_to: "Switch To:"
     short_url: "Short URL"
-    long_url: "Long URL"
+    long_url: "Source URL"
     qr_code: "QR Code"
     download: "Download"
     download_click_data: "Download Click Data"
