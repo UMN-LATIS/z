@@ -6,10 +6,10 @@
     <td><%= url.group.name %></td>
   <% end %>
 	<td class="long-url">
-    <%= link_to display_url(url.url, 25), url.url, target: '_blank' %>
+    <%= link_to display_long_url(url.url), url.url, target: '_blank' %>
   </td>
 	<td class="row-url-keyword" data-search="<%= url.keyword %>">
-    <%= link_to display_url(full_url(url), (full_url(url).size + 25)), full_url(url), target: '_blank' %>
+    <%= link_to display_keyword_url(url.keyword), full_url(url), target: '_blank' %>
     <button class='btn btn-default clipboard-btn' data-clipboard-text="<%= full_url(url) %>">
       <i class=" fa fa-files-o"></i>
     </button>

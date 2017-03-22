@@ -94,7 +94,7 @@ describe 'urls index page', js: true do
     end
   end
   describe 'creating new url ', js: true do
-    let(:url) { 'http://www.googjgjgjgjgjgjgjgjgjgjgjgjgjgjgjggjgjgjgjgjgjggjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjjggle.com' }
+    let(:url) { 'http://www.gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg.com' }
     let(:keyword) { 'goog' }
     before do
       visit urls_path
@@ -107,17 +107,17 @@ describe 'urls index page', js: true do
         visit urls_path
         wait_for_ajax
         find('.js-new-url-url').set url
-        find('.js-new-url-keyword').set 'googgooggooggooggooggooggooggooggooggooggooggooggooggooggoog'
+        find('.js-new-url-keyword').set 'kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk'
         find('.js-url-submit').click
         wait_for_ajax
-        expect(page).to have_content('Keyword is too long')
+        expect(page).to have_content('kkkk...')
       end
     end
     describe 'that is super long' do
       it 'should shorten it on the sceen' do
         find('.js-url-submit').click
         wait_for_ajax
-        expect(page).to have_content('http://www.googjgjgjgj...')
+        expect(page).to have_content('gggg...')
       end
     end
     describe 'visiting page with one url' do

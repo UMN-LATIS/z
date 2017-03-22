@@ -35,7 +35,6 @@ class Url < ApplicationRecord
                         multiline: true,
                         message: 'special characters are not permitted. Only letters, and numbers, dashes ("-") and underscores ("_")'
                     }
-  validates :keyword, length: { in: 1..75 }
   validate :check_for_valid_url
 
   before_validation(on: :create) do

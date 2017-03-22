@@ -3,11 +3,19 @@ module UrlHelper
     "#{request.base_url}/#{url.keyword}"
   end
 
-  def display_url(url, max_length)
+  def display_long_url(url, max_length=20)
     if url.length > max_length
-      return url[0...(max_length-3)]+'...'
+      return truncate(url, length: max_length)
     else
       url
+    end
+  end
+
+  def display_keyword_url(keyword, max_length=35)
+    if keyword.length > max_length
+      return "#{request.base_url}/#{truncate(keyword, length: max_length)}"
+    else
+      return "#{request.base_url}/#{keyword}"
     end
   end
 
