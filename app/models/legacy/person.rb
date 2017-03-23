@@ -5,9 +5,8 @@ class Legacy::Person < ApplicationRecord
 
   def to_umndid
     UserLookupService.new(
-                   query: self.UID,
-                   query_type: 'uid' #todo query_type: params[:search_type]
-               ).search.try(:first).try(:first).try(:last).try(:first)
+      query: self.UID,
+      query_type: 'uid'
+    ).search.try(:first).try(:first).try(:last).try(:first)
   end
-
 end
