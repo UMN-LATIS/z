@@ -13,7 +13,7 @@
 #
 require 'uri'
 class Url < ApplicationRecord
-  has_paper_trail
+  has_paper_trail :ignore => [:total_clicks]
 
   belongs_to :group
   has_many :clicks, dependent: :destroy
@@ -52,14 +52,14 @@ class Url < ApplicationRecord
       index += 1 while Url.exists?(keyword: index.to_s(36))
       self.keyword = index.to_s(36)
     end
-
-    # Downcase the keyword
-    self.keyword = keyword.downcase
-    #    else
   end
 
   scope :created_by_id, ->(group_id) do
     where('group_id = ?', group_id)
+  end
+
+  scope :created_by_ids, ->(group_ids) do
+    where('group_id IN (?)', group_ids)
   end
 
   scope :created_by_name, ->(group_name) do
@@ -78,7 +78,7 @@ class Url < ApplicationRecord
 
   scope :not_in_pending_transfer_request, -> do
     url_ids = TransferRequest.pending.joins(:urls).pluck(:url_id)
-    where.not('id IN (?)', url_ids) if url_ids.present?
+    where.not("#{table_name}.id IN (?)", url_ids) if url_ids.present?
   end
 
   def add_click!(location)

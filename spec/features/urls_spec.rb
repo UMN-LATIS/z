@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'urls show page' do
+describe 'urls show page', js: true do
   let(:keyword) { 'testkeyword' }
   let(:url) { 'http://www.google.com' }
   let(:created_at) { Time.now - 1.day }
@@ -8,6 +8,7 @@ describe 'urls show page' do
   before do
     @user = FactoryGirl.create(:user)
     sign_in(@user)
+    wait_for_ajax
 
     @url = FactoryGirl.create(
         :url,
@@ -58,13 +59,13 @@ describe 'urls show page' do
   it 'should display the total clicks' do
     expect(page).to have_content '15 hits'
   end
-  it "should display the share to facebook button" do
+  it 'should display the share to facebook button' do
     expect(page).to have_selector('.url-share-button-facebook', visible: true)
   end
-  it "should display the share to twitter button" do
+  it 'should display the share to twitter button' do
     expect(page).to have_selector('.url-share-button-twitter', visible: true)
   end
-  it "should display the download QR code button" do
+  it 'should display the download QR code button' do
     expect(page).to have_selector('.url-share-button-qr', visible: true)
   end
 
@@ -80,30 +81,50 @@ describe 'urls show page' do
     end
   end
 end
-describe 'urls index page' do
+describe 'urls index page', js: true do
   before do
     @user = FactoryGirl.create(:user)
     sign_in(@user)
-  end
-
-  describe 'page content' do
-    it 'should display the group info' do
-      expect(page).to have_content 'Viewing URLs for the'
-    end
+    wait_for_ajax
   end
   describe 'creating new url ', js: true do
-    let(:url) { 'http://www.googjgjgjgjgjgjgjgjgjgjgjgjgjgjgjggjgjgjgjgjgjggjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjjggle.com' }
+    let(:url) { 'http://www.gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg.com' }
     let(:keyword) { 'goog' }
     before do
       visit urls_path
+      wait_for_ajax
       find('.js-new-url-url').set url
       find('.js-new-url-keyword').set keyword
+    end
+    describe 'that has a super long keyword' do
+      it 'should shorten it on the sceen' do
+        visit urls_path
+        wait_for_ajax
+        find('.js-new-url-url').set url
+        find('.js-new-url-keyword').set 'kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk'
+        find('.js-url-submit').click
+        wait_for_ajax
+        expect(page).to have_content('kkkk...')
+      end
     end
     describe 'that is super long' do
       it 'should shorten it on the sceen' do
         find('.js-url-submit').click
         wait_for_ajax
-        expect(page).to have_content('http://www.googjgjgjgj...')
+        expect(page).to have_content('gggg...')
+      end
+    end
+    describe 'that has a camel case' do
+      before {find('.js-new-url-keyword').set 'aCamelCaseKeyword'}
+      it 'should display the correct case' do
+        find('.js-url-submit').click
+        wait_for_ajax
+        expect(page).to have_content('aCamelCaseKeyword')
+      end
+      it 'should not display the lower case' do
+        find('.js-url-submit').click
+        wait_for_ajax
+        expect(page).to_not have_content('acamelcasekeyword')
       end
     end
     describe 'visiting page with one url' do
@@ -223,6 +244,7 @@ describe 'urls index page' do
     before do
       @url = FactoryGirl.create(:url, group: @user.context_group)
       visit urls_path
+      wait_for_ajax
     end
 
     describe 'page content', js: true do
@@ -246,6 +268,26 @@ describe 'urls index page' do
       end
       it 'should display a delete button' do
         expect(page).to have_content 'Delete'
+      end
+      it 'should display the urls collection' do
+        expect(page).to have_select("url-collection-#{@url.id}", selected: @url.group.name)
+      end
+
+      describe 'when filtering on collection', js: true do
+        before do
+          new_group = FactoryGirl.create(:group)
+          new_group.users << @user
+          sign_in(@user)
+          @new_url = FactoryGirl.create(:url, group: new_group)
+          wait_for_ajax
+          select new_group.name, from: 'collection-filter'
+        end
+        it 'should display urls from that collection' do
+          expect(page).to have_content @new_url.keyword
+        end
+        it 'should not display urls from another collection' do
+          expect(page).to_not have_content @url.keyword
+        end
       end
     end
 
@@ -320,6 +362,24 @@ describe 'urls index page' do
         it 'should display the not authorized message' do
           expect(page).to have_content 'You are not authorized to perform this action.'
         end
+      end
+    end
+
+    describe 'when changing a URLs collection' do
+      before do
+        @new_group = FactoryGirl.create(:group)
+        @new_group.users << @user
+        sign_in(@user)
+        wait_for_ajax
+        select @new_group.name, from: "url-collection-#{@url.id}"
+        wait_for_ajax
+      end
+      it 'should update the urls collection on the page' do
+        expect(page).to have_select("url-collection-#{@url.id}", selected: @new_group.name)
+      end
+      it 'should update the urls collection in the database' do
+        @url.reload
+        expect(@url.group.id).to eq(@new_group.id)
       end
     end
   end

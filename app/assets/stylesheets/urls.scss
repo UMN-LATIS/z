@@ -48,11 +48,80 @@
 		text-align:initial;
 	}
 }
+.container-force-full-width{
+	width:100% !important;
+}
+.container-wrapper{
+	position:relative;
+}
+.z-hero-content{
+	display:inline-block;
+	color:#eee;
+	position:relative;
+}
 #new-url-form form{
 	padding:0;
 	border: 1px solid #cfcfcf;
   border-radius: 5px;
   overflow: hidden;
+}
+#new-url-form{
+	border-radius:0;
+	&.z-hero{
+		margin-top:0;
+	}
+	.z-hero-title{
+		text-align:left;
+	}
+}
+
+.z-hero{
+	position:absolute;
+	top:0;
+	left:0;
+	margin-top:0;
+	width:100%;
+	border-radius:0;
+	background-color:black;
+	padding-top:10px;
+	height:180px;
+	text-align:center;
+	&:before{
+		background-color:grey;
+		background-image: image-url("umn-pano.jpg");
+		background-size:cover;
+		background-position:center;
+		background-repeat:no-repeat;;
+		display:block;
+		content:' ';
+		position:absolute;
+		top:0;
+		left:0;
+		width:100%;
+		height:100%;
+		opacity:0.6;
+	}
+	&.z-hero-large{
+		height:250px;
+		.z-hero-content{
+			margin-top: 20px;
+		}
+	}
+	&.z-hero-dimmer{
+		&:before{
+			opacity:0.3;
+		}
+	}
+	.z-hero-button{
+		padding:15px 20px;
+	}
+	.z-hero-title-large{
+		font-size:60px;
+	}
+
+}
+.urls-table-container{
+	margin-top:190px;
 }
 .new_admin input[type='text'], .new_member input[type='text'] {
 	width: 400px;
@@ -157,6 +226,10 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, 
 	}
 }
 
+#collection-filter {
+	margin: 0 15px 0 5px;
+}
+
 table.dataTable td.select-checkbox:before{
 	margin-top:3px;
 }
@@ -171,6 +244,8 @@ $superInputHeight: 50px;
   height: 50px;
   position: relative;
   margin: 0;
+	background-color:white;
+	color:black;
   > *{
     display:inline-block;
 		vertical-align:middle;
@@ -241,14 +316,29 @@ $superInputHeight: 50px;
 	}
 }
 @media screen and (max-width:640px){
+	.url-banner-title{
+		text-align:center;
+	}
+	.urls-table-container{
+		margin-top:250px;
+	}
 	#url-blurb-container{
 		display:none;
 	}
 	#new-url-form{
+		height:240px;
 		form{
 			width:70%;
 		}
 	}
+	.z-hero{
+		.z-hero-content{
+			.z-hero-title-large{
+				font-size:40px;
+			}
+		}
+	}
+
 	.super-input{
 		height:auto;
 		width:100%;
@@ -284,6 +374,7 @@ $superInputHeight: 50px;
 	padding: 10px 20px;
 	box-sizing: border-box;
 	overflow: hidden;
+	color:black;
 	&.off{
 		height:0;
 		padding-top:0px;
@@ -338,10 +429,6 @@ $superInputHeight: 50px;
 	}
 	&:hover{
 		background:#eaeaea;
-	}
-	&.url-share-button-facebook{
-		color:#385a97;
-		border:1px solid #385a97;
 	}
 	&.url-share-button-twitter{
 		color:#51adec;

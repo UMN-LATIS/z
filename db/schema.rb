@@ -39,6 +39,14 @@ ActiveRecord::Schema.define(version: 20170321184711) do
     t.string "perid"
     t.string "umndid"
     t.string "uid"
+    t.index ["perid"], name: "perid", using: :btree
+  end
+
+  create_table "perid_umndid_copy", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "perid"
+    t.string "umndid"
+    t.string "uid"
+    t.index ["perid"], name: "perid", using: :btree
   end
 
   create_table "transfer_request_urls", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -82,15 +90,18 @@ ActiveRecord::Schema.define(version: 20170321184711) do
     t.string   "remember_token"
     t.index ["context_group_id"], name: "index_users_on_context_group_id", using: :btree
     t.index ["default_group_id"], name: "index_users_on_default_group_id", using: :btree
+    t.index ["uid"], name: "uid", using: :btree
   end
 
   create_table "versions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
-    t.string   "item_type",  limit: 191,        null: false
-    t.integer  "item_id",                       null: false
-    t.string   "event",                         null: false
+    t.string   "item_type",       limit: 191,        null: false
+    t.integer  "item_id",                            null: false
+    t.string   "event",                              null: false
     t.string   "whodunnit"
-    t.text     "object",     limit: 4294967295
+    t.text     "object",          limit: 4294967295
     t.datetime "created_at"
+    t.string   "whodunnit_email"
+    t.string   "whodunnit_name"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
   end
 

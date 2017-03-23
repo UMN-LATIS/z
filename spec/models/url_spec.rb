@@ -31,7 +31,7 @@ RSpec.describe Url, type: :model do
   it { should respond_to 'created_at' }
   it { should respond_to 'updated_at' }
 
-  describe 'Versioning'do
+  describe 'Versioning' do
     it 's should be enabled' do
       is_expected.to be_versioned
     end
@@ -61,8 +61,16 @@ RSpec.describe Url, type: :model do
         @url.keyword = '_'
         expect(@url).to be_valid
       end
-      it ' letters and number should be valid' do
-        @url.keyword = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890'
+      it ' number should be valid' do
+        @url.keyword = '1234567890'
+        expect(@url).to be_valid
+      end
+      it ' lowercase letters be valid' do
+        @url.keyword = 'abcdefghijklmnopqrstuvwxyz'
+        expect(@url).to be_valid
+      end
+      it ' uppercase letters should be valid' do
+        @url.keyword = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
         expect(@url).to be_valid
       end
       it ' anything but a-zA-Z0-9\-_ chars should not be valid' do

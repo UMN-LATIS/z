@@ -87,7 +87,7 @@ class UrlsController < ApplicationController
     respond_to do |format|
       if @url.save
         format.html do
-          redirect_to urls_path, notice: 'Url was successfully created.'
+          redirect_to urls_path, notice: 'URL was successfully created.'
         end
         format.js { render :create }
       else
@@ -114,7 +114,7 @@ class UrlsController < ApplicationController
     @url.destroy
     respond_to do |format|
       format.html do
-        redirect_to urls_url, notice: 'Url was successfully destroyed.'
+        redirect_to urls_url, notice: 'URL was successfully destroyed.'
       end
       format.js { render layout: false }
     end

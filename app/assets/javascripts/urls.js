@@ -8,8 +8,22 @@ $(document).on("click", ".cancel-edit-url", function (e) {
 	$('table.data-table').DataTable().draw();
 });
 
-$(document).bind('turbolinks:load', function () {
+$(document).on("change", "#urls-table select", function (e) {
+  select = e.target;
+	var newVal = $(select).val();
+  var urlId = $(select).data('url-id');
+  if (!confirm("Are you sure you wish to move short URL " + $(select).data('keyword') + " to collection " + $(select).find(":selected").text() + "?")) {
+    $(select).val($(select).data('group-id')); //set back
+        return;
+  }
+  $.ajax({
+    url: $(select).data('update-path'),
+    method: 'PATCH',
+    data: {url: {group_id: newVal}}
+  });
+ });
 
+$(document).bind('turbolinks:load', function () {
   // If going to the show page, load the google charts JS and
   // load the hrs24 chart
   if ($("body.urls.show").length > 0) {
@@ -28,7 +42,7 @@ $(document).bind('turbolinks:load', function () {
   if ($("body.urls.index").length == 0) {
     return;
   }
-  initializeUrlDataTable(4, "desc", 5, 2, $('.collection-count').data('collection-count') > 1);
+  initializeUrlDataTable(6, "desc", 7,4, $('.collection-count').data('collection-count') > 1, true);
 });
 
 // Load Javascript for the admin-index page
@@ -36,7 +50,7 @@ $(document).bind('turbolinks:load', function () {
   if ($("body.admin\\/urls.index").length == 0) {
     return;
   }
-  initializeUrlDataTable(5, "desc", 6, 3, false);
+  initializeUrlDataTable(5, "desc", 6, 3, false, false);
 });
 
 // The rest of the charts need to be loaded upon showing the tab
@@ -75,8 +89,8 @@ function moveUrl(movePath, keywords){
   });
 }
 
-function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColumn, showMoveButton) {
-  var transferText = '<i class="fa fa-exchange"></i> Transfer to a different user';
+function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColumn, showMoveButton, collectionSelect) {
+  var transferText = '<i class="fa fa-exchange"></i> Give to a different user';
   var moveText = '<i class="fa fa-share-square-o "></i> Move to a different collection';
 
   var userTable = $('#urls-table').DataTable({
@@ -86,12 +100,20 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
           },
      "pageLength": 25,
      columns: [
-           {data: '0' },
-           {data: '1' },
-           {data: '2' },
-           {data: '3' },
-           {data: '4' },
-           {data: '5' }
+          {
+            defaultContent: "",
+            className: 'select-checkbox',
+            searchable: false,
+            orderable: false,
+            title:"<input type='checkbox' id='select-all' class='select-checkbox'/>"
+          },
+          {data: 'group_id', visible: false, orderable: false},
+          {data: 'group_name' },
+          {data: 'url' },
+          {data: 'keyword' },
+          {data: 'total_clicks' },
+          {data: 'created_at' },
+          {data: 'actions', searchable: false, orderable: false },
          ],
      "processing": true,
      "serverSide": true,
@@ -101,21 +123,30 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
        sortColumn,
        sortOrder
      ],
-     columnDefs: [
-       {
-         className: 'select-checkbox',
-         targets:   0,
-         title:"<input type='checkbox' id='select-all' class='select-checkbox'/>"
-       },
-       {
-         orderable: false,
-         searchable: false,
-         targets: [0, actionColumn]
-       }
-     ],
      select: {
        style:    'multi',
        selector: 'td:first-child'
+     },
+     initComplete: function () {
+        if(collectionSelect) {
+         this.api().columns([1]).every( function () {
+             var column = this;
+             var select = $('<select id="collection-filter" class="form-control"><option value="">All</option></select>')
+                 .prependTo( $("#urls-table_filter") )
+                 .on( 'change', function () {
+                     var val = $.fn.dataTable.util.escapeRegex(
+                         $(this).val()
+                     );
+                     column
+                         .search( val ? val : '')
+                         .draw();
+                 } );
+             $('.collection-names').data('collection-names').forEach( function ( d, j ) {
+                 select.append( '<option value="'+d[0]+'">'+d[1]+'</option>' )
+             } );
+             select.before('<label>Collection:</label>');
+         } );
+       }
      },
 		 fnDrawCallback: function(){
 			 setupPopovers();
@@ -181,11 +212,6 @@ $(document).ready(function(){
 		e.preventDefault();
 		var shortUrl = $(this).data("shortUrl");
 		window.open("https://twitter.com/intent/tweet?text=" + shortUrl, '', 'menubar=no, toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
-	})
-	$(document).on("click", ".url-share-button-facebook",function(e){
-		e.preventDefault();
-		var shortUrl = $(this).data("shortUrl");
-		// window.open("https://twitter.com/intent/tweet?text=" + shortUrl, '', 'menubar=no, toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
 	})
 	$(document).on("click", ".url-share-button-qr", function(e){
 		e.preventDefault();

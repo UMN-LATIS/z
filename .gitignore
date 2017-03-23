@@ -26,5 +26,5 @@
 .tags_sorted_by_file
 
 # Ignore authention information
-config/database.yml
 config/ldap.yml
+config/database.yml

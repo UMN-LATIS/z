@@ -1,7 +1,25 @@
-<h2><%= t('helpers.hello') %></h2>
-<p>Welcome to z.umn.edu, a URL shortening service provided by <%= link_to 'LATIS', 'http://latis.umn.edu/', target: '_blank' %>.</p>
-<p>z.umn.edu is available to anybody with a University of Minnesota X500 account. To get started, just <%= link_to 'log in', signin_path  %>.</p>
-<p>For questions about z.umn.edu, visit the <%= link_to 'frequently asked questions', faq_path %> or contact <%= mail_to 'help@umn.edu', 'UMN Technology Help' %>.</p>
+<div class="z-hero z-hero-large">
+  <div class="z-hero-content">
+    <h1 class="z-hero-title z-hero-title-large">
+      What Will You Z?
+    </h1>
+    <% unless signed_in? %>
+        <a class="btn btn-primary z-hero-button " href="<%= signin_path %>">
+          Login to Z
+        </a>
+    <% end %>
+  </div>
+</div>
 
+<div class="home-page-content-wrapper">
+  <h2><%= t('helpers.hello') %></h2>
 
+  <p>Welcome to z.umn.edu, a URL shortening service provided
+    by <%= link_to 'LATIS', 'http://latis.umn.edu/', target: '_blank' %>.</p>
 
+  <p>z.umn.edu is available to anybody with a University of Minnesota X500 account. To get started,
+    just <%= link_to 'log in', signin_path %>.</p>
+
+  <p>For questions about z.umn.edu, visit the <%= link_to 'frequently asked questions', faq_path %> or
+    contact <%= mail_to 'help@umn.edu', 'UMN Technology Help' %>.</p>
+</div>
