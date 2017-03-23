@@ -6,8 +6,8 @@ class UserLookupService
     @connection = Net::LDAP.new(
       YAML.load(File.open('config/ldap.yml'))
     )
-    @query = params[:query]
-    @query_type = params[:query_type]
+    @query = params[:query] if params
+    @query_type = params[:query_type] if params
   end
 
   def ping
