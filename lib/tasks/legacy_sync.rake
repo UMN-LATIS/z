@@ -17,6 +17,7 @@ namespace :user do
     PeridUmndid.where('umndid IS ?', nil).each_with_index do |perid_umndid, index|
       person = Legacy::Person.where(PER_ID: perid_umndid.perid).take
       next unless person.present?
+      puts "Processing #{person.UID}"
       perid_umndid.umndid = UserLookupService.new(
         query: person.UID,
         query_type: 'uid'
@@ -35,13 +36,13 @@ namespace :urls do
       name: 'Unknown Owners',
       description: 'Admin group for unknown URLs fk39wkoim9329jrlsdjfslaj824'
     )
-    Legacy::Yourl.each_with_index do |yourl, index|
-      next unless Url.where(keyword: yourl.keyword).count.blank?
+    Legacy::Yourl.all.each_with_index do |yourl, index|
+      next if Url.where(keyword: yourl.keyword).exists?
       puts "Moving over yourl #{yourl.keyword}"
       puts '-----------------------------'
       umndid = PeridUmndid.where(perid: yourl.per_id).take.umndid
       group_id = if umndid.present?
-                   User.find_or_create_by(uid: umndid).group_id
+                   User.find_or_create_by(uid: umndid).default_group_id
                  else
                    unknown_group.id
                  end
