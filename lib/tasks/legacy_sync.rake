@@ -34,7 +34,7 @@ namespace :urls do
     puts "Syncing #{Legacy::Yourl.count} URLs..."
     unknown_group = Group.find_or_create_by(
       name: 'Unknown Owners',
-      description: 'Admin group for unknown URLs fk39wkoim9329jrlsdjfslaj824'
+      description: 'Admin group for unknown URLs'
     )
     Legacy::Yourl.all.each_with_index do |yourl, index|
 
