@@ -57,6 +57,9 @@ RSpec.describe TransferRequest, type: :model do
           it 'should be valid' do
             expect(@transfer_request).to be_valid
           end
+          it 'should be pending' do
+            expect(@transfer_request.status.eql? 'pending').to be true
+          end
         end
       end
     end
