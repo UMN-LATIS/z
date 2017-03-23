@@ -37,9 +37,12 @@ namespace :urls do
       description: 'Admin group for unknown URLs fk39wkoim9329jrlsdjfslaj824'
     )
     Legacy::Yourl.all.each_with_index do |yourl, index|
-      next if Url.where(keyword: yourl.keyword).exists?
-      puts "Moving over yourl #{yourl.keyword}"
-      puts '-----------------------------'
+
+      if Url.where(keyword: yourl.keyword).exists?
+        puts "already synced #{yourl.keyword} "
+        next
+      end
+      puts "syncing yourl #{yourl.keyword}"
       umndid = PeridUmndid.where(perid: yourl.per_id).take.umndid
       group_id = if umndid.present?
                    User.find_or_create_by(uid: umndid).default_group_id
