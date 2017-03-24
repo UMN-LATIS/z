@@ -28,6 +28,8 @@ en:
     per_day: "per day"
     short_url_created_on: "Short URL created on"
     url_has_never_been_clicked: "This URL has never been clicked."
+    groups:
+      new: "Add New Collection"
     links:
       home: "Home"
       admin: "Admin"
