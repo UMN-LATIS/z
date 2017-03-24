@@ -101,7 +101,7 @@ group :development do
   gem 'binding_of_caller'
 
   # rubocop for styled code
-  gem 'rubocop', '~> 0.40.0', require: false
+  gem 'rubocop', '~> 0.47.1', require: false
 
   # Use annotate to list the attributes of models
   gem 'annotate'
