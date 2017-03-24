@@ -8,6 +8,9 @@ describe 'Visiting root' do
     it 'should say Welcome' do
       expect(page).to have_content 'Welcome'
     end
+    it 'should display Login to Z button' do
+      expect(page).to have_content 'Login to Z'
+    end
   end
 
   describe 'signed in' do
@@ -18,6 +21,9 @@ describe 'Visiting root' do
 
     it 'should direct you to the home page' do
       expect(page).to have_content 'z.umn.edu'
+    end
+    it 'not display Login to Z button' do
+      expect(page).to_not have_content 'Login to Z'
     end
   end
 end

@@ -4,9 +4,7 @@ require 'net/ldap' # gem install net-ldap
 class UserLookupService
   def initialize(params=nil)
     @connection = Net::LDAP.new(
-        host: 'ldap.umn.edu',
-        port: 389,
-        base: 'o=University of Minnesota, c=US'
+      YAML.load(File.open('config/ldap.yml'))
     )
     @query = params[:query] if params
     @query_type = params[:query_type] if params
