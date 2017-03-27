@@ -108,8 +108,8 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
             title:"<input type='checkbox' id='select-all' class='select-checkbox'/>"
           },
           {data: 'group_id', visible: false, orderable: false},
-          {data: 'url' },
           {data: 'keyword' },
+					{data: 'url'},
 				  {data: 'group_name' },
           {data: 'total_clicks' },
           {data: 'created_at' },
