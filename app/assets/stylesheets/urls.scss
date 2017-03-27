@@ -20,6 +20,19 @@
   margin-left:10px;
 }
 
+div.urls-table-container{
+	div.dataTables_wrapper{
+		input{
+			box-shadow:none;
+			border-color:ddd;
+		}
+		label{
+			font-size:12px;
+			font-weight:400;
+			color:#888;
+		}
+	}
+}
  /* Fix bootstrap modal padding issue  */
 .modal-open {
   padding-right: 0 !important;
@@ -138,22 +151,16 @@ table.dataTable{
 	tbody{
 		border:1px solid #ddd;
 		tr{
-			// background-color:#efefef;
 			padding:10px 0;
 			td{
 			border:none;
 			padding:15px 5px;
+			&:nth-child(2){//maybe the best way to target the "short urls value" since there are no class names on TD's
+				padding-right:30px;
+			}
 			.form-inline.url{
 				white-space:nowrap;;
-
 			}
-			//adds ellipses to text thats too long, but gets rid of responsiveness, so needs work.
-			// &.long-url{
-			// 	text-overflow: ellipsis;
-			// 	//  max-width: 0;
-			// 	white-space: nowrap;
-			// 	overflow: hidden;
-			// }
 		}
 	}
 	}
@@ -168,7 +175,9 @@ table.dataTable{
 				font-weight:500;
 			}
 		}
-
+	}
+	.urls-table-header-short-url{
+		width:300px !important;
 	}
 }
 
@@ -446,4 +455,42 @@ $superInputHeight: 50px;
 }
 .actions-column{
 	white-space: nowrap;
+	.actions-dropdown-button{
+		background:none;
+		border:none;
+		padding:3px;
+		outline:none;
+	}
+	.delete-url{
+		background-color:#d95450;
+		color:white !important;
+		&:active{
+			background-color:#d95450;
+		}
+		&:hover{
+			background-color:#d92232;
+		}
+	}
+	.dropdown-menu{
+		padding:0;
+		overflow:hidden;
+		a{
+			display: block;
+			padding: 10px 20px;
+			clear: both;
+			font-weight: normal;
+			line-height: 1.42857143;
+			color: #333;
+			white-space: nowrap;
+			border-radius: 0;
+			margin-bottom: 0;
+		}
+	}
+	i.fa{
+		&::before{
+			font-size: 20px;
+			color: #888;
+			padding-right:10px;
+		}
+	}
 }
