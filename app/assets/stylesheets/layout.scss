@@ -172,14 +172,12 @@ though the color below doesn't improve much.
   border-color: #033C73;
 }
 
-/*
 .btn-primary {
-  color: #fff;
-  background-color: $goldieGold;
-  border-color: #033C73;
+  font-size: 12px;
+  padding: 9px 23px;
+  border: none;
+  transition: background-color 0.5s;
 }
-*/
-
 
 .navbar-inverse .navbar-toggle:hover,
 .navbar-inverse .navbar-toggle:focus {
