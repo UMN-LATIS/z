@@ -36,7 +36,7 @@ class TransferRequest < ApplicationRecord
 
   def from_group_must_own_urls
     from_group_urls_length =
-      urls.map(&:group_id).count(from_group_id)
+        urls.map(&:group_id).count(from_group_id)
     num_urls = urls.length
     return if num_urls == from_group_urls_length || from_group.try(:admin?)
     errors.add(:from_group, 'must own URLs')
@@ -64,6 +64,6 @@ class TransferRequest < ApplicationRecord
   private
 
   def pre_approve?
-    from_user.admin? || from_user.in_group?(to_group) || to_user == from_user
+    from_user.in_group?(to_group) || to_user == from_user
   end
 end

@@ -59,13 +59,13 @@ describe 'urls show page', js: true do
   it 'should display the total clicks' do
     expect(page).to have_content '15 hits'
   end
-  it "should display the share to facebook button" do
+  it 'should display the share to facebook button' do
     expect(page).to have_selector('.url-share-button-facebook', visible: true)
   end
-  it "should display the share to twitter button" do
+  it 'should display the share to twitter button' do
     expect(page).to have_selector('.url-share-button-twitter', visible: true)
   end
-  it "should display the download QR code button" do
+  it 'should display the download QR code button' do
     expect(page).to have_selector('.url-share-button-qr', visible: true)
   end
 
@@ -88,7 +88,7 @@ describe 'urls index page', js: true do
     wait_for_ajax
   end
   describe 'creating new url ', js: true do
-    let(:url) { 'http://www.googjgjgjgjgjgjgjgjgjgjgjgjgjgjgjggjgjgjgjgjgjggjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjgjjggle.com' }
+    let(:url) { 'http://www.gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg.com' }
     let(:keyword) { 'goog' }
     before do
       visit urls_path
@@ -96,11 +96,22 @@ describe 'urls index page', js: true do
       find('.js-new-url-url').set url
       find('.js-new-url-keyword').set keyword
     end
+    describe 'that has a super long keyword' do
+      it 'should shorten it on the sceen' do
+        visit urls_path
+        wait_for_ajax
+        find('.js-new-url-url').set url
+        find('.js-new-url-keyword').set 'kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk'
+        find('.js-url-submit').click
+        wait_for_ajax
+        expect(page).to have_content('kkkk...')
+      end
+    end
     describe 'that is super long' do
       it 'should shorten it on the sceen' do
         find('.js-url-submit').click
         wait_for_ajax
-        expect(page).to have_content('http://www.googjgjgjgj...')
+        expect(page).to have_content('gggg...')
       end
     end
     describe 'that has a camel case' do

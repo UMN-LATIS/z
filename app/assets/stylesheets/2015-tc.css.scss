@@ -116,7 +116,6 @@ body { margin: 0; }
 #umnhf-uf-sm ul li { display: inline-block; width: 16px; height: 16px; margin: 0 5px; background: asset-url("sprites/social.png") no-repeat; background-size: 160px 16px; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 192dpi) { #umnhf-uf-sm ul li { background: asset-url("sprites/social@2x.png") no-repeat; background-size: auto 16px; } }
 #umnhf-uf-sm ul li:first-child { margin-left: 0; }
-#umnhf-uf-sm ul li.facebook { background-position: 0 0; }
 #umnhf-uf-sm ul li.twitter { background-position: -16px 0; }
 #umnhf-uf-sm ul li.google-plus { background-position: -32px 0; }
 #umnhf-uf-sm ul li.linkedin { background-position: -48px 0; }

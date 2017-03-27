@@ -213,11 +213,6 @@ $(document).ready(function(){
 		var shortUrl = $(this).data("shortUrl");
 		window.open("https://twitter.com/intent/tweet?text=" + shortUrl, '', 'menubar=no, toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
 	})
-	$(document).on("click", ".url-share-button-facebook",function(e){
-		e.preventDefault();
-		var shortUrl = $(this).data("shortUrl");
-		// window.open("https://twitter.com/intent/tweet?text=" + shortUrl, '', 'menubar=no, toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
-	})
 	$(document).on("click", ".url-share-button-qr", function(e){
 		e.preventDefault();
 		window.location = $(this).data("path");

@@ -82,9 +82,8 @@ class Url < ApplicationRecord
   end
 
   def add_click!(location)
-    clicks << Click.create(country_code: location.try(:country_code))
-    self.total_clicks = total_clicks + 1
-    save
+    Click.create(country_code: location.try(:country_code), url_id: id)
+    update_columns(total_clicks: total_clicks + 1)
   end
 
   def click_data_to_csv
