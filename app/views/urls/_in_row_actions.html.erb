@@ -1,29 +1,49 @@
 <div class="actions-column">
+  <div class="dropdown">
+    <button data-toggle="dropdown" class="actions-dropdown-button">
+      <i class="fa fa-ellipsis-h">
+      </i>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-right">
+      <li>
+        <%= link_to t('.share', default: t("helpers.links.share")),
+                  '',
+                  class: 'btn action-button share-url fa fa-share-square-o',
+                  'data-content': render('urls/share_buttons', url: url) %>
+      </li>
+      <li>
+        <%= link_to t('.show', default: t("helpers.links.stats")),
+                    url_path(url.keyword),
+                    class: 'btn action-button show-url fa fa-bar-chart' %>
+      </li>
+        <% if admin_view %>
+        <li>
+          <%= link_to t('.edit', default: t('helpers.links.edit')),
+                      edit_admin_url_path(url),
+                      class: 'btn action-button edit-url fa fa-pencil', remote: true %>
+        </li>
+        <li>
+          <%= link_to t('.destroy', default: t('helpers.links.destroy')),
+                      admin_url_path(url),
+                      :method => :delete,
+                      :data => { confirm: t('.confirm-delete', default: t('helpers.links.confirm_delete', to_delete: url.keyword,  default: t('helpers.links.confirm_default'))) },
+                      class: 'btn action-button delete-url fa fa-trash-o', remote: true %>
+        </li>
+        <% else %>
+        <li>
+          <%= link_to t('.edit', default: t('helpers.links.edit')),
+                      edit_url_path(url),
+                      class: 'btn action-button edit-url fa fa-pencil', remote: true %>
+        </li>
+        <li>
+          <%= link_to t('.destroy', default: t('helpers.links.destroy')),
+                      url_path(url),
+                      :method => :delete,
+                      :data => { confirm: t('.confirm-delete', default: t('helpers.links.confirm_delete', to_delete: url.keyword, default: t('helpers.links.confirm_default'))) },
+                      class: 'btn delete-url fa fa-trash-o', remote: true %>
+        </li>
+        <% end %>
+    </ul>
+  </div>
 
-  <%= link_to t('.share', default: t("helpers.links.share")),
-            '',
-            class: 'btn btn-xs btn-default share-url fa fa-share-square-o',
-            'data-content': render('urls/share_buttons', url: url) %>
-  <%= link_to t('.show', default: t("helpers.links.stats")),
-              url_path(url.keyword),
-              class: 'btn btn-xs btn-default show-url fa fa-bar-chart' %>
-  <% if admin_view %>
-    <%= link_to t('.edit', default: t('helpers.links.edit')),
-                edit_admin_url_path(url),
-                class: 'btn btn-xs btn-default edit-url fa fa-pencil', remote: true %>
-    <%= link_to t('.destroy', default: t('helpers.links.destroy')),
-                admin_url_path(url),
-                :method => :delete,
-                :data => { confirm: t('.confirm-delete', default: t('helpers.links.confirm_delete', to_delete: url.keyword,  default: t('helpers.links.confirm_default'))) },
-                class: 'btn btn-xs btn-danger delete-url fa fa-trash-o', remote: true %>
-  <% else %>
-    <%= link_to t('.edit', default: t('helpers.links.edit')),
-                edit_url_path(url),
-                class: 'btn btn-xs btn-default edit-url fa fa-pencil', remote: true %>
-    <%= link_to t('.destroy', default: t('helpers.links.destroy')),
-                url_path(url),
-                :method => :delete,
-                :data => { confirm: t('.confirm-delete', default: t('helpers.links.confirm_delete', to_delete: url.keyword, default: t('helpers.links.confirm_default'))) },
-                class: 'btn btn-xs btn-danger delete-url fa fa-trash-o', remote: true %>
-  <% end %>
 </div>
