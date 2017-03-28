@@ -6,6 +6,29 @@
   padding: 20px 0;
   margin: 30px auto 0px;
   border-top: 3px solid #eeeeee;
+  a {
+    color: #007298;
+    -moz-transition-property: color;
+    -o-transition-property: color;
+    -webkit-transition-property: color;
+    transition-property: color;
+    -moz-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+  }
+
+  a:hover {
+    color: #566D84;
+  }
+
+  a:not([href]) {
+    color: #222;
+  }
+
+  a:not([href]):hover {
+    color: #222;
+  }
 }
 
 #page-footer h1, #page-footer h2, #page-footer .nicholson section.section .row div.pane-fieldable-panels-pane h1.pane-title,
@@ -562,29 +585,7 @@ time {
   display: block;
 }
 
-a {
-  color: #007298;
-  -moz-transition-property: color;
-  -o-transition-property: color;
-  -webkit-transition-property: color;
-  transition-property: color;
-  -moz-transition-duration: 0.3s;
-  -o-transition-duration: 0.3s;
-  -webkit-transition-duration: 0.3s;
-  transition-duration: 0.3s;
-}
 
-a:hover {
-  color: #566D84;
-}
-
-a:not([href]) {
-  color: #222;
-}
-
-a:not([href]):hover {
-  color: #222;
-}
 
 .node-type-landing-page main .row {
   margin-top: 20px;
