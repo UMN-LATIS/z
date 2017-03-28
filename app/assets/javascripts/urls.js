@@ -138,7 +138,7 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
                          $(this).val()
                      );
                      column
-                         .search( val ? val : '')
+                         .search( val ? '^'+val+'$' : '', true, false )
                          .draw();
                  } );
              $('.collection-names').data('collection-names').forEach( function ( d, j ) {
@@ -149,7 +149,7 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
        }
      },
 		 fnDrawCallback: function(){
-			 
+
 		 }
    });
    $('table.data-table').on("page.dt", function(e){
