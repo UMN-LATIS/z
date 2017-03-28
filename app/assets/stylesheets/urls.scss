@@ -159,7 +159,6 @@ table.dataTable{
 					padding-right:30px;
 				}
 				&:nth-child(5){//best way to target "created" column value
-					//  text-align:center;
 					padding-left:30px;
 				}
 				.form-inline.url{
@@ -479,7 +478,6 @@ $superInputHeight: 50px;
 	}
 	.dropdown-menu{
 		padding:0;
-		// overflow:hidden;
 		a{
 			display: block;
 			padding: 10px 20px;
