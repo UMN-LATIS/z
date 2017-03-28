@@ -37,7 +37,7 @@ class UrlDatatable < AjaxDatatablesRails::Base
         ),
         url: link_to(display_long_url(record.url), record.url, target: '_blank'),
         keyword: link_to(display_keyword_url(record.keyword), full_url(record), target: '_blank'),
-        total_clicks: record.total_clicks,
+        total_clicks: link_to(record.total_clicks, url_path(record.keyword), target: '_blank'),
         created_at: record.created_at.to_s(:created_on_formatted),
         actions: ApplicationController.renderer.render(
           partial: 'urls/in_row_actions',
