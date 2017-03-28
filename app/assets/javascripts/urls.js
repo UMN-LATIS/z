@@ -149,7 +149,7 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
        }
      },
 		 fnDrawCallback: function(){
-			 setupPopovers();
+			 
 		 }
    });
    $('table.data-table').on("page.dt", function(e){
@@ -226,24 +226,4 @@ $(document).ready(function(){
 		});
 	});
 
-	setupPopovers();
 });
-
-function setupPopovers(){
-	$(".share-url").popover({html:true, trigger:"click", placement:"top", container:"body"})
-		.click(function(e){
-			e.preventDefault();
-		})
-		.on("shown.bs.popover", function(){
-			var $self = $(this);
-			//hide popover if click happens outside of popover(ie, popup is blurred)
-			function hide(e){
-				if (!$(e.target).closest(".popover").length){
-					$("body").off("click", hide);
-					$self.popover("hide")
-				}
-			}
-
-			$("body").on("click", hide);
-		});
-}
