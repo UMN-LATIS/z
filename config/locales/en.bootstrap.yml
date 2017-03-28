@@ -91,6 +91,8 @@ en:
       created_on: "Created On"
       owner: "Owner"
       url: "URL"
+      short_url: "Short URL"
+      long_url: "Long URL"
       keyword: "Keyword"
       total_clicks: "Total Clicks"
       description: "Description"

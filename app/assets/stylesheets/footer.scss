@@ -591,9 +591,11 @@ a:not([href]):hover {
   margin-bottom: 20px;
 }
 
-.panel {
-  background: whitesmoke;
-  border: 1px solid #eeeeee;
+#page-footer{
+  .panel {
+    background: whitesmoke;
+    border: 1px solid #eeeeee;
+  }
 }
 
 .panel.callout {

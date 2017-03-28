@@ -108,9 +108,9 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
             title:"<input type='checkbox' id='select-all' class='select-checkbox'/>"
           },
           {data: 'group_id', visible: false, orderable: false},
-          {data: 'group_name' },
-          {data: 'url' },
           {data: 'keyword' },
+					{data: 'url'},
+				  {data: 'group_name' },
           {data: 'total_clicks' },
           {data: 'created_at' },
           {data: 'actions', searchable: false, orderable: false },
@@ -149,7 +149,7 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
        }
      },
 		 fnDrawCallback: function(){
-			 setupPopovers();
+			 
 		 }
    });
    $('table.data-table').on("page.dt", function(e){
@@ -226,24 +226,4 @@ $(document).ready(function(){
 		});
 	});
 
-	setupPopovers();
 });
-
-function setupPopovers(){
-	$(".share-url").popover({html:true, trigger:"click", placement:"top", container:"body"})
-		.click(function(e){
-			e.preventDefault();
-		})
-		.on("shown.bs.popover", function(){
-			var $self = $(this);
-			//hide popover if click happens outside of popover(ie, popup is blurred)
-			function hide(e){
-				if (!$(e.target).closest(".popover").length){
-					$("body").off("click", hide);
-					$self.popover("hide")
-				}
-			}
-
-			$("body").on("click", hide);
-		});
-}
