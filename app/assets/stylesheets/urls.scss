@@ -153,15 +153,19 @@ table.dataTable{
 		tr{
 			padding:10px 0;
 			td{
-			border:none;
-			padding:15px 5px;
-			&:nth-child(2){//maybe the best way to target the "short urls value" since there are no class names on TD's
-				padding-right:30px;
+				border:none;
+				padding:15px 5px;
+				&:nth-child(2){//maybe the best way to target the "short urls value" since there are no class names on TD's
+					padding-right:30px;
+				}
+				&:nth-child(5){//best way to target "created" column value
+					//  text-align:center;
+					padding-left:30px;
+				}
+				.form-inline.url{
+					white-space:nowrap;;
+				}
 			}
-			.form-inline.url{
-				white-space:nowrap;;
-			}
-		}
 	}
 	}
 	thead{
@@ -447,8 +451,8 @@ $superInputHeight: 50px;
 		color:#333;
 		border:1px solid #333;
 	}
-
 }
+
 .actions-column{
 	white-space: nowrap;
 	.actions-dropdown-button{
@@ -467,9 +471,15 @@ $superInputHeight: 50px;
 			background-color:#d92232;
 		}
 	}
+	.dropdown-submenu.pull-left{
+		float:none !important;
+		.dropdown-menu{
+			overflow:hidden;
+		}
+	}
 	.dropdown-menu{
 		padding:0;
-		overflow:hidden;
+		// overflow:hidden;
 		a{
 			display: block;
 			padding: 10px 20px;
@@ -481,12 +491,36 @@ $superInputHeight: 50px;
 			border-radius: 0;
 			margin-bottom: 0;
 		}
+		li button.url-share-button{
+			width:100%;
+			padding:10px;
+			border-radius: 0;
+			font-size:12px;
+			opacity:0.8;
+			&:hover{
+				opacity:1;
+			}
+			&.url-share-button-twitter{
+				background-color:#51adec;
+				color:white;
+			}
+			&.url-share-button-qr{
+				background-color:black;
+				color:white;
+			}
+		}
 	}
 	i.fa{
 		&::before{
-			font-size: 20px;
-			color: #888;
+			font-size: 12px;
+			color: white;
 			padding-right:10px;
+			vertical-align:middle;
+		}
+		&.fa-ellipsis-h{
+			&::before{
+				color: #888;
+			}
 		}
 	}
 }
