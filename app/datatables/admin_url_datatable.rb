@@ -26,6 +26,7 @@ class AdminUrlDatatable < AjaxDatatablesRails::Base
         total_clicks: record.total_clicks,
         created_at: record.created_at.to_s(:created_on_formatted),
         actions: render(
+          formats: [:html],
           partial: 'urls/in_row_actions',
           locals: { url: record, admin_view: true }
         ),
