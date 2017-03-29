@@ -37,11 +37,6 @@ class Url < ApplicationRecord
                     }
   validate :check_for_valid_url
 
-  before_validation(on: :create) do
-    # Set clicks to zero
-    self.total_clicks = 0
-  end
-
   before_validation do
     # remove leading and trailing whitespaces for validation
     url.strip!
