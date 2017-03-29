@@ -64,6 +64,7 @@ class TransferRequest < ApplicationRecord
   private
 
   def pre_approve?
-    from_user.in_group?(to_group) || to_user == from_user
+    (from_user.admin? && (!from_user.in_group?(to_group) && !from_user.in_group?(from_group))) || from_user.in_group?(to_group) || to_user == from_user
   end
+
 end
