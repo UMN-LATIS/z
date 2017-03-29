@@ -25,12 +25,20 @@
 .dataTables_wrapper .col-sm-6 > :last-child {
   margin-left:10px;
 }
-
+.table-striped>tbody>tr:nth-child(odd) {
+  background-color: white;
+}
+.table-striped>tbody>tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
 div.urls-table-container{
 	div.dataTables_wrapper{
 		input{
 			box-shadow:none;
 			border-color:ddd;
+		}
+		input[type='checkbox']{
+	    margin-left: 10px;
 		}
 		label{
 			font-size:12px;
@@ -149,18 +157,18 @@ div.urls-table-container{
 table.dataTable{
 	width: 100%;
 	margin-bottom: 100px !important;
-	border-radius: 5px;
+	border-radius: 3px;
 	overflow:hidden;
 	border:none;
-	box-shadow: 1px 1px 2px rgba(0,0,0,0.2), -1px 1px 2px rgba(0,0,0,0.2);
+	// box-shadow: 1px 1px 2px rgba(0,0,0,0.1), -1px 1px 2px rgba(0,0,0,0.1);
 	font-size:12px;
+	border: 1px solid #ddd;
 	tbody{
-		border:1px solid #ddd;
 		tr{
 			padding:10px 0;
 			td{
 				border:none;
-				padding:15px 5px;
+				padding:25px 5px;
 				&:nth-child(2){//maybe the best way to target the "short urls value" since there are no class names on TD's
 					padding-right:30px;
 				}
@@ -174,14 +182,15 @@ table.dataTable{
 	}
 	}
 	thead{
-		background-color:#3f87c5;
-		color: white;
-
+		// background-color:#fbfbfb;
 		tr{
 			th{
-				padding:10px;
+				padding: 18px 10px;
 				border:none;
-				font-weight:500;
+				font-weight: 400;
+				font-size: 13px;
+				border-bottom: 1px solid #eeeeee;
+				color: #5f5f5f;
 			}
 		}
 	}
@@ -251,11 +260,30 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, 
 	margin: 0 15px 0 5px;
 }
 
+#urls-table_filter{
+	margin-top:8px;
+	label{
+		display:inline-block;
+		vertical-align:middle;
+	}
+	.bootstrap-select.form-control:not([class*="col-"]) {
+		width: auto;
+		max-width: 150px;
+		margin-right:14px;
+		margin-left:4px;
+		margin-bottom:2px;
+	}
+}
 table.dataTable td.select-checkbox:before{
-	margin-top:3px;
+	margin-top: 13px;
 }
 table.dataTable tr.selected td.select-checkbox:after{
-	margin-top:0px;
+	margin-top:10px;
+}
+table.dataTable tr.selected .fa-ellipsis-h{
+	&::before{
+		color:white;
+	}
 }
 
 $superInputHeight: 50px;
@@ -527,7 +555,27 @@ $superInputHeight: 50px;
 		&.fa-ellipsis-h{
 			&::before{
 				color: #888;
+				font-size:15px;
 			}
 		}
 	}
+}
+.bootstrap-select{
+	height:auto;
+	margin-top:-3px
+}
+.selectpicker {
+    height: auto !important;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 13px;
+}
+
+.form-inline .bootstrap-select.btn-group .form-control {
+    width: 100%;
+    box-shadow: none;
+    background-color: #ededed;
+    color: white;
+    color: #3687c5;
+    border: none;
 }

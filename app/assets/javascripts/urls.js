@@ -145,11 +145,12 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
                  select.append( '<option value="'+d[0]+'">'+d[1]+'</option>' )
              } );
              select.before('<label>Collection:</label>');
+						 select.selectpicker();
          } );
        }
      },
 		 fnDrawCallback: function(){
-			 
+			 $(".selectpicker").selectpicker();
 		 }
    });
    $('table.data-table').on("page.dt", function(e){
@@ -225,5 +226,4 @@ $(document).ready(function(){
 			$(this).remove();
 		});
 	});
-
 });
