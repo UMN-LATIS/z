@@ -25,6 +25,9 @@
 .dataTables_wrapper .col-sm-6 > :last-child {
   margin-left:10px;
 }
+.dataTables_wrapper .col-sm-6 .btn-primary{
+	font-size:11px;
+}
 .table-striped>tbody>tr:nth-child(odd) {
   background-color: white;
 }
@@ -376,9 +379,16 @@ $superInputHeight: 50px;
 	}
 	#new-url-form{
 		height:240px;
-		form{
-			width:70%;
+		
+		.z-hero-title{
+			text-align:center;
 		}
+		form{
+			width:100%;
+		}
+	}
+	.z-hero-content{
+		width:90%;
 	}
 	.z-hero{
 		.z-hero-content{
