@@ -1,5 +1,5 @@
 class AdminUrlDatatable < AjaxDatatablesRails::Base
-  def_delegators :@view, :link_to, :full_url, :display_long_url, :display_keyword_url, :select_tag, :options_from_collection_for_select, :url_path
+  def_delegators :@view, :link_to, :full_url, :display_long_url, :display_keyword_url, :select_tag, :options_from_collection_for_select, :url_path, :render
 
   def view_columns
     @view_columns ||= {
@@ -25,7 +25,7 @@ class AdminUrlDatatable < AjaxDatatablesRails::Base
         keyword: link_to(display_keyword_url(record.keyword), full_url(record), target: '_blank'),
         total_clicks: record.total_clicks,
         created_at: record.created_at.to_s(:created_on_formatted),
-        actions: ApplicationController.renderer.render(
+        actions: render(
           partial: 'urls/in_row_actions',
           locals: { url: record, admin_view: true }
         ),
