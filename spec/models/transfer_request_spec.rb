@@ -29,9 +29,9 @@ RSpec.describe TransferRequest, type: :model do
             @admin_user.context_group_id
         @transfer_request.from_user =
             @admin_user
-        @transfer_request.pre_approve
+        @transfer_request.save
       end
-      it 'should be pending' do
+      it 'status should be pending' do
         expect(@transfer_request.status.eql? 'pending').to be true
       end
   end
@@ -40,7 +40,7 @@ RSpec.describe TransferRequest, type: :model do
     before do
       @user1 = FactoryGirl.create(:user)
       @user2 = FactoryGirl.create(:user)
-      @adminster = FactoryGirl.create(:admin)
+      @admin_user = FactoryGirl.create(:admin)
 
       @transfer_request.from_group_id =
           @user1.context_group_id
@@ -48,13 +48,12 @@ RSpec.describe TransferRequest, type: :model do
           @user2.context_group_id
 
       @transfer_request.from_user =
-          @adminster
+          @admin_user
       @transfer_request.to_user=
           @user2
-      @transfer_request.pre_approve
+      @transfer_request.save
     end
-    it 'should be pre-approved' do
-      pp @transfer_request.status
+    it 'status should be approved' do
       expect(@transfer_request.status.eql? 'approved').to be true
     end
   end
