@@ -16,6 +16,16 @@ FactoryGirl.define do
     end
   end
 
+  factory :audit do
+    item_type	'url'
+    item_id	'1'
+    event	'create'
+    whodunnit { FactoryGirl.create(:user) }
+    object	'test_keyword'
+    whodunnit_email 'abc.def,com'
+    whodunnit_name	'Julia Child'
+  end
+
   factory :url do
     url 'http://google.com'
     sequence(:keyword) { |n| "keyword#{n}" }

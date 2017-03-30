@@ -13,7 +13,6 @@
 
 class TransferRequest < ApplicationRecord
   has_paper_trail
-
   belongs_to :from_group, foreign_key: 'from_group_id', class_name: 'Group'
   belongs_to :to_group, foreign_key: 'to_group_id', class_name: 'Group'
   belongs_to :from_user, foreign_key: 'from_group_requestor_id', class_name: 'User'
@@ -23,7 +22,7 @@ class TransferRequest < ApplicationRecord
                           join_table: :transfer_request_urls,
                           dependant: :destroy
 
-  validate :from_group_must_own_urls
+  validate :from_group_must_own_urls_or_from_user_is_admin
 
   before_save :pre_approve
 
@@ -34,11 +33,11 @@ class TransferRequest < ApplicationRecord
     approve
   end
 
-  def from_group_must_own_urls
+  def from_group_must_own_urls_or_from_user_is_admin
     from_group_urls_length =
         urls.map(&:group_id).count(from_group_id)
     num_urls = urls.length
-    return if num_urls == from_group_urls_length || from_group.try(:admin?)
+    return if num_urls == from_group_urls_length || from_group.try(:admin?) || from_user.try(:admin?)
     errors.add(:from_group, 'must own URLs')
   end
 
@@ -64,6 +63,7 @@ class TransferRequest < ApplicationRecord
   private
 
   def pre_approve?
-    from_user.in_group?(to_group) || to_user == from_user
+    (from_user.admin? && (!from_user.in_group?(to_group) && !from_user.in_group?(from_group))) || from_user.in_group?(to_group) || to_user == from_user
   end
+
 end
