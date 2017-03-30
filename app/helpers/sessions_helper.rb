@@ -25,8 +25,8 @@ module SessionsHelper
   end
 
   def shib_logout_url
-    redirect_url = Rails.application.config.shib_return_url 
+    redirect_url = Rails.application.config.shib_return_url
     encoded_redirect_url = ERB::Util.url_encode(redirect_url)
-    "http://#{request.host}/Shibboleth.sso/Logout?return=#{encoded_redirect_url}"
+    "/Shibboleth.sso/Logout?return=#{encoded_redirect_url}"
   end
 end
