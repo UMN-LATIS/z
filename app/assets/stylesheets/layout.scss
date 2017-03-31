@@ -33,7 +33,14 @@ textarea {
 .center {
   text-align: center;
 }
+.center-inline{
+  text-align:center;
+  > * {
+    display:inline;
+    text-align:inherit;;
+  }
 
+}
 .center h1 {
   margin-bottom: 10px;
 }
