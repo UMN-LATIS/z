@@ -31,14 +31,6 @@ describe 'groups index page', js: true do
             wait_for_ajax
           end.to change(GroupsUser, :count).by(1)
         end
-        it 'should update the context switcher' do
-          find('.js-group-submit').click
-          wait_for_ajax
-          # Need to click the viewing as portion to actually
-          # see the correct link
-          find('.js-viewing-as').click
-          expect(page).to have_css('a', text: name)
-        end
       end
       describe 'when the description is blank' do
         before { find('#group_description').set '' }

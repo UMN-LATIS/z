@@ -214,6 +214,9 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
 
 //url share actions
 $(document).ready(function(){
+	$(document).on("click", ".share-url", function(e){
+		e.preventDefault();
+	});
 	$(document).on("click", ".url-share-button-twitter",function(e){
 		e.preventDefault();
 		var shortUrl = $(this).data("shortUrl");
