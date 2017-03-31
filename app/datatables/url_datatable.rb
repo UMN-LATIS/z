@@ -28,7 +28,7 @@ class UrlDatatable < AjaxDatatablesRails::Base
             'name',
             record.group_id
           ),
-          class: 'form-control selectpicker',
+          class: 'form-control selectpicker ',
           data: {
             update_path: url_path(record.id),
             keyword: record.keyword,
@@ -36,7 +36,11 @@ class UrlDatatable < AjaxDatatablesRails::Base
           }
         ),
         url: link_to(display_long_url(record.url), record.url, target: '_blank'),
-        keyword: link_to(display_keyword_url(record.keyword), full_url(record), target: '_blank'),
+        keyword: render(
+            formats: [:html],
+            partial: 'urls/short_url_table_cell',
+            locals: { url: record}
+        ),
         total_clicks: link_to(record.total_clicks, url_path(record.keyword), target: '_blank'),
         created_at: record.created_at.to_s(:created_on_formatted),
         actions: render(
