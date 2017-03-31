@@ -22,7 +22,7 @@ describe 'as a valid admin user' do
   describe 'visiting admin url index' do
     before { visit admin_urls_path }
     it 'display the URL title' do
-      expect(page).to have_content 'Urls'
+      expect(page).to have_content 'URLs'
     end
 
     it 'should have the Owner field' do
@@ -35,11 +35,8 @@ describe 'as a valid admin user' do
         visit admin_urls_path
       end
 
-      it 'should display an edit button' do
-        expect(page).to have_content 'Edit'
-      end
-      it 'should display a delete button' do
-        expect(page).to have_content 'Delete'
+      it 'should display the actions dropdown button' do
+        expect(page).to have_selector('.dropdown .actions-dropdown-button')
       end
 
       describe 'acting on an existing URL' do
@@ -47,7 +44,10 @@ describe 'as a valid admin user' do
         let(:new_keyword) { 'face' }
 
         describe 'when editing', js: true do
-          before { find('.edit-url').click }
+          before {
+            find('.dropdown .actions-dropdown-button').click
+            find('.dropdown-menu .edit-url').click
+          }
 
           describe 'with new valid content' do
             it 'should update the url in the db' do
@@ -90,7 +90,8 @@ describe 'as a valid admin user' do
           describe 'clicking delete' do
             it 'should delete the url' do
               expect do
-                find('.delete-url').click
+                find('.dropdown .actions-dropdown-button').click
+                find('.dropdown-menu .delete-url').click
                 click_button "Confirm"
                 wait_for_ajax
               end.to change(Url, :count).by(-1)

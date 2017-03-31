@@ -59,9 +59,6 @@ describe 'urls show page', js: true do
   it 'should display the total clicks' do
     expect(page).to have_content '15 hits'
   end
-  it 'should display the share to facebook button' do
-    expect(page).to have_selector('.url-share-button-facebook', visible: true)
-  end
   it 'should display the share to twitter button' do
     expect(page).to have_selector('.url-share-button-twitter', visible: true)
   end
@@ -131,12 +128,12 @@ describe 'urls index page', js: true do
       it ' should not display pagination Next button' do
         find('.js-url-submit').click
         wait_for_ajax
-        expect(page).to_not have_content('Next')
+        expect(page).to have_selector('.paginate_button.next.disabled')
       end
       it ' should not display pagination Previous button' do
         find('.js-url-submit').click
         wait_for_ajax
-        expect(page).to_not have_content('Previous')
+        expect(page).to have_selector('.paginate_button.previous.disabled')
       end
     end
   end
@@ -171,9 +168,6 @@ describe 'urls index page', js: true do
         end
         it 'should have the newly created short url' do
            expect(page.find(".url-blurb-source")).to have_content(url)
-        end
-        it "should display the share to facebook button" do
-          expect(page).to have_selector('.url-blurb .url-share-button-facebook', visible: true)
         end
         it "should display the share to twitter button" do
           expect(page).to have_selector('.url-blurb .url-share-button-twitter', visible: true)
@@ -260,17 +254,11 @@ describe 'urls index page', js: true do
       it 'should display the url\'s click count' do
         expect(page).to have_css('td', text: @url.total_clicks)
       end
-      it 'should display the share button' do
-        expect(page).to have_content 'Share'
-      end
-      it 'should display an edit button' do
-        expect(page).to have_content 'Edit'
-      end
-      it 'should display a delete button' do
-        expect(page).to have_content 'Delete'
+      it 'should display the action dropdown button' do
+        expect(page).to have_selector('.actions-column .actions-dropdown-button')
       end
       it 'should display the urls collection' do
-        expect(page).to have_select("url-collection-#{@url.id}", selected: @url.group.name)
+        expect(page).to have_selector("[data-id='url-collection-#{@url.id}']", text: @url.group.name, exact: true)
       end
 
       describe 'when filtering on collection', js: true do
@@ -280,7 +268,8 @@ describe 'urls index page', js: true do
           sign_in(@user)
           @new_url = FactoryGirl.create(:url, group: new_group)
           wait_for_ajax
-          select new_group.name, from: 'collection-filter'
+          find('[data-id="collection-filter"]').click
+          find('.dropdown-menu.open li', text: (new_group.name) ).click
         end
         it 'should display urls from that collection' do
           expect(page).to have_content @new_url.keyword
@@ -292,15 +281,12 @@ describe 'urls index page', js: true do
     end
 
     describe 'when sharing existing url', js: true do
-      before { find('.share-url').click }
+      before {
+        find('.dropdown .actions-dropdown-button').click
+        find('.dropdown-menu .share-url').hover
+      }
 
       describe "when clicking the share button" do
-        it "should display the share popup" do
-          expect(page).to have_selector('.popover .popover-content', visible: true)
-        end
-        it "should display the share to facebook button" do
-          expect(page).to have_selector('.url-share-button-facebook', visible: true)
-        end
         it "should display the share to twitter button" do
           expect(page).to have_selector('.url-share-button-twitter', visible: true)
         end
@@ -322,7 +308,10 @@ describe 'urls index page', js: true do
       end
     end
     describe 'when editing existing url', js: true do
-      before { find('.edit-url').click }
+      before {
+        find('.dropdown .actions-dropdown-button').click
+        find('.dropdown-menu .edit-url').click
+      }
 
       describe 'with new valid content' do
         it 'should update the url in the db' do
@@ -344,7 +333,8 @@ describe 'urls index page', js: true do
       describe 'clicking delete' do
         it 'should delete the url' do
           expect do
-            find('.delete-url').click
+            find('.dropdown .actions-dropdown-button').click
+            find('.dropdown-menu .delete-url').click
             click_button "Confirm"
             wait_for_ajax
           end.to change(Url, :count).by(-1)
@@ -371,11 +361,12 @@ describe 'urls index page', js: true do
         @new_group.users << @user
         sign_in(@user)
         wait_for_ajax
-        select @new_group.name, from: "url-collection-#{@url.id}"
+        find("[data-id='url-collection-#{@url.id}']").click
+        find('.dropdown-menu.open').find("li:not(.selected)").click
         wait_for_ajax
       end
       it 'should update the urls collection on the page' do
-        expect(page).to have_select("url-collection-#{@url.id}", selected: @new_group.name)
+        expect(page).to have_selector("[data-id='url-collection-#{@url.id}']", text: @new_group.name, exact: true)
       end
       it 'should update the urls collection in the database' do
         @url.reload

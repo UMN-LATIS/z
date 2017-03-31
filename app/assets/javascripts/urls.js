@@ -99,6 +99,7 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
               pagination.toggle(this.api().page.info().pages > 1);
           },
      "pageLength": 25,
+		 "autoWidth": false,
      columns: [
           {
             defaultContent: "",
@@ -151,6 +152,10 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
      },
 		 fnDrawCallback: function(){
 			 $(".selectpicker").selectpicker();
+			 $(".selectpicker").attr("title", "Change this URL's Collection")
+			 setTimeout(function(){
+				 $("#urls-table .selectpicker").tooltip();
+			 }, 300);
 		 }
    });
    $('table.data-table').on("page.dt", function(e){
@@ -209,6 +214,9 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
 
 //url share actions
 $(document).ready(function(){
+	$(document).on("click", ".share-url", function(e){
+		e.preventDefault();
+	});
 	$(document).on("click", ".url-share-button-twitter",function(e){
 		e.preventDefault();
 		var shortUrl = $(this).data("shortUrl");

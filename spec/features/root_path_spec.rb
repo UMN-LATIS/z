@@ -9,7 +9,7 @@ describe 'Visiting root' do
       expect(page).to have_content 'Welcome'
     end
     it 'should display Login to Z button' do
-      expect(page).to have_content 'Login to Z'
+      expect(page).to have_content 'Sign In to Z'
     end
   end
 

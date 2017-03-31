@@ -25,6 +25,9 @@
 .dataTables_wrapper .col-sm-6 > :last-child {
   margin-left:10px;
 }
+.dataTables_wrapper .col-sm-6 .btn-primary{
+	font-size:11px;
+}
 .table-striped>tbody>tr:nth-child(odd) {
   background-color: white;
 }
@@ -68,7 +71,7 @@ div.urls-table-container{
 	form{
 		// background-color: #eee;
 		padding: 15px 35px;
-    border: 1px solid #dcdcdc;
+
 	}
 	#new_url, .new_admin, .new_member{
 		display:inline-block;
@@ -88,8 +91,6 @@ div.urls-table-container{
 }
 #new-url-form form{
 	padding:0;
-	border: 1px solid #cfcfcf;
-  border-radius: 5px;
   overflow: hidden;
 }
 #new-url-form{
@@ -158,7 +159,7 @@ table.dataTable{
 	width: 100%;
 	margin-bottom: 100px !important;
 	border-radius: 3px;
-	overflow:hidden;
+	// overflow:hidden;
 	border:none;
 	// box-shadow: 1px 1px 2px rgba(0,0,0,0.1), -1px 1px 2px rgba(0,0,0,0.1);
 	font-size:12px;
@@ -175,11 +176,9 @@ table.dataTable{
 				&:nth-child(5){//best way to target "created" column value
 					padding-left:30px;
 				}
-				.form-inline.url{
-					white-space:nowrap;;
-				}
+
 			}
-	}
+		}
 	}
 	thead{
 		// background-color:#fbfbfb;
@@ -191,7 +190,48 @@ table.dataTable{
 				font-size: 13px;
 				border-bottom: 1px solid #eeeeee;
 				color: #5f5f5f;
+				white-space:nowrap;
 			}
+		}
+	}
+	.table-row-no-padding{
+		background-color: #eee !important;
+		td{
+			padding: 15px 0;
+		}
+	}
+	.table-row-edit-url{
+		.z-hero-title{
+			text-align:left;
+			padding-left:5px;
+			color:#828282;
+		}
+		.super-input{
+			display:inline-block;
+			vertical-align:middle;
+		}
+		form{
+			display:block;
+			white-space:nowrap;
+
+			.cancel-edit-url{
+				display: inline-block;
+				vertical-align: middle;
+				padding: 15px 32px;
+				border-color: #ddd;
+				margin-left:5px;
+			}
+
+			input{
+				margin:0;
+			}
+
+		}
+		.z-hero-title{
+			color: #666;
+    	font-size: 13px;
+			font-weight:400;
+			margin-top:0;
 		}
 	}
 	.urls-table-header-short-url{
@@ -233,8 +273,13 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, 
 }
 
 .btn.clipboard-btn{
-	padding:1px 7px;
-	margin-left:5px;
+	padding: 3px 10px;
+	margin-left: 5px;
+	font-size: 11px;
+	border: none;
+	color: #428bca;
+	/* color: white; */
+	background-color: #ededed;
 }
 
 .transfer-request-item {
@@ -295,6 +340,9 @@ $superInputHeight: 50px;
   margin: 0;
 	background-color:white;
 	color:black;
+	border-radius:5px;
+	border: 1px solid #cfcfcf;
+	border-radius: 5px;
   > *{
     display:inline-block;
 		vertical-align:middle;
@@ -374,11 +422,22 @@ $superInputHeight: 50px;
 	#url-blurb-container{
 		display:none;
 	}
+	.cancel-edit-url{
+		display: block !important;
+		margin-top:10px !important;
+	}
 	#new-url-form{
 		height:240px;
-		form{
-			width:70%;
+
+		.z-hero-title{
+			text-align:center;
 		}
+		form{
+			width:100%;
+		}
+	}
+	.z-hero-content{
+		width:90%;
 	}
 	.z-hero{
 		.z-hero-content{
@@ -465,12 +524,13 @@ $superInputHeight: 50px;
   }
 }
 .url-share-button{
-	font-size:10px;
-	padding:2px 15px;
-	background:none;
-	color:blue;
-	border-radius:3px;
-	font-weight:500;
+	font-size: 10px;
+	padding: 4px;
+	background: none;
+	color: blue;
+	border-radius: 3px;
+	font-weight: 500;
+	width: 90px;
 
 	&.url-share-button-large {
     font-size: 12px;
@@ -486,6 +546,12 @@ $superInputHeight: 50px;
 	 &.url-share-button-qr{
 		color:#333;
 		border:1px solid #333;
+	}
+}
+.panel-body{
+	.url-share-button{
+		padding:5px;
+		width:100px;
 	}
 }
 
@@ -528,20 +594,29 @@ $superInputHeight: 50px;
 		}
 		li button.url-share-button{
 			width:100%;
-			padding:10px;
+			padding:15px 10px;
 			border-radius: 0;
 			font-size:12px;
-			opacity:0.8;
+			border:none;
 			&:hover{
-				opacity:1;
+				background:#f5f5f5;
 			}
 			&.url-share-button-twitter{
-				background-color:#51adec;
-				color:white;
+				color:#51adec;
+				font-size:13px;
+				i.fa::before{
+					font-size:13px;
+					color:#51adec;
+				}
+
 			}
 			&.url-share-button-qr{
-				background-color:black;
-				color:white;
+				color:black;
+				font-size:13px;
+				i.fa::before{
+					font-size:13px;
+					color:black;
+				}
 			}
 		}
 	}
