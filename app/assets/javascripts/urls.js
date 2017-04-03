@@ -8,7 +8,7 @@ $(document).on("click", ".cancel-edit-url", function (e) {
 	$('table.data-table').DataTable().draw();
 });
 
-$(document).on("change", "#urls-table select", function (e) {
+$(document).on("change", "#urls-table select, body.urls.show select", function (e) {
   select = e.target;
 	var newVal = $(select).val();
   var urlId = $(select).data('url-id');
@@ -212,8 +212,9 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
      $(".col-sm-6 .dt-buttons").removeClass("btn-group");
 }
 
-//url share actions
+
 $(document).ready(function(){
+	//url share actions
 	$(document).on("click", ".share-url", function(e){
 		e.preventDefault();
 	});
