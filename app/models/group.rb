@@ -46,6 +46,10 @@ class Group < ApplicationRecord
     users.delete(user)
   end
 
+  def default?
+    User.pluck(:default_group_id).include?(id)
+  end
+
   # Groups for admins will only be one person long and the only user
   # will be an administrator
   def admin?
