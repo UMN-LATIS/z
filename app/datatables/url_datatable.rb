@@ -1,5 +1,5 @@
 class UrlDatatable < AjaxDatatablesRails::Base
-  def_delegators :@view, :link_to, :full_url, :display_long_url, :display_keyword_url, :select_tag, :options_from_collection_for_select, :url_path, :render
+  def_delegators :@view, :link_to, :full_url, :display_long_url, :display_keyword_url, :select_tag, :options_for_select, :url_path, :render, :display_name
 
   def view_columns
     @view_columns ||= {
@@ -15,6 +15,7 @@ class UrlDatatable < AjaxDatatablesRails::Base
   private
 
   def data
+    user_groups_for_collection = current_user.groups.collect { |group| [display_name(group), group['id'] ] }
     records.map do |record|
       {
         # comma separated list of the values for each cell of a table row
@@ -22,10 +23,8 @@ class UrlDatatable < AjaxDatatablesRails::Base
         group_id: record.group_id,
         group_name: select_tag(
           "url-collection-#{record.id}",
-          options_from_collection_for_select(
-            current_user.groups,
-            'id',
-            'name',
+          options_for_select(
+            user_groups_for_collection,
             record.group_id
           ),
           class: 'form-control selectpicker ',
