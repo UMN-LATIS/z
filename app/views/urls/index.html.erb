@@ -38,7 +38,7 @@
 <%= content_tag :div, class: "collection-count", data: {collection_count: current_user.groups.length} do %>
 <% end %>
 
-<%= content_tag :div, class: "collection-names", data: {collection_names: current_user.groups.pluck(:id, :name)} do %>
+<%= content_tag :div, class: "collection-names", data: {collection_names: current_user.groups.collect{ |group| [group.id, display_name(group)]}} do %>
 <% end %>
 
 <%= render 'modal' %>
