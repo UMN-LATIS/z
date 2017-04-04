@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170321184711) do
+ActiveRecord::Schema.define(version: 20170329193403) do
 
   create_table "clicks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "country_code"
@@ -71,11 +71,12 @@ ActiveRecord::Schema.define(version: 20170321184711) do
   create_table "urls", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text     "url",          limit: 65535
     t.string   "keyword"
-    t.integer  "total_clicks"
+    t.integer  "total_clicks",                    default: 0
     t.integer  "group_id"
     t.integer  "modified_by"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+    t.text     "search_cache", limit: 4294967295
     t.index ["group_id"], name: "index_urls_on_group_id", using: :btree
     t.index ["keyword"], name: "index_urls_on_keyword", unique: true, using: :btree
   end
@@ -102,6 +103,8 @@ ActiveRecord::Schema.define(version: 20170321184711) do
     t.datetime "created_at"
     t.string   "whodunnit_email"
     t.string   "whodunnit_name"
+    t.text     "object_changes",  limit: 4294967295
+    t.text     "search_cache",    limit: 4294967295
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
   end
 
