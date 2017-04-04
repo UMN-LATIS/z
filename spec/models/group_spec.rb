@@ -23,7 +23,7 @@ RSpec.describe Group, type: :model do
   it { should respond_to 'created_at' }
   it { should respond_to 'updated_at' }
 
-  describe 'Versioning'do
+  describe 'Versioning' do
     it 's should be enabled' do
       is_expected.to be_versioned
     end
@@ -86,5 +86,17 @@ RSpec.describe Group, type: :model do
     end
   end
 
+  describe 'calling default?' do
+    before do
+      @default_group = FactoryGirl.create(:user).default_group
+    end
 
+    it 'should be false for non-default groups' do
+      expect(@group.default?).to eq(false)
+    end
+
+    it 'should be true for default groups' do
+      expect(@default_group.default?).to eq(true)
+    end
+  end
 end
