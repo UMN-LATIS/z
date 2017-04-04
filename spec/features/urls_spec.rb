@@ -77,6 +77,24 @@ describe 'urls show page', js: true do
       expect(page.body).to_not be_blank
     end
   end
+
+  describe 'collection dropdown' do
+    before {
+      @new_group = FactoryGirl.create(:group)
+      @new_group.users << @user
+      sign_in(@user)
+      wait_for_ajax
+      visit url_path(@url.keyword)
+      wait_for_ajax
+      find('.selectpicker.dropdown-toggle').click
+      find('.dropdown-menu.open').find('li', text: @new_group.name).click
+      wait_for_ajax
+    }
+
+    it 'should change the collection' do
+      expect(page).to have_selector('.selectpicker.dropdown-toggle', text: @new_group.name)
+    end
+  end
 end
 describe 'urls index page', js: true do
   before do
@@ -366,7 +384,7 @@ describe 'urls index page', js: true do
         wait_for_ajax
       end
       it 'should update the urls collection on the page' do
-        expect(page).to have_selector("[data-id='url-collection-#{@url.id}']", text: @new_group.name, exact: true)
+        expect(page).to have_selector("[data-id='url-collection-#{@url.id}']", text: @new_group.name)
       end
       it 'should update the urls collection in the database' do
         @url.reload
