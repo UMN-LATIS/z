@@ -1,6 +1,6 @@
 module GroupHelper
   def display_name(group)
-    return 'No Collection' if group.default?
+    return t('helpers.groups.default_display') if group.default?
     group.name
   end
 end
