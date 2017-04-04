@@ -25,10 +25,9 @@ RSpec.describe TransferRequest, type: :model do
   describe 'for admin in the from group of the request' do
       before do
         @admin_user = FactoryGirl.create(:admin)
-        @transfer_request.from_group_id =
-            @admin_user.context_group_id
-        @transfer_request.from_user =
-            @admin_user
+        @transfer_url = FactoryGirl.create(:url)
+        @transfer_url.group_id = @admin_user.context_group_id
+        @transfer_request.urls << @transfer_url
         @transfer_request.save
       end
       it 'status should be pending' do
