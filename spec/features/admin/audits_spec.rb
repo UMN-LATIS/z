@@ -3,6 +3,7 @@ require 'rails_helper'
 describe 'as a non-admin user' do
   before do
     @user = FactoryGirl.create(:user)
+    @audit = FactoryGirl.create(:audit, whodunnit: @user.id)
     sign_in(@user)
     visit admin_audits_path
   end

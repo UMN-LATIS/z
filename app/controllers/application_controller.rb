@@ -47,4 +47,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def redirect_to_urls_if_logged_in
+    redirect_to urls_path unless !signed_in?
+  end
 end

@@ -11,6 +11,7 @@
             <a target='_blank' href="<%= full_url(@url) %>"><%= full_url(@url) %></a>
             <button class='btn btn-default clipboard-btn' data-clipboard-text="<%= full_url(@url) %>">
               <i class=" fa fa-files-o"></i>
+              Copy
             </button>
           </div>
         </div>
@@ -25,15 +26,30 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-9 stats-actions">
+      <div class="col-md-12 stats-actions">
+        <div class="panel panel-default">
+          <div class="panel-heading"><%= t('helpers.collection')%></div>
+          <div class="panel-body">
+            <%= select_tag(
+              "url-collection-#{@url.id}",
+              options_from_collection_for_select(
+                current_user.groups,
+                'id',
+                'name',
+                @url.group_id
+              ),
+              class: 'form-control selectpicker ',
+              data: {
+                update_path: url_path(@url.id),
+                keyword: @url.keyword,
+                group_id: @url.group_id
+              }
+            ) %>
+          </div>
+        </div>
         <button class="btn btn-primary js-transfer-urls ">
           <i class="fa fa-exchange"></i>
           Give to a different user
-        </button>
-        <button class="btn btn-primary js-move-urls ">
-          <i class="fa fa-share-square-o "></i>
-
-          Move to a different collection
         </button>
       </div>
     </div>

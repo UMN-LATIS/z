@@ -29,6 +29,7 @@ en:
     short_url_created_on: "Short URL created on"
     url_has_never_been_clicked: "This URL has never been clicked."
     groups:
+      default_display: "No Collection"
       new: "Add New Collection"
     links:
       home: "Home"

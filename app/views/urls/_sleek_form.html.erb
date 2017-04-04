@@ -1,6 +1,9 @@
+<% is_edit = (defined?(edit) && edit == true) ? true : false %>
+
 <div class="z-hero-content">
+
   <h3 class="z-hero-title">
-    Shorten your links
+    <%= is_edit ? 'Edit your shortlink' : 'Shorten your links' %>
   </h3>
 
   <%= form_for_url_admin @admin_view, url do |f| %>
@@ -18,8 +21,14 @@
         <%= f.text_field :keyword, class: 'js-new-url-keyword', placeholder: "keyword (optional)" %>
       </div>
 
-      <button type="submit" class="js-url-submit"> Z-link it! </button>
+      <button type="submit" class="js-url-submit">
+        <%= is_edit ? "Submit" : "Z-Link It" %>
+       </button>
     </div>
+
+    <% if is_edit %>
+      <a href="#" class='btn btn-default cancel-edit-url'><%= t('helpers.buttons.cancel')%></a>
+    <% end %>
 
     <div id="url-blurb-container">
     </div>
@@ -27,5 +36,3 @@
   <% end %>
   <%= render 'urls/in_row_errors', url: url %>
 </div>
-
-

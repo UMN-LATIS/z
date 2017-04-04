@@ -40,7 +40,8 @@ gem 'net-ldap'
 
 # Use bootstrap for styling
 gem 'twitter-bootstrap-rails'
-
+# Use special bootstrap select
+gem 'bootstrap-select-rails'
 #Use font awesome for icons
 gem "font-awesome-rails"
 

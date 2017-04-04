@@ -8,7 +8,7 @@ $(document).on("click", ".cancel-edit-url", function (e) {
 	$('table.data-table').DataTable().draw();
 });
 
-$(document).on("change", "#urls-table select", function (e) {
+$(document).on("change", "#urls-table select, body.urls.show select", function (e) {
   select = e.target;
 	var newVal = $(select).val();
   var urlId = $(select).data('url-id');
@@ -99,6 +99,7 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
               pagination.toggle(this.api().page.info().pages > 1);
           },
      "pageLength": 25,
+		 "autoWidth": false,
      columns: [
           {
             defaultContent: "",
@@ -145,11 +146,16 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
                  select.append( '<option value="'+d[0]+'">'+d[1]+'</option>' )
              } );
              select.before('<label>Collection:</label>');
+						 select.selectpicker();
          } );
        }
      },
 		 fnDrawCallback: function(){
-
+			 $(".selectpicker").selectpicker();
+			 $(".selectpicker").attr("title", "Change this URL's Collection")
+			 setTimeout(function(){
+				 $("#urls-table .selectpicker").tooltip();
+			 }, 300);
 		 }
    });
    $('table.data-table').on("page.dt", function(e){
@@ -206,8 +212,12 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
      $(".col-sm-6 .dt-buttons").removeClass("btn-group");
 }
 
-//url share actions
+
 $(document).ready(function(){
+	//url share actions
+	$(document).on("click", ".share-url", function(e){
+		e.preventDefault();
+	});
 	$(document).on("click", ".url-share-button-twitter",function(e){
 		e.preventDefault();
 		var shortUrl = $(this).data("shortUrl");
@@ -225,5 +235,4 @@ $(document).ready(function(){
 			$(this).remove();
 		});
 	});
-
 });

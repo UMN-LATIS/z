@@ -1,5 +1,7 @@
-<tr id="url-<%= url_identifier %>" class="info">
-	<td colspan=6>
-    <%= render 'urls/form', url: url %>
+<tr class="table-row-no-padding table-row-edit-url" id="url-<%= url_identifier %>" class="info">
+	<td colspan=7>
+		<div class="center-inline">
+			<%= render 'urls/sleek_form', url: url, edit: true %>
+		</div>
   </td>
 </tr>
