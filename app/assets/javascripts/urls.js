@@ -53,6 +53,11 @@ $(document).bind('turbolinks:load', function () {
   initializeUrlDataTable(5, "desc", 6, 3, false, false);
 });
 
+// Turn the group select into the fancy select picker
+$(document).on('show.bs.modal', function() {
+    $("#index-modal select#Group").selectpicker();
+});
+
 // The rest of the charts need to be loaded upon showing the tab
 // preloading the charts ruins their formatting
 $(document).on('shown.bs.tab', function (e) {
