@@ -38,7 +38,45 @@ describe 'creating a transfer request', js: true do
         end
       end
 
-      describe 'with a url selected' do
+      describe 'with multiple urls selected' do
+        describe 'from different groups' do
+          before do
+            @new_group = FactoryGirl.create(:group)
+            @new_group.users << @user
+            @new_group_url = FactoryGirl.create(:url, group: @new_group)
+            sign_in @user
+            visit urls_path
+            find("#url-#{@selected_url.id} > .select-checkbox").click
+            find("#url-#{@new_group_url.id} > .select-checkbox").click
+            find('.js-transfer-urls').click
+            wait_for_ajax
+          end
+
+          it 'should display default group url' do
+            expect(page).to have_selector(".new_transfer_request input[value='#{@selected_url.keyword}']", visible: false)
+          end
+
+          it 'should display new group url' do
+            expect(page).to have_selector(".new_transfer_request input[value='#{@new_group_url.keyword}']", visible: false)
+          end
+
+          describe 'submitting a transfer request' do
+            before do
+              @other_user = FactoryGirl.create(:user)
+              first('input#transfer_request_to_group', visible: false).set @other_user.uid
+              find('#new_transfer_request  input[type="submit"]').click
+              click_button 'Confirm'
+              wait_for_ajax
+            end
+            it 'should have all of the urls in the request' do
+              expect(TransferRequest.last.urls - [@selected_url, @new_group_url]).to be_empty
+            end
+          end
+        end
+      end
+
+
+      describe 'with a single url selected' do
         before { find("#url-#{@selected_url.id} > .select-checkbox").click }
         describe 'the transfer button' do
           it 'should be enabled' do

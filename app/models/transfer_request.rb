@@ -22,7 +22,7 @@ class TransferRequest < ApplicationRecord
                           join_table: :transfer_request_urls,
                           dependant: :destroy
 
-  validate :from_group_must_own_urls_or_from_user_is_admin
+  validate :from_user_must_own_urls_or_from_user_is_admin
 
   before_save :pre_approve
 
@@ -39,12 +39,11 @@ class TransferRequest < ApplicationRecord
     approve
   end
 
-  def from_group_must_own_urls_or_from_user_is_admin
-    from_group_urls_length =
-        urls.map(&:group_id).count(from_group_id)
-    num_urls = urls.length
-    return if num_urls == from_group_urls_length || from_group.try(:admin?) || from_user.try(:admin?)
-    errors.add(:from_group, 'must own URLs')
+  def from_user_must_own_urls_or_from_user_is_admin
+    url_groups = urls.map(&:group_id)
+    user_groups = from_user.groups.pluck(:id)
+    return if (url_groups - user_groups).empty? || from_group.try(:admin?) || from_user.try(:admin?)
+    errors.add(:from_user, 'must own URLs')
   end
 
   def approve
