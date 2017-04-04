@@ -258,7 +258,7 @@ describe 'urls index page', js: true do
         expect(page).to have_selector('.actions-column .actions-dropdown-button')
       end
       it 'should display the default urls display_name' do
-        expect(page).to have_selector("[data-id='url-collection-#{@url.id}']", text: I18n.t('helpers.groups.default_display'), exact: true)
+        expect(page).to have_selector("[data-id='url-collection-#{@url.id}']", text: I18n.t('helpers.groups.default_display'))
       end
 
       describe 'when filtering on collection', js: true do
@@ -366,7 +366,7 @@ describe 'urls index page', js: true do
         wait_for_ajax
       end
       it 'should update the urls collection on the page' do
-        expect(page).to have_selector("[data-id='url-collection-#{@url.id}']", text: @new_group.name, exact: true)
+        expect(page).to have_selector("[data-id='url-collection-#{@url.id}']", text: @new_group.name)
       end
       it 'should update the urls collection in the database' do
         @url.reload
