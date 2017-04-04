@@ -257,8 +257,8 @@ describe 'urls index page', js: true do
       it 'should display the action dropdown button' do
         expect(page).to have_selector('.actions-column .actions-dropdown-button')
       end
-      it 'should display the urls collection' do
-        expect(page).to have_selector("[data-id='url-collection-#{@url.id}']", text: @url.group.name, exact: true)
+      it 'should display the default urls display_name' do
+        expect(page).to have_selector("[data-id='url-collection-#{@url.id}']", text: I18n.t('helpers.groups.default_display'), exact: true)
       end
 
       describe 'when filtering on collection', js: true do
@@ -286,11 +286,11 @@ describe 'urls index page', js: true do
         find('.dropdown-menu .share-url').hover
       }
 
-      describe "when clicking the share button" do
-        it "should display the share to twitter button" do
+      describe 'when clicking the share button' do
+        it 'should display the share to twitter button' do
           expect(page).to have_selector('.url-share-button-twitter', visible: true)
         end
-        it "should display the download QR code button" do
+        it 'should display the download QR code button' do
           expect(page).to have_selector('.url-share-button-qr', visible: true)
         end
 
