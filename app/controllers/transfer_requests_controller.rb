@@ -16,7 +16,7 @@ class TransferRequestsController < ApplicationController
     @transfer_request = TransferRequest.new
 
     @urls = Url
-            .created_by_id(current_user.context_group_id)
+            .created_by_ids(current_user.groups.pluck(:id))
             .where(keyword: params[:keywords])
             .order('created_at DESC')
 
@@ -40,7 +40,7 @@ class TransferRequestsController < ApplicationController
       ).default_group_id
 
     @urls = Url
-            .created_by_id(current_user.context_group_id)
+            .created_by_ids(current_user.groups.pluck(:id))
             .where(keyword: params[:keywords])
             .order('created_at DESC')
 
