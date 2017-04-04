@@ -48,6 +48,9 @@ div.urls-table-container{
 			font-weight:400;
 			color:#888;
 		}
+		td>*{
+			vertical-align: middle;
+		}
 	}
 }
  /* Fix bootstrap modal padding issue  */
@@ -257,7 +260,6 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, 
 }
 
 .stats-actions{
-	margin: 30px 0;
 	.btn{
 		display:inline-block;
 		margin-right:5px;
@@ -274,7 +276,7 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, 
 
 .btn.clipboard-btn{
 	padding: 3px 10px;
-	margin-left: 5px;
+	// margin-left: 5px;
 	font-size: 11px;
 	border: none;
 	color: #428bca;
@@ -646,7 +648,7 @@ $superInputHeight: 50px;
     padding-left: 13px;
 }
 
-.form-inline .bootstrap-select.btn-group .form-control {
+.bootstrap-select .selectpicker.btn-default{
     width: 100%;
     box-shadow: none;
     background-color: #ededed;
