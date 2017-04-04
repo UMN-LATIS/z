@@ -31,6 +31,9 @@ en:
     groups:
       default_display: "No Collection"
       new: "Add New Collection"
+    urls:
+      url_placeholder: "destination URL"
+      keyword_placeholder: "keyword (optional)"
     links:
       home: "Home"
       admin: "Admin"

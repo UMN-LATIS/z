@@ -9,7 +9,7 @@
   <%= form_for_url_admin @admin_view, url do |f| %>
 
     <div class="super-input">
-      <%= f.text_field :url, class: 'js-new-url-url', placeholder: "source URL" %>
+      <%= f.text_field :url, class: 'js-new-url-url', placeholder: t('helpers.urls.url_placeholder') %>
 
       <div class="divider">
       </div>
@@ -18,7 +18,7 @@
         <div class="keyword-static-text">
           z.umn.edu /
         </div>
-        <%= f.text_field :keyword, class: 'js-new-url-keyword', placeholder: "keyword (optional)" %>
+        <%= f.text_field :keyword, class: 'js-new-url-keyword', placeholder: t('helpers.urls.keyword_placeholder')  %>
       </div>
 
       <button type="submit" class="js-url-submit">
