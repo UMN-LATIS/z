@@ -3,7 +3,7 @@
 <div class="z-hero-content">
 
   <h3 class="z-hero-title">
-    <%= is_edit ? 'Edit your shortlink' : 'Shorten your links' %>
+    <%= is_edit ? 'Edit your shortlink' : t('helpers.urls.sleek_form_header') %>
   </h3>
 
   <%= form_for_url_admin @admin_view, url do |f| %>

@@ -34,6 +34,7 @@ en:
     urls:
       url_placeholder: "destination URL"
       keyword_placeholder: "keyword (optional)"
+      sleek_form_header: "Shorten your link"
     links:
       home: "Home"
       admin: "Admin"
