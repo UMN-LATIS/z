@@ -15,7 +15,7 @@ describe 'admin urls index page' do
       describe 'the transfer button' do
         it 'should be disabled' do
           expect(page.find('.js-transfer-urls')[:class]).to(
-            have_content('disabled')
+              have_content('disabled')
           )
         end
       end
@@ -29,12 +29,43 @@ describe 'admin urls index page' do
         FactoryGirl.create(:url, group: @user.context_group)
         visit admin_urls_path
       end
-
+      describe 'as an admin' do
+        describe ' and the admin is not in the group of of the url' do
+          before do
+            find("#url-#{@users_url.id} > .select-checkbox").click
+            page.find('.js-transfer-urls').click
+            wait_for_ajax
+            @to_user = FactoryGirl.create(:user)
+            first('input#transfer_request_to_group', visible: false).set @to_user.uid
+            find('#new_transfer_request  input[type="submit"]').click
+            click_button 'Confirm'
+            wait_for_ajax
+          end
+          it 'should have transfered' do
+            expect(@to_user.context_group.urls).to_not be_nil
+          end
+        end
+        describe 'and in the group of the url' do
+          before do
+            find("#url-#{@admins_url.id} > .select-checkbox").click
+            page.find('.js-transfer-urls').click
+            wait_for_ajax
+            @to_user = FactoryGirl.create(:user)
+            first('input#transfer_request_to_group', visible: false).set @to_user.uid
+            find('#new_transfer_request  input[type="submit"]').click
+            click_button 'Confirm'
+            wait_for_ajax
+          end
+          it 'should not have transferred' do
+            expect(@admin.context_group.urls).to_not be_nil
+          end
+        end
+      end
       describe 'with no urls selected' do
         describe 'the transfer button' do
           it 'should be disabled' do
             expect(page.find('.js-transfer-urls')[:class]).to(
-              have_content('disabled')
+                have_content('disabled')
             )
           end
         end
@@ -48,7 +79,7 @@ describe 'admin urls index page' do
         describe 'the transfer button' do
           it 'should be enabled' do
             expect(page.find('.js-transfer-urls')[:class]).to_not(
-              have_content('disabled')
+                have_content('disabled')
             )
           end
         end
@@ -75,24 +106,6 @@ describe 'admin urls index page' do
                   wait_for_ajax
                 end.to change(TransferRequest, :count).by(0)
               end
-              it 'should transfer admins url immediately' do
-                expect do
-                  find('#new_transfer_request  input[type="submit"]').click
-                  click_button "Confirm"
-                  wait_for_ajax
-                  @users_url.reload
-                end.to change(@users_url, :group_id).to(@other_user.context_group_id)
-              end
-
-              it 'should transfer users url immediately' do
-                expect do
-                  find('#new_transfer_request  input[type="submit"]').click
-                  click_button "Confirm"
-                  wait_for_ajax
-                  @admins_url.reload
-                end.to change(@admins_url, :group_id).to(@other_user.context_group_id)
-              end
-
               describe 'user does not exist' do
                 let(:new_uid) { 'notauser123456' }
                 before do
@@ -114,7 +127,6 @@ describe 'admin urls index page' do
                 end
               end
             end
-
             describe 'with invalid information' do
               let(:new_uid) { '' }
               describe 'uid is blank' do
