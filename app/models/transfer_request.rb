@@ -29,7 +29,13 @@ class TransferRequest < ApplicationRecord
   scope :pending, -> { where(status: 'pending') }
 
   def pre_approve
-    return unless pre_approve?
+    if from_user.admin?
+      # as an admin, do not rubberstamp if I belong to at least one url's group in this request
+      return if urls.any? { |url| url.group.user?(from_user) }
+    else
+      # as a non-admin, do not rubberstamp unless I am in the group I want to transfer to or am transferring to myself
+      return unless from_user.in_group?(to_group) || from_user == to_user
+    end
     approve
   end
 
@@ -58,12 +64,6 @@ class TransferRequest < ApplicationRecord
   def reject!
     reject
     save
-  end
-
-  private
-
-  def pre_approve?
-    (from_user.admin? && (!from_user.in_group?(to_group) && !from_user.in_group?(from_group))) || from_user.in_group?(to_group) || to_user == from_user
   end
 
 end
