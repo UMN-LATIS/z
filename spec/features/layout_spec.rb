@@ -29,7 +29,7 @@ describe 'the layout' do
       expect(page).to have_link 'Sign Out'
     end
     it 'should have a URLs link' do
-      expect(page).to have_link 'URLs'
+      expect(page).to have_link 'My Z-Links'
     end
     it 'should have a Collections link' do
       expect(page).to have_link 'Collections'

@@ -1,7 +1,9 @@
 <%- model_class = Url -%>
 
 <div id="new-url-form" class="z-hero z-hero-dimmer">
-  <%= render 'sleek_form', url: @url %>
+  <div class="container">
+    <%= render 'sleek_form', url: @url %>
+  </div>
 </div>
 
 <div class="collection_select_spot"></div>
@@ -14,6 +16,9 @@
     <%= render 'transfer_requests_from' %>
   </div>
 
+  <div class="urls-table-title">
+    My Z-Links
+  </div>
   <table id="urls-table" class="table user-table table-striped table-bordered data-table" data-source="<%= datatable_urls_path(format: :json) %>">
     <thead>
       <tr>
@@ -21,8 +26,8 @@
         <th></th>
         <th class="urls-table-header-short-url"><%= t('helpers.table_headers.short_url') %></th>
         <th class="urls-table-header-long-url"><%= t('helpers.table_headers.long_url')  %></th>
-        <th>Collection</th>
-        <th><%= t('helpers.table_headers.clicks') %></th>
+        <th data-toggle="tooltip" data-container="body" title="Organize and share management of your Z-Links" >Collection <i class=" fa fa-info-circle"></i></th>
+        <th ><%= t('helpers.table_headers.clicks') %><i data-toggle="tooltip" data-container="body" title="The number of times your short URL has been accessed" class=" fa fa-info-circle"></i></th>
         <th><%= t('helpers.table_headers.created') %></th>
         <th></th>
       </tr>
