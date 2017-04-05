@@ -61,7 +61,7 @@ describe 'moving urls to a group', js: true do
 
         describe 'selected' do
           before do
-            find("#url-#{@url.id} > .select-checkbox").click
+            find("#url-#{@url.id} .select-checkbox").click
           end
 
           describe 'the move group button' do
@@ -93,42 +93,6 @@ describe 'moving urls to a group', js: true do
                 end
               end
             end
-          end
-        end
-      end
-    end
-  end
-
-  describe 'on the urls index page' do
-    before do
-      @url = FactoryGirl.create(:url, group: @user.context_group)
-      visit url_path(@url.keyword)
-    end
-
-    describe 'the move group button' do
-      it 'should be visible' do
-        expect(page).to have_selector('.js-move-urls')
-      end
-    end
-
-    describe 'clicking the move group button' do
-      before { click_button 'Move to a different collection' }
-      it 'should display the modal' do
-        expect(page).to have_selector('#index-modal', visible: true)
-      end
-
-      describe 'filling out the form' do
-        describe 'with valid information' do
-          before do
-            find('.js-move-group-group').set @other_group.id
-          end
-          it 'should move url immediately' do
-            expect do
-              find('#move_group  input[type="submit"]').click
-              click_button 'Confirm'
-              wait_for_ajax
-              @url.reload
-            end.to change(@url, :group_id).to(@other_group.id)
           end
         end
       end
