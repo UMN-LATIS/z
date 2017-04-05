@@ -2,37 +2,44 @@
 
 <div class="z-hero-content">
 
-  <h3 class="z-hero-title">
-    <%= is_edit ? 'Edit your shortlink' : 'Shorten your links' %>
-  </h3>
+  <div class="container">
 
-  <%= form_for_url_admin @admin_view, url do |f| %>
+    <h3 class="z-hero-title">
+      <%= is_edit ? 'Edit your shortlink' : 'Shorten your links' %>
+    </h3>
 
-    <div class="super-input">
-      <%= f.text_field :url, class: 'js-new-url-url', placeholder: "source URL" %>
+    <%= form_for_url_admin @admin_view, url do |f| %>
 
-      <div class="divider">
+      <div class="super-input">
+          <%= f.text_field :url, class: 'js-new-url-url', placeholder: "source URL" %>
+
+        <div class="super-input-right">
+          <div class="divider">
+          </div>
+
+          <div class="keyword-wrapper">
+            <div class="keyword-static-text">
+              z.umn.edu /
+            </div>
+            <%= f.text_field :keyword, class: 'js-new-url-keyword', placeholder: "keyword (optional)" %>
+          </div>
+
+          <button type="submit" class="js-url-submit">
+            <%= is_edit ? "Submit" : "Z-Link It" %>
+           </button>
+         </div>
+
+
+       </div>
+
+      <% if is_edit %>
+        <a href="#" class='btn btn-default cancel-edit-url'><%= t('helpers.buttons.cancel')%></a>
+      <% end %>
+
+      <div id="url-blurb-container">
       </div>
 
-      <div class="keyword-wrapper">
-        <div class="keyword-static-text">
-          z.umn.edu /
-        </div>
-        <%= f.text_field :keyword, class: 'js-new-url-keyword', placeholder: "keyword (optional)" %>
-      </div>
-
-      <button type="submit" class="js-url-submit">
-        <%= is_edit ? "Submit" : "Z-Link It" %>
-       </button>
-    </div>
-
-    <% if is_edit %>
-      <a href="#" class='btn btn-default cancel-edit-url'><%= t('helpers.buttons.cancel')%></a>
     <% end %>
-
-    <div id="url-blurb-container">
-    </div>
-
-  <% end %>
-  <%= render 'urls/in_row_errors', url: url %>
+    <%= render 'urls/in_row_errors', url: url %>
+  </div>
 </div>
