@@ -72,5 +72,6 @@ FrequentlyAskedQuestion.create(
      {header: 'general', question: 'What happens to the URLs I created if I graduate or leave the U?', answer: 'The ownership of a URL can be transferred to another individual or group to ensure they can be updated and modified. The owner can do this themselves right from the site.'},
      {header: 'general', question: 'Is there a limit as to how many URLs I can create and have active?', answer: 'There is currently no limit, though we request that the service be used for U-related work/projects/events only.'},
      {header: 'general', question: 'What software does Z use?', answer: 'Z is an open source application developed by LATIS at the University of Minnesota.  You can view the source code and learn about installing it yourself at github.com/umn-latis/z.'},
+     {header: 'general', question: 'How reliable are click counts for a given URL?', answer: 'In general, the Z counts should be reliable. The application itself definitely counts any time it redirects someone. We say "in general" because some browsers cache these types of redirects. So, if the same person clicked a given link a few times, with the same browser, Z might only count the first click.'}
     ]
 )
