@@ -1,0 +1,2 @@
+class FrequentlyAskedQuestion < ApplicationRecord
+end
