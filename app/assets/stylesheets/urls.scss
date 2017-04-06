@@ -546,11 +546,12 @@ $superInputHeight: 50px;
 			border-bottom:1px solid #eee;
 		}
 		.keyword-wrapper{
-			width:100%;
+			width:100% ;
 			padding:0 30px;
-			white-space: nowrap;;
+			white-space: nowrap;
+			text-align: left;
 			input{
-				width:auto;
+				width:auto !important;
 				height:$superInputHeight;
 				padding:0;
 			}
