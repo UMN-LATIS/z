@@ -5,13 +5,13 @@
   <div class="container">
 
     <h3 class="z-hero-title">
-      <%= is_edit ? 'Edit your shortlink' : 'Shorten your links' %>
+      <%= is_edit ? t('helpers.header_tags.urls_edit') : t('helpers.header_tags.urls_new') %>
     </h3>
 
     <%= form_for_url_admin @admin_view, url do |f| %>
 
       <div class="super-input">
-          <%= f.text_field :url, class: 'js-new-url-url', placeholder: "source URL" %>
+          <%= f.text_field :url, class: 'js-new-url-url', placeholder: t('helpers.urls.url_placeholder') %>
 
         <div class="super-input-right">
           <div class="divider">
@@ -21,7 +21,7 @@
             <div class="keyword-static-text">
               z.umn.edu /
             </div>
-            <%= f.text_field :keyword, class: 'js-new-url-keyword', placeholder: "keyword (optional)" %>
+            <%= f.text_field :keyword, class: 'js-new-url-keyword', placeholder: t('helpers.urls.keyword_placeholder') %>
           </div>
 
           <button type="submit" class="js-url-submit">

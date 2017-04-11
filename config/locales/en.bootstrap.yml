@@ -31,6 +31,9 @@ en:
     groups:
       default_display: "No Collection"
       new: "Add New Collection"
+    urls:
+      url_placeholder: "destination URL"
+      keyword_placeholder: "keyword (optional)"
     links:
       home: "Home"
       admin: "Admin"
@@ -70,7 +73,7 @@ en:
       save: "Save %{model}"
       new: "New %{model}"
       delete: "Delete %{model}"
-      move-to-group: "Move to Group"
+      move-to-group: "Move to Collection"
     placeholders:
       description: "Description"
       name: "Name"
@@ -101,8 +104,11 @@ en:
       total_clicks: "Total Clicks"
       description: "Description"
     header_tags:
-      group_to_move_urls_to: "Group to move URLs to"
+      urls_edit: "Edit your shortlink"
+      urls_new: "Shorten your link"
+      group_to_move_urls_to: "Collection to move URLs to"
       urls_you_want_to_transfer: "URLs you are giving away"
+      urls_you_want_to_move: "URLs you are moving"
       new_transfer: "Give URLs"
       internet_id_to_transfer_to: "X500 to give to"
       urls_to_transfer: "URLs you're giving'"
