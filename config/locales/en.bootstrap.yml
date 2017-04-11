@@ -101,6 +101,7 @@ en:
       total_clicks: "Total Clicks"
       description: "Description"
     header_tags:
+      urls_edit: "Edit your shortlink"
       urls_new: "Shorten your link"
       group_to_move_urls_to: "Collection to move URLs to"
       urls_you_want_to_transfer: "URLs you are giving away"

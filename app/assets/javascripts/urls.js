@@ -220,6 +220,7 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
 
 $(document).ready(function(){
 	//url share actions
+	$("[data-toggle='tooltip']").tooltip();
 	$(document).on("click", ".share-url", function(e){
 		e.preventDefault();
 	});
