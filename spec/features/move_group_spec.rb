@@ -81,7 +81,8 @@ describe 'moving urls to a group', js: true do
             describe 'filling out the form' do
               describe 'with valid information' do
                 before do
-                  find('.js-move-group-group').set @other_group.id
+                  find('.js-move-group-group button').click
+                  find('.dropdown-menu.open li', text: @other_group.name).click
                 end
                 it 'should move url immediately' do
                   expect do
