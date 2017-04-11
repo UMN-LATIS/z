@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170329193403) do
+ActiveRecord::Schema.define(version: 20170405202937) do
 
   create_table "clicks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "country_code"
@@ -18,6 +18,14 @@ ActiveRecord::Schema.define(version: 20170329193403) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.index ["url_id"], name: "index_clicks_on_url_id", using: :btree
+  end
+
+  create_table "frequently_asked_questions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "header"
+    t.text     "question",   limit: 65535
+    t.text     "answer",     limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "groups", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

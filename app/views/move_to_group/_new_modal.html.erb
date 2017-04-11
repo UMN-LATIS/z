@@ -7,7 +7,7 @@
     <%= form_tag move_to_group_index_path, data: {remote: true}, id: 'move_group' do |f| %>
       <div class="modal-body">
         <h5><%= t('helpers.header_tags.group_to_move_urls_to') %></h5>
-          <%= select_tag 'Group', options_from_collection_for_select(@groups, 'id', 'name'), class: 'js-move-group-group form-control' %>
+          <%= select_tag 'Group', options_for_select(@groups.collect { |group| [display_name(group), group['id'] ] }), class: 'js-move-group-group form-control' %>
         <h5><%= t('helpers.header_tags.urls_you_want_to_move')%></h5>
         <%= render 'transfer_requests/transfer_urls' %>
       </div>
