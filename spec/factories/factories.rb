@@ -44,4 +44,10 @@ FactoryGirl.define do
     to_user { FactoryGirl.create(:user) }
     urls { [FactoryGirl.create(:url, group: from_group)] }
   end
+
+  factory :frequently_asked_question do
+    header "Header"
+    question "Question"
+    answer "Answer"
+  end
 end
