@@ -25,7 +25,6 @@ describe 'visit the faq page ' do
     end
     it 'should have an answer when a question is clicked on' do
       click_link('Question')
-      save_and_open_page
       expect(page).to have_content 'Answer'
     end
 
