@@ -1,79 +1,70 @@
 <header class="cla-header " role="banner">
   <div class="row main-swooshes container">
     <nav class="navbar navbar-default" role="navigation">
-      <div class="container-fluid">
+       <div class="container-fluid">
 
-        <ul class="nav navbar-nav navbar-left">
-          <% if signed_in? %>
+           <ul class="nav navbar-nav navbar-left">
+             <% if signed_in? %>
 
-              <li class="<%= current_page?(urls_path) ? "selected" : "" %>">
-                <%= link_to (urls_path) do %>
+               <li class="<%= current_page?(urls_path) ? "selected" : "" %>">
+                 <%= link_to (urls_path) do  %>
                    <span>
                      <i class="fa fa-link" aria-hidden="true"></i>
-                     <span> My URLs </span>
+                     <span > My Z-Links </span>
                    </span>
-                <% end %>
-              </li>
-              <li class="<%= current_page?(groups_path) ? "selected" : "" %>">
-                <%= link_to (groups_path) do %>
+                 <% end %>
+               </li>
+               <li class="<%= current_page?(groups_path) ? "selected" : "" %>">
+                 <%= link_to (groups_path) do  %>
                    <span>
                      <i class="fa fa-users" aria-hidden="true"></i>
-                     <span> My Collections </span>
+                     <span > My Collections </span>
                    </span>
-                <% end %>
-              </li>
-              <li>
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= t('helpers.links.help') %>
-                  <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a href="<%= faq_path %>"><%= t('helpers.links.faq') %></a></li>
-                  <li><a href='mailto:help@umn.edu'><%= t('helpers.links.contact_us') %></a></li>
-                </ul>
-              </li>
-              <% if current_user.admin? %>
+                 <% end %>
+               </li>
 
-                  <li>
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= t('helpers.links.admin') %>
-                      <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                      <li><a href="<%= admin_urls_path %>">View all URLs</a></li>
-                      <li><a href="<%= admin_groups_path %>">View all Collections</a></li>
-                      <li><a href="<%= admin_members_path %>">Manage Admins</a></li>
-                      <li><a href="<%= admin_audits_path %>">Audit Log</a></li>
-                    </ul>
-                  </li>
+               <%if current_user.admin? %>
 
-              <% end %>
-              <li>
-                <%= link_to (signout_path) do %>
+               <li>
+                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= t('helpers.links.admin')%> <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="<%= admin_urls_path %>">View all URLs</a></li>
+                    <li><a href="<%= admin_groups_path %>">View all Collections</a></li>
+                    <li><a href="<%= admin_members_path %>">Manage Admins</a></li>
+                    <li><a href="<%= admin_audits_path %>">Audit Log</a></li>
+                  </ul>
+                </li>
+
+               <%end%>
+               <li>
+                 <%= link_to (signout_path) do %>
                    <span>
                      <i class="fa fa-sign-in " aria-hidden="true"></i>
-                     <span> Sign Out </span>
+                     <span > Sign Out </span>
                    </span>
-                <% end %>
-              </li>
-          <% else %>
-              <li>
-                <%= link_to (signin_path) do %>
+                 <% end %>
+               </li>
+             <% else %>
+                <li>
+                 <%= link_to (signin_path) do %>
                    <span>
                      <i class="fa fa-sign-out" aria-hidden="true"></i>
-                     <span> Login </span>
+                     <span > Sign In </span>
                    </span>
-                <% end %>
-              </li>
-          <% end %>
-        </ul>
-        <div id="nav_context_switcher">
-          <%#= render 'layouts/nav/context_switcher' %>
-        </div>
-      </div>
-    </nav>
-    <div class="panel-pane pane-cla-glue-logo-pane left">
-      <a href="/">
-        <img class="logo" src="<%= asset_path('college_of_liberal_arts.png') %>" alt="College of Liberal Arts">
-
-        <div class="logo-text"></div>
-      </a>
-    </div>
+                 <% end %>
+               </li>
+             <% end %>
+           </ul>
+           <div id="nav_context_switcher">
+             <%#= render 'layouts/nav/context_switcher' %>
+           </div>
+       </div>
+     </nav>
+     <div class="panel-pane pane-cla-glue-logo-pane left">
+       <a href="/">
+         <img class="logo" src="<%= asset_path('college_of_liberal_arts.png') %>" alt="College of Liberal Arts">
+         <div class="logo-text"></div>
+       </a>
+     </div>
   </div>
 </header>
