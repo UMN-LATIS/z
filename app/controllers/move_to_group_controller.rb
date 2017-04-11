@@ -3,7 +3,7 @@ class MoveToGroupController < ApplicationController
     @urls = Url
             .where(keyword: params[:keywords])
             .order('created_at DESC')
-    @groups = current_user.groups - [current_user.context_group]
+    @groups = current_user.groups
 
     respond_to do |format|
       format.html
