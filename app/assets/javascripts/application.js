@@ -16,6 +16,7 @@
 //= require twitter/typeahead.min
 //= require turbolinks
 //= require data-confirm-modal
+//= require starburst/starburst
 //= require_tree .
 //= require clipboard
 //= require bootstrap-select
