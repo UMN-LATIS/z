@@ -1,5 +1,3 @@
-@import 'variables';
-
 .url {
 	display: inline;
 }
@@ -153,7 +151,7 @@ body > .modal{
 	text-align:center;
 	&:before{
 		background-color:grey;
-		background-image: image-url($heroImageUrl);
+		background-image: image-url("umn-pano.jpg");
 		background-size:cover;
 		background-position:center;
 		background-repeat:no-repeat;;
@@ -203,7 +201,9 @@ table.dataTable{
 	width: 100%;
 	margin-bottom: 100px !important;
 	border-radius: 3px;
+	// overflow:hidden;
 	border:none;
+	// box-shadow: 1px 1px 2px rgba(0,0,0,0.1), -1px 1px 2px rgba(0,0,0,0.1);
 	font-size:12px;
 	border: 1px solid #ddd;
 	tbody{
@@ -223,6 +223,7 @@ table.dataTable{
 		}
 	}
 	thead{
+		// background-color:#fbfbfb;
 		tr{
 			th{
 				padding: 18px 10px;
@@ -256,6 +257,7 @@ table.dataTable{
 			color:#828282;
 		}
 		.super-input{
+			// display:inline-block;
 			display:inline-table;
 			vertical-align:middle;
 			border-radius:5px;
@@ -342,9 +344,11 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, 
 
 .btn.clipboard-btn{
 	padding: 3px 10px;
+	// margin-left: 5px;
 	font-size: 11px;
 	border: none;
 	color: #428bca;
+	/* color: white; */
 	background-color: #ededed;
 }
 
