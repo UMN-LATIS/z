@@ -8,7 +8,8 @@ module UrlHelper
   end
 
   def display_keyword_url(keyword, max_length=35)
-      "#{request.base_url}/#{truncate(keyword, length: max_length)}"
+      base_url = request.base_url.sub(/^https?\:\/\/(www.)?/,'')
+      "#{base_url}/#{truncate(keyword, length: max_length)}"
   end
 
   def best_day_formatter(best_day)
