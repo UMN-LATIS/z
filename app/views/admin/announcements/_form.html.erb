@@ -1,0 +1,37 @@
+<%= form_for(admin_announcement) do |f| %>
+  <% if admin_announcement.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(admin_announcement.errors.count, "error") %> prohibited this admin_announcement from being saved:</h2>
+
+      <ul>
+      <% admin_announcement.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %>
+    <%= f.text_area :title %>
+  </div>
+
+  <div class="field">
+    <%= f.label :body %>
+    <%= f.text_area :body %>
+  </div>
+
+  <div class="field">
+    <%= f.label :start_delivering_at %>
+    <%= f.datetime_select :start_delivering_at %>
+  </div>
+
+  <div class="field">
+    <%= f.label :stop_delivering_at %>
+    <%= f.datetime_select :stop_delivering_at %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

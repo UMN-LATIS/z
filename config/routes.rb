@@ -138,10 +138,7 @@ Rails.application.routes.draw do
       # admin/admins/create	admin::admins	create	put
       resources :admins, only: [:index, :destroy, :create]
 
-      # admin/admins	admin::admins	index	get
-      # admin/admins/delete	admin::admins	destroy	delete
-      # admin/admins/create	admin::admins	create	put
-      resources :announcements, only: [:index, :edit, :destroy, :create]
+      resources :announcements, only: [:index, :new, :edit, :show, :update, :destroy, :create]
 
 
     end
