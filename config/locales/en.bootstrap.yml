@@ -7,6 +7,26 @@ en:
       root: "Index"
     pages:
       pages: "Pages"
+  header:
+    sign_in: "Sign In"
+  hero:
+    text: "What will you Z?"
+    button: "Sign In to Z"
+  nav:
+    sign_in: "Sign In"
+    sign_out: "Sign Out"
+    links: "My Z-Links"
+    collections: "My Collections"
+    admin_menu: "Admin"
+    home: "Home"
+    help: "Help"
+    contact_us: "Contact Us!"
+    faq: "Read our FAQ"
+    admin:
+      all_urls: "View all URLs"
+      all_collections: "View all Collections"
+      admins: "Manage Admins"
+      audit_log: "Audit Log"
   helpers:
     lookup_service_down: "Could not establish a connection to the LDAP server. Please notify help@umn.edu"
     actions: "Actions"
@@ -35,13 +55,7 @@ en:
       url_placeholder: "destination URL"
       keyword_placeholder: "keyword (optional)"
     links:
-      home: "Home"
-      admin: "Admin"
-      help: "Help"
-      contact_us: "Contact Us!"
-      faq: "Read our FAQ"
-      urls: "URLs"
-      groups: "Groups"
+
       back: "Back"
       cancel: "Cancel"
       confirm: "Are you sure?"
