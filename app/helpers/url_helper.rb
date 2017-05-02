@@ -8,7 +8,7 @@ module UrlHelper
   end
 
   def display_keyword_url(keyword, max_length=35)
-      "#{request.base_url}/#{truncate(keyword, length: max_length)}"
+      "#{request.host_with_port}/#{truncate(keyword, length: max_length)}"
   end
 
   def best_day_formatter(best_day)

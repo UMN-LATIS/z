@@ -268,7 +268,7 @@ describe 'urls index page', js: true do
         expect(page).to have_content @url.url
       end
       it 'should display short url host' do
-        expect(page).to have_content page.current_host
+        expect(page).to have_content page.current_host.sub(/^https?\:\/\/(www.)?/,'')
       end
       it 'should display the url\'s keyword' do
         expect(page).to have_content @url.keyword
