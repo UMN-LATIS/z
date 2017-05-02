@@ -17,12 +17,16 @@ namespace :user do
     PeridUmndid.where('umndid IS ?', nil).each_with_index do |perid_umndid, index|
       person = Legacy::Person.where(PER_ID: perid_umndid.perid).take
       next unless person.present?
+      # Set UID
+      if perid_umndid.uid.blank?
+        perid_umndid.uid = person.UID
+      end
       puts "Processing #{person.UID}"
       perid_umndid.umndid = UserLookupService.new(
         query: person.UID,
         query_type: 'uid'
       ).search.try(:first).try(:first).try(:last).try(:first)
-      perid_umndid.save if perid_umndid.umndid.present?
+      perid_umndid.save if perid_umndid.umndid.present? || perid_umndid.uid.present?
       puts "Processed #{index + 1}/#{total}"
     end
   end
