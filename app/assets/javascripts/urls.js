@@ -26,6 +26,8 @@ $(document).on("change", "#urls-table select, body.urls.show select", function (
 $(document).bind('turbolinks:load', function () {
   // If going to the show page, load the google charts JS and
   // load the hrs24 chart
+	$("[data-toggle='tooltip']").tooltip();
+
   if ($("body.urls.show").length > 0) {
     if (google.charts.Bar === undefined) {
       google.charts.load('current', {'packages':['bar', 'geochart', 'corechart']});
@@ -33,6 +35,9 @@ $(document).bind('turbolinks:load', function () {
     google.charts.setOnLoadCallback(drawChartHrs24);
     google.charts.setOnLoadCallback(drawRegionsMap);
     google.charts.setOnLoadCallback(drawRegionsPie);
+
+		//make sure the select picker on this page is initialized
+		$(".selectpicker").selectpicker()
   }
 
 });
