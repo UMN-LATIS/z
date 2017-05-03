@@ -31,7 +31,9 @@ en:
           shorturl: "Short URL"
           longurl: "Long URL"
           collections: "Collections"
+          collect_tooltip: "Organize and share management of your Z-Links"
           clicks: "Clicks"
+          clicks_tooltip: "The number of times your short URL has been accessed"
           created: "Created"
       show:
       edit:
