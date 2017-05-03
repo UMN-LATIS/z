@@ -39,6 +39,14 @@ en:
       edit:
     collections:
       index:
+        title: "My Collections"
+        table:
+          name: "Name"
+          description: "Description"
+          created: "Created On"
+          actions: "Actions"
+          empty: "Please click the New button to add a collection"
+        new_button: "Add New Collection"
       show:
       edit:
     admins:

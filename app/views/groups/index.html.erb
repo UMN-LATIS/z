@@ -2,7 +2,7 @@
 <div class="z-hero z-hero-dimmer">
   <div class="z-hero-content">
     <div class="page-header">
-      <h1>My Collections</h1>
+      <h1><%= t('views.collections.index.title') %></h1>
     </div>
   </div>
 </div>
@@ -12,17 +12,17 @@
   <table class="table table-striped">
     <thead>
     <tr>
-      <th><%= t('helpers.table_headers.name') %></th>
-      <th><%= t('helpers.table_headers.description') %></th>
-      <th><%= t('helpers.table_headers.created_on') %></th>
-      <th><%= t '.actions', :default => t('helpers.actions') %></th>
+      <th><%= t('views.collections.index.table.name') %></th>
+      <th><%= t('views.collections.index.table.description') %></th>
+      <th><%= t('views.collections.index.table.created') %></th>
+      <th><%= t '.actions', :default => t('views.collections.index.table.actions') %></th>
     </tr>
     </thead>
     <tbody>
     <% if @groups.blank? %>
         <tr id="new-group-tip">
           <td colspan=4 class="info">
-            <i>Please Click the </i><b>New</b><i> Button to Add a Collection.</i>
+            <i><%= t('views.collections.index.table.empty') %></i>
           </td>
         </tr>
     <% end %>
@@ -34,7 +34,7 @@
 </div>
 
 <%= link_to  new_group_path,
-            :class => 'btn btn-primary btn-xs add-new-group', remote: true  do %>
+             class: 'btn btn-primary btn-xs add-new-group', remote: true  do %>
               <i class="fa fa-plus-circle"></i>
-              <%= t('.new', :default => t("helpers.groups.new")) %>
+              <%= t('.new', default: t("views.collections.index.new_button")) %>
             <% end %>
