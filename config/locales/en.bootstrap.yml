@@ -2,31 +2,48 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  breadcrumbs:
-    application:
-      root: "Index"
-    pages:
-      pages: "Pages"
-  header:
-    sign_in: "Sign In"
-  hero:
-    text: "What will you Z?"
-    button: "Sign In to Z"
-  nav:
-    sign_in: "Sign In"
-    sign_out: "Sign Out"
-    links: "My Z-Links"
-    collections: "My Collections"
-    admin_menu: "Admin"
-    home: "Home"
-    help: "Help"
-    contact_us: "Contact Us!"
-    faq: "Read our FAQ"
-    admin:
-      all_urls: "View all URLs"
-      all_collections: "View all Collections"
-      admins: "Manage Admins"
-      audit_log: "Audit Log"
+  application:
+    nav:
+      sign_in: "Sign In"
+      sign_out: "Sign Out"
+      links: "My Z-Links"
+      collections: "My Collections"
+      admin_menu: "Admin"
+      home: "Home"
+      help: "Help"
+      contact_us: "Contact Us!"
+      faq: "Read our FAQ"
+      admin:
+        all_urls: "View all URLs"
+        all_collections: "View all Collections"
+        admins: "Manage Admins"
+        audit_log: "Audit Log"
+  controllers:
+  models:
+  views:
+    root:
+      hero_text: "What will you Z?"
+      hero_button: "Sign In to Z"
+    urls:
+      index:
+        table:
+          title: "My Z-Links"
+          shorturl: "Short URL"
+          longurl: "Long URL"
+          collections: "Collections"
+          clicks: "Clicks"
+          created: "Created"
+      show:
+      edit:
+    collections:
+      index:
+      show:
+      edit:
+    admins:
+      index:
+    transfer_requests:
+    group_moves:
+
   helpers:
     lookup_service_down: "Could not establish a connection to the LDAP server. Please notify help@umn.edu"
     actions: "Actions"
