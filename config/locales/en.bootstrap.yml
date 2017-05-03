@@ -36,7 +36,18 @@ en:
           clicks_tooltip: "The number of times your short URL has been accessed"
           created: "Created"
       show:
-      edit:
+      sleek_form:
+        domain: "z.umn.edu / "
+        placeholders:
+          url: "destination URL"
+          keyword: "keyword (optional)"
+        edit:
+          title: "edit your shortlink"
+          submit: "Submit"
+          cancel: "Cancel"
+        new:
+          title: "Shorten your link"
+          submit: "Z-Link It"
     collections:
       index:
         title: "My Collections"
