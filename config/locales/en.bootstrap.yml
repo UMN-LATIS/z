@@ -27,6 +27,24 @@ en:
       hero_text: "What will you Z?"
       hero_button: "Sign In to Z"
       hello: "z.umn.edu"
+    announcements:
+      form:
+        start_on_label: "Start delivering at"
+        stop_on_label: "Stop delivering at"
+        body_label: "Message"
+        back: "Back"
+      index:
+        title: "Announcements"
+        new_button: "New"
+        table:
+          actions:
+            edit: "Edit"
+            destroy: "Destroy"
+            destroy_confirm_html: "This will delete: <br/> %{message}"
+      new:
+        title: "New Announcement"
+      edit:
+        title: "Editing Announcement"
     audits:
       index:
         title: "Audits"
