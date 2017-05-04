@@ -1,37 +1,31 @@
 <%= form_for(admin_announcement) do |f| %>
-  <% if admin_announcement.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(admin_announcement.errors.count, "error") %> prohibited this admin_announcement from being saved:</h2>
+    <% if admin_announcement.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(admin_announcement.errors.count, "error") %> prohibited this admin_announcement from being
+            saved:</h2>
 
-      <ul>
-      <% admin_announcement.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+          <ul>
+            <% admin_announcement.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+    <div class="field form-group">
+      <%= t('helpers.admin.announcements.message') %>
+      <%= f.text_area :body, cols: 80, rows: 5, class: 'form-control' %>
     </div>
-  <% end %>
 
-  <div class="field">
-    <%= f.label :title %>
-    <%= f.text_area :title %>
-  </div>
+    <div class="field form-group">
+      <%= t('helpers.admin.announcements.start_on') %></th>
+      <%= f.datetime_select :start_delivering_at %>
+    </div>
 
-  <div class="field">
-    <%= f.label :body %>
-    <%= f.text_area :body %>
-  </div>
+    <div class="field form-group">
+      <%= t('helpers.admin.announcements.stop_on') %>
+      <%= f.datetime_select :stop_delivering_at %>
+    </div>
+    <%= f.submit nil, class: 'btn btn-primary js-group-submit' %>
+    <%= link_to 'Back', admin_announcements_path, class: 'btn btn-primary js-group-submit'  %>
 
-  <div class="field">
-    <%= f.label :start_delivering_at %>
-    <%= f.datetime_select :start_delivering_at %>
-  </div>
-
-  <div class="field">
-    <%= f.label :stop_delivering_at %>
-    <%= f.datetime_select :stop_delivering_at %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
 <% end %>

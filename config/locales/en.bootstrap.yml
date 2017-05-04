@@ -40,7 +40,7 @@ en:
         page_header: "Admin Announcements"
         new: "New Admin Announcement"
         title: "Title"
-        body: "Body"
+        message: "Message"
         start_on: "Start delivering at"
         stop_on: "Stop delivering at"
     groups:

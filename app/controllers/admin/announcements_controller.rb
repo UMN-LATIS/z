@@ -33,11 +33,9 @@ class Admin::AnnouncementsController < ApplicationController
 
     respond_to do |format|
       if @admin_announcement.save
-        format.html {redirect_to @admin_announcement, notice: 'Announcement was successfully created.'}
-        format.json {render :show, status: :created, location: @admin_announcement}
+        format.html {redirect_to admin_announcements_url, notice: 'Announcement was successfully created.'}
       else
         format.html {render :new}
-        format.json {render json: @admin_announcement.errors, status: :unprocessable_entity}
       end
     end
   end
@@ -47,11 +45,9 @@ class Admin::AnnouncementsController < ApplicationController
   def update
     respond_to do |format|
       if @admin_announcement.update(admin_announcement_params)
-        format.html {redirect_to @admin_announcement, notice: 'Announcement was successfully updated.'}
-        format.json {render :show, status: :ok, location: @admin_announcement}
+        format.html {redirect_to admin_announcements_url, notice: 'Announcement was successfully updated.'}
       else
         format.html {render :edit}
-        format.json {render json: @admin_announcement.errors, status: :unprocessable_entity}
       end
     end
   end

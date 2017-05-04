@@ -37,12 +37,8 @@ describe 'as a valid admin user' do
     visit admin_announcements_path
   end
 
-  it 'should display the announcement title' do
-    expect(page).to have_content 'Title'
-  end
-
   it 'should display announcement body' do
-    expect(page).to have_content 'Body'
+    expect(page).to have_content 'Message'
   end
 
   it 'should display announcement start by date' do
