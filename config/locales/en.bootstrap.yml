@@ -30,9 +30,12 @@ en:
       transfer_button: "Give to a different user"
       move_button: "Move to a different collection"
       index:
+        admin:
+          title: "URLs"
         table:
           title: "My Z-Links"
           shorturl: "Short URL"
+          owner: "Owner"
           longurl: "Long URL"
           collections: "Collections"
           collection_header_tooltip: "Organize and share management of your Z-Links"
@@ -76,6 +79,10 @@ en:
           zero: "URL has never been clicked"
           one: "1 hit on %{date}"
           other: "%{count} hits on %{date}"
+        charts:
+          hour: "Hour"
+          day: "Day"
+          clicks: "Clicks"
       sleek_form:
         domain: "z.umn.edu / "
         placeholders:
@@ -114,9 +121,15 @@ en:
           submit: "Create Collection"
       show:
       edit:
-    admins:
-      index:
     transfer_requests:
+      new:
+        title: "Give URLs"
+        transferee_label: "Person to give to"
+        transferee_help: "Search by name or Email."
+        urls_title: "URLs you are going to give away"
+        submit: "Send URLs"
+        submit_confirm: "Are you sure you want to transfer these URLs?"
+        cancel: "Cancel"
     group_moves:
 
   helpers:
