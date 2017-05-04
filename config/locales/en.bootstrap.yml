@@ -44,6 +44,14 @@ en:
             label: "Collection"
             all: "All"
             none: "No Collection"
+          in_row_actions:
+            share: "Share"
+            tweet: "Tweet"
+            qr_code: "QR Code"
+            stats: "Stats"
+            edit: "Edit"
+            delete: "Delete"
+            delete_confirm: "Are you sure you want to delete the short URL <b>%{keyword}</b>?"
       show:
       sleek_form:
         domain: "z.umn.edu / "
