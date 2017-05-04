@@ -130,8 +130,14 @@ en:
         submit: "Send URLs"
         submit_confirm: "Are you sure you want to transfer these URLs?"
         cancel: "Cancel"
-    group_moves:
-
+    collection_moves:
+      new:
+        title: "Move to Collection"
+        collection_label: "Collection to move URLs to"
+        urls_title: "URLs you are moving"
+        submit: "Move URLs"
+        submit_confirm: "Are you sure you want to move these URLs?"
+        cancel: "Cancel"
   helpers:
     lookup_service_down: "Could not establish a connection to the LDAP server. Please notify help@umn.edu"
     actions: "Actions"

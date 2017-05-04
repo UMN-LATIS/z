@@ -2,18 +2,18 @@
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-label="Close"  ><span aria-hidden="true">&times;</span></button>
-      <h4 class="modal-title" id="myModalLabel"><%= t('helpers.titles.move-to-group')%> </h4>
+      <h4 class="modal-title" id="myModalLabel"><%= t('views.collection_moves.new.title')%> </h4>
     </div>
     <%= form_tag move_to_group_index_path, data: {remote: true}, id: 'move_group' do |f| %>
       <div class="modal-body">
-        <h5><%= t('helpers.header_tags.group_to_move_urls_to') %></h5>
+        <h5><%= t('views.collection_moves.new.collection_label') %></h5>
           <%= select_tag 'Group', options_for_select(@groups.collect { |group| [display_name(group), group['id'] ] }), class: 'js-move-group-group form-control' %>
-        <h5><%= t('helpers.header_tags.urls_you_want_to_move')%></h5>
+        <h5><%= t('views.collection_moves.new.urls_title')%></h5>
         <%= render 'transfer_requests/transfer_urls' %>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal"><%= t('helpers.buttons.close') %></button>
-        <input type="submit" class="btn btn-primary" value="<%= t('helpers.buttons.send_urls') %>" data-confirm="<%= t('helpers.links.confirm_url_move') %>">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><%= t('views.collection_moves.new.cancel') %></button>
+        <input type="submit" class="btn btn-primary" value="<%= t('views.collection_moves.new.submit') %>" data-confirm="<%= t('views.collection_moves.new.submit_confirm') %>">
       </div>
     <% end %>
   </div>
