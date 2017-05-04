@@ -1,6 +1,6 @@
 <% if @pending_transfer_requests_to.present? %>
     <div class="bs-callout bs-callout-primary" id="callout-badges-ie8-empty">
-      <h4><%= t('helpers.header_tags.transfer_requests_pending')%> </h4>
+      <h4><%= t('views.urls.index.transfer_requests.to_user')%> </h4>
       <p>
         <% @pending_transfer_requests_to.each do |transfer_request| %>
         <div class="transfer-request-item">

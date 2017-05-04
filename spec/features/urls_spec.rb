@@ -280,7 +280,7 @@ describe 'urls index page', js: true do
         expect(page).to have_selector('.actions-column .actions-dropdown-button')
       end
       it 'should display the default urls display_name' do
-        expect(page).to have_selector("[data-id='url-collection-#{@url.id}']", text: I18n.t('helpers.groups.default_display'))
+        expect(page).to have_selector("[data-id='url-collection-#{@url.id}']", text: I18n.t('views.urls.index.table.collection_filter.none'))
       end
 
       describe 'when filtering on collection', js: true do

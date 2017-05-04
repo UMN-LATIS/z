@@ -27,6 +27,14 @@ en:
       hero_text: "What will you Z?"
       hero_button: "Sign In to Z"
       hello: "z.umn.edu"
+    audits:
+      index:
+        title: "Audits"
+        table:
+          item: "Item"
+          event: "Action"
+          whodunnit: "Whodunnit"
+          when: "When"
     urls:
       copy_success: "Copied shortlink to clipboard"
       move_confirm: "Are you sure you with to move short URL {{keyword}} to collection {{collection}}?"
@@ -34,7 +42,8 @@ en:
       move_button: "Move to a different collection"
       index:
         transfer_requests:
-          pending:
+          to_others: "URLs you gave that are pending approval"
+          to_user: "URLs you are being given"
           from_html: "From: <b>%{user}</b>"
           to_html: "To: <b>%{user}</b>"
           keyword_html: "Keyword: <b>%{keyword}</b>"
