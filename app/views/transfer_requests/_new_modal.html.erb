@@ -34,28 +34,28 @@
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <h4 class="modal-title" id="myModalLabel"><%= t('helpers.header_tags.new_transfer')%></h4>
+      <h4 class="modal-title" id="myModalLabel"><%= t('views.transfer_requests.new.title')%></h4>
     </div>
     <%= form_for_transfer_admin @admin_view, @transfer_request do |f| %>
       <div class="modal-body">
         <div class="error-space"><%= @transfer_request.errors.full_messages.join('. ') %></div>
 
-        <h5> <%=t('helpers.header_tags.person_to_transfer_to')%> <span class="hidden glyphicon glyphicon-refresh glyphicon-refresh-animate" aria-hidden="true"></span></h5>
+        <h5> <%=t('views.transfer_requests.new.transferee_label')%> <span class="hidden glyphicon glyphicon-refresh glyphicon-refresh-animate" aria-hidden="true"></span></h5>
 
         <div class="form-group people-search">
           <%= text_field_tag "people_search", nil, class: 'form-control js-new-transfer-to-group'  %>
           <span id="passwordHelpInline" class="text-muted">
-            <%= t('helpers.placeholders.search_by_name_or_email') %>.
+            <%= t('views.transfer_requests.new.transferee_help') %>.
           </span>
           <%= f.hidden_field "to_group" %>
         </div>
 
-        <h5><%= t('helpers.header_tags.urls_you_want_to_transfer')%></h5>
+        <h5><%= t('views.transfer_requests.new.urls_title')%></h5>
         <%= render 'transfer_requests/transfer_urls' %>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal"><%= t('helpers.buttons.cancel')%></button>
-        <input type="submit" class="btn btn-primary" value="Send URLs" data-confirm="Are you sure you want to transfer these URLs?">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><%= t('views.transfer_requests.new.cancel')%></button>
+        <input type="submit" class="btn btn-primary" value="<%= t('views.transfer_requests.new.submit') %>" data-confirm="<%= t('views.transfer_requests.new.submit_confirm') %>">
       </div>
     <% end %>
   </div>
