@@ -1,5 +1,5 @@
 # lib/tasks/legacy_sync.rake
-namespace :user do
+namespace :users do
   desc 'Load new users into perid_umndid'
   task load_users: :environment do
     new_per_ids = Legacy::Yourl.where('per_id NOT IN (?)', PeridUmndid.all.pluck(:perid).uniq).pluck(:per_id).uniq
@@ -14,13 +14,11 @@ namespace :user do
   desc 'Find umndid for the per ids'
   task update_umndids: :environment do
     total = PeridUmndid.where('umndid IS ?', nil).count
-    PeridUmndid.where('umndid IS ?', nil).each_with_index do |perid_umndid, index|
+    PeridUmndid.where('umndid IS ?', nil).find_each.with_index do |perid_umndid, index|
       person = Legacy::Person.where(PER_ID: perid_umndid.perid).take
       next unless person.present?
       # Set UID
-      if perid_umndid.uid.blank?
-        perid_umndid.uid = person.UID
-      end
+      perid_umndid.uid = person.UID if perid_umndid.uid.blank?
       puts "Processing #{person.UID}"
       perid_umndid.umndid = UserLookupService.new(
         query: person.UID,
@@ -40,8 +38,7 @@ namespace :urls do
       name: 'Unknown Owners',
       description: 'Admin group for unknown URLs'
     )
-    Legacy::Yourl.all.each_with_index do |yourl, index|
-
+    Legacy::Yourl.all.find_each do |yourl|
       if Url.where(keyword: yourl.keyword).exists?
         puts "already synced #{yourl.keyword} "
         next
@@ -77,15 +74,19 @@ namespace :urls do
       legacy_click_total = Legacy::Click.where(shorturl: url.keyword).count
       next if url.clicks.size == legacy_click_total
       puts '---------------------------------'
-      puts "Deleting current clicks for #{url.keyword}..."
-      Click.where(url_id: url.id).delete_all
+      last_click_date = if url.clicks.size.zero?
+                          DateTime.new
+                        else
+                          Click.where(url_id: url.id).last.created_at
+                        end
       url_id = url.id
-      puts "Loading #{legacy_click_total} clicks for #{url.keyword}..."
-      Legacy::Click.where(shorturl: url.keyword).each_with_index do |legacy_click, index|
+      new_click_count = legacy_click_total - url.clicks.size
+      puts "Loading #{new_click_count} clicks for #{url.keyword}..."
+      Legacy::Click.where(shorturl: url.keyword).where('click_time > ?', last_click_date).find_each.with_index do |legacy_click, index|
         ActiveRecord::Base.connection.execute(
           "INSERT INTO `clicks` (`country_code`, `url_id`, `created_at`, `updated_at`) VALUES ('#{legacy_click.country_code}', #{url_id}, '#{legacy_click.click_time.to_s(:db)}', '#{Time.now.to_s(:db)}')"
         )
-        puts "[#{url.keyword}]: Adding click #{index + 1}/#{legacy_click_total}"
+        puts "[#{url.keyword}]: Adding click #{index + 1}/#{new_click_count}"
       end
     end
   end
@@ -93,7 +94,7 @@ end
 
 def valid_url?(url)
   schemes = %w(http https)
-  parsed = Addressable::URI.parse(url) or return false
+  (parsed = Addressable::URI.parse(url)) || (return false)
   schemes.include?(parsed.scheme)
 rescue Addressable::URI::InvalidURIError
   false
