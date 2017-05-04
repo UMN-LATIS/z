@@ -25,16 +25,21 @@ en:
       hero_text: "What will you Z?"
       hero_button: "Sign In to Z"
     urls:
+      copy_success: "Copied shortlink to clipboard"
+      move_confirm: "Are you sure you with to move short URL {{keyword}} to collection {{collection}}?"
+      transfer_button: "Give to a different user"
+      move_button: "Move to a different collection"
       index:
         table:
           title: "My Z-Links"
           shorturl: "Short URL"
           longurl: "Long URL"
           collections: "Collections"
-          collect_tooltip: "Organize and share management of your Z-Links"
+          collection_header_tooltip: "Organize and share management of your Z-Links"
           clicks: "Clicks"
-          clicks_tooltip: "The number of times your short URL has been accessed"
+          clicks_header_tooltip: "The number of times your short URL has been accessed"
           created: "Created"
+          collection_tooltip: "Change this URL's Collection"
       show:
       sleek_form:
         domain: "z.umn.edu / "
@@ -49,6 +54,10 @@ en:
           title: "Shorten your link"
           submit: "Z-Link It"
     collections:
+      filter:
+        label: "Collection"
+        all: "All"
+        none: "No Collection"
       index:
         title: "My Collections"
         table:
@@ -93,7 +102,6 @@ en:
       url_placeholder: "destination URL"
       keyword_placeholder: "keyword (optional)"
     links:
-
       back: "Back"
       cancel: "Cancel"
       confirm: "Are you sure?"

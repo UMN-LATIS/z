@@ -12,7 +12,7 @@ $(document).on("change", "#urls-table select, body.urls.show select", function (
   select = e.target;
 	var newVal = $(select).val();
   var urlId = $(select).data('url-id');
-  if (!confirm("Are you sure you wish to move short URL " + $(select).data('keyword') + " to collection " + $(select).find(":selected").text() + "?")) {
+  if (!confirm(I18n.t("views.urls.move_confirm", {keyword: $(select).data('keyword'), collection: $(select).find(":selected").text()}))) {
     $(select).val($(select).data('group-id')); //set back
         return;
   }
@@ -100,8 +100,8 @@ function moveUrl(movePath, keywords){
 }
 
 function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColumn, showMoveButton, collectionSelect) {
-  var transferText = '<i class="fa fa-exchange"></i> Give to a different user';
-  var moveText = '<i class="fa fa-share-square-o "></i> Move to a different collection';
+  var transferText = '<i class="fa fa-exchange"></i> ' + I18n.t("views.urls.transfer_button");
+  var moveText = '<i class="fa fa-share-square-o "></i> ' + I18n.t("views.urls.move_button");
 
   var userTable = $('#urls-table').DataTable({
           drawCallback: function(settings) {
@@ -142,7 +142,7 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
         if(collectionSelect) {
          this.api().columns([1]).every( function () {
              var column = this;
-             var select = $('<select id="collection-filter" class="form-control"><option value="">All</option></select>')
+             var select = $('<select id="collection-filter" class="form-control"><option value="">' + I18n.t("views.collections.filter.all") + '</option></select>')
                  .prependTo( $("#urls-table_filter") )
                  .on( 'change', function () {
                      var val = $.fn.dataTable.util.escapeRegex(
@@ -155,14 +155,14 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
              $('.collection-names').data('collection-names').forEach( function ( d, j ) {
                  select.append( '<option value="'+d[0]+'">'+d[1]+'</option>' )
              } );
-             select.before('<label>Collection:</label>');
+             select.before('<label>' + I18n.t("views.collections.filter.label") + ':</label>');
 						 select.selectpicker();
          } );
        }
      },
 		 fnDrawCallback: function(){
 			 $(".selectpicker").selectpicker();
-			 $(".selectpicker").attr("title", "Change this URL's Collection")
+			 $(".selectpicker").attr("title", I18n.t("views.urls.index.table.collection_tooltip"))
 			 setTimeout(function(){
 				 $("#urls-table .selectpicker").tooltip();
 			 }, 300);
