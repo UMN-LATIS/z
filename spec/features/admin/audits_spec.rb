@@ -25,11 +25,11 @@ describe 'as a valid admin user' do
   end
 
   it 'should display  Audited Item col header' do
-    expect(page).to have_content 'Audited Item'
+    expect(page).to have_content 'Item'
   end
 
   it 'should display  Audited Action col header' do
-    expect(page).to have_content 'Audited Action'
+    expect(page).to have_content 'Action'
   end
 
   it 'should display  Whodunnit col header' do

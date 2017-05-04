@@ -2,130 +2,180 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  breadcrumbs:
+  controllers:
     application:
-      root: "Index"
-    pages:
-      pages: "Pages"
-  helpers:
-    lookup_service_down: "Could not establish a connection to the LDAP server. Please notify help@umn.edu"
-    actions: "Actions"
-    no_email: "No Email"
-    hello: "z.umn.edu"
-    switch_to: "Switch To:"
-    short_url: "Short URL"
-    long_url: "Source URL"
-    qr_code: "QR Code"
-    download: "Download"
-    download_click_data: "Download Click Data"
-    historical_click_count: "Historical Click Count"
-    best_day: "Best Day"
-    last_24_hours: "Last 24 hours"
-    last_7_days: "Last 7 days"
-    last_30_days: "Last 30 days"
-    all_time: "All time"
-    per_hour: "per hour"
-    per_day: "per day"
-    short_url_created_on: "Short URL created on"
-    url_has_never_been_clicked: "This URL has never been clicked."
-    admin:
-      audit_log:
-        page_header: "Audit Log"
-        audit_item: "Audited Item"
-        audit_event: "Audited Action"
-        audit_whodunnit: "Whodunnit"
-        audit_whodunnit_when: "When"
-        admin_name: "Admin Name"
-      announcements:
-        page_header: "Admin Announcements"
-        new: "New Admin Announcement"
-        title: "Title"
-        message: "Message"
-        start_on: "Start delivering at"
-        stop_on: "Stop delivering at"
-    groups:
-      default_display: "No Collection"
-      new: "Add New Collection"
+      lookup_service_down: "Could not establish a connection to the LDAP server. Please notify help@umn.edu"
+  models:
+  views:
+    application:
+      nav:
+        sign_in: "Sign In"
+        sign_out: "Sign Out"
+        links: "My Z-Links"
+        collections: "My Collections"
+        admin_menu: "Admin"
+        home: "Home"
+        help: "Help"
+        contact_us: "Contact Us!"
+        faq: "Read our FAQ"
+        admin:
+          all_urls: "View all URLs"
+          all_collections: "View all Collections"
+          admins: "Manage Admins"
+          audit_log: "Audit Log"
+    root:
+      hero_text: "What will you Z?"
+      hero_button: "Sign In to Z"
+      hello: "z.umn.edu"
+    announcements:
+      form:
+        start_on_label: "Start delivering at"
+        stop_on_label: "Stop delivering at"
+        body_label: "Message"
+        back: "Back"
+      index:
+        title: "Announcements"
+        new_button: "New"
+        table:
+          actions:
+            edit: "Edit"
+            destroy: "Destroy"
+            destroy_confirm_html: "This will delete: <br/> %{message}"
+      new:
+        title: "New Announcement"
+      edit:
+        title: "Editing Announcement"
+    audits:
+      index:
+        title: "Audits"
+        table:
+          item: "Item"
+          event: "Action"
+          whodunnit: "Whodunnit"
+          when: "When"
     urls:
-      url_placeholder: "destination URL"
-      keyword_placeholder: "keyword (optional)"
-    links:
-      home: "Home"
-      admin: "Admin"
-      help: "Help"
-      contact_us: "Contact Us!"
-      faq: "Read our FAQ"
-      urls: "URLs"
-      groups: "Groups"
-      back: "Back"
-      cancel: "Cancel"
-      confirm: "Are you sure?"
-      confirm_add_someone: "Are you sure you want to add this person?"
-      confirm_delete: "Are you sure want to delete <b>%{to_delete}</b>?"
-      confirm_default: "Are you sure?"
-      confirm_url_move: "Are you sure you want to move these URLs?"
-      confirm_url_transfer: "Are you sure you want to transfer these URLs?"
-      destroy: "Delete"
-      new: "New"
-      edit: "Edit"
-      edit_url: "Edit URL"
-      create_url: "Create URL"
-      group_members: "Members"
-      groups: "Groups"
-      add:  "Add"
-      add_someone: "Add Someone"
-      search_users: "Add"
-      search_by_url: "Search By URL"
-      manage_admins: "Manage Admins"
-      sign_in: "Sign In"
-      sign_out: "Sign Out"
-      viewing_as: "Viewing as:"
-      reject: "Reject"
-      approve: "Approve"
-    titles:
-      members: "Members"
-      edit: "Edit %{model}"
-      save: "Save %{model}"
-      new: "New %{model}"
-      delete: "Delete %{model}"
-      move-to-group: "Move to Collection"
-    placeholders:
-      description: "Description"
-      name: "Name"
-      search_by_last_name_or_email: "Search by Last Name or Email"
-      search_by_name_or_email: "Search by Name or Email"
-      url: "URL"
-      keyword: "Keyword"
-    buttons:
-      cancel: "Cancel"
-      close: "Close"
-      send_urls: "Send URLs"
-    table_headers:
-      name: "Name"
-      member_name: "Member Name"
-      id: "ID"
-      email: "Email"
-      created_on: "Created On"
-      owner: "Owner"
-      url: "URL"
-      short_url: "Short URL"
-      long_url: "Long URL"
-      keyword: "Keyword"
-      total_clicks: "Total Clicks"
-      description: "Description"
-    header_tags:
-      urls_edit: "Edit your shortlink"
-      urls_new: "Shorten your link"
-      group_to_move_urls_to: "Collection to move URLs to"
-      urls_you_want_to_transfer: "URLs you are giving away"
-      urls_you_want_to_move: "URLs you are moving"
-      new_transfer: "Give URLs"
-      internet_id_to_transfer_to: "X500 to give to"
-      urls_to_transfer: "URLs you're giving'"
-      transfer_urls: "Give URLs"
-      transfer_requests_to_others: "URLs you gave that are pending approval"
-      transfer_requests_pending: "URLs you are being given"
-      person_to_transfer_to: "Person to give to:"
-      information_about_your_link: "Information about your link"
-      traffic_statistics: "Traffic Statistics"
-      traffic_location: "Traffic Location"
+      copy_success: "Copied shortlink to clipboard"
+      move_confirm: "Are you sure you with to move short URL {{keyword}} to collection {{collection}}?"
+      transfer_button: "Give to a different user"
+      move_button: "Move to a different collection"
+      index:
+        transfer_requests:
+          to_others: "URLs you gave that are pending approval"
+          to_user: "URLs you are being given"
+          from_html: "From: <b>%{user}</b>"
+          to_html: "To: <b>%{user}</b>"
+          keyword_html: "Keyword: <b>%{keyword}</b>"
+          url_html: "URL: %{url}"
+          reject: "Reject"
+          reject_confirm: "Are you sure you want to reject these URLs?"
+          approve: "Accept"
+          take_back: "Take back"
+          take_back_confirm: "Are you sure you want to take back these URLs?"
+        admin:
+          title: "URLs"
+        table:
+          title: "My Z-Links"
+          shorturl: "Short URL"
+          owner: "Owner"
+          longurl: "Long URL"
+          collections: "Collections"
+          collection_header_tooltip: "Organize and share management of your Z-Links"
+          clicks: "Clicks"
+          clicks_header_tooltip: "The number of times your short URL has been accessed"
+          created: "Created"
+          collection_tooltip: "Change this URL's Collection"
+          collection_filter:
+            label: "Collection"
+            all: "All"
+            none: "No Collection"
+          in_row_actions:
+            share: "Share"
+            tweet: "Tweet"
+            qr_code: "QR Code"
+            stats: "Stats"
+            edit: "Edit"
+            delete: "Delete"
+            delete_confirm: "Are you sure you want to delete the short URL <b>%{keyword}</b>?"
+      show:
+        header: "Information about your link"
+        short_url: "Short URL"
+        source_url: "Source URL"
+        collection: "Collection"
+        copy_button: "Copy"
+        traffic_stats: "Traffic Statistics"
+        traffic_location: "Traffic Location"
+        export_button: "Export to CSV"
+        historical_click_count: "Historical Click Count"
+        created_on: "Short URL created on"
+        hours_24: "Last 24 Hours"
+        days_7: "Last 7 days"
+        days_30: "Last 30 days"
+        all_time: "All time"
+        hit: "hit"
+        per_hour: "per hour"
+        per_day: "per day"
+        share: "Share"
+        best_day_header: "Best Day"
+        best_day:
+          zero: "URL has never been clicked"
+          one: "1 hit on %{date}"
+          other: "%{count} hits on %{date}"
+        charts:
+          hour: "Hour"
+          day: "Day"
+          clicks: "Clicks"
+      sleek_form:
+        domain: "z.umn.edu / "
+        placeholders:
+          url: "destination URL"
+          keyword: "keyword (optional)"
+        edit:
+          title: "edit your shortlink"
+          submit: "Submit"
+          cancel: "Cancel"
+        new:
+          title: "Shorten your link"
+          submit: "Z-Link It"
+    collections:
+      index:
+        title: "My Collections"
+        table:
+          name: "Name"
+          description: "Description"
+          created: "Created On"
+          actions: "Actions"
+          empty: "Please click the New button to add a collection"
+          in_row_actions:
+            edit: "Edit"
+            members: "Members"
+            delete: "Delete"
+            delete_confirm: "Are you sure you want to delete the collection <b>%{name}</b>?"
+        new_button: "Add New Collection"
+      form:
+        cancel: "Cancel"
+        placeholders:
+          name: "Name"
+          description: "Description"
+        edit:
+          submit: "Edit Collection"
+        new:
+          submit: "Create Collection"
+      show:
+      edit:
+    transfer_requests:
+      new:
+        title: "Give URLs"
+        transferee_label: "Person to give to"
+        transferee_help: "Search by name or Email."
+        urls_title: "URLs you are going to give away"
+        submit: "Send URLs"
+        submit_confirm: "Are you sure you want to transfer these URLs?"
+        cancel: "Cancel"
+    collection_moves:
+      new:
+        title: "Move to Collection"
+        collection_label: "Collection to move URLs to"
+        urls_title: "URLs you are moving"
+        submit: "Move URLs"
+        submit_confirm: "Are you sure you want to move these URLs?"
+        cancel: "Cancel"

@@ -12,20 +12,20 @@
         </div>
     <% end %>
     <div class="field form-group">
-      <%= t('helpers.admin.announcements.message') %>
+      <%= t('views.announcements.form.body_label') %>
       <%= f.text_area :body, cols: 80, rows: 5, class: 'form-control' %>
     </div>
 
     <div class="field form-group">
-      <%= t('helpers.admin.announcements.start_on') %></th>
+      <%= t('views.announcements.form.start_on_label') %></th>
       <%= f.datetime_select :start_delivering_at %>
     </div>
 
     <div class="field form-group">
-      <%= t('helpers.admin.announcements.stop_on') %>
+      <%= t('views.announcements.form.stop_on_label') %>
       <%= f.datetime_select :stop_delivering_at %>
     </div>
-    <%= f.submit nil, class: 'btn btn-primary js-group-submit' %>
-    <%= link_to 'Back', admin_announcements_path, class: 'btn btn-primary js-group-submit'  %>
+    <%= f.submit nil, class: 'btn btn-primary' %>
+    <%= link_to t('views.announcements.form.back'), admin_announcements_path, class: 'btn btn-primary'  %>
 
 <% end %>

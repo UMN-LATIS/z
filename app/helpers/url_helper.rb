@@ -3,20 +3,23 @@ module UrlHelper
     "#{request.base_url}/#{url.keyword}"
   end
 
-  def display_long_url(url, max_length=20)
+  def display_long_url(url, max_length = 20)
     truncate(url, length: max_length)
   end
 
-  def display_keyword_url(keyword, max_length=35)
-      "#{request.host_with_port}/#{truncate(keyword, length: max_length)}"
+  def display_keyword_url(keyword, max_length = 35)
+    "#{request.host_with_port}/#{truncate(keyword, length: max_length)}"
   end
 
   def best_day_formatter(best_day)
     if best_day.blank?
-      t('helpers.url_has_never_been_clicked')
+      t('views.urls.show.best_day', count: 0)
     else
-      "#{pluralize(best_day[1], 'hits')} " \
-      "on #{best_day[0].strftime('%B %d %Y')}."
+      t(
+        'views.urls.show.best_day',
+        count: best_day[1],
+        date: best_day[0].strftime('%B %d %Y')
+      )
     end
   end
 end

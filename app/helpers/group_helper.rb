@@ -1,6 +1,6 @@
 module GroupHelper
   def display_name(group)
-    return t('helpers.groups.default_display') if group.default?
+    return t('views.urls.index.table.collection_filter.none') if group.default?
     group.name
   end
 end
