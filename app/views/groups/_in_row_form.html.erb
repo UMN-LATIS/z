@@ -1,20 +1,20 @@
 <tr id="group-<%= group_identifier %>">
   <td colspan=4 class="info">
-    <%= form_for group, :html => {class: 'form-inline group', remote: true} do |f| %>
+    <%= form_for group, html: {class: 'form-inline group', remote: true} do |f| %>
         <table>
           <tr>
             <td>
               <%= hidden_field_tag :new_identifier, group_identifier %>
-              <%= f.text_field :name, :maxlength => 20, size: 15, class: 'form-control', placeholder: t('helpers.placeholders.name') %>
+              <%= f.text_field :name, maxlength: 20, size: 15, class: 'form-control', placeholder: t('views.collections.form.placeholders.name') %>
             </td>
             <td class="input-spacing">
-              <%= f.text_field :description, :maxlength => 65, size: 65, class: 'form-control', placeholder: t('helpers.placeholders.description') %>
+              <%= f.text_field :description, maxlength: 65, size: 65, class: 'form-control', placeholder: t('views.collections.form.placeholders.description') %>
             </td>
             <td>
               <% if group.new_record? %>
                 <%= button_tag  type:"submit", class: 'btn btn-xs btn-primary js-group-submit' do %>
                   <i class="fa fa-plus-circle"></i>
-
+                  <%= t('views.collections.form.new.submit') %>
                   Create Collection
                 <% end %>
 
@@ -22,11 +22,10 @@
               <% else %>
                 <%= button_tag  type:"submit", class: 'btn btn-xs btn-primary js-group-submit' do %>
                   <i class="fa fa-pencil"></i>
-
-                  Edit Collection
+                  <%= t('views.collections.form.edit.submit') %>
                 <% end %>
 
-                <%= link_to t('.cancel', default: t('helpers.links.cancel')),
+                <%= link_to t('views.collections.form.cancel'),
                             group_path(group),
                             class: 'btn btn-xs btn-default cancel-group', remote: true %>
               <% end %>

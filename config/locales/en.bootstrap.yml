@@ -40,6 +40,10 @@ en:
           clicks_header_tooltip: "The number of times your short URL has been accessed"
           created: "Created"
           collection_tooltip: "Change this URL's Collection"
+          collection_filter:
+            label: "Collection"
+            all: "All"
+            none: "No Collection"
       show:
       sleek_form:
         domain: "z.umn.edu / "
@@ -54,10 +58,6 @@ en:
           title: "Shorten your link"
           submit: "Z-Link It"
     collections:
-      filter:
-        label: "Collection"
-        all: "All"
-        none: "No Collection"
       index:
         title: "My Collections"
         table:
@@ -72,6 +72,15 @@ en:
             delete: "Delete"
             delete_confirm: "Are you sure you want to delete the collection <b>%{name}</b>?"
         new_button: "Add New Collection"
+      form:
+        cancel: "Cancel"
+        placeholders:
+          name: "Name"
+          description: "Description"
+        edit:
+          submit: "Edit Collection"
+        new:
+          submit: "Create Collection"
       show:
       edit:
     admins:

@@ -142,7 +142,7 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
         if(collectionSelect) {
          this.api().columns([1]).every( function () {
              var column = this;
-             var select = $('<select id="collection-filter" class="form-control"><option value="">' + I18n.t("views.collections.filter.all") + '</option></select>')
+             var select = $('<select id="collection-filter" class="form-control"><option value="">' + I18n.t("views.urls.index.table.collection_filter.all") + '</option></select>')
                  .prependTo( $("#urls-table_filter") )
                  .on( 'change', function () {
                      var val = $.fn.dataTable.util.escapeRegex(
@@ -155,7 +155,7 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
              $('.collection-names').data('collection-names').forEach( function ( d, j ) {
                  select.append( '<option value="'+d[0]+'">'+d[1]+'</option>' )
              } );
-             select.before('<label>' + I18n.t("views.collections.filter.label") + ':</label>');
+             select.before('<label>' + I18n.t("views.urls.index.table.collection_filter.label") + ':</label>');
 						 select.selectpicker();
          } );
        }
