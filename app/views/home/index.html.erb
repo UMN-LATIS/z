@@ -1,18 +1,18 @@
 <div class="z-hero z-hero-large">
   <div class="z-hero-content">
     <h1 class="z-hero-title z-hero-title-large">
-      <%= t('hero.text') %>
+      <%= t('views.root.hero_text') %>
     </h1>
     <% unless signed_in? %>
         <a class="btn btn-primary z-hero-button " href="<%= signin_path %>">
-          <%= t('hero.button') %>
+          <%= t('views.root.hero_button') %>
         </a>
     <% end %>
   </div>
 </div>
 
 <div class="home-page-content-wrapper">
-  <h2><%= t('helpers.hello') %></h2>
+  <h2><%= t('views.root.hello') %></h2>
 
   <p>Welcome to z.umn.edu, a URL shortening service provided
     by <%= link_to 'LATIS', 'http://latis.umn.edu/', target: '_blank' %>.</p>

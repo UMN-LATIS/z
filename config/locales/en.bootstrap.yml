@@ -24,6 +24,7 @@ en:
     root:
       hero_text: "What will you Z?"
       hero_button: "Sign In to Z"
+      hello: "z.umn.edu"
     urls:
       copy_success: "Copied shortlink to clipboard"
       move_confirm: "Are you sure you with to move short URL {{keyword}} to collection {{collection}}?"
