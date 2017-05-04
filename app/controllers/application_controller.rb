@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
   include Pundit
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
+  helper Starburst::AnnouncementsHelper
+
   before_action :set_paper_trail_whodunnit
   before_action :ping_lookup_service
 

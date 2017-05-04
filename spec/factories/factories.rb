@@ -32,6 +32,13 @@ FactoryGirl.define do
     group { FactoryGirl.create(:user).context_group }
   end
 
+  factory :announcement, :class => Admin::Announcement do
+    title	'Whoa Nelly!'
+    body	'The Court is in Session, here comes the judge!'
+    start_delivering_at	(DateTime.now - 30.days).strftime("%Y-%m-%d")
+    stop_delivering_at (DateTime.now + 30.days).strftime("%Y-%m-%d") 
+  end
+
   factory :group do
     name 'My First Group'
     description 'first group of urls'

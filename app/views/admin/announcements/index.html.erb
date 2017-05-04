@@ -1,0 +1,39 @@
+<div class="z-hero z-hero-dimmer">
+  <div class="z-hero-content">
+    <div class="page-header">
+      <h1><%= t('helpers.admin.announcements.page_header') %></h1>
+    </div>
+  </div>
+</div>
+<p id="notice"><%= notice %></p>
+<div class="groups-table-wrapper">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th><%= t('helpers.admin.announcements.message') %></th>
+      <th><%= t('helpers.admin.announcements.start_on') %></th>
+      <th><%= t('helpers.admin.announcements.stop_on') %></th>
+      <th colspan="2"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @admin_announcements.each do |admin_announcement| %>
+        <tr>
+          <td><%= admin_announcement.body %></td>
+          <td><%= admin_announcement.start_delivering_at %></td>
+          <td><%= admin_announcement.stop_delivering_at %></td>
+          <td><%= link_to 'Edit', edit_admin_announcement_path(admin_announcement) %></td>
+          <td><%= link_to 'Destroy', admin_announcement, method: :delete, data: {confirm: "This will delete: <br/> #{admin_announcement.body}"} %></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%= link_to new_admin_announcement_path,
+            :class => 'btn btn-primary btn-xs add-new-group' do %>
+    <i class="fa fa-plus-circle"></i>
+    <%= t('.new', :default => t("helpers.admin.announcements.new")) %>
+<% end %>
+<br>
+
