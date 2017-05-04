@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see
   # http://guides.rubyonrails.org/routing.html
 
+  mount Starburst::Engine => "/starburst"
+
   # Handle Auth
   post '/auth/:provider/callback', to: 'sessions#create'
   get '/auth/:provider/callback', to: 'sessions#create'
@@ -135,6 +137,10 @@ Rails.application.routes.draw do
       # admin/admins/delete	admin::admins	destroy	delete
       # admin/admins/create	admin::admins	create	put
       resources :admins, only: [:index, :destroy, :create]
+
+      resources :announcements, only: [:index, :new, :edit, :show, :update, :destroy, :create]
+
+
     end
   end
 

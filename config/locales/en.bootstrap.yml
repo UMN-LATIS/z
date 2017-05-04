@@ -28,6 +28,21 @@ en:
     per_day: "per day"
     short_url_created_on: "Short URL created on"
     url_has_never_been_clicked: "This URL has never been clicked."
+    admin:
+      audit_log:
+        page_header: "Audit Log"
+        audit_item: "Audited Item"
+        audit_event: "Audited Action"
+        audit_whodunnit: "Whodunnit"
+        audit_whodunnit_when: "When"
+        admin_name: "Admin Name"
+      announcements:
+        page_header: "Admin Announcements"
+        new: "New Admin Announcement"
+        title: "Title"
+        message: "Message"
+        start_on: "Start delivering at"
+        stop_on: "Stop delivering at"
     groups:
       default_display: "No Collection"
       new: "Add New Collection"
@@ -86,11 +101,6 @@ en:
       close: "Close"
       send_urls: "Send URLs"
     table_headers:
-      audit_item: "Audited Item"
-      audit_event: "Audited Action"
-      audit_whodunnit: "Whodunnit"
-      audit_whodunnit_when: "When"
-      admin_name: "Admin Name"
       name: "Name"
       member_name: "Member Name"
       id: "ID"

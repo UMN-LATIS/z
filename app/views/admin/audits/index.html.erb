@@ -1,18 +1,24 @@
 <%- model_class = Audit -%>
-<div class="page-header">
-  <h1><%= t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+<div class="z-hero z-hero-dimmer">
+  <div class="z-hero-content">
+    <div class="page-header">
+      <h1><%= t('helpers.admin.audit_log.page_header') %></h1>
+    </div>
+  </div>
 </div>
+<div class="groups-table-wrapper">
 
 <table id="audits-table" class="table admin-table table-striped table-bordered data-table" data-source="<%= datatable_admin_audits_path(format: :json) %>">
   <thead>
   <tr>
-    <th><%= t('helpers.table_headers.audit_item') %></th>
-    <th><%= t('helpers.table_headers.audit_event') %></th>
-    <th><%= t('helpers.table_headers.audit_whodunnit') %></th>
-    <th><%= t('helpers.table_headers.audit_whodunnit_when') %></th>
+    <th><%= t('helpers.admin.audit_log.audit_event') %></th>
+    <th><%= t('helpers.admin.audit_log.audit_item') %></th>
+    <th><%= t('helpers.admin.audit_log.audit_whodunnit') %></th>
+    <th><%= t('helpers.admin.audit_log.audit_whodunnit_when') %></th>
   </tr>
   </thead>
   <tbody>
 
   </tbody>
 </table>
+</div>

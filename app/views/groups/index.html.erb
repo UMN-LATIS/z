@@ -6,35 +6,38 @@
     </div>
   </div>
 </div>
-
-<div class="groups-table-wrapper">
-
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th><%= t('helpers.table_headers.name') %></th>
-      <th><%= t('helpers.table_headers.description') %></th>
-      <th><%= t('helpers.table_headers.created_on') %></th>
-      <th><%= t '.actions', :default => t('helpers.actions') %></th>
-    </tr>
-    </thead>
-    <tbody>
-    <% if @groups.blank? %>
-        <tr id="new-group-tip">
-          <td colspan=4 class="info">
-            <i>Please Click the </i><b>New</b><i> Button to Add a Collection.</i>
-          </td>
-        </tr>
-    <% end %>
-    <% @groups.each do |group| %>
-        <%= render 'in_row_show', group: group %>
-    <% end %>
-    </tbody>
-  </table>
+<div class="urls-table-container">
+  <div class="groups-table-wrapper">
+    <div id="announcements">
+      <%= render :partial => "announcements/starburst/announcement_bootstrap" %>
+    </div>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th><%= t('helpers.table_headers.name') %></th>
+        <th><%= t('helpers.table_headers.description') %></th>
+        <th><%= t('helpers.table_headers.created_on') %></th>
+        <th><%= t '.actions', :default => t('helpers.actions') %></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% if @groups.blank? %>
+          <tr id="new-group-tip">
+            <td colspan=4 class="info">
+              <i>Please Click the </i><b>New</b><i> Button to Add a Collection.</i>
+            </td>
+          </tr>
+      <% end %>
+      <% @groups.each do |group| %>
+          <%= render 'in_row_show', group: group %>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
 
-<%= link_to  new_group_path,
-            :class => 'btn btn-primary btn-xs add-new-group', remote: true  do %>
-              <i class="fa fa-plus-circle"></i>
-              <%= t('.new', :default => t("helpers.groups.new")) %>
-            <% end %>
+<%= link_to new_group_path,
+            :class => 'btn btn-primary btn-xs add-new-group', remote: true do %>
+    <i class="fa fa-plus-circle"></i>
+    <%= t('.new', :default => t("helpers.groups.new")) %>
+<% end %>

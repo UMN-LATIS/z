@@ -62,6 +62,10 @@ gem 'chunky_png'
 # authorization lugin
 gem 'pundit'
 
+# announcements to the seething masses
+# https://github.com/csm123/starburst#
+gem "starburst"
+
 # For country information
 gem 'geocoder'
 
