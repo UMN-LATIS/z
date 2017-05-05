@@ -43,7 +43,7 @@ class UrlsController < ApplicationController
         @url.clicks.group_by_time_ago(30.days, '%m/%d'),
       alltime:
         @url.clicks.group_by_time_ago(
-          ((Time.now - @url.created_at) / 60 / 60 / 24).days,
+          ((Time.zone.now - @url.created_at) / 60 / 60 / 24).ceil.days,
           '%m/%Y'
         ),
       regions:
