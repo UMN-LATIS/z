@@ -37,8 +37,10 @@ en:
         audit_whodunnit_when: "When"
         admin_name: "Admin Name"
       announcements:
+        delete: "Delete"
+        edit: "Edit"
         page_header: "Admin Announcements"
-        new: "New Admin Announcement"
+        new: "Make an Announcement"
         title: "Title"
         message: "Message"
         start_on: "Start delivering at"

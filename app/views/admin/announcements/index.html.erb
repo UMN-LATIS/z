@@ -17,23 +17,32 @@
     </tr>
     </thead>
     <tbody>
-    <% @admin_announcements.each do |admin_announcement| %>
-        <tr>
-          <td><%= admin_announcement.body %></td>
-          <td><%= admin_announcement.start_delivering_at %></td>
-          <td><%= admin_announcement.stop_delivering_at %></td>
-          <td><%= link_to 'Edit', edit_admin_announcement_path(admin_announcement) %></td>
-          <td><%= link_to 'Destroy', admin_announcement, method: :delete, data: {confirm: "This will delete: <br/> #{admin_announcement.body}"} %></td>
-        </tr>
+    <% if @admin_announcements.size == 0 %>
+          <tr>
+            <td colspan="5">
+              No Announcements. Click <i><%= t("helpers.admin.announcements.new") %> </i> to add.
+            </td>
+          </tr>
+    <% else %>
+        <% @admin_announcements.each do |admin_announcement| %>
+            <tr>
+              <td><%= admin_announcement.body %></td>
+              <td><%= admin_announcement.start_delivering_at %></td>
+              <td><%= admin_announcement.stop_delivering_at %></td>
+              <td><%= link_to t("helpers.admin.announcements.edit"), edit_admin_announcement_path(admin_announcement) %></td>
+              <td><%= link_to t("helpers.admin.announcements.delete"), admin_announcement, method: :delete, data: {confirm: "This will delete: <br/> #{admin_announcement.body}"} %></td>
+            </tr>
+        <% end %>
     <% end %>
     </tbody>
   </table>
 </div>
 
-<%= link_to new_admin_announcement_path,
-            :class => 'btn btn-primary btn-xs add-new-group' do %>
-    <i class="fa fa-plus-circle"></i>
-    <%= t('.new', :default => t("helpers.admin.announcements.new")) %>
+<% if @admin_announcements.size == 0 %>
+    <%= link_to new_admin_announcement_path,
+                :class => 'btn btn-primary btn-xs add-new-group' do %>
+        <i class="fa fa-plus-circle"></i>
+        <%= t('.new', :default => t("helpers.admin.announcements.new")) %>
+    <% end %>
 <% end %>
-<br>
 

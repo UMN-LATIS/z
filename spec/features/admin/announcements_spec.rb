@@ -48,5 +48,18 @@ describe 'as a valid admin user' do
   it 'should display announcement end by date' do
     expect(page).to have_content 'Stop delivering at'
   end
-
+  describe 'without an announcement' do
+    it 'should display invitation to add an announcement' do
+      expect(page).to have_content 'No Announcements. Click'
+    end
+  end
+  describe 'with an announcement' do
+    before do
+      @announcement = FactoryGirl.create(:announcement)
+      visit admin_announcements_path
+    end
+    it 'should not display invitation to add an announcement' do
+      expect(page).to_not have_content 'No Announcements. Click'
+    end
+  end
 end
