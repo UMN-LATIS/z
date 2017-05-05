@@ -39,7 +39,11 @@ class Click < ApplicationRecord
                            .in_time_zone(Time.zone)
                            .strftime(format)
 
-      click_counts[time_label] = result[1]
+      if click_counts[time_label].nil?
+        click_counts[time_label] = result[1]
+      else
+        click_counts[time_label] += result[1]
+      end
     end
 
     click_counts
