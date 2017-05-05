@@ -1,7 +1,7 @@
 <div class="z-hero z-hero-dimmer">
   <div class="z-hero-content">
     <div class="page-header">
-      <h1><%= t('helpers.admin.announcements.page_header') %></h1>
+      <h1><%= t('views.announcements.index.title') %></h1>
     </div>
   </div>
 </div>
@@ -10,39 +10,29 @@
   <table class="table table-striped">
     <thead>
     <tr>
-      <th><%= t('helpers.admin.announcements.message') %></th>
-      <th><%= t('helpers.admin.announcements.start_on') %></th>
-      <th><%= t('helpers.admin.announcements.stop_on') %></th>
+      <th><%= t('views.announcements.form.body_label') %></th>
+      <th><%= t('views.announcements.form.start_on_label') %></th>
+      <th><%= t('views.announcements.form.stop_on_label') %></th>
       <th colspan="2"></th>
     </tr>
     </thead>
     <tbody>
-    <% if @admin_announcements.size == 0 %>
-          <tr>
-            <td colspan="5">
-              No Announcements. Click <i><%= t("helpers.admin.announcements.new") %> </i> to add.
-            </td>
-          </tr>
-    <% else %>
-        <% @admin_announcements.each do |admin_announcement| %>
-            <tr>
-              <td><%= admin_announcement.body %></td>
-              <td><%= admin_announcement.start_delivering_at %></td>
-              <td><%= admin_announcement.stop_delivering_at %></td>
-              <td><%= link_to t("helpers.admin.announcements.edit"), edit_admin_announcement_path(admin_announcement) %></td>
-              <td><%= link_to t("helpers.admin.announcements.delete"), admin_announcement, method: :delete, data: {confirm: "This will delete: <br/> #{admin_announcement.body}"} %></td>
-            </tr>
-        <% end %>
+    <% @admin_announcements.each do |admin_announcement| %>
+        <tr>
+          <td><%= admin_announcement.body %></td>
+          <td><%= admin_announcement.start_delivering_at %></td>
+          <td><%= admin_announcement.stop_delivering_at %></td>
+          <td><%= link_to t('views.announcements.index.actions.edit'), edit_admin_announcement_path(admin_announcement) %></td>
+          <td><%= link_to t('views.announcements.index.actions.destroy'), admin_announcement, method: :delete, data: {confirm: t('views.announcements.index.table.actions.destroy_confirm_html', message: admin_announcement.body)} %></td>
+        </tr>
     <% end %>
     </tbody>
   </table>
 </div>
 
-<% if @admin_announcements.size == 0 %>
-    <%= link_to new_admin_announcement_path,
-                :class => 'btn btn-primary btn-xs add-new-group' do %>
-        <i class="fa fa-plus-circle"></i>
-        <%= t('.new', :default => t("helpers.admin.announcements.new")) %>
-    <% end %>
+<%= link_to new_admin_announcement_path,
+            class: 'btn btn-primary btn-xs add-new-group' do %>
+            <i class="fa fa-plus-circle"></i>
+            <%= t('views.announcements.index.new_button') %>
 <% end %>
-
+<br>

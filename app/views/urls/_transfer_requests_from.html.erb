@@ -1,23 +1,23 @@
 <% if @pending_transfer_requests_from.present? %>
     <div class="bs-callout bs-callout-warning" id="callout-badges-ie8-empty">
-      <h4><%= t('helpers.header_tags.transfer_requests_to_others')%> </h4>
+      <h4><%= t('views.urls.index.transfer_requests.to_others')%> </h4>
       <p>
         <% @pending_transfer_requests_from.each do |transfer_request| %>
           <div class="transfer-request-item">
             <div class="transfer-details">
               <div class="to">
-                To: <b><%= transfer_request.to_user.user_full_name %></b>
+                <%= t('views.urls.index.transfer_requests.to_html', user: transfer_request.from_user.user_full_name) %>
               </div>
               <% transfer_request.urls.each do |url| %>
                 <div class="keyword">
-                  Keyword: <b><%= url.keyword %></b>
+                  <%= t('views.urls.index.transfer_requests.keyword_html', keyword: url.keyword) %>
                 </div>
                 <div class="url">
-                  URL: <%= link_to url.url, url.url, target: 'blank' %>
+                  <%= t('views.urls.index.transfer_requests.url_html', url: link_to(url.url, url.url, target: 'blank')) %>
                 </div>
               <% end %>
             </div>
-            <a href="<%= transfer_request_path(transfer_request) %>" data-method="delete" data-confirm="Are you sure you want to take back these URLs?" class='btn btn-default btn-xs'>Take back</a>
+            <a href="<%= transfer_request_path(transfer_request) %>" data-method="delete" data-confirm="<%= t('views.urls.index.transfer_requests.take_back_confirm') %>" class='btn btn-default btn-xs'><%= t('views.urls.index.transfer_requests.take_back') %></a>
           </div>
         <% end %>
       </p>

@@ -1,24 +1,24 @@
 <div class="page-header">
-  <h3><%= t('helpers.header_tags.information_about_your_link') %></h3>
+  <h3><%= t('views.urls.show.header') %></h3>
 </div>
 <div class="row">
   <div class="col-md-7">
     <div class="row">
       <div class="col-md-6">
         <div class="panel panel-default">
-          <div class="panel-heading"><%= t('helpers.short_url')%></div>
+          <div class="panel-heading"><%= t('views.urls.show.short_url') %></div>
           <div class="panel-body">
             <a target='_blank' href="<%= full_url(@url) %>"><%= full_url(@url) %></a>
             <button class='btn btn-default clipboard-btn' data-clipboard-text="<%= full_url(@url) %>">
               <i class=" fa fa-files-o"></i>
-              Copy
+              <%= t('views.urls.show.thing.copy') %>
             </button>
           </div>
         </div>
       </div>
       <div class="col-md-6">
         <div class="panel panel-default">
-          <div class="panel-heading"><%= t('helpers.long_url')%></div>
+          <div class="panel-heading"><%= t('views.urls.show.source_url') %></div>
           <div class="panel-body">
             <a target='_blank' href="<%= @url.url %>"><%= @url.url %></a>
           </div>
@@ -28,7 +28,7 @@
     <div class="row">
       <div class="col-md-12 stats-actions">
         <div class="panel panel-default">
-          <div class="panel-heading"><%= t('helpers.collection')%></div>
+          <div class="panel-heading"><%= t('views.urls.show.collection') %></div>
           <div class="panel-body">
             <%= select_tag(
               "url-collection-#{@url.id}",
@@ -49,21 +49,21 @@
         </div>
         <button class="btn btn-primary js-transfer-urls ">
           <i class="fa fa-exchange"></i>
-          Give to a different user
+          <%= t('views.urls.transfer_button') %>
         </button>
       </div>
     </div>
     <div class="traffic-stats-header">
-      <h3 ><%= t('helpers.header_tags.traffic_statistics')%></h3>
-      <a class='btn btn-default js-csv-download' href="<%= url_csv_click_data_path(@url, format: :csv) %>">Export to CSV</a>
+      <h3 ><%= t('views.urls.show.traffic_stats') %></h3>
+      <a class='btn btn-default js-csv-download' href="<%= url_csv_click_data_path(@url, format: :csv) %>"><%= t('views.urls.show.export_button') %></a>
     </div>
     <div class="row">
       <div class="col-md-12">
         <ul id='show-tabs' class="col-md-12 nav nav-tabs" role='tablist'>
-          <li role="presentation" class="active"><a href="#chart-div-hrs24" data-load='hrs24' data-toggle='tab' role='tab'><%= t('helpers.last_24_hours')%></a></li>
-          <li role="presentation"><a href="#chart-div-days7" data-load='days7' data-toggle='tab' role='tab'><%= t('helpers.last_7_days')%></a></li>
-          <li role="presentation"><a href="#chart-div-days30" data-load='days30' data-toggle='tab' role='tab'><%= t('helpers.last_30_days')%></a></li>
-          <li role="presentation"><a href="#chart-div-all" data-load='all' data-toggle='tab' role='tab'><%= t('helpers.all_time')%></a></li>
+          <li role="presentation" class="active"><a href="#chart-div-hrs24" data-load='hrs24' data-toggle='tab' role='tab'><%= t('views.urls.show.hours_24')%></a></li>
+          <li role="presentation"><a href="#chart-div-days7" data-load='days7' data-toggle='tab' role='tab'><%= t('views.urls.show.days_7')%></a></li>
+          <li role="presentation"><a href="#chart-div-days30" data-load='days30' data-toggle='tab' role='tab'><%= t('views.urls.show.days_30')%></a></li>
+          <li role="presentation"><a href="#chart-div-all" data-load='all' data-toggle='tab' role='tab'><%= t('views.urls.show.all_time')%></a></li>
         </ul>
         <div class="col-md-12 tab-content">
           <div role="tabpanel" class='tab-pane fade in active' id="chart-div-hrs24" ></div>
@@ -73,7 +73,7 @@
         </div>
       </div>
     </div>
-    <h3><%= t('helpers.header_tags.traffic_location')%></h3>
+    <h3><%= t('views.urls.show.traffic_location')%></h3>
     <div class="row">
       <div id="regions-div" class="col-md-12">
       </div>
@@ -87,7 +87,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="panel panel-default">
-          <div class="panel-heading"><%= t('helpers.share') %></div>
+          <div class="panel-heading"><%= t('views.urls.show.share') %></div>
           <div class="panel-body text-center">
               <%= render "/urls/share_buttons", url: @url, large: true %>
           </div>
@@ -98,40 +98,40 @@
       <div class="col-md-12">
         <div class="panel panel-default">
           <!-- Default panel contents -->
-          <div class="panel-heading"><%= t('helpers.historical_click_count') %>  </div>
+          <div class="panel-heading"><%= t('views.urls.show.historical_click_count') %></div>
           <div class="panel-body">
-           <%= t('helpers.short_url_created_on')%> <%= @url.created_at.to_s(:created_on_formatted) %> (<%= time_ago_in_words(@url.created_at) %> ago)
+           <%= t('views.urls.show.created_on')%> <%= @url.created_at.to_s(:created_on_formatted) %> (<%= time_ago_in_words(@url.created_at) %> ago)
           </div>
           <table class="table table-hover">
             <tbody>
               <tr>
-                <td><%= t('helpers.last_24_hours')%></td>
+                <td><%= t('views.urls.show.hours_24')%></td>
                 <td><%= pluralize(@clicks[:hrs24].values.sum, 'hit') %></td>
-                <td><%= (@clicks[:hrs24].values.sum / 24.00).round(2) %> <%= t('helpers.per_hour') %></td>
+                <td><%= (@clicks[:hrs24].values.sum / 24.00).round(2) %> <%= t('views.urls.show.per_hour') %></td>
               </tr>
 
               <tr>
-                <td><%= t('helpers.last_7_days')%></td>
+                <td><%= t('views.urls.show.days_7')%></td>
                 <td><%= pluralize(@clicks[:days7].values.sum, 'hit') %></td>
-                <td><%= (@clicks[:days7].values.sum / 7.00).round(2) %> <%= t('helpers.per_day') %></td>
+                <td><%= (@clicks[:days7].values.sum / 7.00).round(2) %> <%= t('views.urls.show.per_day') %></td>
               </tr>
 
               <tr>
-                <td><%= t('helpers.last_30_days')%></td>
+                <td><%= t('views.urls.show.days_30')%></td>
                 <td><%= pluralize(@clicks[:days30].values.sum, 'hit') %></td>
-                <td><%= (@clicks[:days30].values.sum / 30.0).round(2) %> <%= t('helpers.per_day') %></td>
+                <td><%= (@clicks[:days30].values.sum / 30.0).round(2) %> <%= t('views.urls.show.per_day') %></td>
               </tr>
 
               <tr>
-                <td><%= t('helpers.all_time')%></td>
+                <td><%= t('views.urls.show.all_time')%></td>
                 <td><%= pluralize(@url.total_clicks, 'hit') %></td>
-                <td><%= (@url.total_clicks / ((Time.now.to_ms - @url.created_at.to_ms) / 1000 / 60 / 60 / 24.0)).round(2) %> <%= t('helpers.per_day') %></td>
+                <td><%= (@url.total_clicks / ((Time.now.to_ms - @url.created_at.to_ms) / 1000 / 60 / 60 / 24.0)).round(2) %> <%= t('views.urls.show.per_day') %></td>
               </tr>
             </tbody>
           </table>
         </div>
         <div class="panel panel-default">
-          <div class="panel-heading"><%= t('helpers.best_day')%></div>
+          <div class="panel-heading"><%= t('views.urls.show.best_day_header')%></div>
           <div class="panel-body">
             <%= best_day_formatter(@best_day) %>
           </div>

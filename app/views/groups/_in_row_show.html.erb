@@ -5,17 +5,17 @@
   <td><%= group.description %></td>
   <td><%= group.created_at.to_s(:created_on_formatted)  %></td>
   <td>
-    <%= link_to t('.edit', default: t('helpers.links.edit')),
+    <%= link_to t('views.collections.index.table.in_row_actions.edit'),
                 edit_group_path(group),
                 class: 'btn btn-xs btn-default edit-group fa fa-pencil', remote: true %>
-    <%= link_to t('.group-members', default: t('helpers.links.group_members')),
+    <%= link_to t('views.collections.index.table.in_row_actions.members'),
                 group_members_path(group),
                 class: 'btn btn-xs btn-default group-members fa fa-users' %>
-    <%= link_to t('.destroy', default: t('helpers.links.destroy')),
+    <%= link_to t('views.collections.index.table.in_row_actions.delete'),
                 group_path(group),
-                :method => :delete,
-                :disabled => group.urls.present?,
-                :data => { confirm: t('.confirm-delete', default: t('helpers.links.confirm_delete', to_delete: group.name, default: t('helpers.links.confirm_default'))) },
+                method: :delete,
+                disabled: group.urls.present?,
+                data: { confirm: t('views.collections.index.table.in_row_actions.delete_confirm', name: group.name) },
                 class: 'btn btn-xs btn-danger delete-group fa fa-trash-o', remote: true %>
   </td>
 </tr>
