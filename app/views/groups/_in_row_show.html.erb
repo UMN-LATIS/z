@@ -1,8 +1,10 @@
 <tr id='group-<%= group.id %>'>
   <td>
-    <%= link_to group.name, group_context_path(group) %></li>
+    <div class="group-name"><%= group.name %></div>
+    <div class="group-description"><%= group.description %></div>
   </td>
-  <td><%= group.description %></td>
+  <td>53</td>
+  <td>1234</td>
   <td><%= group.created_at.to_s(:created_on_formatted)  %></td>
   <td>
     <%= link_to t('views.collections.index.table.in_row_actions.edit'),
