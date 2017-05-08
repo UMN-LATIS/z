@@ -524,6 +524,8 @@ div.dataTables_wrapper{
 }
 
 .cla-header{
+  position:relative;
+  z-index:100;
   .row{
     margin:auto;
   }
@@ -546,6 +548,10 @@ div.dataTables_wrapper{
     margin-bottom:0;
   }
   .navbar-default .navbar-nav>li{
+    ul.dropdown-menu{
+      background-color:white;
+      position:absolute;
+    }
     >a{
       color:white;
       font-size:12px;
@@ -594,7 +600,19 @@ div.dataTables_wrapper{
   margin-top:280px;
 }
 @media only screen and (max-width:800px){
-  .cla-header{
+  header.cla-header{
+    .row .main-swooshes{
+      .dropdown-menu{
+        background-color:white;
+      }
+    }
+    .navbar-default .navbar-nav>li{
+      >a{
+        color:white;
+        font-size:11px;
+        padding: 19px 5px 16px;
+      }
+    }
     .pane-cla-glue-logo-pane {
       .logo{
         display:none;
@@ -605,8 +623,15 @@ div.dataTables_wrapper{
     }
   }
 }
-.container{
-      // width: 93% !important;
+@media only screen and (max-width:500px){
+  header.cla-header{
+
+    .pane-cla-glue-logo-pane {
+      .logo-text{
+        display: none
+      }
+    }
+  }
 }
 .pane-cla-glue-logo-pane{
   overflow: hidden;
