@@ -20,7 +20,7 @@
     <% if @admin_announcements.size == 0 %>
         <tr>
           <td colspan="5">
-            No Announcements. Click <i> <%= t('views.announcements.index.new_button') %> </i> to add one.
+            <%= t('views.announcements.index.table.empty_html', new_button: t('views.announcements.index.new_button')) %>
           </td>
         </tr>
     <% else %>

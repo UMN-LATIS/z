@@ -37,6 +37,7 @@ en:
         title: "Announcements"
         new_button: "Make an Announcement"
         table:
+          empty_html: "No Announcements. Click <i>%{new_button}</i> to add one."
           actions:
             edit: "Edit"
             destroy: "Delete"
