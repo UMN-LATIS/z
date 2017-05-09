@@ -10,7 +10,7 @@
 #
 # models/group.rb
 class Group < ApplicationRecord
-  has_paper_trail
+  has_paper_trail :meta => {:version_history => :version_history}
 
   has_many :groups_users, dependent: :destroy
   has_many :users, through: :groups_users
@@ -38,7 +38,7 @@ class Group < ApplicationRecord
   def add_user(user, send_group_change_notifications = false)
     users << user unless users.exists?(user.id)
     groups_users.find_by_user_id(user).update(
-      notify_user_changes: send_group_change_notifications
+        notify_user_changes: send_group_change_notifications
     )
   end
 
@@ -54,6 +54,26 @@ class Group < ApplicationRecord
   # will be an administrator
   def admin?
     users.length == 1 && users.first.admin?
+  end
+
+  def version_history
+    h = "<b> Current Name: #{name} </b><br/>"
+    h.concat "<b>Current Description: #{description}</b><br/>"
+    h.concat "<h3>History</h3><hr>"
+    self.versions.each do |v|
+      g = v.reify unless v.event.equal? "create"
+      h.concat "<b>What Happened: </b> #{v.event} <br/>"
+      h.concat "<b>Who Made It: </b>  #{v.whodunnit_name}<br/>"
+      h.concat "<b>Previous Name: </b>  #{g ? g.name : 'N/A'}<br/>"
+      h.concat "<b>Previous Description: </b>  #{g ? g.description : 'N/A'}<br/>"
+      h.concat "<b>Date of Change: </b>  #{g ? g.updated_at : 'N/A'}<br/>"
+      h.concat "<br/><br/>"
+    end
+    self.versions.each do |v|
+      v.version_history = h
+      v.save
+    end
+    h
   end
 
 end

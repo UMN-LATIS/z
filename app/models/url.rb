@@ -13,7 +13,7 @@
 #
 require 'uri'
 class Url < ApplicationRecord
-  has_paper_trail :ignore => [:total_clicks]
+  has_paper_trail :ignore => [:total_clicks], :meta => {:version_history => :version_history}
 
   belongs_to :group
   has_many :clicks, dependent: :destroy
@@ -112,6 +112,28 @@ class Url < ApplicationRecord
     rescue URI::InvalidURIError
       errors.add(:url, 'is not valid.')
     end
+  end
+
+  def version_history
+    h = "<b> Current URL: #{url} </b><br/>"
+    h.concat "<b>Current Keyword: #{keyword}</b><br/>"
+    h.concat "<b>Current Group: #{group.name}</b><br/>"
+    h.concat "<h3>History</h3><hr>"
+    self.versions.each do |v|
+      g = v.reify unless v.event.equal? "create"
+      h.concat "<b>What Happened: </b> #{v.event} <br/>"
+      h.concat "<b>Who Made It: </b>  #{v.whodunnit_name}<br/>"
+      h.concat "<b>Previous URL: </b>  #{g ? g.url : 'N/A'}<br/>"
+      h.concat "<b>Previous Keyword: </b>  #{g ? g.keyword : 'N/A'}<br/>"
+      h.concat "<b>Previous Group Name: </b>  #{g ? g.group.name : 'N/A'}<br/>"
+      h.concat "<b>Date of Change: </b>  #{g ? g.updated_at : 'N/A'}<br/>"
+      h.concat "<br/><br/>"
+    end
+    self.versions.each do |v|
+      v.version_history = h
+      v.save
+    end
+    h
   end
 
 end

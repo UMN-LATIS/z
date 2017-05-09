@@ -1,5 +1,5 @@
 class AuditDatatable < AjaxDatatablesRails::Base
-  def_delegators :@view, :display_audited_item_url, :display_whodunnit_email
+  def_delegators :@view, :display_whodunnit_email
 
   def view_columns
     @view_columns ||= {
@@ -8,21 +8,31 @@ class AuditDatatable < AjaxDatatablesRails::Base
         whodunnit: { source: 'Audit.whodunnit' },
         whodunnit_email: { source: 'Audit.whodunnit_email' },
         whodunnit_name: { source: 'Audit.whodunnit_name' },
+        audit_history: { source: 'Audit.version_history' },
         created_at: { source: 'Audit.created_at' }
     }
   end
   private
 
   def data
+    visited = []
+    posi = []
+    records.each do |record|
+      next if visited.include? record.item_id
+      visited << record.item_id
+      posi << record
+    end
+    records = posi
     records.map do |record|
       {
           # comma separated list of the values for each cell of a table row
           # example: record.attribute,
-          item_type: display_audited_item_url(record),
+          item_type: record.item_type,
           event: record.event,
           whodunnit: display_whodunnit_email(record),
           whodunnit_email: record.whodunnit_email,
           whodunnit_name: record.whodunnit_name,
+          audit_history: record.version_history,
           created_at: record.created_at.to_s(:created_on_formatted),
           'DT_RowId' => "audit-#{record.id}"
       }
