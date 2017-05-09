@@ -11,7 +11,7 @@
  * It is generally better to create a new file per style scope.
  *
  *= require_self
- *= require_tree 
+ *= require_tree
  *= require bootstrap-select
  */
 
@@ -29,6 +29,7 @@
     text-align: center;
     border-radius: 8px;
     box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    border:none;
 }
 
 .input-spacing {
