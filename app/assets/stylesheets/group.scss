@@ -8,3 +8,7 @@
 #groups-table.table > tbody > tr > td {
      vertical-align: middle;
 }
+
+#groups-table.table td:first-child, #groups-table.table th:first-child {
+  padding-left: 15px;
+}
