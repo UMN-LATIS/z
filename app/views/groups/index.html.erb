@@ -2,7 +2,7 @@
 <div class="z-hero z-hero-dimmer">
   <div class="z-hero-content">
     <div class="page-header">
-      <h1><%= t('views.collections.index.title') %></h1>
+      <h1><%= t('views.groups.index.title') %></h1>
     </div>
   </div>
 </div>
@@ -14,10 +14,10 @@
   <table id="groups-table" class="table user-table table-striped table-bordered data-table">
     <thead>
     <tr>
-      <th><%= t('views.collections.index.table.collection') %></th>
-      <th><%= t('views.collections.index.table.num_members') %></th>
-      <th><%= t('views.collections.index.table.num_links') %></th>
-      <th><%= t('views.collections.index.table.created') %></th>
+      <th><%= t('views.groups.index.table.collection') %></th>
+      <th><%= t('views.groups.index.table.num_members') %></th>
+      <th><%= t('views.groups.index.table.num_links') %></th>
+      <th><%= t('views.groups.index.table.created') %></th>
       <th></th>
     </tr>
     </thead>
@@ -25,7 +25,7 @@
     <% if @groups.blank? %>
         <tr id="new-group-tip">
           <td colspan=4 class="info">
-            <i><%= t('views.collections.index.table.empty') %></i>
+            <i><%= t('views.groups.index.table.empty') %></i>
           </td>
         </tr>
     <% end %>
@@ -39,5 +39,5 @@
 <%= link_to  new_group_path,
              class: 'btn btn-primary btn-xs add-new-group', remote: true  do %>
               <i class="fa fa-plus-circle"></i>
-              <%= t("views.collections.index.new_button") %>
+              <%= t("views.groups.index.new_button") %>
             <% end %>

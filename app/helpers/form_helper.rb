@@ -14,4 +14,12 @@ module FormHelper
         form_for transfer_request, html: { remote: true }, &block
       end
   end
+
+  def form_for_group_admin(admin_view, group, &block)
+      if admin_view
+        form_for [:admin, group], html: { remote: true }, &block
+      else
+        form_for group, html: { remote: true }, &block
+      end
+  end
 end

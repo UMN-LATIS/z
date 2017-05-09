@@ -241,7 +241,7 @@ table.dataTable{
 			padding: 15px 0;
 		}
 	}
-	.table-row-edit-url{
+	.table-row-edit-main{
 		.z-hero-content{
 			width:auto;
 		}
@@ -271,7 +271,7 @@ table.dataTable{
 			display:inline-block;;
 			white-space:nowrap;
 
-			.cancel-edit-url{
+			.cancel-edit{
 				display: inline-block;
 				vertical-align: middle;
 				padding: 15px 22px;
@@ -296,9 +296,9 @@ table.dataTable{
 	}
 }
 @media screen and (max-width:900px){
-	.table-row-edit-url{
+	.table-row-edit-main{
 		.super-input{
-			input.js-new-url-keyword{
+			input.js-new-url-keyword, input.js-new-group-name{
 					width:100px;
 			}
 		}
@@ -460,17 +460,17 @@ $superInputHeight: 50px;
 }
 
 .super-input{
-	.js-new-url-url{
+	.js-new-url-url, .js-new-group-name{
 		width:100%;
 		display:table-cell;
 	}
-	.keyword-wrapper{
+	.keyword-wrapper, .description-wrapper{
 		height:$superInputHeight;
 		> * {
 			display:inline-block;
 		}
 
-		.keyword-static-text{
+		.keyword-static-text, .description-static-text{
 			font-weight:500;
 			color:#555;
 		}
@@ -488,8 +488,8 @@ $superInputHeight: 50px;
 }
 @media screen and (min-width:1100px){
 	.super-input{
-		.keyword-wrapper{
-			input.js-new-url-keyword{
+		.keyword-wrapper, .description-static-text{
+			input.js-new-url-keyword, input.js-new-group-description{
 				width:300px;
 			}
 		}
@@ -498,7 +498,7 @@ $superInputHeight: 50px;
 @media screen and (max-width:992px){
 	.super-input{
 
-		.js-new-url-url{
+		.js-new-url-url, .js-new-group-name{
 			width:200px;
 		}
 
@@ -514,7 +514,7 @@ $superInputHeight: 50px;
 	#url-blurb-container{
 		display:none;
 	}
-	.cancel-edit-url{
+	.cancel-edit{
 		display: block !important;
 		margin-top:10px !important;
 	}

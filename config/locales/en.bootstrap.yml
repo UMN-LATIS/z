@@ -136,7 +136,7 @@ en:
         new:
           title: "Shorten your link"
           submit: "Z-Link It"
-    collections:
+    groups:
       index:
         title: "My Collections"
         table:

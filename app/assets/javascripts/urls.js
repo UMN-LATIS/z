@@ -3,7 +3,7 @@ $(document).on("click", ".cancel-new-url", function (e) {
 	$(this).closest("tr").remove();
 });
 
-$(document).on("click", ".cancel-edit-url", function (e) {
+$(document).on("click", ".cancel-edit", function (e) {
 	e.preventDefault();
 	$('table.data-table').DataTable().draw();
 });
