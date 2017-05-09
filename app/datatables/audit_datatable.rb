@@ -18,8 +18,8 @@ class AuditDatatable < AjaxDatatablesRails::Base
     visited = []
     posi = []
     records.each do |record|
-      next if visited.include? record.item_id
-      visited << record.item_id
+      next if visited.include? "#{record.item_id}-#{record.item_type}"
+      visited << "#{record.item_id}-#{record.item_type}"
       posi << record
     end
     records = posi
