@@ -19,19 +19,6 @@
   *= require font-awesome
   */
 
-#starburst-close {
-    display: none;
-}
-
-#starburst-announcement{
-    color: #fff;
-    background-color: #428bca;
-    text-align: center;
-    border-radius: 8px;
-    box-shadow: 0 5px 10px rgba(0,0,0,.2);
-    border:none;
-}
-
 .input-spacing {
     padding-right: 10px;
 }
