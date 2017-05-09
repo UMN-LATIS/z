@@ -35,11 +35,12 @@ en:
         back: "Back"
       index:
         title: "Announcements"
-        new_button: "New"
+        new_button: "Make an Announcement"
         table:
+          empty_html: "No Announcements. Click <i>%{new_button}</i> to add one."
           actions:
             edit: "Edit"
-            destroy: "Destroy"
+            destroy: "Delete"
             destroy_confirm_html: "This will delete: <br/> %{message}"
       new:
         title: "New Announcement"
