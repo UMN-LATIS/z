@@ -10,7 +10,8 @@
 #
 # models/group.rb
 class Group < ApplicationRecord
-  has_paper_trail :meta => {:version_history => :version_history}
+  has_paper_trail
+  after_save :version_history
 
   has_many :groups_users, dependent: :destroy
   has_many :users, through: :groups_users

@@ -13,7 +13,8 @@
 #
 require 'uri'
 class Url < ApplicationRecord
-  has_paper_trail :ignore => [:total_clicks], :meta => {:version_history => :version_history}
+  has_paper_trail :ignore => [:total_clicks]
+  after_save :version_history
 
   belongs_to :group
   has_many :clicks, dependent: :destroy

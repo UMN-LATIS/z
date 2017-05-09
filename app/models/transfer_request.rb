@@ -12,7 +12,9 @@
 #
 
 class TransferRequest < ApplicationRecord
-  has_paper_trail :meta => {:version_history => :version_history}
+  has_paper_trail
+  after_save :version_history
+
   belongs_to :from_group, foreign_key: 'from_group_id', class_name: 'Group'
   belongs_to :to_group, foreign_key: 'to_group_id', class_name: 'Group'
   belongs_to :from_user, foreign_key: 'from_group_requestor_id', class_name: 'User'
