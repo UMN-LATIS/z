@@ -1,3 +1,5 @@
+@import 'variables';
+
 .url {
 	display: inline;
 }
@@ -347,7 +349,7 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, 
 	// margin-left: 5px;
 	font-size: 11px;
 	border: none;
-	color: #428bca;
+	color: $primaryColor;
 	/* color: white; */
 	background-color: #ededed;
 }
@@ -392,6 +394,10 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, 
 table.dataTable td.select-checkbox:before{
 	margin-top: 13px;
 }
+table.dataTable tbody > tr.selected, table.dataTable tbody>tr>.selected{
+	background-color:$primaryColor;
+}
+
 table.dataTable tr.selected td.select-checkbox:after{
 	margin-top:10px;
 }
@@ -454,7 +460,7 @@ $superInputHeight: 50px;
     padding:0 30px;
     color:white;
     font-weight:600;
-    background-color:#3687c5;
+    background-color:$primaryColor;
 		font-size:13px;
 		font-weight:500;
   }
@@ -755,7 +761,7 @@ $superInputHeight: 50px;
     box-shadow: none;
     background-color: #ededed;
     color: white;
-    color: #3687c5;
+    color: $primaryColor;
     border: none;
 }
 .loading-indicator-wrapper{
