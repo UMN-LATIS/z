@@ -48,12 +48,13 @@ en:
         title: "Editing Announcement"
     audits:
       index:
-        title: "Audits"
+        title: "Audit Log"
         table:
           item: "Item"
-          event: "Action"
+          event: "Last Action"
           whodunnit: "Whodunnit"
-          when: "When"
+          what: "Change History"
+          when: "As Of"
     urls:
       copy_success: "Copied shortlink to clipboard"
       move_confirm: "Are you sure you with to move short URL {{keyword}} to collection {{collection}}?"

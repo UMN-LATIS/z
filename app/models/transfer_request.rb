@@ -13,6 +13,8 @@
 
 class TransferRequest < ApplicationRecord
   has_paper_trail
+  after_save :version_history
+
   belongs_to :from_group, foreign_key: 'from_group_id', class_name: 'Group'
   belongs_to :to_group, foreign_key: 'to_group_id', class_name: 'Group'
   belongs_to :from_user, foreign_key: 'from_group_requestor_id', class_name: 'User'
@@ -64,5 +66,26 @@ class TransferRequest < ApplicationRecord
     reject
     save
   end
+
+
+  def version_history
+    h = "<b> Requested By: #{from_user.user_full_name} </b><br/>"
+    h.concat "<b> From Group: #{from_group.name} </b><br/>"
+    h.concat "<b> To Group: #{to_group.name} </b><br/>"
+    h.concat "<b> Current Status: #{status} </b><br/>"
+    h.concat "<h3>History</h3><hr>"
+    self.versions.each do |v|
+      g = v.reify #unless v.event.equal? "create"
+      h.concat "<b>What Happened: </b> #{v.event} <br/>"
+      h.concat "<b>Who Made It: </b>  #{v.whodunnit_name}<br/>"
+      h.concat "<b>Previous Status: </b>  #{g ? g.status : 'N/A'}<br/>"
+      h.concat "<br/><br/>"
+    end
+    self.versions.each do |v|
+      v.version_history = h
+      v.save
+    end
+  end
+
 
 end
