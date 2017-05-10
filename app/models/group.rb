@@ -74,7 +74,6 @@ class Group < ApplicationRecord
       v.version_history = h
       v.save
     end
-    h
   end
 
 end

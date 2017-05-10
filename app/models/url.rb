@@ -134,7 +134,6 @@ class Url < ApplicationRecord
       v.version_history = h
       v.save
     end
-    h
   end
 
 end

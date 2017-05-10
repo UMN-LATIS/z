@@ -79,14 +79,12 @@ class TransferRequest < ApplicationRecord
       h.concat "<b>What Happened: </b> #{v.event} <br/>"
       h.concat "<b>Who Made It: </b>  #{v.whodunnit_name}<br/>"
       h.concat "<b>Previous Status: </b>  #{g ? g.status : 'N/A'}<br/>"
-#      h.concat "<b>Date of Change: </b>  #{g ? g.updated_at : 'N/A'}<br/>"
       h.concat "<br/><br/>"
     end
     self.versions.each do |v|
       v.version_history = h
       v.save
     end
-    h
   end
 
 
