@@ -19,9 +19,6 @@
               </div>
 
               <div class="description-wrapper">
-                <div class="description-static-text">
-                  <%= t('views.groups.form.description') %>
-                </div>
                 <%= f.text_field :description, class: 'js-new-group-description', placeholder: t('views.groups.form.placeholders.description') %>
               </div>
 
@@ -32,7 +29,7 @@
            </div>
 
           <% if is_edit %>
-            <a href="#" class='btn btn-default cancel-edit-group'><%= t('views.groups.form.edit.cancel')%></a>
+            <a href="#" class='btn btn-default cancel-edit'><%= t('views.groups.form.edit.cancel')%></a>
           <% end %>
         <% end %>
         <%= render 'groups/in_row_errors', group: group %>
