@@ -6,7 +6,7 @@
       <td><i><%= t('helpers.no_email') %> </i></td>
   <% end %>
   <td>
-    <%= link_to t('.destroy', default: t('helpers.links.destroy')),
+    <%= link_to t('.destroy', default: t('helpers.links.remove')),
                 group_member_path(@group, member),
                 :method => :delete,
                 :data => { confirm: t('.confirm-delete', default: t('helpers.links.confirm_delete', to_delete: member.user_full_name, default: t('helpers.links.confirm_default'))) },
