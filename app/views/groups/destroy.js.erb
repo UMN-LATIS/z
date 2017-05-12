@@ -1,5 +1,1 @@
 $(document).find("tr#group-<%= @group.id %>").remove();
-
-$(document).find("div#nav_context_switcher").html(
-  $("<%= escape_javascript(render(partial: 'layouts/nav/context_switcher')) %>")
-);
