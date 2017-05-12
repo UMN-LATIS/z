@@ -263,7 +263,7 @@ table.dataTable{
 			overflow:hidden;
 			width:auto;
 			 border:1px solid white;
-			 .js-new-url-url{
+			 .js-new-url-url, .js-new-group-name{
 				 width:100%;
 			 }
 		}
@@ -488,7 +488,7 @@ $superInputHeight: 50px;
 }
 @media screen and (min-width:1100px){
 	.super-input{
-		.keyword-wrapper, .description-static-text{
+		.keyword-wrapper, .description-wrapper{
 			input.js-new-url-keyword, input.js-new-group-description{
 				width:300px;
 			}
@@ -555,7 +555,7 @@ $superInputHeight: 50px;
 		> * {
 			display:block;
 		}
-		.js-new-url-url{
+		.js-new-url-url, .js-new-group-name{
 			width:100%;
 			border-bottom:1px solid #eee;
 		}
@@ -623,7 +623,6 @@ $superInputHeight: 50px;
       text-transform:uppercase;
       color:#777;
     }
-
   }
 }
 .url-share-button{
