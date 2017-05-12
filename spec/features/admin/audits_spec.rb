@@ -21,7 +21,7 @@ describe 'as a valid admin user' do
   end
 
   it 'should display the audit title' do
-    expect(page).to have_content 'Audits'
+    expect(page).to have_content 'Audit Log'
   end
 
   it 'should display  Audited Item col header' do
@@ -29,7 +29,7 @@ describe 'as a valid admin user' do
   end
 
   it 'should display  Audited Action col header' do
-    expect(page).to have_content 'Action'
+    expect(page).to have_content 'Last Action'
   end
 
   it 'should display  Whodunnit col header' do
@@ -37,6 +37,11 @@ describe 'as a valid admin user' do
   end
 
   it 'should display  When col header' do
-    expect(page).to have_content 'When'
+    expect(page).to have_content 'Change History'
   end
+
+  it 'should display  When col header' do
+    expect(page).to have_content 'As Of'
+  end
+
 end

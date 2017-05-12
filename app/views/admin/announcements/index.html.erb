@@ -17,22 +17,32 @@
     </tr>
     </thead>
     <tbody>
-    <% @admin_announcements.each do |admin_announcement| %>
+    <% if @admin_announcements.size == 0 %>
         <tr>
-          <td><%= admin_announcement.body %></td>
-          <td><%= admin_announcement.start_delivering_at %></td>
-          <td><%= admin_announcement.stop_delivering_at %></td>
-          <td><%= link_to t('views.announcements.index.actions.edit'), edit_admin_announcement_path(admin_announcement) %></td>
-          <td><%= link_to t('views.announcements.index.actions.destroy'), admin_announcement, method: :delete, data: {confirm: t('views.announcements.index.table.actions.destroy_confirm_html', message: admin_announcement.body)} %></td>
+          <td colspan="5">
+            <%= t('views.announcements.index.table.empty_html', new_button: t('views.announcements.index.new_button')) %>
+          </td>
         </tr>
+    <% else %>
+        <% @admin_announcements.each do |admin_announcement| %>
+            <tr>
+              <td><%= admin_announcement.body %></td>
+              <td><%= admin_announcement.start_delivering_at %></td>
+              <td><%= admin_announcement.stop_delivering_at %></td>
+              <td><%= link_to t('views.announcements.index.table.actions.edit'), edit_admin_announcement_path(admin_announcement) %></td>
+              <td><%= link_to t('views.announcements.index.table.actions.destroy'), admin_announcement, method: :delete, data: {confirm: t('views.announcements.index.table.actions.destroy_confirm_html', message: admin_announcement.body)} %></td>
+            </tr>
+        <% end %>
     <% end %>
     </tbody>
   </table>
 </div>
-
-<%= link_to new_admin_announcement_path,
-            class: 'btn btn-primary btn-xs add-new-group' do %>
-            <i class="fa fa-plus-circle"></i>
-            <%= t('views.announcements.index.new_button') %>
+<% if @admin_announcements.size == 0 %>
+    <%= link_to new_admin_announcement_path,
+                class: 'btn btn-primary btn-xs add-new-group' do %>
+        <i class="fa fa-plus-circle"></i>
+        <%= t('views.announcements.index.new_button') %>
+    <% end %>
 <% end %>
+
 <br>

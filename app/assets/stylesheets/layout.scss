@@ -1,3 +1,6 @@
+@import "variables";
+@import "spinthatshit/loaders";
+
 /* mixins, variables, etc. */
 @mixin box_sizing {
   -moz-box-sizing: border-box;
@@ -8,11 +11,8 @@ $gray: #aaa;
 $grayLight: #bbbbbb;
 $grayMediumLight: #a4a4a4;
 $grayDarker: #8c8c8c;
-$goldieGold: #FFD700;
-$goldieMaroon: #800000;
 
 /* universal */
-
 html {
   overflow-y: scroll;
   font-size: 100%;
@@ -71,6 +71,9 @@ p {
   line-height: 1.2em;
 }
 
+a{
+  color:$primaryColor;
+}
 .bold{
   font-weight:bold;
 }
@@ -183,7 +186,11 @@ though the color below doesn't improve much.
   font-size: 12px;
   padding: 9px 23px;
   border: none;
-  transition: background-color 0.5s;
+  transition: background-color 0.3s;
+  background-color:$primaryColor;
+  &:hover{
+    background-color: darken($primaryColor, 5%)
+  }
 }
 
 .navbar-inverse .navbar-toggle:hover,
@@ -524,6 +531,8 @@ div.dataTables_wrapper{
 }
 
 .cla-header{
+  position:relative;
+  z-index:100;
   .row{
     margin:auto;
   }
@@ -546,6 +555,10 @@ div.dataTables_wrapper{
     margin-bottom:0;
   }
   .navbar-default .navbar-nav>li{
+    ul.dropdown-menu{
+      background-color:white;
+      position:absolute;
+    }
     >a{
       color:white;
       font-size:12px;
@@ -594,7 +607,19 @@ div.dataTables_wrapper{
   margin-top:280px;
 }
 @media only screen and (max-width:800px){
-  .cla-header{
+  header.cla-header{
+    .row .main-swooshes{
+      .dropdown-menu{
+        background-color:white;
+      }
+    }
+    .navbar-default .navbar-nav>li{
+      >a{
+        color:white;
+        font-size:11px;
+        padding: 19px 5px 16px;
+      }
+    }
     .pane-cla-glue-logo-pane {
       .logo{
         display:none;
@@ -605,9 +630,64 @@ div.dataTables_wrapper{
     }
   }
 }
-.container{
-      // width: 93% !important;
+@media only screen and (max-width:500px){
+  header.cla-header{
+
+    .pane-cla-glue-logo-pane {
+      .logo-text{
+        display: none
+      }
+    }
+  }
 }
 .pane-cla-glue-logo-pane{
   overflow: hidden;
+}
+
+
+.pagination {
+  li > a{
+    color:$primaryColor;
+    &:hover, &:focus{
+      color:$primaryColor;
+    }
+  }
+
+  > .active{
+    > a, >span{
+      background-color:$primaryColor;
+      border-color:$primaryColor;
+
+      &:focus{
+        color:white;
+        background-color:$primaryColor;
+        border-color:$primaryColor;
+
+      }
+      &:hover{
+        color:white;
+        background-color:$primaryColor;
+        border-color:$primaryColor;
+
+      }
+    }
+  }
+}
+
+#starburst-close {
+    display: none;
+}
+
+#starburst-announcement{
+    color: #fff;
+    background-color: $primaryColor;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    border-color:transparent;
+}
+//taken from https://github.com/webkul/csspin
+$loader-color: $primaryColor;
+.loading-indicator{
+  @include loader01;
 }

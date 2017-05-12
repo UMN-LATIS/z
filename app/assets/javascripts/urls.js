@@ -103,7 +103,8 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
   var transferText = '<i class="fa fa-exchange"></i> ' + I18n.t("views.urls.transfer_button");
   var moveText = '<i class="fa fa-share-square-o "></i> ' + I18n.t("views.urls.move_button");
 
-  var userTable = $('#urls-table').DataTable({
+	var $urlsTable = $('#urls-table');
+  var userTable = $urlsTable.DataTable({
           drawCallback: function(settings) {
               var pagination = $(this).closest('.dataTables_wrapper').find('.dataTables_paginate');
               pagination.toggle(this.api().page.info().pages > 1);
@@ -168,6 +169,18 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
 			 }, 300);
 		 }
    });
+
+	 $urlsTable.on( 'processing.dt', function ( e, settings, processing ) {
+		 if (processing){
+			 $urlsTable.parent().prepend('<div class="loading-indicator-wrapper">'
+			 																+ '<div class="loading-indicator">'
+																			+ '</div>'
+																		+ '</div>');
+		 }
+		 else{
+			 $(".loading-indicator-wrapper").remove();
+		 }
+    });
    $('table.data-table').on("page.dt", function(e){
        userTable.rows().deselect();
        $("#select-all").prop("checked", false);
