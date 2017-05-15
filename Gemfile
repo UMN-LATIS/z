@@ -67,7 +67,12 @@ gem 'pundit'
 
 # announcements to the seething masses
 # https://github.com/csm123/starburst#
-gem "starburst"
+gem 'starburst'
+
+#notify someone when exceptions occur
+#and notify slack channel
+gem 'exception_notification'
+gem 'slack-notifier'
 
 # For country information
 gem 'geocoder'
