@@ -141,9 +141,10 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
      },
      initComplete: function () {
         if(collectionSelect) {
+         selected_collection = $('.collection-selected').data('collectionSelected')
          this.api().columns([1]).every( function () {
              var column = this;
-             var select = $('<select id="collection-filter" class="form-control"><option value="">' + I18n.t("views.urls.index.table.collection_filter.all") + '</option></select>')
+             select = $('<select id="collection-filter" class="form-control"><option value="">' + I18n.t("views.urls.index.table.collection_filter.all") + '</option></select>')
                  .prependTo( $("#urls-table_filter") )
                  .on( 'change', function () {
                      var val = $.fn.dataTable.util.escapeRegex(
@@ -154,10 +155,16 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
                          .draw();
                  } );
              $('.collection-names').data('collection-names').forEach( function ( d, j ) {
-                 select.append( '<option value="'+d[0]+'">'+d[1]+'</option>' )
+                select.append( '<option value="'+d[0]+'">'+d[1]+'</option>' )
              } );
              select.before('<label>' + I18n.t("views.urls.index.table.collection_filter.label") + ':</label>');
 						 select.selectpicker();
+             if (selected_collection !== undefined) {
+               setTimeout(function(){
+               select.val(selected_collection).trigger("change");
+              }, 0);
+             }
+
          } );
        }
      },

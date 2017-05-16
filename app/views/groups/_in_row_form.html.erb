@@ -10,7 +10,8 @@
         </h3>
 
         <%= form_for_group_admin @admin_view, group do |f| %>
-
+        
+          <%= hidden_field_tag :new_identifier, group_identifier %>
           <div class="super-input">
               <%= f.text_field :name, class: 'js-new-group-name', placeholder: t('views.groups.form.placeholders.name') %>
 

@@ -37,7 +37,7 @@ class GroupsController < ApplicationController
         # new sign in will be necessary
         sign_in current_user
 
-        format.js { render :show }
+        format.js { render :create }
       else
         format.js { render :edit }
       end
@@ -54,7 +54,7 @@ class GroupsController < ApplicationController
   def update
     respond_to do |format|
       if @group.update(group_params)
-        format.js { render :show }
+        format.js { render :update }
       else
         format.js { render :edit }
       end

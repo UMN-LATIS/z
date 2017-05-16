@@ -1,1 +1,4 @@
-$(document).find("tr#group-<%= @group.id %>").remove();
+row = $("tr#group-<%= @group.id %>")
+datatable = $('table.data-table').DataTable()
+datatable.rows( row ).remove();
+datatable.columns.adjust().draw(); // Redraw the DataTable

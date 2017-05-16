@@ -1,3 +1,0 @@
-$(document).find("tr#group-<%= @group_identifier %>").replaceWith(
-  $("<%= escape_javascript(render(partial: 'groups/in_row_show', locals: { group: @group })) %>")
-);
