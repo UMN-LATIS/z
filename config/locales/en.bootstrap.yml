@@ -164,6 +164,19 @@ en:
           submit: "Create Collection"
       show:
       edit:
+    group_memberships:
+      index:
+        title_html: "Members of <i>%{group_name}</i>"
+        form:
+          add_someone: "Add a new member to this collection"
+          help: "Search by name or email"
+          submit: "Add member"
+          submit_confirm: "Are you sure you want to add %{name} to this collection?"
+        table:
+          member_name: "Name"
+          Email: "E-Mail"
+
+        back_to_collections: "Back to collections"
     transfer_requests:
       new:
         title: "Give URLs"
