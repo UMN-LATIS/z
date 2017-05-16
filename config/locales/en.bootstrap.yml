@@ -18,6 +18,7 @@ en:
         help: "Help"
         contact_us: "Contact Us!"
         faq: "Read our FAQ"
+        org_url: "http://latis.umn.edu/"
         admin:
           all_urls: "View all URLs"
           all_collections: "View all Collections"
