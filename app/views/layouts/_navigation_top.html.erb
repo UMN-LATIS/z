@@ -14,7 +14,7 @@
                    </span>
                  <% end %>
                </li>
-               <li class="<%= current_page?(groups_path) ? "selected" : "" %>">
+               <li class="<%= current_page?(groups_path) || params[:controller] == 'group_memberships' ? "selected" : "" %>">
                  <%= link_to (groups_path) do  %>
                    <span>
                      <i class="fa fa-users" aria-hidden="true"></i>
