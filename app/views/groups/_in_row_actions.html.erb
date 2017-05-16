@@ -20,7 +20,9 @@
           <%= link_to t('views.groups.index.table.in_row_actions.delete'),
                       group_path(group),
                       method: :delete,
-                      data: { confirm: t('views.urls.index.table.in_row_actions.delete_confirm', keyword: group.name) },
+                      disabled: group.urls.present?,
+                      data: {confirm: t('views.urls.index.table.in_row_actions.delete_confirm', keyword: group.name)},
+
                       class: 'btn delete-url fa fa-trash-o', remote: true %>
         </li>
     </ul>
