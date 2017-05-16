@@ -3,13 +3,13 @@
   <% if member.email %>
       <td><%= member.email %></td>
   <% else %>
-      <td><i><%= t('helpers.no_email') %> </i></td>
+      <td><i><%= t('views.group_members.table.no_email') %> </i></td>
   <% end %>
   <td>
-    <%= link_to t('.destroy', default: t('helpers.links.destroy')),
+    <%= link_to t('.views.group_members.table.destroy'),
                 group_member_path(@group, member),
-                :method => :delete,
-                :data => { confirm: t('.confirm-delete', default: t('helpers.links.confirm_delete', to_delete: member.user_full_name, default: t('helpers.links.confirm_default'))) },
+                method: :delete,
+                data: { confirm: t('.confirm-delete', default: t('helpers.links.confirm_delete', to_delete: member.user_full_name, default: t('views.group_members.table.destroy_confirm'))) },
                 class: 'btn btn-xs btn-danger delete-group-member fa fa-trash-o', remote: true %>
   </td>
 </tr>

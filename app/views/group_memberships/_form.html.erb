@@ -1,6 +1,6 @@
 <div id="search">
   <%= form_tag(group_members_path, remote: true, method: 'post', id: 'search-form', class: 'new_member') do %>
-    <div class="input-wrapper">
+    <div class="input-wrapper new-member-wrapper">
       <%= label_tag :people_search, "Add Someone" %>
       <%= text_field_tag 'people_search', nil, class: 'form-control' %>
       <span id="searchHelpInline" class="text-muted">

@@ -113,6 +113,9 @@ body > .modal{
 		text-align:initial;
 	}
 }
+#new-member-form{
+  margin: 180px 0 0 0;
+}
 .container-force-full-width{
 	width:100% !important;
 }
@@ -195,8 +198,11 @@ body.groups.index{
 		margin-top: 55px;
 	}
 }
-.new_admin input[type='text'], .new_member input[type='text'] {
+.new_admin input[type='text'] {
 	width: 400px;
+}
+.new_member input[type='text'] {
+  
 }
 
 table.dataTable{
