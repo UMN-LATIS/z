@@ -443,6 +443,9 @@ div.dataTables_wrapper{
 }
 .new-member-wrapper {
   margin-bottom: 0;
+  #people_search {
+    width: 500px;
+  }
 }
 
 @media (min-width: 768px){
