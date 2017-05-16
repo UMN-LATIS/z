@@ -11,6 +11,13 @@ class ApplicationController < ActionController::Base
   before_action :set_paper_trail_whodunnit
   before_action :ping_lookup_service
 
+  before_filter :set_notification
+
+  def set_notification
+    request.env['exception_notifier.exception_data'] = {"server" => request.env['SERVER_NAME']}
+    # can be any key-value pairs
+  end
+
   def info_for_paper_trail
     { :whodunnit_name => current_user.user_full_name, :whodunnit_email => current_user.email } if signed_in?
   end
