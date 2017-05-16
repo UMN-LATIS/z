@@ -6,6 +6,10 @@ en:
     application:
       lookup_service_down: "Could not establish a connection to the LDAP server. Please notify help@umn.edu"
   models:
+  helpers:
+    links:
+      remove: "Remove"
+      confirm_delete: "Confirm Delete"
   views:
     application:
       nav:
