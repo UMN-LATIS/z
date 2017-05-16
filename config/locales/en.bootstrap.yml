@@ -171,10 +171,13 @@ en:
           add_someone: "Add a new member to this collection"
           help: "Search by name or email"
           submit: "Add member"
-          submit_confirm: "Are you sure you want to add %{name} to this collection?"
+          submit_confirm: "Are you sure you want to add a new member to this collection?"
         table:
           member_name: "Name"
-          Email: "E-Mail"
+          email: "E-Mail"
+          no_email: "No E-Mail"
+          destroy: "Remove"
+          destroy_confirm: "Are you sure you want to remove <strong>%{to_delete}</strong> from this collection?"
 
         back_to_collections: "Back to collections"
     transfer_requests:
