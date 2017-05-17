@@ -71,8 +71,7 @@ class TransferRequest < ApplicationRecord
 
   def version_history
     h = "<b> Requested By: #{from_user.user_full_name} </b><br/>"
-    h.concat "<b> From Group: #{from_group.name} </b><br/>"
-    h.concat "<b> To Group: #{to_group.name} </b><br/>"
+    h.concat "<b> To User: #{to_user.user_full_name} </b><br/>"
     h.concat "<b> Current Status: #{status} </b><br/>"
     h.concat "<h3>History</h3><hr>"
     self.versions.each do |v|
