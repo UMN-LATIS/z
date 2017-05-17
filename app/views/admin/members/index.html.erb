@@ -37,10 +37,10 @@
 <table class="table table-striped">
   <thead>
   <tr>
-    <th><%= t('helpers.table_headers.admin_name')%></th>
-    <th><%= t('helpers.table_headers.id')%></th>
-    <th><%= t('helpers.table_headers.email') %></th>
-    <th><%= t('helpers.table_headers.created_on') %> </th>
+    <th><%= t('views.admin.members.index.table.name')%></th>
+    <th><%= t('views.admin.members.index.table.id')%></th>
+    <th><%= t('views.admin.members.index.table.email') %></th>
+    <th><%= t('views.admin.members.index.table.created_on') %> </th>
     <th><%= t '.actions', :default => t('helpers.actions') %></th>
   </tr>
   </thead>
@@ -50,7 +50,3 @@
   <% end %>
   </tbody>
 </table>
-
-<%= link_to t('.groups', :default => t('helpers.links.collections')),
-            groups_path,
-            :class => 'btn btn-primary btn-xs group' %>
