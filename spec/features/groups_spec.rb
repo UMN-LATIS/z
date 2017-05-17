@@ -82,15 +82,18 @@ describe 'groups index page', js: true do
         expect(page).to have_content group.description
       end
       it 'should display an edit button' do
+        find('.js-group-actions-dropdown').click
         expect(page).to have_content 'Edit'
       end
       it 'should display a delete button' do
+        find('.js-group-actions-dropdown').click
         expect(page).to have_content 'Delete'
       end
     end
 
     describe 'when updating an existing group', js: true do
       before do
+        find('.js-group-actions-dropdown').click
         find('.edit-group').click
       end
 
@@ -99,6 +102,7 @@ describe 'groups index page', js: true do
           find('#group_name').set new_name
           find('.js-group-submit').click
           wait_for_ajax
+          find('.js-group-actions-dropdown').click
           find('.edit-group').click
           expect(find('#group_name')['value']).to eq(new_name)
         end
@@ -106,6 +110,7 @@ describe 'groups index page', js: true do
           find('#group_description').set new_description
           find('.js-group-submit').click
           wait_for_ajax
+          find('.js-group-actions-dropdown').click
           find('.edit-group').click
           expect(find('#group_description')['value']).to eq(new_description)
         end
@@ -118,6 +123,7 @@ describe 'groups index page', js: true do
           before { group.urls << FactoryGirl.create(:url) }
           it 'should not delete the group' do
             expect do
+              find('.js-group-actions-dropdown').click
               find('.delete-group').click
               click_button "Confirm"
               wait_for_ajax
@@ -127,6 +133,7 @@ describe 'groups index page', js: true do
         describe 'on a group without urls' do
           it 'should delete the group' do
             expect do
+              find('.js-group-actions-dropdown').click
               find('.delete-group').click
               click_button "Confirm"
               wait_for_ajax

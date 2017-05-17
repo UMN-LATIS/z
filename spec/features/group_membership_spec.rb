@@ -26,7 +26,7 @@ describe 'groups members index page' do
         expect(page).to have_content user.email
       end
       it 'should display a delete button' do
-        expect(page).to have_content 'Delete'
+        expect(page).to have_content 'Remove'
       end
     end
   end

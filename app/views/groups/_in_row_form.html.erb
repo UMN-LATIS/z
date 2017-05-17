@@ -10,7 +10,7 @@
         </h3>
 
         <%= form_for_group_admin @admin_view, group do |f| %>
-        
+
           <%= hidden_field_tag :new_identifier, group_identifier %>
           <div class="super-input">
               <%= f.text_field :name, class: 'js-new-group-name', placeholder: t('views.groups.form.placeholders.name') %>
@@ -23,7 +23,7 @@
                 <%= f.text_field :description, class: 'js-new-group-description', placeholder: t('views.groups.form.placeholders.description') %>
               </div>
 
-              <button type="submit" class="js-url-submit">
+              <button type="submit" class="js-group-submit">
                 <%= is_edit ? t('views.groups.form.edit.submit') : t('views.groups.form.new.submit')  %>
               </button>
              </div>

@@ -202,7 +202,7 @@ body.groups.index{
 	width: 400px;
 }
 .new_member input[type='text'] {
-  
+
 }
 
 table.dataTable{
@@ -677,7 +677,7 @@ $superInputHeight: 50px;
 		padding:3px;
 		outline:none;
 	}
-	.delete-url{
+	.delete-url, .delete-group{
 		background-color:#d95450;
 		color:white !important;
 		&:active{
