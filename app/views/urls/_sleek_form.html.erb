@@ -11,7 +11,7 @@
     <%= form_for_url_admin @admin_view, url do |f| %>
 
       <div class="super-input">
-          <%= f.text_field :url, class: 'js-new-url-url', placeholder: t('views.urls.sleek_form.placeholders.url') %>
+          <%= f.text_field :url, class: 'js-new-url-url', placeholder: t('views.urls.sleek_form.placeholders.url'), 'aria-label': 'source URL' %>
 
         <div class="super-input-right">
           <div class="divider">
@@ -21,7 +21,7 @@
             <div class="keyword-static-text">
               <%= t('views.urls.sleek_form.domain') %>
             </div>
-            <%= f.text_field :keyword, class: 'js-new-url-keyword', placeholder: t('views.urls.sleek_form.placeholders.keyword') %>
+            <%= f.text_field :keyword, class: 'js-new-url-keyword', placeholder: t('views.urls.sleek_form.placeholders.keyword'), 'aria-label': 'keyword' %>
           </div>
 
           <button type="submit" class="js-url-submit">

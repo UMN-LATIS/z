@@ -85,6 +85,7 @@ en:
           shorturl: "Short URL"
           owner: "Owner"
           longurl: "Long URL"
+          actions: "Actions"
           collections: "Collections"
           collection_header_tooltip: "Organize and share management of your Z-Links"
           clicks: "Clicks"
