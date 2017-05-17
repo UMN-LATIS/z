@@ -15,6 +15,7 @@ require 'uri'
 class Url < ApplicationRecord
   has_paper_trail :ignore => [:total_clicks]
   after_save :version_history
+  before_destroy :version_history
 
   belongs_to :group
   has_many :clicks, dependent: :destroy
