@@ -28,6 +28,7 @@ class UrlDatatable < AjaxDatatablesRails::Base
             record.group_id
           ),
           class: 'form-control selectpicker ',
+          'aria-label': 'Current Collection',
           data: {
             update_path: url_path(record.id),
             keyword: record.keyword,
