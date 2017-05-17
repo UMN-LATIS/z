@@ -73,6 +73,10 @@ class TransferRequest < ApplicationRecord
     h = "<b> Requested By: #{from_user.user_full_name} </b><br/>"
     h.concat "<b> To User: #{to_user.user_full_name} </b><br/>"
     h.concat "<b> Current Status: #{status} </b><br/>"
+    h.concat "<br/><b>URLs:</b><br/>"
+    self.urls.each do |url|
+      h.concat "<a href=\"#{url.url}\">#{url.keyword}</a><br/>"
+    end
     h.concat "<h3>History</h3><hr>"
     self.versions.each do |v|
       g = v.reify #unless v.event.equal? "create"
