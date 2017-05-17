@@ -22,13 +22,6 @@
     </tr>
     </thead>
     <tbody>
-    <% if @groups.blank? %>
-        <tr id="new-group-tip">
-          <td colspan=4 class="info">
-            <i><%= t('views.groups.index.table.empty') %></i>
-          </td>
-        </tr>
-    <% end %>
     <% @groups.each do |group| %>
         <%= render 'in_row_show', group: group %>
     <% end %>
