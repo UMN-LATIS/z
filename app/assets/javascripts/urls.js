@@ -117,7 +117,7 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
             className: 'select-checkbox',
             searchable: false,
             orderable: false,
-            title:"<input type='checkbox' id='select-all' class='select-checkbox'/>"
+            title:"<input type='checkbox' id='select-all' class='select-checkbox' aria-label='select/deselect all rows'/>"
           },
           {data: 'group_id', visible: false, orderable: false},
           {data: 'keyword' },
@@ -144,7 +144,7 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
          selected_collection = $('.collection-selected').data('collectionSelected')
          this.api().columns([1]).every( function () {
              var column = this;
-             select = $('<select id="collection-filter" class="form-control"><option value="">' + I18n.t("views.urls.index.table.collection_filter.all") + '</option></select>')
+             var select = $('<select id="collection-filter" class="form-control" aria-label="Collections Filter"><option value="">' + I18n.t("views.urls.index.table.collection_filter.all") + '</option></select>')
                  .prependTo( $("#urls-table_filter") )
                  .on( 'change', function () {
                      var val = $.fn.dataTable.util.escapeRegex(
@@ -157,7 +157,7 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
              $('.collection-names').data('collection-names').forEach( function ( d, j ) {
                 select.append( '<option value="'+d[0]+'">'+d[1]+'</option>' )
              } );
-             select.before('<label>' + I18n.t("views.urls.index.table.collection_filter.label") + ':</label>');
+             select.before('<label for="collection-filter">' + I18n.t("views.urls.index.table.collection_filter.label") + ':</label>');
 						 select.selectpicker();
              if (selected_collection !== undefined) {
                setTimeout(function(){

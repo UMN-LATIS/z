@@ -90,6 +90,16 @@ Rails.application.configure do
   config.omniauth_provider = 'shibboleth'
   config.shib_return_url = 'https://login.umn.edu/idp/profile/Logout'
 
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+      address:              'mail.socsci.umn.edu',
+      port:                 587,
+      enable_starttls_auto: true  }
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+
+
   config.middleware.use ExceptionNotification::Rack,
                         email: {
                             email_prefix: Rails.env,
