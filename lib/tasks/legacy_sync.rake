@@ -20,7 +20,7 @@ namespace :users do
       # Set UID
       perid_umndid.uid = person.UID if perid_umndid.uid.blank?
       puts "Processing #{person.UID}"
-      perid_umndid.umndid = UserLookupService.new(
+      perid_umndid.umndid = UserLookup.new(
         query: person.UID,
         query_type: 'uid'
       ).search.try(:first).try(:first).try(:last).try(:first)

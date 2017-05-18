@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   before_action :set_paper_trail_whodunnit
   before_action :ping_lookup_service
 
-  before_filter :set_notification
+  before_action :set_notification
 
   def set_notification
     request.env['exception_notifier.exception_data'] = {"server" => request.env['SERVER_NAME']}
@@ -50,7 +50,7 @@ class ApplicationController < ActionController::Base
   end
 
   def ping_lookup_service
-    unless UserLookupService.new.ping
+    unless UserLookup.new.ping
       flash.now[:error] = I18n.t 'controllers.application.lookup_service_down'
       render file: 'public/lookup_service_down.html', layout: false
     end
