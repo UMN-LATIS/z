@@ -398,6 +398,18 @@ table.dataTable td.select-checkbox:before{
 }
 table.dataTable tbody > tr.selected, table.dataTable tbody>tr>.selected{
 	background-color:$primaryColor;
+	.bootstrap-select{
+		.dropdown-menu{
+			color:black;
+			ul{
+				li{
+					a{
+						color:black;
+					}
+				}
+			}
+		}
+	}
 }
 
 table.dataTable tr.selected td.select-checkbox:after{
