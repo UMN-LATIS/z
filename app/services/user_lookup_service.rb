@@ -2,7 +2,7 @@
 require 'net/ldap' # gem install net-ldap
 
 class UserLookupService
-  def initialize(params=nil)
+  def initialize(params = nil)
     @connection = Net::LDAP.new(
       YAML.load(File.open('config/ldap.yml'))
     )
@@ -11,13 +11,12 @@ class UserLookupService
   end
 
   def ping
-# @connection.get_operation_result.code == 0
     begin
       @connection.bind
     rescue Net::LDAP::ConnectionRefusedError
       return false
     end
-    return true
+    true
   end
 
   def search
@@ -25,21 +24,15 @@ class UserLookupService
     results = Rails.cache.fetch("#{@query}/#{@query_type}/search", expires_in: 12.hours) do
       if @connection.bind
         @connection.search(
-            filter: get_filter,
-            return_result: true
+          filter: get_filter,
+          return_result: true
         )
-      else
-        # authentication has failed
-        puts "Result: #{@connection.get_operation_result.code}"
-        puts "Message: #{@connection.get_operation_result.message}"
       end
     end
     return nil unless results
     results = results.promote(results.detect { |x| x[:uid] == [@query] })
-    results = results.map { |x| {umndid: x.try(:umndid), value: display_name(x), uid: x.try(:uid), first_name: x.try(:givenname), last_name: x.try(:sn), email: x.try(:mail)} }.flatten unless results.blank?
-    # Promote Internet id match
-    # Promote emplid match
-    return results
+    results = results.map { |x| { umndid: x.try(:umndid), value: display_name(x), uid: x.try(:uid), first_name: x.try(:givenname), last_name: x.try(:sn), email: x.try(:mail) } }.flatten unless results.blank?
+    results
   end
 
   private
@@ -51,22 +44,21 @@ class UserLookupService
   end
 
   def get_filter
-    sn_filter = Net::LDAP::Filter.eq('sn', "#{@query.squish.gsub(/\s/, '*')}*")
-    cn_filter = Net::LDAP::Filter.eq('cn', "#{@query.squish.gsub(/\s/, '* ')}*")
-    uid_filter = Net::LDAP::Filter.eq('uid', "#{@query}*")
-    mail_filter = Net::LDAP::Filter.eq('mail', "#{@query}*")
-    umndid_filter = Net::LDAP::Filter.eq('umndid', "#{@query}")
     if @query_type.eql? 'last_name'
-      return sn_filter
+      Net::LDAP::Filter.eq('sn', "#{@query.squish.gsub(/\s/, '*')}*")
     elsif @query_type.eql? 'uid'
-      return uid_filter
+      Net::LDAP::Filter.eq('uid', "#{@query}*")
     elsif @query_type.eql? 'umndid'
-      return umndid_filter
+      Net::LDAP::Filter.eq('umndid', @query.to_s)
     elsif @query_type.eql? 'mail'
-      return mail_filter
+      Net::LDAP::Filter.eq('mail', "#{@query}*")
     elsif @query_type.eql? 'all'
+      cn_filter = Net::LDAP::Filter.eq('cn', "#{@query.squish.gsub(/\s/, '* ')}*")
+      uid_filter = Net::LDAP::Filter.eq('uid', "#{@query}*")
+      mail_filter = Net::LDAP::Filter.eq('mail', "#{@query}*")
+
       x = Net::LDAP::Filter.intersect(cn_filter, uid_filter)
-      return Net::LDAP::Filter.intersect(x, mail_filter)
+      Net::LDAP::Filter.intersect(x, mail_filter)
     end
   end
 end
