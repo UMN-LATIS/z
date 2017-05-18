@@ -3,7 +3,7 @@ $(document).on("click", ".cancel-new-url", function (e) {
 	$(this).closest("tr").remove();
 });
 
-$(document).on("click", ".cancel-edit-url", function (e) {
+$(document).on("click", ".cancel-edit", function (e) {
 	e.preventDefault();
 	$('table.data-table').DataTable().draw();
 });
@@ -141,6 +141,7 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
      },
      initComplete: function () {
         if(collectionSelect) {
+         selected_collection = $('.collection-selected').data('collectionSelected')
          this.api().columns([1]).every( function () {
              var column = this;
              var select = $('<select id="collection-filter" class="form-control" aria-label="Collections Filter"><option value="">' + I18n.t("views.urls.index.table.collection_filter.all") + '</option></select>')
@@ -154,10 +155,16 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
                          .draw();
                  } );
              $('.collection-names').data('collection-names').forEach( function ( d, j ) {
-                 select.append( '<option value="'+d[0]+'">'+d[1]+'</option>' )
+                select.append( '<option value="'+d[0]+'">'+d[1]+'</option>' )
              } );
              select.before('<label for="collection-filter">' + I18n.t("views.urls.index.table.collection_filter.label") + ':</label>');
 						 select.selectpicker();
+             if (selected_collection !== undefined) {
+               setTimeout(function(){
+               select.val(selected_collection).trigger("change");
+              }, 0);
+             }
+
          } );
        }
      },

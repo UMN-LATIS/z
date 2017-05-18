@@ -1,0 +1,31 @@
+<div class="actions-column">
+  <div class="dropdown">
+    <button data-toggle="dropdown" class="actions-dropdown-button js-group-actions-dropdown" aria-label="More Actions">
+      <i class="fa fa-ellipsis-h">
+      </i>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-right">
+      <li>
+        <%= link_to t('views.groups.index.table.in_row_actions.members'),
+                    group_members_path(group),
+                    class: 'btn action-button group-members fa fa-users' %>
+      </li>
+
+        <li>
+          <%= link_to t('views.groups.index.table.in_row_actions.edit'),
+                      edit_group_path(group),
+                      class: 'btn action-button edit-group fa fa-pencil', remote: true %>
+        </li>
+        <li>
+          <%= link_to t('views.groups.index.table.in_row_actions.delete'),
+                      group_path(group),
+                      method: :delete,
+                      disabled: group.urls.present?,
+                      data: {confirm: t('views.urls.index.table.in_row_actions.delete_confirm', keyword: group.name)},
+
+                      class: 'btn delete-group fa fa-trash-o', remote: true %>
+        </li>
+    </ul>
+  </div>
+
+</div>

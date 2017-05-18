@@ -11,6 +11,24 @@ en:
       remove: "Remove"
       confirm_delete: "Confirm Delete"
   views:
+    admin:
+      members:
+        index:
+          form:
+            add_someone: "Add an Admin"
+            help: "Search by name or E-Mail"
+            submit: "Add Admin"
+            submit_confirm: "Are you sure you want to add this user as an admin?"
+          table:
+            name: "Name"
+            id: "ID"
+            email: "E-Mail"
+            created_on: "Created On"
+            destroy: "Remove"
+            destroy_confirm_html: "Are you sure you want to remove access for <b>%{name}</b>?"
+
+
+
     application:
       nav:
         sign_in: "Sign In"
@@ -144,12 +162,13 @@ en:
         new:
           title: "Shorten your link"
           submit: "Z-Link It"
-    collections:
+    groups:
       index:
         title: "My Collections"
         table:
           name: "Name"
-          description: "Description"
+          num_members: "# of Members"
+          num_links: "# of Z-Links"
           created: "Created On"
           actions: "Actions"
           empty: "Please click the New button to add a collection"
@@ -170,6 +189,22 @@ en:
           submit: "Create Collection"
       show:
       edit:
+    group_memberships:
+      index:
+        title_html: "Members of <i>%{group_name}</i>"
+        form:
+          add_someone: "Add a new member to this collection"
+          help: "Search by name or email"
+          submit: "Add member"
+          submit_confirm: "Are you sure you want to add a new member to this collection?"
+        table:
+          member_name: "Name"
+          email: "E-Mail"
+          no_email: "No E-Mail"
+          destroy: "Remove"
+          destroy_confirm: "Are you sure you want to remove <strong>%{to_delete}</strong> from this collection?"
+
+        back_to_collections: "Back to collections"
     transfer_requests:
       new:
         title: "Give URLs"

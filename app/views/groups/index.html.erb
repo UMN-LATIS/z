@@ -2,7 +2,7 @@
 <div class="z-hero z-hero-dimmer">
   <div class="z-hero-content">
     <div class="page-header">
-      <h1><%= t('views.collections.index.title') %></h1>
+      <h1><%= t('views.groups.index.title') %></h1>
     </div>
   </div>
 </div>
@@ -11,23 +11,17 @@
   <div id="announcements">
     <%= render :partial => "announcements/starburst/announcement_bootstrap" %>
   </div>
-  <table class="table table-striped">
+  <table id="groups-table" class="table user-table table-striped table-bordered data-table">
     <thead>
     <tr>
-      <th><%= t('views.collections.index.table.name') %></th>
-      <th><%= t('views.collections.index.table.description') %></th>
-      <th><%= t('views.collections.index.table.created') %></th>
-      <th><%= t('views.collections.index.table.actions') %></th>
+      <th><%= t('views.groups.index.table.name') %></th>
+      <th><%= t('views.groups.index.table.num_members') %></th>
+      <th><%= t('views.groups.index.table.num_links') %></th>
+      <th><%= t('views.groups.index.table.created') %></th>
+      <th><%= t('views.groups.index.table.actions') %></th>
     </tr>
     </thead>
     <tbody>
-    <% if @groups.blank? %>
-        <tr id="new-group-tip">
-          <td colspan=4 class="info">
-            <i><%= t('views.collections.index.table.empty') %></i>
-          </td>
-        </tr>
-    <% end %>
     <% @groups.each do |group| %>
         <%= render 'in_row_show', group: group %>
     <% end %>
@@ -38,5 +32,5 @@
 <%= link_to  new_group_path,
              class: 'btn btn-primary btn-xs add-new-group', remote: true  do %>
               <i class="fa fa-plus-circle"></i>
-              <%= t("views.collections.index.new_button") %>
+              <%= t("views.groups.index.new_button") %>
             <% end %>

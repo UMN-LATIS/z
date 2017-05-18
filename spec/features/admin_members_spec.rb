@@ -1,6 +1,5 @@
 require 'rails_helper'
 
-
 describe 'admin members index page' do
   before do
     @user = FactoryGirl.create(:user, admin: true, uid: 'wozniak')
@@ -9,7 +8,7 @@ describe 'admin members index page' do
   end
 
   describe 'visiting the group membership page' do
-    let(:user) { User.where(:uid => 'wozniak').first }
+    let(:user) { User.where(uid: 'wozniak').first }
     describe 'page content' do
       it 'should display the admin member uid' do
         expect(page).to have_content user.uid
@@ -27,7 +26,7 @@ describe 'admin members index page' do
     describe 'to an existing group of admins' do
       let(:group) { FactoryGirl.create(:group) }
       it 'add and then set the new member admin flag to true' do
-        find("#uid", :visible => false).set 'andersen'
+        find('#uid', visible: false).set 'andersen'
         click_button 'Add'
         click_button 'Confirm'
         wait_for_ajax
@@ -36,7 +35,7 @@ describe 'admin members index page' do
       end
       describe 'clicking delete' do
         it 'should first add a new member and then delete it with notification' do
-          find("#uid", :visible => false).set 'andersen'
+          find('#uid', visible: false).set 'andersen'
           click_button 'Add'
           click_button 'Confirm'
           wait_for_ajax

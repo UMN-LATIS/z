@@ -12,12 +12,11 @@
 
 ActiveRecord::Schema.define(version: 20170509175646) do
 
-  create_table "clicks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "clicks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "country_code"
     t.integer  "url_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
-    t.index ["url_id"], name: "index_clicks_on_url_id", using: :btree
   end
 
   create_table "frequently_asked_questions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -28,14 +27,14 @@ ActiveRecord::Schema.define(version: 20170509175646) do
     t.datetime "updated_at",               null: false
   end
 
-  create_table "groups", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "groups", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.string   "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
 
-  create_table "groups_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "groups_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "group_id"
     t.integer "user_id"
     t.boolean "notify_user_changes", default: false, null: false
@@ -43,18 +42,10 @@ ActiveRecord::Schema.define(version: 20170509175646) do
     t.index ["user_id"], name: "index_groups_users_on_user_id", using: :btree
   end
 
-  create_table "perid_umndid", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "perid_umndid", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string "perid"
     t.string "umndid"
     t.string "uid"
-  end
-
-  create_table "perid_umndid_old", unsigned: true, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT" do |t|
-    t.integer "perid"
-    t.string  "umndid", limit: 11
-    t.index ["perid", "umndid"], name: "perid_2", using: :btree
-    t.index ["perid"], name: "perid", using: :btree
-    t.index ["umndid"], name: "umndid", using: :btree
   end
 
   create_table "starburst_announcement_views", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -76,14 +67,14 @@ ActiveRecord::Schema.define(version: 20170509175646) do
     t.text     "category",            limit: 65535
   end
 
-  create_table "transfer_request_urls", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "transfer_request_urls", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "transfer_request_id"
     t.integer "url_id"
     t.index ["transfer_request_id"], name: "index_transfer_request_urls_on_transfer_request_id", using: :btree
     t.index ["url_id"], name: "index_transfer_request_urls_on_url_id", using: :btree
   end
 
-  create_table "transfer_requests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "transfer_requests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "to_group_id"
     t.integer  "from_group_id"
     t.integer  "from_group_requestor_id"
@@ -95,7 +86,7 @@ ActiveRecord::Schema.define(version: 20170509175646) do
     t.index ["to_group_id"], name: "index_transfer_requests_on_to_group_id", using: :btree
   end
 
-  create_table "urls", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "urls", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text     "url",          limit: 65535
     t.string   "keyword"
     t.integer  "total_clicks",               default: 0
@@ -107,7 +98,7 @@ ActiveRecord::Schema.define(version: 20170509175646) do
     t.index ["keyword"], name: "index_urls_on_keyword", unique: true, using: :btree
   end
 
-  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "uid"
     t.integer  "context_group_id"
     t.integer  "default_group_id"
@@ -119,7 +110,7 @@ ActiveRecord::Schema.define(version: 20170509175646) do
     t.index ["default_group_id"], name: "index_users_on_default_group_id", using: :btree
   end
 
-  create_table "versions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT" do |t|
+  create_table "versions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.string   "item_type",       limit: 191,        null: false
     t.integer  "item_id",                            null: false
     t.string   "event",                              null: false
@@ -132,18 +123,6 @@ ActiveRecord::Schema.define(version: 20170509175646) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
   end
 
-  create_table "yourls_url", primary_key: "keyword", id: :string, limit: 200, default: "", force: :cascade, options: "ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC" do |t|
-    t.text     "url",       limit: 65535,                                      null: false
-    t.datetime "timestamp",               default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.string   "ip",        limit: 41,    default: "",                         null: false
-    t.integer  "clicks",                  default: 0,                          null: false, unsigned: true
-    t.integer  "per_id"
-    t.index ["ip"], name: "ip", using: :btree
-    t.index ["per_id"], name: "per_id", using: :btree
-    t.index ["timestamp"], name: "timestamp", using: :btree
-  end
-
-  add_foreign_key "clicks", "urls"
   add_foreign_key "groups_users", "groups"
   add_foreign_key "groups_users", "users"
   add_foreign_key "transfer_request_urls", "transfer_requests"

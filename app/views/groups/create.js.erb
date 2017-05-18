@@ -1,0 +1,3 @@
+datatable = $('table.data-table').DataTable()
+datatable.rows.add($("<%= escape_javascript(render(partial: 'groups/in_row_show', locals: { group: @group })) %>")); // Add new data
+datatable.columns.adjust().draw(); // Redraw the DataTable

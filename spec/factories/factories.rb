@@ -36,12 +36,12 @@ FactoryGirl.define do
     title	'Whoa Nelly!'
     body	'The Court is in Session, here comes the judge!'
     start_delivering_at	(DateTime.now - 30.days).strftime("%Y-%m-%d")
-    stop_delivering_at (DateTime.now + 30.days).strftime("%Y-%m-%d") 
+    stop_delivering_at (DateTime.now + 30.days).strftime("%Y-%m-%d")
   end
 
   factory :group do
-    name 'My First Group'
-    description 'first group of urls'
+    sequence(:name) { |n| "group_name#{n}" }
+    sequence(:description) { |n| "group_descr#{n}" }
   end
 
   factory :transfer_request do

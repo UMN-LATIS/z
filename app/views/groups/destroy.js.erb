@@ -1,5 +1,4 @@
-$(document).find("tr#group-<%= @group.id %>").remove();
-
-$(document).find("div#nav_context_switcher").html(
-  $("<%= escape_javascript(render(partial: 'layouts/nav/context_switcher')) %>")
-);
+row = $("tr#group-<%= @group.id %>")
+datatable = $('table.data-table').DataTable()
+datatable.rows( row ).remove();
+datatable.columns.adjust().draw(); // Redraw the DataTable
