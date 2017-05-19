@@ -210,6 +210,10 @@ table.dataTable{
 	.short-url{
 		font-weight:500;
 		// white-space:nowrap;
+		.btn.clipboard-btn{
+			padding-top:2px;
+			padding-bottom:2px;
+		}
 		a{
 			margin-bottom: 5px;
 			max-width: 230px;
@@ -221,6 +225,7 @@ table.dataTable{
 		}
 	}
 	.long-url{
+		margin-top:1px;
 		a{
 			color:#999;
 			font-size: 11px;
