@@ -1,5 +1,11 @@
-<%= link_to(display_keyword_url(url.keyword), full_url(url), target: '_blank') %>
-<button class='btn btn-default clipboard-btn' data-clipboard-text="<%= full_url(url) %>">
-  <i class=" fa fa-files-o"></i>
-  Copy
-</button>
+
+<div class="short-url">
+  <%= link_to(display_keyword_url(url.keyword), full_url(url), target: '_blank') %>
+  <button class='btn btn-default clipboard-btn' data-clipboard-text="<%= full_url(url) %>">
+    <i class=" fa fa-files-o"></i>
+    Copy
+  </button>
+</div>
+<div class="long-url">
+  <%= link_to(url.url, url.url, target: '_blank') %>
+</div>

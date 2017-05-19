@@ -47,7 +47,7 @@ $(document).bind('turbolinks:load', function () {
   if ($("body.urls.index").length == 0) {
     return;
   }
-  initializeUrlDataTable(6, "desc", 7,4, $('.collection-count').data('collection-count') > 1, true);
+  initializeUrlDataTable(5, "desc", 7,4, $('.collection-count').data('collection-count') > 1, true);
 });
 
 // Load Javascript for the admin-index page
@@ -121,7 +121,6 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
           },
           {data: 'group_id', visible: false, orderable: false},
           {data: 'keyword' },
-					{data: 'url'},
 				  {data: 'group_name' },
           {data: 'total_clicks' },
           {data: 'created_at' },
