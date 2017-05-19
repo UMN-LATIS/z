@@ -120,6 +120,7 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
             title:"<input type='checkbox' id='select-all' class='select-checkbox' aria-label='select/deselect all rows'/>"
           },
           {data: 'group_id', visible: false, orderable: false},
+					{data: 'url', visible:false, orderable: false},
           {data: 'keyword' },
 				  {data: 'group_name' },
           {data: 'total_clicks' },
