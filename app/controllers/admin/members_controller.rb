@@ -9,7 +9,7 @@ class Admin::MembersController < ApplicationController
   end
 
   def new
-    render json: UserLookupService.new(
+    render json: UserLookup.new(
       query: params[:search_terms],
       query_type: 'all'
     ).search

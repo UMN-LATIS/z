@@ -88,7 +88,7 @@ class User < ApplicationRecord
 
   def load_user_data
     # sets this objects UserData attrs
-    me = UserLookupService.new(
+    me = UserLookup.new(
         query: uid,
         query_type: 'umndid'
     ).search.try(:first)

@@ -4,7 +4,7 @@ class Legacy::Person < ApplicationRecord
   self.table_name = 'PERSON'
 
   def to_umndid
-    UserLookupService.new(
+    UserLookup.new(
       query: self.UID,
       query_type: 'uid'
     ).search.try(:first).try(:first).try(:last).try(:first)
