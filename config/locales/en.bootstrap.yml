@@ -99,7 +99,7 @@ en:
         admin:
           title: "URLs"
         table:
-          zlinks:"Z-Links"
+          zlinks: "Z-Links"
           title: "My Z-Links"
           shorturl: "Short URL"
           owner: "Owner"
