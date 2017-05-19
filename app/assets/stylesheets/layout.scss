@@ -392,7 +392,22 @@ div.container {
   height: 100%;
   margin-bottom:60px;
 }
-
+#umnhf-h-sb{
+  color:transparent;
+}
+header div.container{
+  margin-bottom:0;
+  position:relative;
+  #umnhf-h-logo{
+    margin-left:10px;
+  }
+  #umnhf-h-ql{
+    right: 12px;
+  }
+  #umnhf-h-search{
+    right:27px;
+  }
+}
 div.dataTables_wrapper{
   table{
     tbody{
@@ -566,11 +581,9 @@ div.dataTables_wrapper{
       position:absolute;
     }
     >a{
-      color:white;
-      font-size:12px;
-      padding: 19px 13px 16px;
-
-
+      color: white;
+      font-size: 13px;
+      padding: 19px 9px 16px;
       &:hover{
         color: #d8d8d8
       }

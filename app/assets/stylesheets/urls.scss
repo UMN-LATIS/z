@@ -205,8 +205,32 @@ table.dataTable{
 	// overflow:hidden;
 	border:none;
 	// box-shadow: 1px 1px 2px rgba(0,0,0,0.1), -1px 1px 2px rgba(0,0,0,0.1);
-	font-size:12px;
+	font-size:13px;
 	border: 1px solid #ddd;
+	.short-url{
+		font-weight:500;
+		// white-space:nowrap;
+		.btn.clipboard-btn{
+			padding-top:2px;
+			padding-bottom:2px;
+		}
+		a{
+			margin-bottom: 5px;
+			max-width: 230px;
+			margin-right:3px;
+			// text-overflow: ellipsis;
+			// overflow: hidden;
+			/* white-space: normal; */
+			/* display: inline-block; */
+		}
+	}
+	.long-url{
+		margin-top:1px;
+		a{
+			color:#999;
+			font-size: 11px;
+		}
+	}
 	tbody{
 		tr{
 			padding:10px 0;
@@ -215,8 +239,10 @@ table.dataTable{
 				padding:25px 5px;
 				&:nth-child(2){//maybe the best way to target the "short urls value" since there are no class names on TD's
 					padding-right:30px;
+					width:40%;
+					min-width:200px;
 				}
-				&:nth-child(5){//best way to target "created" column value
+				&:nth-child(4){//best way to target "created" column value
 					padding-left:30px;
 				}
 
@@ -394,7 +420,7 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, 
 	}
 }
 table.dataTable td.select-checkbox:before{
-	margin-top: 13px;
+	margin-top: 22px;
 }
 table.dataTable tbody > tr.selected, table.dataTable tbody>tr>.selected{
 	background-color:$primaryColor;
@@ -411,9 +437,12 @@ table.dataTable tbody > tr.selected, table.dataTable tbody>tr>.selected{
 		}
 	}
 }
+table.table-bordered.dataTable tbody td{
+	vertical-align: middle;
+}
 
 table.dataTable tr.selected td.select-checkbox:after{
-	margin-top:10px;
+	margin-top:19px;
 }
 table.dataTable tr.selected .fa-ellipsis-h{
 	&::before{
@@ -680,11 +709,17 @@ $superInputHeight: 50px;
 
 .actions-column{
 	white-space: nowrap;
+	text-align:center;
+	*>{
+		text-align:initial;
+	}
+
 	.actions-dropdown-button{
 		background:none;
 		border:none;
 		padding:3px;
 		outline:none;
+    margin-top: -6px;
 	}
 	.delete-url, .delete-group{
 		background-color:#d95450;
