@@ -47,7 +47,7 @@ $(document).bind('turbolinks:load', function () {
   if ($("body.urls.index").length == 0) {
     return;
   }
-  initializeUrlDataTable(5, "desc", 7,4, $('.collection-count').data('collection-count') > 1, true);
+  initializeUrlDataTable(6, "desc", 7,4, $('.collection-count').data('collection-count') > 1, true);
 });
 
 // Load Javascript for the admin-index page
@@ -55,7 +55,7 @@ $(document).bind('turbolinks:load', function () {
   if ($("body.admin\\/urls.index").length == 0) {
     return;
   }
-  initializeUrlDataTable(5, "desc", 6, 3, false, false);
+  initializeUrlDataTable(2, "desc", 6, 3, false, false);
 });
 
 // Turn the group select into the fancy select picker
