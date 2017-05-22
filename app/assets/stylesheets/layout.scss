@@ -625,6 +625,15 @@ div.dataTables_wrapper{
 .home-page-content-wrapper{
   margin-top:280px;
 }
+@media only screen and (max-width:991px){
+  header.cla-header{
+    .navbar-default .navbar-nav>li{
+      >a{
+        font-size:12px;
+      }
+    }
+  }
+}
 @media only screen and (max-width:800px){
   header.cla-header{
     .row .main-swooshes{
