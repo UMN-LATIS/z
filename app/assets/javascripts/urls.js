@@ -169,6 +169,7 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
        }
      },
 		 fnDrawCallback: function(){
+			 $("table#urls-table .selectpicker").append("<option class='bottom-action-option'>Create New Collection...</option").on("change")
 			 $(".selectpicker").selectpicker();
 			 $(".selectpicker").attr("title", I18n.t("views.urls.index.table.collection_tooltip"))
 			 setTimeout(function(){
