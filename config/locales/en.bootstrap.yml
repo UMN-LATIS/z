@@ -164,6 +164,10 @@ en:
           title: "Shorten your link"
           submit: "Z-Link It"
     groups:
+      new:
+        title: "New Collection"
+        submit: "Create"
+
       index:
         title: "My Collections"
         table:
