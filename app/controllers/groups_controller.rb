@@ -31,12 +31,16 @@ class GroupsController < ApplicationController
     @group_identifier = params[:new_identifier]
     @group = Group.new(group_params)
     @group.users << current_user
+    
+    if params[:keyword]
+      @group.urls << Url.find_by(keyword: params[:keyword])
+    end
+
     respond_to do |format|
       if @group.save
         # Since user gets updated (with a new group), a
         # new sign in will be necessary
         sign_in current_user
-
         format.js { render :create }
       else
         format.js { render :edit }
