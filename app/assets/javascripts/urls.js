@@ -99,6 +99,14 @@ function moveUrl(movePath, keywords){
   });
 }
 
+function changeGroup(groupPath, keyword){
+  $.ajax({
+    url: groupPath,
+    data: {keyword: keyword, modal:true},
+    dataType: 'script'
+  });
+}
+
 function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColumn, showMoveButton, collectionSelect) {
   var transferText = '<i class="fa fa-exchange"></i> ' + I18n.t("views.urls.transfer_button");
   var moveText = '<i class="fa fa-share-square-o "></i> ' + I18n.t("views.urls.move_button");
@@ -169,7 +177,11 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
        }
      },
 		 fnDrawCallback: function(){
-			 $("table#urls-table .selectpicker").append("<option class='bottom-action-option'>Create New Collection...</option").on("change")
+			 $("table#urls-table .selectpicker").append("<option class='bottom-action-option'>Create New Collection...</option").on("change", function(e){
+				 e.preventDefault();
+				 changeGroup($('.route-info').data('new-group-path') , $(e.currentTarget).data().keyword);
+				 return false;
+			 });
 			 $(".selectpicker").selectpicker();
 			 $(".selectpicker").attr("title", I18n.t("views.urls.index.table.collection_tooltip"))
 			 setTimeout(function(){
