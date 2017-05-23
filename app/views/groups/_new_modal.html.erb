@@ -1,0 +1,25 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title" id="myModalLabel"><%= t('views.groups.new.title')%></h4>
+    </div>
+    <%= form_for_group_admin @admin_view, @group do |f| %>
+
+      <div class="modal-body">
+          <%= hidden_field_tag :modal, true %>
+          <%= hidden_field_tag :new_identifier, @group_identifier %>
+          <%= hidden_field_tag :keyword, params[:keyword] %>
+          <%= f.text_field :name, class: 'js-new-group-name', placeholder: t('views.groups.form.placeholders.name') %>
+          <%= f.text_field :description, class: 'js-new-group-description', placeholder: t('views.groups.form.placeholders.description') %>
+
+        <%= render 'groups/in_row_errors', group: @group %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><%= t('views.transfer_requests.new.cancel')%></button>
+        <input type="submit" class="btn btn-primary" value="<%= t('views.groups.new.submit') %>" data-confirm="<%= t('views.transfer_requests.new.submit_confirm') %>">
+      </div>
+    <% end %>
+
+  </div>
+</div>
