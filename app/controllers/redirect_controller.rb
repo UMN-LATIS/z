@@ -5,7 +5,7 @@ class RedirectController < ActionController::Base
       redirect_to root_path
     else
       redirect_to(url.url)
-      url.add_click!(request.location)
+      url.add_click!(request.location.try(:country_code))
     end
   end
 end
