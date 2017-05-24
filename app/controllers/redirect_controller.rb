@@ -4,8 +4,8 @@ class RedirectController < ActionController::Base
     if url.nil?
       redirect_to root_path
     else
-      url.add_click!(request.location)
       redirect_to(url.url)
+      url.add_click!(request.location)
     end
   end
 end
