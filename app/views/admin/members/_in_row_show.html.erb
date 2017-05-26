@@ -1,5 +1,5 @@
 <tr id='user-<%= member.id %>'>
-  <td><%= member.user_full_name %></td>
+  <td><%= member.display_name %></td>
   <td><%= member.uid %></td>
   <% if member.email %>
       <td><%= member.email %></td>
@@ -11,7 +11,7 @@
     <%= link_to t('.destroy', default: t('views.admin.members.index.table.destroy')),
                 admin_member_path(member),
                 :method => :delete,
-                :data => {confirm: t('views.admin.members.index.table.destroy_confirm_html', name: member.user_full_name)},
+                :data => {confirm: t('views.admin.members.index.table.destroy_confirm_html', name: member.display_name)},
                 class: 'btn btn-xs btn-danger delete-admin-member fa fa-trash-o', remote: true %>
 
   </td>

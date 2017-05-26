@@ -70,8 +70,8 @@ class TransferRequest < ApplicationRecord
 
 
   def version_history
-    h = "<b> Requested By: #{from_user.user_full_name} </b><br/>"
-    h.concat "<b> To User: #{to_user.user_full_name} </b><br/>"
+    h = "<b> Requested By: #{from_user.internet_id} </b><br/>"
+    h.concat "<b> To User: #{to_user.internet_id} </b><br/>"
     h.concat "<b> Current Status: #{status} </b><br/>"
     h.concat "<br/><b>URLs:</b><br/>"
     self.urls.each do |url|

@@ -14,7 +14,7 @@ describe 'admin members index page' do
         expect(page).to have_content user.uid
       end
       it 'should display the admin member full name' do
-        expect(page).to have_content user.user_full_name
+        expect(page).to have_content user.display_name
       end
       it 'should display the admin member email' do
         expect(page).to have_content user.email
@@ -45,7 +45,7 @@ describe 'admin members index page' do
           wait_for_ajax
           visit admin_members_path(@user)
           expect(User.where(uid: 'andersen', admin: true)).not_to exist
-          expect(page).to have_content '(andersen) has been removed.'
+          expect(page).to have_content '(testinternetid) has been removed.'
         end
       end
       describe 'clicking delete on oneself' do

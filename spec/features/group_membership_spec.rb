@@ -20,7 +20,7 @@ describe 'groups members index page' do
         expect(page).to have_content group.name
       end
       it 'should display the group member full name' do
-        expect(page).to have_content user.user_full_name
+        expect(page).to have_content user.display_name
       end
       it 'should display the group member email' do
         expect(page).to have_content user.email
