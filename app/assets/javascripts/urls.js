@@ -178,9 +178,18 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
      },
 		 fnDrawCallback: function(){
 			 $("table#urls-table .selectpicker").append("<option class='bottom-action-option'>Create New Collection...</option").on("change", function(e){
-				 e.preventDefault();
-				 changeGroup($('.route-info').data('new-group-path') , $(e.currentTarget).data().keyword);
-				 return false;
+				 var $target = $(e.currentTarget)
+				 if ($target.find("option.bottom-action-option:selected").length){
+					 e.preventDefault();
+					 changeGroup($('.route-info').data('new-group-path') , $(e.currentTarget).data().keyword);
+					 $target.val($target.data("prev"));
+					 return false;
+				 }
+
+				 $target.data("prev", this.value);
+
+			 }).on('focus', function(e){
+				 $(e.currentTarget).data("prev", this.value); //store previous value
 			 });
 			 $(".selectpicker").selectpicker();
 			 $(".selectpicker").attr("title", I18n.t("views.urls.index.table.collection_tooltip"))
