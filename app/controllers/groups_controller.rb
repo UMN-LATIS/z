@@ -23,6 +23,9 @@ class GroupsController < ApplicationController
     @group = Group.new
     @group_identifier = Time.now.to_ms
 
+    if params[:keyword]
+      @url = Url.find_by(keyword: params[:keyword])
+    end
     respond_to do |format|
       format.js { render layout: false }
     end
@@ -43,6 +46,8 @@ class GroupsController < ApplicationController
         # new sign in will be necessary
         sign_in current_user
         format.js { render :create }
+      elsif params[:modal]
+        format.js { render "groups/new", layout: false}
       else
         format.js { render :edit }
       end
