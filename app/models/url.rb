@@ -127,7 +127,7 @@ class Url < ApplicationRecord
       h.concat "<b>Who Made It: </b>  #{v.whodunnit_name}<br/>"
       h.concat "<b>Previous URL: </b>  #{g ? g.url : 'N/A'}<br/>"
       h.concat "<b>Previous Keyword: </b>  #{g ? g.keyword : 'N/A'}<br/>"
-      h.concat "<b>Previous Group Name: </b>  #{g ? g.group.name : 'N/A'}<br/>"
+      h.concat "<b>Previous Group Name: </b>  #{g && g.group ? g.group.name : 'N/A(Group doesnt exist)'}<br/>"
       h.concat "<b>Date of Change: </b>  #{g ? g.updated_at : 'N/A'}<br/>"
       h.concat "<br/><br/>"
     end
