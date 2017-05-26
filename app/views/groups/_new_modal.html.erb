@@ -7,6 +7,8 @@
     <%= form_for_group_admin @admin_view, @group do |f| %>
 
       <div class="modal-body">
+          <div class="error-space"><%= @group.errors.full_messages.join('. ') %></div>
+
             <%= hidden_field_tag :modal, true %>
             <%= hidden_field_tag :new_identifier, @group_identifier %>
             <%= hidden_field_tag :keyword, params[:keyword] %>
@@ -19,7 +21,6 @@
               <%= f.text_field :description, class: 'form-control js-new-group-description', placeholder: t('views.groups.form.placeholders.description') %>
               <br/>
 
-            <%= render 'groups/in_row_errors', group: @group %>
 
       </div>
       <div class="modal-footer">
