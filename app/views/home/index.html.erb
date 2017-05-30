@@ -17,13 +17,12 @@
         <iframe width="400" height="250" src="https://www.youtube.com/embed/1mvUh2wNCA8" frameborder="0" allowfullscreen></iframe>
   </div>
   <p>Welcome to z.umn.edu, a URL shortening service provided
-    by <%#= link_to 'LATIS', 'http://latis.umn.edu/', target: '_blank' %>.</p>
+    by <%= link_to 'LATIS', 'http://latis.umn.edu/', target: '_blank' %>.</p>
 
   <p>z.umn.edu is available to everyone with a University of Minnesota Internet ID. To get started,
-    just <%#= link_to 'sign in', signin_path %>.</p>
+    just <%= link_to 'sign in', signin_path %>.</p>
 
-  <p>For questions about z.umn.edu, visit the <%#= link_to 'frequently asked questions', faq_path %> or
-    contact <%#= mail_to 'help@umn.edu', 'UMN Technology Help' %>.</p>
-
+  <p>For questions about z.umn.edu, visit the <%= link_to 'frequently asked questions', faq_path %> or
+    contact <%= mail_to 'help@umn.edu', 'UMN Technology Help' %>.</p>
 
 </div>
