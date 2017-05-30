@@ -16,13 +16,13 @@
           <div class="panel-heading">
             <h4 class="panel-title">
               <a id="q<%= count %>" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= count %>">
-                <%= faq.question %>
+                <%= faq.question.html_safe %>
               </a>
             </h4>
           </div>
           <div id="collapse<%= count %>" class="panel-collapse collapse">
             <div class="panel-body">
-              <%= faq.answer %>
+              <%= faq.answer.html_safe %>
             </div>
           </div>
         </div>
