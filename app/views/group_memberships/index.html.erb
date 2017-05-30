@@ -25,14 +25,14 @@
             source: peopleSearch,
             templates: {
               empty: [
-                '<div class="empty-message">',
+                '<div class="tt-suggestion empty-message">',
                   '<p>' + I18n.t('views.transfer_requests.new.no_users_found') + '</p>',
                 '</div>'
               ].join('\n'),
               suggestion: function(data){
                 return [
                   '<div>',
-                  '<p class="autocompleter-name"><strong>' + data.displayname + '</strong></p><p>'+ data.uid +'</p>',
+                  '<p class="autocompleter-name"><strong>' + data.display_name + '</strong></p><p>'+ data.internet_id +'</p>',
                   '</div>'].join('\n')
               }
             }
