@@ -12,9 +12,21 @@
 
         $('#people_search').typeahead({minLength: 2}, {
             name: 'people_search',
-            display: 'value',
+            highlight: true,
             limit: 1000,
-            source: peopleSearch
+            display: 'value',
+            source: peopleSearch,
+            templates: {
+              empty: [
+                '<div class="empty-message">',
+                  'Unable to find any people that match your search.</p>',
+                '</div>'
+              ].join('\n'),
+
+              suggestion: function(data){
+                return '<div><p class="autocompleter-name"><strong>' + data.displayname + '</strong></p><p>'+ data.uid +'</p></div>'
+              }
+            }
         })
         .on('typeahead:asyncrequest', function() {
           $('.glyphicon-refresh').removeClass("hidden");

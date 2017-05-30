@@ -1,3 +1,5 @@
+@import 'variables';
+
 .tt-query {
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
      -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
@@ -27,12 +29,16 @@
   padding: 3px 20px;
   line-height: 24px;
 }
-
+.tt-suggestion .autocompleter-name {
+  color: $primaryColor
+}
 .tt-suggestion.tt-cursor,.tt-suggestion:hover {
   color: #fff;
   background-color: #428bca;
   cursor: pointer;
-
+  .autocompleter-name {
+    color: #fff;
+  }
 }
 
 .tt-suggestion p {
