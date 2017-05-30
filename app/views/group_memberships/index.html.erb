@@ -20,9 +20,22 @@
 
         $('#people_search').typeahead({minLength: 2}, {
             name: 'people_search',
+            limit: 10,
             display: 'value',
-            limit: 1000,
-            source: peopleSearch
+            source: peopleSearch,
+            templates: {
+              empty: [
+                '<div class="tt-suggestion empty-message">',
+                  '<p>' + I18n.t('views.transfer_requests.new.no_users_found') + '</p>',
+                '</div>'
+              ].join('\n'),
+              suggestion: function(data){
+                return [
+                  '<div>',
+                  '<p class="autocompleter-name"><strong>' + data.display_name + '</strong></p><p>'+ data.internet_id +'</p>',
+                  '</div>'].join('\n')
+              }
+            }
         })
         .on('typeahead:asyncrequest', function() {
           $('.glyphicon-refresh').removeClass("hidden");

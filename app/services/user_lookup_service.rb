@@ -56,15 +56,25 @@ class UserLookupService
     end
     return nil unless results
     results = results.promote(results.detect { |x| x[:uid] == [@query] })
-    results = results.map { |x| { umndid: x.try(:umndid), value: autocompleter_display(x), uid: x.try(:uid), displayname: x.try(:displayname) } }.flatten unless results.blank?
+    results = results.map { |x| { umndid: x.try(:umndid), value: value(x), internet_id: internet_id(x), display_name: result_name(x) } }.flatten unless results.blank?
     results
   end
 
   private
 
-  def autocompleter_display(x)
-    displayname = x.try(:displayname).try(:first) ? x.try(:displayname).try(:first) : 'No Name'
-    internet_id = x.try(:uid).try(:first) ? x.try(:uid).try(:first) : 'No Internet ID'
-    "#{internet_id} - #{displayname}"
+  def display_name(x)
+    x.try(:displayname).try(:first) ? x.try(:displayname).try(:first) : 'Name not available'
+  end
+
+  def result_name(x)
+    x.try(:displayname).try(:first) ? x.try(:displayname).try(:first) : '(name not available)'
+  end
+
+  def internet_id(x)
+    x.try(:uid).try(:first) ? x.try(:uid).try(:first) : 'Internet ID not available'
+  end
+
+  def value(x)
+    "#{display_name(x)} (#{internet_id(x)})"
   end
 end

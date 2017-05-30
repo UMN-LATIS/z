@@ -16,7 +16,7 @@ en:
         index:
           form:
             add_someone: "Add an Admin"
-            help: "Search by name or E-Mail"
+            help: "Search by name or Internet ID"
             submit: "Add Admin"
             submit_confirm: "Are you sure you want to add this user as an admin?"
           table:
@@ -26,9 +26,6 @@ en:
             created_on: "Created On"
             destroy: "Remove"
             destroy_confirm_html: "Are you sure you want to remove access for <b>%{name}</b>?"
-
-
-
     application:
       nav:
         sign_in: "Sign In"
@@ -79,6 +76,7 @@ en:
           what: "Change History"
           when: "As Of"
     urls:
+
       copy_success: "Copied shortlink to clipboard"
       move_confirm: "Are you sure you with to move short URL {{keyword}} to collection {{collection}}?"
       transfer_button: "Give to a different user"
@@ -195,7 +193,7 @@ en:
         title_html: "Members of <i>%{group_name}</i>"
         form:
           add_someone: "Add a new member to this collection"
-          help: "Search by name or email"
+          help: "Search by name or Internet ID"
           submit: "Add member"
           submit_confirm: "Are you sure you want to add a new member to this collection?"
         table:
@@ -210,11 +208,12 @@ en:
       new:
         title: "Give URLs"
         transferee_label: "Person to give to"
-        transferee_help: "Search by name or Email."
+        transferee_help: "Search by name or Internet ID"
         urls_title: "URLs you are going to give away"
         submit: "Send URLs"
         submit_confirm: "Are you sure you want to transfer these URLs?"
         cancel: "Cancel"
+        no_users_found: "Unable to find any people that match your search."
     collection_moves:
       new:
         title: "Move to Collection"
