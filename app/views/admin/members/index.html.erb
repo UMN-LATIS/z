@@ -12,19 +12,20 @@
 
         $('#people_search').typeahead({minLength: 2}, {
             name: 'people_search',
-            highlight: true,
-            limit: 1000,
+            limit: 10,
             display: 'value',
             source: peopleSearch,
             templates: {
               empty: [
                 '<div class="empty-message">',
-                  'Unable to find any people that match your search.</p>',
+                  '<p>' + I18n.t('views.transfer_requests.new.no_users_found') + '</p>',
                 '</div>'
               ].join('\n'),
-
               suggestion: function(data){
-                return '<div><p class="autocompleter-name"><strong>' + data.displayname + '</strong></p><p>'+ data.uid +'</p></div>'
+                return [
+                  '<div>',
+                  '<p class="autocompleter-name"><strong>' + data.displayname + '</strong></p><p>'+ data.uid +'</p>',
+                  '</div>'].join('\n')
               }
             }
         })
@@ -38,7 +39,6 @@
         $('#people_search').bind('typeahead:selected', function (obj, datum, name) {
             $("#uid").val(datum.umndid);
         });
-
     });
 </script>
 
