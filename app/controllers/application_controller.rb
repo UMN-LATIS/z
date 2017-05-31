@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
   end
 
   def info_for_paper_trail
-    { whodunnit_name: current_user.user_full_name, whodunnit_email: current_user.email } if signed_in?
+    { whodunnit_name: current_user.internet_id, whodunnit_email: current_user.email } if signed_in?
   end
 
   def ensure_signed_in

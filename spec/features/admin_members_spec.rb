@@ -10,14 +10,11 @@ describe 'admin members index page' do
   describe 'visiting the group membership page' do
     let(:user) { User.where(uid: 'wozniak').first }
     describe 'page content' do
-      it 'should display the admin member uid' do
-        expect(page).to have_content user.uid
+      it 'should display the admin member internet_id' do
+        expect(page).to have_content user.internet_id
       end
-      it 'should display the admin member full name' do
-        expect(page).to have_content user.user_full_name
-      end
-      it 'should display the admin member email' do
-        expect(page).to have_content user.email
+      it 'should display the admin member display name' do
+        expect(page).to have_content user.display_name
       end
     end
   end
@@ -45,7 +42,7 @@ describe 'admin members index page' do
           wait_for_ajax
           visit admin_members_path(@user)
           expect(User.where(uid: 'andersen', admin: true)).not_to exist
-          expect(page).to have_content '(andersen) has been removed.'
+          expect(page).to have_content '(testinternetid) has been removed.'
         end
       end
       describe 'clicking delete on oneself' do

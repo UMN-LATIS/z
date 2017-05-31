@@ -21,44 +21,64 @@ class UserLookupService
 
   def search
     return nil unless @query.present? && @query_type.present?
-    results = Rails.cache.fetch("#{@query}/#{@query_type}/search", expires_in: 12.hours) do
-      if @connection.bind
-        @connection.search(
-          filter: get_filter,
-          return_result: true
+    results = nil
+    if @connection.bind
+      if @query_type == 'all'
+        cn_filter = Net::LDAP::Filter.eq('displayname', "*#{@query.squish.gsub(/\s/, '* ')}*")
+        uid_exact_filter = Net::LDAP::Filter.eq('uid', @query)
+        uid_filter = Net::LDAP::Filter.eq('uid', "#{@query}*")
+        results1 = @connection.search(
+          filter: uid_exact_filter,
+          return_result: true,
+          size: 1
+        )
+        results1 = [] if results1.nil?
+        results2 = @connection.search(
+          filter: (uid_filter | cn_filter) & Net::LDAP::Filter.negate(uid_exact_filter),
+          return_result: true,
+          size: 10
+        )
+        results2 = [] if results2.nil?
+        results = (results1 + results2)
+      elsif @query_type == 'umndid'
+        results = @connection.search(
+          filter: Net::LDAP::Filter.eq('umndid', @query),
+          return_result: true,
+          size: 1
+        )
+      elsif @query_type == 'uid'
+        results = @connection.search(
+          filter: Net::LDAP::Filter.eq('uid', @query),
+          return_result: true,
+          size: 1
         )
       end
     end
     return nil unless results
     results = results.promote(results.detect { |x| x[:uid] == [@query] })
-    results = results.map { |x| { umndid: x.try(:umndid), value: display_name(x), uid: x.try(:uid), first_name: x.try(:givenname), last_name: x.try(:sn), email: x.try(:mail) } }.flatten unless results.blank?
+    results = results.map { |x| { umndid: umndid(x), display: display(x), internet_id: internet_id(x), display_name: result_name(x) } }.flatten unless results.blank?
     results
   end
 
   private
 
-  def display_name(x)
-    name = x.try(:displayname)[0] ? x.try(:displayname)[0] : 'No Name'
-    mail = x.try(:mail) ? x.try(:mail)[0] : 'No Email'
-    "#{name} (#{mail})"
+  def umndid(x)
+    x.try(:umndid).try(:first)
   end
 
-  def get_filter
-    if @query_type.eql? 'last_name'
-      Net::LDAP::Filter.eq('sn', "#{@query.squish.gsub(/\s/, '*')}*")
-    elsif @query_type.eql? 'uid'
-      Net::LDAP::Filter.eq('uid', "#{@query}*")
-    elsif @query_type.eql? 'umndid'
-      Net::LDAP::Filter.eq('umndid', @query.to_s)
-    elsif @query_type.eql? 'mail'
-      Net::LDAP::Filter.eq('mail', "#{@query}*")
-    elsif @query_type.eql? 'all'
-      cn_filter = Net::LDAP::Filter.eq('cn', "#{@query.squish.gsub(/\s/, '* ')}*")
-      uid_filter = Net::LDAP::Filter.eq('uid', "#{@query}*")
-      mail_filter = Net::LDAP::Filter.eq('mail', "#{@query}*")
+  def display_name(x)
+    x.try(:displayname).try(:first) ? x.try(:displayname).try(:first) : 'Name not available'
+  end
 
-      x = Net::LDAP::Filter.intersect(cn_filter, uid_filter)
-      Net::LDAP::Filter.intersect(x, mail_filter)
-    end
+  def result_name(x)
+    x.try(:displayname).try(:first) ? x.try(:displayname).try(:first) : '(name not available)'
+  end
+
+  def internet_id(x)
+    x.try(:uid).try(:first) ? x.try(:uid).try(:first) : 'Internet ID not available'
+  end
+
+  def display(x)
+    "#{display_name(x)} (#{internet_id(x)})"
   end
 end

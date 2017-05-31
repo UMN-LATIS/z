@@ -30,12 +30,11 @@
         <div class="panel panel-default">
           <div class="panel-heading"><%= t('views.urls.show.collection') %></div>
           <div class="panel-body">
+            <% user_groups_for_collection = group_names_and_ids_for_select(current_user.groups)%>
             <%= select_tag(
               "url-collection-#{@url.id}",
-              options_from_collection_for_select(
-                current_user.groups,
-                'id',
-                'name',
+              options_for_select(
+                user_groups_for_collection,
                 @url.group_id
               ),
               class: 'form-control selectpicker collection-picker ',

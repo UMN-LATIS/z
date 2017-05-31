@@ -36,7 +36,7 @@ gem 'turbolinks', '~> 5.x'
 gem 'jbuilder', '~> 2.0'
 
 # Use this as the autocompleter library
-gem 'twitter-typeahead-rails'
+gem 'twitter-typeahead-rails', git: 'git://github.com/pgate/twitter-typeahead-rails'
 
 # Use net-ldap for LDAP lookup integration
 gem 'net-ldap'

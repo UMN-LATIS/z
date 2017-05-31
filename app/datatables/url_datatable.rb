@@ -1,5 +1,5 @@
 class UrlDatatable < AjaxDatatablesRails::Base
-  def_delegators :@view, :link_to, :full_url, :display_long_url, :display_keyword_url, :select_tag, :options_for_select, :url_path, :render, :display_name
+  def_delegators :@view, :link_to, :full_url, :display_long_url, :display_keyword_url, :select_tag, :options_for_select, :url_path, :render, :display_name, :group_names_and_ids_for_select
 
   def view_columns
     @view_columns ||= {
@@ -15,7 +15,7 @@ class UrlDatatable < AjaxDatatablesRails::Base
   private
 
   def data
-    user_groups_for_collection = current_user.groups.collect { |group| [display_name(group), group['id'] ] }
+    user_groups_for_collection = group_names_and_ids_for_select(current_user.groups)
     records.map do |record|
       {
         # comma separated list of the values for each cell of a table row
