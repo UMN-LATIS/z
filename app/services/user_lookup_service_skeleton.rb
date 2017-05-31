@@ -32,9 +32,7 @@ class UserLookupServiceSkeleton
 
     # Dummy results
     results = [
-      umndid: [
-        'testuid'
-      ],
+      umndid: 'testuid',
       display: 'Ryan Doe (testinternetid@umn.edu)',
       internet_id: 'testinternetid',
       display_name: 'Ryan Doe'
