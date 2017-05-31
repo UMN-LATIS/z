@@ -90,8 +90,8 @@ class User < ApplicationRecord
     if me.present?
       # Sometimes this data is not present
       # so we try for it
-      @display_name_loaded = me[:displayname].try(:first) || 'Unknown'
-      @internet_id_loaded = me[:uid].try(:first) || 'Unknown'
+      @display_name_loaded = me[:display_name] || 'Name not available'
+      @internet_id_loaded = me[:internet_id] || 'Unknown'
     end
   end
 

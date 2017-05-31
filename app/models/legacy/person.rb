@@ -7,6 +7,6 @@ class Legacy::Person < ApplicationRecord
     UserLookup.new(
       query: self.UID,
       query_type: 'uid'
-    ).search.try(:first).try(:first).try(:last).try(:first)
+    ).search.try(:first).try(:first).try(:last)
   end
 end

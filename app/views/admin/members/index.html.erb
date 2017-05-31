@@ -13,7 +13,7 @@
         $('#people_search').typeahead({minLength: 2}, {
             name: 'people_search',
             limit: 10,
-            display: 'value',
+            display: 'display',
             source: peopleSearch,
             templates: {
               empty: [
@@ -50,9 +50,7 @@
   <thead>
   <tr>
     <th><%= t('views.admin.members.index.table.name')%></th>
-    <th><%= t('views.admin.members.index.table.id')%></th>
-    <th><%= t('views.admin.members.index.table.email') %></th>
-    <th><%= t('views.admin.members.index.table.created_on') %> </th>
+    <th><%= t('views.admin.members.index.table.internet_id') %></th>
     <th><%= t '.actions', :default => t('helpers.actions') %></th>
   </tr>
   </thead>

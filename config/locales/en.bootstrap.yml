@@ -22,7 +22,7 @@ en:
           table:
             name: "Name"
             id: "ID"
-            email: "E-Mail"
+            internet_id: "Internet ID"
             created_on: "Created On"
             destroy: "Remove"
             destroy_confirm_html: "Are you sure you want to remove access for <b>%{name}</b>?"
