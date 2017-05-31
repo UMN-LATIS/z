@@ -30,7 +30,7 @@ class Url < ApplicationRecord
     self.url = "http://#{url}" if URI.parse(url).scheme.nil?
   end
 
-  validates :keyword, uniqueness: true, presence: true
+  validates :keyword, uniqueness: { case_sensitive: false }, presence: true
   validates :url, presence: true
   validates :keyword, format: {
                         with: /^[a-zA-Z0-9\-_]*$/,
