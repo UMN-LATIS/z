@@ -1,0 +1,12 @@
+function drawRegionsPie() {
+
+  var data = google.visualization.arrayToDataTable(<%= region_data_formatter(@clicks[:regions]).to_json.html_safe %>);
+  var options = {
+    title: "Traffic Location",
+    colors: ["#650014", "#FFCC32", "#79B791", "#266DD3", "#6969B3"]
+  };
+
+  var chart = new google.visualization.PieChart(document.getElementById('regions-pie-div'));
+
+  chart.draw(data, options);
+}

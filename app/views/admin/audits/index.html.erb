@@ -1,0 +1,25 @@
+<%- model_class = Audit -%>
+<div class="z-hero z-hero-dimmer">
+  <div class="z-hero-content">
+    <div class="page-header">
+      <h1><%= t('views.audits.index.title') %></h1>
+    </div>
+  </div>
+</div>
+<div class="groups-table-wrapper">
+
+<table id="audits-table" class="table admin-table table-striped table-bordered data-table" data-source="<%= datatable_admin_audits_path(format: :json) %>">
+  <thead>
+  <tr>
+    <th><%= t('views.audits.index.table.item') %></th>
+    <th><%= t('views.audits.index.table.event') %></th>
+    <th><%= t('views.audits.index.table.whodunnit') %></th>
+    <th><%= t('views.audits.index.table.what') %></th>
+    <th><%= t('views.audits.index.table.when') %></th>
+  </tr>
+  </thead>
+  <tbody>
+
+  </tbody>
+</table>
+</div>

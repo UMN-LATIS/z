@@ -1,0 +1,26 @@
+<div class="url-blurb">
+  <button class="url-blurb-close-button">
+    <i class="fa fa-close"> </i>
+  </button>
+  <div class="url-blurb-actions">
+    <div class="url-blurb-actions-header">
+        share your new z link
+    </div>
+    <div class="url-blurb-action-buttons">
+        <%= render 'share_buttons', url: @url %>
+    </div>
+  </div>
+
+  <div class="url-blurb-details">
+    <div class="url-blurb-source">
+      <%= display_long_url(@url.url,75) %>
+    </div>
+    <div class="url-blurb-short-url">
+      <%= display_keyword_url(@url.keyword) %>
+      <button type="button" class='btn btn-default clipboard-btn' data-clipboard-text="<%= full_url(url) %>">
+        <i class=" fa fa-files-o"></i>
+        Copy
+      </button>
+    </div>
+  </div>
+</div>

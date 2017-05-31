@@ -19,3 +19,12 @@
 
 # Ignore Byebug command history file.
 .byebug_history
+.idea/
+
+# Ignore tags
+.tags
+.tags_sorted_by_file
+
+# Ignore authention information
+config/ldap.yml
+config/database.yml

@@ -1,0 +1,28 @@
+<div class="page-header">
+  <h1><%= t('views.urls.index.admin.title') %></h1>
+</div>
+
+<table id="urls-table" class="table admin-table table-striped table-bordered data-table" data-source="<%= datatable_admin_urls_path(format: :json) %>">
+  <thead>
+    <tr>
+      <th></th>
+      <th></th>
+      <th><%= t('views.urls.index.table.shorturl') %></th>
+      <th><%= t('views.urls.index.table.longurl') %></th>
+      <th><%= t('views.urls.index.table.owner') %></th>
+      <th><%= t('views.urls.index.table.clicks') %></th>
+      <th><%= t('views.urls.index.table.created') %></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+
+  </tbody>
+</table>
+
+
+<%= content_tag :div, class: "route-info", data: {new_transfer_request_path: new_admin_transfer_request_path} do %>
+<% end %>
+
+
+<%= render 'urls/modal' %>

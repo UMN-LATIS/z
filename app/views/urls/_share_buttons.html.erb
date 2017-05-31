@@ -1,0 +1,21 @@
+<% is_large = (defined?(large) && large == true) ? 'url-share-button-large' : '' %>
+<% is_list = (defined?(list) && list == true) ? true : false %>
+
+<% if is_list %>
+  <li>
+<% end %>
+  <button class="url-share-button url-share-button-twitter <%= is_large %>" data-short-url="<%= full_url(url) %>">
+    <i class="fa fa-twitter"></i>
+    <%= t('views.urls.index.table.in_row_actions.tweet') %>
+  </button>
+<% if is_list %>
+  </li>
+  <li>
+<% end %>
+  <button class="url-share-button url-share-button-qr <%= is_large %> js-qrcode-download" data-path="<%= url_download_qrcode_path(url.keyword) %>">
+    <i class="fa fa-qrcode"></i>
+    <%= t('views.urls.index.table.in_row_actions.qr_code') %>
+  </button>
+<% if is_list %>
+  </li>
+<% end %>

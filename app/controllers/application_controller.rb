@@ -2,4 +2,68 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+  include SessionsHelper
+  include Pundit
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
+  helper Starburst::AnnouncementsHelper
+
+  before_action :set_paper_trail_whodunnit
+  before_action :ping_lookup_service
+  before_action :expire_cache_headers
+
+  before_action :set_notification
+
+  def set_notification
+    request.env['exception_notifier.exception_data'] = { 'server' => request.env['SERVER_NAME'] }
+    # can be any key-value pairs
+  end
+
+  def info_for_paper_trail
+    { whodunnit_name: current_user.internet_id, whodunnit_email: current_user.email } if signed_in?
+  end
+
+  def ensure_signed_in
+    redirect_to signin_path unless signed_in?
+  end
+
+  def ensure_is_admin
+    current_user.admin
+  end
+
+  def urls_by_keyword(keyword)
+    Url.where(
+      'keyword LIKE ? AND group_id = ?',
+      "%#{keyword.try(:downcase)}%",
+      current_user.context_group
+    )
+  end
+
+  def set_admin_view
+    @admin_view = true
+  end
+
+  private
+
+  def user_not_authorized
+    flash[:error] = I18n.t :error_with_help, scope: 'pundit', default: :default
+    redirect_to(request.referer || root_path)
+  end
+
+  def ping_lookup_service
+    unless UserLookup.new.ping
+      flash.now[:error] = I18n.t 'controllers.application.lookup_service_down'
+      render file: 'public/lookup_service_down.html', layout: false
+    end
+  end
+
+  def redirect_to_urls_if_logged_in
+    redirect_to urls_path if signed_in?
+  end
+
+  def expire_cache_headers
+    response.headers['Cache-Control'] = 'no-cache, no-store'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = 'Fri, 01 Jan 1990 00:00:00 GMT'
+  end
 end

@@ -1,0 +1,15 @@
+<tr id='user-<%= member.id %>'>
+  <td><%= member.display_name %></td>
+  <% if member.email %>
+      <td><%= member.email %></td>
+  <% else %>
+      <td><i><%= t('views.group_memberships.index.table.no_email') %> </i></td>
+  <% end %>
+  <td>
+    <%= link_to t('views.group_memberships.index.table.destroy'),
+                group_member_path(@group, member),
+                method: :delete,
+                data: { confirm: t('views.group_memberships.index.table.destroy_confirm', to_delete: member.display_name) },
+                class: 'btn btn-xs btn-danger delete-group-member fa fa-trash-o', remote: true %>
+  </td>
+</tr>

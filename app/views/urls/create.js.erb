@@ -1,0 +1,10 @@
+$('table.data-table').DataTable().draw();
+$(document).find("#new-url-form").html("<%= escape_javascript(render(partial: 'sleek_form', locals: { url: @empty_url })) %>");
+
+var $urlBlurb = $("<%= escape_javascript(render(partial: 'urls/url_blurb', locals: { url: @url })) %>");
+$urlBlurb.addClass("off");
+$("#url-blurb-container").append($urlBlurb);
+
+setTimeout(function(){
+  $urlBlurb.removeClass("off")
+},100);

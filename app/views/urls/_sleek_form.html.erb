@@ -1,0 +1,45 @@
+<% is_edit = (defined?(edit) && edit == true) ? true : false %>
+
+<div class="z-hero-content">
+
+  <div class="container">
+
+    <h3 class="z-hero-title">
+      <%= is_edit ? t('views.urls.sleek_form.edit.title') : t('views.urls.sleek_form.new.title') %>
+    </h3>
+
+    <%= form_for_url_admin @admin_view, url do |f| %>
+
+      <div class="super-input">
+          <%= f.text_field :url, class: 'js-new-url-url', placeholder: t('views.urls.sleek_form.placeholders.url'), 'aria-label': 'source URL' %>
+
+        <div class="super-input-right">
+          <div class="divider">
+          </div>
+
+          <div class="keyword-wrapper">
+            <div class="keyword-static-text">
+              <%= t('views.urls.sleek_form.domain') %>
+            </div>
+            <%= f.text_field :keyword, class: 'js-new-url-keyword', placeholder: t('views.urls.sleek_form.placeholders.keyword'), 'aria-label': 'keyword' %>
+          </div>
+
+          <button type="submit" class="js-url-submit">
+            <%= is_edit ? t('views.urls.sleek_form.edit.submit') : t('views.urls.sleek_form.new.submit')  %>
+          </button>
+         </div>
+
+
+       </div>
+
+      <% if is_edit %>
+        <a href="#" class='btn btn-default cancel-edit'><%= t('views.urls.sleek_form.edit.cancel')%></a>
+      <% end %>
+
+      <div id="url-blurb-container">
+      </div>
+
+    <% end %>
+    <%= render 'urls/in_row_errors', url: url %>
+  </div>
+</div>

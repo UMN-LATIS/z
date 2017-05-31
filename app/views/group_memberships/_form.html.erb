@@ -1,0 +1,17 @@
+<div id="search">
+  <%= form_tag(group_members_path, remote: true, method: 'post', id: 'search-form', class: 'new_member') do %>
+    <div class="input-wrapper new-member-wrapper">
+      <%= label_tag :people_search, t('views.group_memberships.index.form.add_someone') %>
+      <%= text_field_tag 'people_search', nil, class: 'form-control' %>
+      <span id="searchHelpInline" class="text-muted">
+        <%= t('views.group_memberships.index.form.help') %>.
+      </span>
+      <span class="hidden glyphicon glyphicon-refresh glyphicon-refresh-animate" aria-hidden="true"></span>
+      <%= hidden_field_tag 'uid' %>
+    </div>
+      <%= button_tag type: "submit", class: 'btn btn-primary add-new-group-member', data: { confirm: t('views.group_memberships.index.form.submit_confirm') } do %>
+        <i class="fa fa-plus-circle"></i>
+        <%= t('views.group_memberships.index.form.submit') %>
+      <% end %>
+  <% end %>
+</div>

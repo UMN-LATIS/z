@@ -1,0 +1,74 @@
+<script type="text/javascript">
+    $(function () {
+        var peopleSearch = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+                url: "<%= request.base_url %>/shortener/lookup_users?search_terms=%QUERY",
+                wildcard: '%QUERY'
+            }
+        });
+
+        $('#people_search').typeahead({minLength: 2}, {
+            name: 'people_search',
+            limit: 10,
+            display: 'display',
+            source: peopleSearch,
+            templates: {
+              empty: [
+                '<div class="tt-suggestion empty-message">',
+                  '<p>' + I18n.t('views.transfer_requests.new.no_users_found') + '</p>',
+                '</div>'
+              ].join('\n'),
+              suggestion: function(data){
+                return [
+                  '<div>',
+                  '<p class="autocompleter-name"><strong>' + data.display_name + '</strong></p><p>'+ data.internet_id +'</p>',
+                  '</div>'].join('\n')
+              }
+            }
+        })
+        .on('typeahead:asyncrequest', function() {
+          $('.glyphicon-refresh').removeClass("hidden");
+        })
+        .on('typeahead:asynccancel typeahead:asyncreceive', function() {
+          $('.glyphicon-refresh').addClass("hidden");
+        });
+
+        $('#people_search').bind('typeahead:selected', function (obj, datum, name) {
+            $("#transfer_request_to_group").val(datum.umndid);
+        });
+
+    });
+</script>
+
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title" id="myModalLabel"><%= t('views.transfer_requests.new.title')%></h4>
+    </div>
+    <%= form_for_transfer_admin @admin_view, @transfer_request do |f| %>
+      <div class="modal-body">
+        <div class="error-space"><%= @transfer_request.errors.full_messages.join('. ') %></div>
+
+        <h5><label for="people_search"> <%=t('views.transfer_requests.new.transferee_label')%> </label><span class="hidden glyphicon glyphicon-refresh glyphicon-refresh-animate" aria-hidden="true"></span></h5>
+
+        <div class="form-group people-search">
+          <%= text_field_tag "people_search", nil, class: 'form-control js-new-transfer-to-group'  %>
+          <span id="passwordHelpInline" class="text-muted">
+            <%= t('views.transfer_requests.new.transferee_help') %>.
+          </span>
+          <%= f.hidden_field "to_group" %>
+        </div>
+
+        <h5><%= t('views.transfer_requests.new.urls_title')%></h5>
+        <%= render 'transfer_requests/transfer_urls' %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><%= t('views.transfer_requests.new.cancel')%></button>
+        <input type="submit" class="btn btn-primary" value="<%= t('views.transfer_requests.new.submit') %>" data-confirm="<%= t('views.transfer_requests.new.submit_confirm') %>">
+      </div>
+    <% end %>
+  </div>
+</div>

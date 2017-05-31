@@ -1,0 +1,32 @@
+<%= form_for_url_admin @admin_view, url do |f| %>
+  <div class="input-wrapper">
+    <%= f.label :name, 'URL' %>
+    <%= f.text_field :url, class: 'form-control js-new-url-url', placeholder: "http://yourwebsite.com" %>
+  </div>
+  <div class="keyword-input-wrapper">
+    <%= f.label :name, 'https://z.umn.edu/' %>
+
+    <div class="input-wrapper">
+      <%= f.label :name, 'keyword' %>
+
+        <%= f.text_field :keyword, class: 'form-control js-new-url-keyword',  placeholder: "keyword" %>
+    </div>
+  </div>
+
+  <% if url.new_record? %>
+    <%= button_tag(type: "submit", class: 'btn btn-primary js-url-submit') do %>
+      <i class="fa fa-plus-circle"></i>
+      <%= t('.create_url', :default => t("helpers.links.create_url")) %>
+    <% end %>
+  <% else %>
+    <%= button_tag(type: "submit", class: 'btn btn-primary js-url-submit') do %>
+      <i class="fa fa-plus-circle"></i>
+      <%= t('.edit_url', :default => t("helpers.links.edit_url")) %>
+    <% end %>
+    <a href="#" class='btn btn-default cancel-edit'><%= t('helpers.buttons.cancel')%></a>
+  <% end %>
+<% end %>
+
+
+
+<%= render 'urls/in_row_errors', url: url %>

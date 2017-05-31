@@ -12,5 +12,14 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require twitter/bootstrap
+//= require twitter/typeahead.min
 //= require turbolinks
+//= require data-confirm-modal
+//= require starburst/starburst
 //= require_tree .
+//= require clipboard
+//= require bootstrap-select
+//= require i18n
+//= require i18n.js
+//= require i18n/translations

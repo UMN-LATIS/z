@@ -1,0 +1,35 @@
+<%- model_class = TransferRequest -%>
+<div class="page-header">
+  <h1><%= t('helpers.header_tags.transfer_urls')%></h1>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th><%=t('helpers.table_headers.url')%></th>
+      <th><%=t('helpers.table_headers.keyword')%></th>
+      <th><%=t('helpers.table_headers.created_on')%></th>
+    </tr>
+  </thead>
+  <tbody id='transfer-request-available-urls'>
+    <%= render 'transfer_requests/urls/url_transfer_table_body', urls: @urls %>
+  </tbody>
+</table>
+
+<a href="#" class='btn btn-primary add-new-url'><%= t('helpers.header_tags.transfer_urls')%></a>
+
+<h3><%= t('helpers.header_tags.urls_to_transfer')%> </h3>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th><%=t('helpers.table_headers.url')%></th>
+      <th><%=t('helpers.table_headers.keyword')%></th>
+      <th><%=t('helpers.table_headers.created_on')%></th>
+    </tr>
+  </thead>
+  <tbody id='transfer-request-selected-urls'>
+    <%= render 'transfer_requests/urls/url_transfer_table_body', urls: @transfer_request.urls %>
+  </tbody>
+</table>

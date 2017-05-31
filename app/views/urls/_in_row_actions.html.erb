@@ -1,0 +1,53 @@
+<div class="actions-column">
+  <div class="dropdown">
+    <button data-toggle="dropdown" class="actions-dropdown-button" aria-label="More Actions">
+      <i class="fa fa-ellipsis-h">
+      </i>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-right">
+      <li class="dropdown-submenu pull-left">
+        <%= link_to t('views.urls.index.table.in_row_actions.share'),
+                  '',
+                  class: 'btn action-button share-url fa fa-share-square-o',
+                  'data-content': render('urls/share_buttons', url: url) %>
+        <ul class="dropdown-menu dropdown-menu-left">
+          <%= render('urls/share_buttons', url: url, list: true) %>
+        </ul>
+      </li>
+
+      <li>
+        <%= link_to t('views.urls.index.table.in_row_actions.stats'),
+                    url_path(url.keyword),
+                    class: 'btn action-button show-url fa fa-bar-chart' %>
+      </li>
+        <% if admin_view %>
+        <li>
+          <%= link_to t('views.urls.index.table.in_row_actions.edit'),
+                      edit_admin_url_path(url),
+                      class: 'btn action-button edit-url fa fa-pencil', remote: true %>
+        </li>
+        <li>
+          <%= link_to t('views.urls.index.table.in_row_actions.delete'),
+                      admin_url_path(url),
+                      method: :delete,
+                      data: { confirm: t('views.urls.index.table.in_row_actions.delete_confirm', keyword: url.keyword) },
+                      class: 'btn action-button delete-url fa fa-trash-o', remote: true %>
+        </li>
+        <% else %>
+        <li>
+          <%= link_to t('views.urls.index.table.in_row_actions.edit'),
+                      edit_url_path(url),
+                      class: 'btn action-button edit-url fa fa-pencil', remote: true %>
+        </li>
+        <li>
+          <%= link_to t('views.urls.index.table.in_row_actions.delete'),
+                      url_path(url),
+                      method: :delete,
+                      data: { confirm: t('views.urls.index.table.in_row_actions.delete_confirm', keyword: url.keyword) },
+                      class: 'btn delete-url fa fa-trash-o', remote: true %>
+        </li>
+        <% end %>
+    </ul>
+  </div>
+
+</div>

@@ -1,0 +1,2 @@
+$("<%= escape_javascript(render(partial: 'groups/in_row_form', locals: { group: @group, group_identifier: @group_identifier })) %>").appendTo("table tbody");
+$('table tr#new-group-tip').remove();

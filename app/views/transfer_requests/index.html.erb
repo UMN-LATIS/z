@@ -1,0 +1,20 @@
+<%- model_class = TransferRequest -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+
+<h3>Requests To You</h3>
+<% unless @transfer_requests_to.blank? %>
+  <% @transfer_requests_to.each do |request| %>
+    <%= request.urls.map(&:keyword).join(", ") %>
+  <% end %>
+<% end %>
+
+<h3>Requests From You</h3>
+<% @transfer_requests_from.each do |request| %>
+  <%= request.urls.map(&:keyword).join(", ") %>
+<% end %>
+
+<%= link_to t('.new', :default => t('helpers.links.new')),
+            new_transfer_request_path,
+            :class => 'btn btn-primary add-new-transfer-request' %>

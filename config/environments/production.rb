@@ -11,7 +11,7 @@ Rails.application.configure do
   config.eager_load = true
 
   # Full error reports are disabled and caching is turned on.
-  config.consider_all_requests_local       = false
+  config.consider_all_requests_local = false
   config.action_controller.perform_caching = true
 
   # Disable serving static files from the `/public` folder by default since
@@ -46,10 +46,10 @@ Rails.application.configure do
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
-  config.log_level = :debug
+  config.log_level = :info
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [ :request_id ]
+  config.log_tags = [:request_id]
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
@@ -78,11 +78,39 @@ Rails.application.configure do
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
   if ENV["RAILS_LOG_TO_STDOUT"].present?
-    logger           = ActiveSupport::Logger.new(STDOUT)
+    logger = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # Set the omniauth provider
+  config.omniauth_provider = 'shibboleth'
+  config.shib_return_url = 'https://login.umn.edu/idp/profile/Logout'
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+      address:              'mail.socsci.umn.edu',
+      port:                 587,
+      enable_starttls_auto: true  }
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+
+  config.middleware.use ExceptionNotification::Rack,
+                        email: {
+                            email_prefix: Rails.env,
+                            sender_address: '"Z Exception Notifier" <help@umn.edu>',
+                            exception_recipients: ["web-app-errors@cla.umn.edu"]
+                        },
+                        :slack => {
+                            :webhook_url => "https://hooks.slack.com/services/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",
+                            :channel => "#sw_z_exceptions",
+                            :username => "Z Production Environment",
+                            :additional_parameters => {
+                                :icon_emoji => ":boom:",
+                                :mrkdwn => true
+                            }
+                        }
 end

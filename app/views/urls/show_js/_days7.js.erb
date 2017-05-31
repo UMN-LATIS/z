@@ -1,0 +1,24 @@
+function drawChartDays7() {
+  var data = new google.visualization.DataTable(<%= click_data_formatter(@clicks[:days7]).to_json.html_safe %>);
+
+  var options = {
+    axes: {
+      x: {
+        0: {label: I18n.t("views.urls.show.charts.day")}
+      },
+      y: {
+        0: {label: I18n.t("views.urls.show.charts.clicks")}
+      }
+    },
+    width: '100%',
+    height: 255,
+    legend: {
+      position: 'none'
+    },
+    colors: ['#FFCC32']
+  };
+
+  var chart = new google.charts.Bar(document.getElementById('chart-div-days7'));
+
+  chart.draw(data, options);
+}

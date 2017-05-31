@@ -1,0 +1,7 @@
+<dl class="dl-horizontal">
+<% @urls.each do |url| %>
+    <input type="hidden" name="keywords[]" value="<%= url.keyword %>">
+    <dt><%= url.keyword %> </dt>
+    <dd><%= url.url %></dd>
+<% end %>
+</dl>

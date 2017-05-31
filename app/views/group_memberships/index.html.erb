@@ -1,0 +1,76 @@
+<div class="z-hero z-hero-dimmer">
+  <div class="z-hero-content">
+    <div class="page-header">
+      <h1><%= t('views.group_memberships.index.title_html', group_name: @group.name) %></h1>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+    $(function () {
+        var peopleSearch = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+                url: "<%= request.base_url %>/shortener/groups/<%= @group.id %>/members/new/%QUERY",
+                wildcard: '%QUERY'
+            }
+        });
+
+        $('#people_search').typeahead({minLength: 2}, {
+            name: 'people_search',
+            limit: 10,
+            display: 'display',
+            source: peopleSearch,
+            templates: {
+              empty: [
+                '<div class="tt-suggestion empty-message">',
+                  '<p>' + I18n.t('views.transfer_requests.new.no_users_found') + '</p>',
+                '</div>'
+              ].join('\n'),
+              suggestion: function(data){
+                return [
+                  '<div>',
+                  '<p class="autocompleter-name"><strong>' + data.display_name + '</strong></p><p>'+ data.internet_id +'</p>',
+                  '</div>'].join('\n')
+              }
+            }
+        })
+        .on('typeahead:asyncrequest', function() {
+          $('.glyphicon-refresh').removeClass("hidden");
+        })
+        .on('typeahead:asynccancel typeahead:asyncreceive', function() {
+          $('.glyphicon-refresh').addClass("hidden");
+        });;
+
+        $('#people_search').bind('typeahead:selected', function (obj, datum, name) {
+            $("#uid").val(datum.umndid);
+        });
+
+    });
+</script>
+
+<div id="new-member-form">
+  <%= render 'form' %>
+</div>
+
+<table id="members-table" class="table user-table table-striped table-bordered data-table">
+  <thead>
+  <tr>
+    <th><%= t('views.group_memberships.index.table.member_name')%></th>
+    <th><%= t('views.group_memberships.index.table.email')%></th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @members.each do |member| %>
+      <%= render 'in_row_show', member: member, group: @group %>
+  <% end %>
+  </tbody>
+</table>
+
+<%= link_to groups_path do %>
+  <i class="fa fa-arrow-circle-left"></i>
+  <%= t('views.group_memberships.index.back_to_collections') %>
+<% end %>
