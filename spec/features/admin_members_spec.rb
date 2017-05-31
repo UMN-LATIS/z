@@ -10,14 +10,11 @@ describe 'admin members index page' do
   describe 'visiting the group membership page' do
     let(:user) { User.where(uid: 'wozniak').first }
     describe 'page content' do
-      it 'should display the admin member uid' do
-        expect(page).to have_content user.uid
+      it 'should display the admin member internet_id' do
+        expect(page).to have_content user.internet_id
       end
-      it 'should display the admin member full name' do
+      it 'should display the admin member display name' do
         expect(page).to have_content user.display_name
-      end
-      it 'should display the admin member email' do
-        expect(page).to have_content user.email
       end
     end
   end

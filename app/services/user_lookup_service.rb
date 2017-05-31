@@ -56,11 +56,15 @@ class UserLookupService
     end
     return nil unless results
     results = results.promote(results.detect { |x| x[:uid] == [@query] })
-    results = results.map { |x| { umndid: x.try(:umndid), value: value(x), internet_id: internet_id(x), display_name: result_name(x) } }.flatten unless results.blank?
+    results = results.map { |x| { umndid: umndid(x), display: display(x), internet_id: internet_id(x), display_name: result_name(x) } }.flatten unless results.blank?
     results
   end
 
   private
+
+  def umndid(x)
+    x.try(:umndid).try(:first)
+  end
 
   def display_name(x)
     x.try(:displayname).try(:first) ? x.try(:displayname).try(:first) : 'Name not available'
@@ -74,7 +78,7 @@ class UserLookupService
     x.try(:uid).try(:first) ? x.try(:uid).try(:first) : 'Internet ID not available'
   end
 
-  def value(x)
+  def display(x)
     "#{display_name(x)} (#{internet_id(x)})"
   end
 end

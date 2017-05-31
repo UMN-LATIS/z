@@ -1,9 +1,9 @@
 # app/services/user_lookup_service_skeleton.rb
 
 class UserLookupServiceSkeleton
-  def initialize(params=nil)
+  def initialize(params = nil)
     # LDAP Connection propreties
-    # Left as an example
+    # An example
     # @connection = Net::LDAP.new(
     #   YAML.load(File.open('config/ldap.yml'))
     # )
@@ -19,7 +19,7 @@ class UserLookupServiceSkeleton
     return nil unless @query.present? && @query_type.present?
 
     # Query the cache or make a connection to LDAP to find results.
-    results = Rails.cache.fetch("#{@query}/#{@query_type}/search", expires_in: 12.hours) do
+    # results = Rails.cache.fetch("#{@query}/#{@query_type}/search", expires_in: 12.hours) do
       # Query LDAP
       # Left as an example
       # if @connection.bind
@@ -27,27 +27,17 @@ class UserLookupServiceSkeleton
       #       filter: get_filter,
       #       return_result: true
       #   )
-      # end
-    end
+     # end
+    # end
 
     # Dummy results
     results = [
       umndid: [
         'testuid'
       ],
-      value: 'Ryan Doe (testemail@umn.edu)',
-      uid:  [
-        'testinternetid'
-      ],
-      first_name: [
-        'Ryan'
-      ],
-      last_name: [
-        'Doe'
-      ],
-      email: [
-        'testemail@umn.edu'
-      ]
+      display: 'Ryan Doe (testinternetid@umn.edu)',
+      internet_id: 'testinternetid',
+      display_name: 'Ryan Doe'
     ]
     results
   end

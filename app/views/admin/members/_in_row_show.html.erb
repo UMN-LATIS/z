@@ -1,12 +1,6 @@
 <tr id='user-<%= member.id %>'>
   <td><%= member.display_name %></td>
-  <td><%= member.uid %></td>
-  <% if member.email %>
-      <td><%= member.email %></td>
-  <% else %>
-      <td><i>No Email </i></td>
-  <% end %>
-  <td><%= member.created_at.to_s(:created_on_formatted)  %></td>
+  <td><%= member.internet_id %></td>
   <td>
     <%= link_to t('.destroy', default: t('views.admin.members.index.table.destroy')),
                 admin_member_path(member),
