@@ -115,19 +115,8 @@ describe 'urls index page', js: true do
       find('.js-new-url-url').set url
       find('.js-new-url-keyword').set keyword
     end
-    describe 'that has a super long keyword' do
-      it 'should shorten it on the sceen' do
-        visit urls_path
-        wait_for_ajax
-        find('.js-new-url-url').set url
-        find('.js-new-url-keyword').set 'kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk'
-        find('.js-url-submit').click
-        wait_for_ajax
-        expect(page).to have_content('kkkk...')
-      end
-    end
     describe 'that is super long' do
-      it 'should shorten it on the sceen' do
+      it 'should shorten it in the url blurb' do
         find('.js-url-submit').click
         wait_for_ajax
         expect(page).to have_content('gggg...')
@@ -377,22 +366,63 @@ describe 'urls index page', js: true do
       end
     end
 
-    describe 'when changing a URLs collection' do
-      before do
+    describe 'collection dropdown' do
+      before {
         @new_group = FactoryGirl.create(:group)
         @new_group.users << @user
         sign_in(@user)
         wait_for_ajax
-        find("[data-id='url-collection-#{@url.id}']").click
-        find('.dropdown-menu.open').find("li:not(.selected)").click
+        visit urls_path
         wait_for_ajax
+        find('table .selectpicker.dropdown-toggle').click
+      }
+
+      describe 'when changing collection' do
+        before{
+          find('.dropdown-menu.open').find('li', text: @new_group.name).click
+          wait_for_ajax
+        }
+
+        it 'should change the collection' do
+          expect(page).to have_selector('table .selectpicker.dropdown-toggle', text: @new_group.name)
+        end
+        it 'should update the urls collection in the database' do
+          @url.reload
+          expect(@url.group.id).to eq(@new_group.id)
+        end
       end
-      it 'should update the urls collection on the page' do
-        expect(page).to have_selector("[data-id='url-collection-#{@url.id}']", text: @new_group.name)
-      end
-      it 'should update the urls collection in the database' do
-        @url.reload
-        expect(@url.group.id).to eq(@new_group.id)
+
+      describe 'when creating a new collection' do
+        before{
+          find('table .dropdown-menu.open .bottom-action-option').click
+          wait_for_ajax
+        }
+
+        it 'should display the modal' do
+          expect(page).to have_selector('#index-modal', visible: true)
+        end
+
+        describe 'filling out form' do
+          before{
+            @new_group_name = "new group"
+            @new_group_description = "new group description"
+            find('.modal input#group_name').set @new_group_name
+            find('.modal input#group_description').set @new_group_description
+            find('.modal input[type="submit"]').click
+            wait_for_ajax
+            click_button "Confirm"
+            wait_for_ajax
+          }
+
+          it 'should update collection picker in table' do
+            expect(page).to have_selector('table .selectpicker.dropdown-toggle', text: @new_group_name)
+          end
+          it 'should update url in database' do
+            @url.reload
+            expect(@url.group.name).to eq(@new_group_name)
+          end
+
+        end
       end
     end
   end
