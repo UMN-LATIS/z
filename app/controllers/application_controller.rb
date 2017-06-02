@@ -10,16 +10,17 @@ class ApplicationController < ActionController::Base
 
   before_action :set_paper_trail_whodunnit
   before_action :ping_lookup_service
+  before_action :expire_cache_headers
 
   before_action :set_notification
 
   def set_notification
-    request.env['exception_notifier.exception_data'] = {"server" => request.env['SERVER_NAME']}
+    request.env['exception_notifier.exception_data'] = { 'server' => request.env['SERVER_NAME'] }
     # can be any key-value pairs
   end
 
   def info_for_paper_trail
-    { :whodunnit_name => current_user.user_full_name, :whodunnit_email => current_user.email } if signed_in?
+    { whodunnit_name: current_user.internet_id, whodunnit_email: current_user.email } if signed_in?
   end
 
   def ensure_signed_in
@@ -46,7 +47,7 @@ class ApplicationController < ActionController::Base
 
   def user_not_authorized
     flash[:error] = I18n.t :error_with_help, scope: 'pundit', default: :default
-    redirect_to(request.referrer || root_path)
+    redirect_to(request.referer || root_path)
   end
 
   def ping_lookup_service
@@ -57,6 +58,12 @@ class ApplicationController < ActionController::Base
   end
 
   def redirect_to_urls_if_logged_in
-    redirect_to urls_path unless !signed_in?
+    redirect_to urls_path if signed_in?
+  end
+
+  def expire_cache_headers
+    response.headers['Cache-Control'] = 'no-cache, no-store'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = 'Fri, 01 Jan 1990 00:00:00 GMT'
   end
 end

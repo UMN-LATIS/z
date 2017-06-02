@@ -10,7 +10,7 @@
 #  updated_at       :datetime         not null
 #
 class User < ApplicationRecord
-  attr_accessor :first_name, :last_name, :email, :internet_id, :first_name_loaded, :last_name_loaded, :email_loaded, :internet_id_loaded
+  attr_accessor :display_name, :internet_id, :display_name_loaded, :email_loaded, :internet_id_loaded
 
   has_many :groups_users, dependent: :destroy
   has_many :groups, through: :groups_users
@@ -43,9 +43,7 @@ class User < ApplicationRecord
   before_save { generate_token(:remember_token) }
 
   after_initialize do
-    @first_name_loaded = nil
-    @last_name_loaded = nil
-    @email_loaded = nil
+    @display_name_loaded = nil
     @internet_id_loaded = nil
   end
 
@@ -57,25 +55,18 @@ class User < ApplicationRecord
     group.user?(self)
   end
 
-  def first_name
-    if @first_name_loaded.nil?
+  def display_name
+    if @display_name_loaded.nil?
       load_user_data
     end
-    @first_name_loaded
-  end
-
-  def last_name
-    if @last_name_loaded.nil?
-      load_user_data
-    end
-    @last_name_loaded
+    @display_name_loaded
   end
 
   def email
-    if @email_loaded.nil?
+    if @internet_id_loaded.nil?
       load_user_data
     end
-    @email_loaded
+    "#{@internet_id_loaded}@umn.edu"
   end
 
   def internet_id
@@ -93,25 +84,15 @@ class User < ApplicationRecord
         query_type: 'umndid'
     ).search.try(:first)
 
-    @first_name_loaded = 'Unknown'
-    @last_name_loaded = 'Unknown'
-    @email_loaded = 'Unknown'
+    @display_name_loaded = 'Unknown'
     @internet_id_loaded = 'Unknown'
 
     if me.present?
       # Sometimes this data is not present
       # so we try for it
-      @first_name_loaded = me[:first_name].try(:first) || 'Unknown'
-      @last_name_loaded = me[:last_name].try(:first) || 'Unknown'
-      @email_loaded = me[:email].try(:first) || 'Unknown'
-      @internet_id_loaded = me[:uid].try(:first) || 'Unknown'
-
+      @display_name_loaded = me[:display_name] || 'Name not available'
+      @internet_id_loaded = me[:internet_id] || 'Unknown'
     end
-  end
-
-  def user_full_name
-    load_user_data unless first_name.present?
-    "#{last_name}, #{first_name}"
   end
 
   def update_context_group_id(group_id)

@@ -30,7 +30,7 @@ class Url < ApplicationRecord
     self.url = "http://#{url}" if URI.parse(url).scheme.nil?
   end
 
-  validates :keyword, uniqueness: true, presence: true
+  validates :keyword, uniqueness: { case_sensitive: false }, presence: true
   validates :url, presence: true
   validates :keyword, format: {
                         with: /^[a-zA-Z0-9\-_]*$/,
@@ -78,8 +78,8 @@ class Url < ApplicationRecord
     where.not("#{table_name}.id IN (?)", url_ids) if url_ids.present?
   end
 
-  def add_click!(location)
-    Click.create(country_code: location.try(:country_code), url_id: id)
+  def add_click!(country_code)
+    Click.create(country_code: country_code, url_id: id)
     update_columns(total_clicks: total_clicks + 1)
   end
 

@@ -46,7 +46,7 @@ class Admin::MembersController < ApplicationController
         sign_in current_user
         format.html { redirect_to shortener_url, notice: 'Admin Membership: You have successfully removed your administrative privileges and have been routed back to your home page.' }
       else
-        format.html { redirect_to admin_members_url, notice: "Admin Membership: #{@member.user_full_name} (#{@member.uid}) has been removed." }
+        format.html { redirect_to admin_members_url, notice: "Admin Membership: #{@member.display_name} (#{@member.internet_id}) has been removed." }
       end
     end
 

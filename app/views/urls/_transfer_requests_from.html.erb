@@ -6,7 +6,7 @@
           <div class="transfer-request-item">
             <div class="transfer-details">
               <div class="to">
-                <%= t('views.urls.index.transfer_requests.to_html', user: transfer_request.from_user.user_full_name) %>
+                <%= t('views.urls.index.transfer_requests.to_html', user: transfer_request.to_user.internet_id) %>
               </div>
               <% transfer_request.urls.each do |url| %>
                 <div class="keyword">

@@ -2,13 +2,7 @@ FactoryGirl.define do
   factory :user do
     sequence(:uid)
     admin false
-    sequence(:last_name) { |n| "last_name#{n}" }
-    sequence(:first_name) { |n| "first_name#{n}" }
-    sequence(:email) { |n| "email#{n}@umn.edu" }
-    sequence(:internet_id) { |n| "internet_id#{n}" }
-    sequence(:last_name_loaded) { |n| "last_name#{n}" }
-    sequence(:first_name_loaded) { |n| "first_name#{n}" }
-    sequence(:email_loaded) { |n| "email#{n}@umn.edu" }
+    sequence(:display_name_loaded) { |n| "first_name#{n}" }
     sequence(:internet_id_loaded) { |n| "internet_id#{n}" }
 
     factory :admin do

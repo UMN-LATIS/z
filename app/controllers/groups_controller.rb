@@ -8,7 +8,7 @@ class GroupsController < ApplicationController
     # as you don't need to see it and it's permanent.
     # This group will always be your first group.
     @groups =
-      current_user.groups - [current_user.groups.first]
+      current_user.groups - [current_user.default_group]
     @group = Group.new
   end
 
