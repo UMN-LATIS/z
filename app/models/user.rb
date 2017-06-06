@@ -41,6 +41,7 @@ class User < ApplicationRecord
   end
 
   before_save { generate_token(:remember_token) }
+  before_create { generate_authentication_token }
 
   after_initialize do
     @display_name_loaded = nil
