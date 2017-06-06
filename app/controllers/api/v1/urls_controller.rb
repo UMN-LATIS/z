@@ -12,7 +12,7 @@ class Api::V1::UrlsController < Api::V1::BaseController
     end
 
     # Create URL
-    @url = Url.new(url: params[:url], group_id: @group_id)
+    @url = Url.new(url: params[:url], keyword: params[:keyword], group_id: @group_id)
 
     # Return
     if @url.save
