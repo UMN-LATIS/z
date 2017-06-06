@@ -3,7 +3,7 @@ class ApiKeysController < ApplicationController
   def index; end
 
   def create
-    current_user.secret_key = ApiAuth.generate_secret_key
+    current_user.generate_authentication_token
     if current_user.save
       sign_in current_user
     else

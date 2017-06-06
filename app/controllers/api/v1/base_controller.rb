@@ -1,25 +1,20 @@
 class Api::V1::BaseController < ActionController::Base
   protect_from_forgery with: :null_session
 
-  # before_action :sign_request
   before_action :destroy_session, :api_authenticate
 
   def api_authenticate
-    @current_user = User.find_by(uid: ApiAuth.access_id(request))
-    head(:unauthorized) unless @current_user && ApiAuth.authentic?(request, @current_user.secret_key)
+    auth_header = request.headers['Authorization']
+    user_uid, token = auth_header.split(':')
+    @current_user = User.find_by(uid: user_uid)
+    begin
+      @payload = JWT.decode(token, @current_user.try(:secret_key), true, algorithm: 'HS256').first
+    rescue JWT::VerificationError
+      head(:unauthorized)
+    end
   end
 
   def destroy_session
     request.session_options[:skip] = true
-  end
-
-  def sign_request
-    # Test -- Simulate a client side signing with ApiAuth
-    # binding.pry
-    old_user = User.find_by(uid: '5scyi59j8')
-    ApiAuth.sign!(request, old_user.uid, old_user.secret_key)
-    binding.pry
-    head(:unauthorized)
-    # End Test
   end
 end

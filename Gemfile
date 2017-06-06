@@ -81,7 +81,7 @@ gem 'geocoder'
 gem 'addressable'
 
 # For API Authentication
-gem 'api-auth'
+gem 'jwt'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a

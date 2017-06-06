@@ -1,8 +1,8 @@
 class Api::V1::UrlsController < Api::V1::BaseController
   def create
     # Find group_id to use for new URL
-    if params[:collection_name]
-      @group_id = @current_user.groups.find_by(name: params[:collection_name]).try(:id)
+    if @payload['collection_name']
+      @group_id = @current_user.groups.find_by(name: @payload['collection_name']).try(:id)
       if @group_id.blank?
         render json: { error: 'Cannot find collection with that name.' }
         return
@@ -12,7 +12,7 @@ class Api::V1::UrlsController < Api::V1::BaseController
     end
 
     # Create URL
-    @url = Url.new(url: params[:url], keyword: params[:keyword], group_id: @group_id)
+    @url = Url.new(url: @payload['url'], keyword: @payload['keyword'], group_id: @group_id)
 
     # Return
     if @url.save

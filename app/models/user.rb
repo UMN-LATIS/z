@@ -104,6 +104,10 @@ class User < ApplicationRecord
     save
   end
 
+  def generate_authentication_token
+    generate_token(:secret_key)
+  end
+
   private
 
   def user_belongs_to_context_group_validation
