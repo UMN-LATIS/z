@@ -1,7 +1,7 @@
 class Api::V1::BaseController < ActionController::Base
   protect_from_forgery with: :null_session
 
-  before_action :sign_request
+  # before_action :sign_request
   before_action :destroy_session, :api_authenticate
 
   def api_authenticate
@@ -15,10 +15,11 @@ class Api::V1::BaseController < ActionController::Base
 
   def sign_request
     # Test -- Simulate a client side signing with ApiAuth
+    # binding.pry
     old_user = User.find_by(uid: '5scyi59j8')
     ApiAuth.sign!(request, old_user.uid, old_user.secret_key)
+    binding.pry
+    head(:unauthorized)
     # End Test
-    # binding.pry
   end
-
 end
