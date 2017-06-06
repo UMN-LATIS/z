@@ -1,0 +1,18 @@
+<div class="z-hero z-hero-dimmer">
+  <div class="z-hero-content">
+    <div class="page-header">
+      <h1><%= t('views.api_keys.index.title') %></h1>
+    </div>
+  </div>
+</div>
+<div class="api-key-wrapper">
+  <p>
+    Hello, this is the API Keys page. Thank you.
+  </p>
+  <div id="api-access-id-label">API Access ID</div>
+  <div id="api-access-id"><%= current_user.uid %></div>
+  <div id="api-secret-key-label">Secret Key</div>
+  <div id="api-secret-key"><%= current_user.secret_key %></div>
+
+  <%= link_to 'Generate a new secret key', api_keys_path, method: :post %>
+</div>

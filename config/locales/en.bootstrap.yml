@@ -32,6 +32,7 @@ en:
         sign_out: "Sign Out"
         links: "My Z-Links"
         collections: "My Collections"
+        api: "API"
         admin_menu: "Admin"
         home: "Home"
         help: "Help"
@@ -75,8 +76,10 @@ en:
           whodunnit: "Whodunnit"
           what: "Change History"
           when: "As Of"
+    api_keys:
+      index:
+        title: "API"
     urls:
-
       copy_success: "Copied shortlink to clipboard"
       move_confirm: "Are you sure you with to move short URL {{keyword}} to collection {{collection}}?"
       transfer_button: "Give to a different user"
