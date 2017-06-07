@@ -9,7 +9,7 @@ class Api::V1::BaseController < ActionController::Base
     @current_user = User.find_by(uid: user_uid)
     begin
       @payload = JWT.decode(token, @current_user.try(:secret_key).to_s, true, algorithm: 'HS256').first
-    rescue JWT::VerificationError
+    rescue JWT::VerificationError, JWT::ExpiredSignature
       head(:unauthorized)
     end
   end
