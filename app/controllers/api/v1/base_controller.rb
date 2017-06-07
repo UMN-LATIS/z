@@ -6,15 +6,15 @@ class Api::V1::BaseController < ActionController::Base
   def api_authenticate
     # Parse Auth Header
     user_uid, token = request.headers['Authorization'].split(':')
-    head(:unauthorized) unless user_uid && token
+    head(:unauthorized) && return unless user_uid && token
 
     # Load User
     @current_user = User.find_by(uid: user_uid)
-    head(:unauthorized) if @current_user.try(:sercet_key).blank?
+    head(:unauthorized) && return unless @current_user && @current_user.secret_key
 
     # Decode Token
     begin
-      @payload = JWT.decode(token, @current_user.try(:secret_key), true, algorithm: 'HS256').first
+      @payload = JWT.decode(token, @current_user.secret_key, true, algorithm: 'HS256').first
     rescue JWT::VerificationError, JWT::ExpiredSignature
       head(:unauthorized)
     end
@@ -23,5 +23,4 @@ class Api::V1::BaseController < ActionController::Base
   def destroy_session
     request.session_options[:skip] = true
   end
-
 end
