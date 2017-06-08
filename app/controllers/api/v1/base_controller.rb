@@ -4,6 +4,9 @@ class Api::V1::BaseController < ActionController::Base
   before_action :destroy_session, :api_authenticate
 
   def api_authenticate
+    # Verify Auth Header
+    # head(:unauthorized) && return unless request.headers['Authorization']
+
     # Parse Auth Header
     user_uid, token = request.headers['Authorization'].split(':')
     head(:unauthorized) && return unless user_uid && token

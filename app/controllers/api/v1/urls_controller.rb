@@ -7,7 +7,7 @@ class Api::V1::UrlsController < Api::V1::BaseController
       if url['collection_name']
         group_id = @current_user.groups.find_by(name: url['collection_name']).try(:id)
         if group_id.blank?
-          url['status'] = { error: 'Cannot find collection with that name.' }
+          url['result'] = { status: :error, message: 'Cannot find collection with that name.' }
           next
         end
       else
@@ -16,11 +16,11 @@ class Api::V1::UrlsController < Api::V1::BaseController
 
       new_url = Url.new(url: url['url'], keyword: url['keyword'], group_id: group_id)
 
-      url['status'] =
+      url['result'] =
         if new_url.save
-          { success: view_context.full_url(new_url) }
+          { status: :success, message: view_context.full_url(new_url) }
         else
-          { error: new_url.errors.full_messages }
+          { status: :error, message: new_url.errors.full_messages }
         end
     end
 
