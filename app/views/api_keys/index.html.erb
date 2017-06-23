@@ -6,15 +6,32 @@
   </div>
 </div>
 <div class="api-key-wrapper">
-
-  <div id="api-access-id-label">Access ID</div>
-  <div id="api-access-id"><%= current_user.uid %></div>
-  <div id="api-secret-key-label">Secret Key</div>
-  <div id="api-secret-key"><%= current_user.secret_key %></div>
+  <div class='row'>
+    <div class="col-md-2">
+      <div class="panel panel-default">
+        <div class="panel-heading">Access ID</div>
+        <div class="panel-body">
+          <%= current_user.uid %>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">Secret Key</div>
+        <div class="panel-body">
+          <%= current_user.secret_key %>
+          <%= link_to api_keys_path, method: :post, class: 'btn btn-default clipboard-btn' do %>
+            <i class=" fa fa-key"></i>
+            Generate new key
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <p>Z features an API to allow Short URL creation directly from your applications.</p>
   <p>Z is configured to use <strong>JSON Web Tokens</strong> (or <strong>JWT</strong>, <a href="https://jwt.io">https://jwt.io</a>) to ensure secure communications between the client and server. This is a popular method that has libraries for most popular programming languages. See their website for specific language support.</p>
-  <p>Z has one API endpoint, <strong><a href="http://z.umn.edu/api/v1/urls">z.umn.edu/api/v1/urls</a></strong>. You can POST to this endpoint with your <strong>Access ID</strong> and the <strong>JWT</strong> (signed by your <strong>secret key</strong>), separated by a colon in an <strong>Authorization</strong> Header, like so:</p>
+  <p>Z has one API endpoint, <strong><a href="http://z.umn.edu/api/v1/urls"><%= "#{request.base_url}#{api_v1_urls_path}" %></a></strong>. You can POST to this endpoint with your <strong>Access ID</strong> and the <strong>JWT</strong> (signed by your <strong>secret key</strong>), separated by a colon in an <strong>Authorization</strong> Header, like so:</p>
   <pre>
   <code>Header Name: Authorization
   Header Value: access_id:jwt
@@ -121,8 +138,8 @@
   require 'net/http'
   require 'uri'
 
-  secret_key = 'SuperSecretKey'
-  access_id = '12345asdf'
+  access_id = '5scyi59j8'
+  secret_key = 'AwLX2W7lNQybuxkO6dh6hg'
 
   payload = {
     urls: [
@@ -135,18 +152,18 @@
   # jwt =
   # eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1cmxzIjpbeyJ1cmwiOiJodHRwOi8vZXhhbXBsZS5jb20vZnVuL3NpdGUvMTIzNDUvbmVhdC5waHAifV19.l8oAAw6SeJgyrE7v65Pxdxz7Yya8UZYCcc3kj5Amieo
 
-  url = URI.parse('https://z.umn.edu/api/v1/urls')
-  req = Net::HTTP::Post.new(url.path)
-  req.add_field('Authorization', &quot;#{access_id}:#{jwt}&quot;)
+  uri = URI('<%= "#{request.base_url}#{api_v1_urls_path}" %>')
 
-  res = Net::HTTP.new(url.host, url.port).start do |http|
-    http.request(req)
+  Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
+    request = Net::HTTP::Post.new uri
+    request.add_field('Authorization', "#{access_id}:#{jwt}")
+
+    response = http.request request
+    puts response.body
   end
 
-  puts res.body
   </code></pre>
 
 
 
-  <%= link_to 'Generate a new secret key', api_keys_path, method: :post %>
 </div>
