@@ -1,3 +1,19 @@
 .api-key-wrapper {
+  font-size: 1.05em;
   margin-top: 210px;
+  hr {
+    margin-top: 0;
+  }
+  pre {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  h2 {
+    font-size: 30px;
+    letter-spacing: 0px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-align: left;
+    font-weight: 500;
+  }
 }

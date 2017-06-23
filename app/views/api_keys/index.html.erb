@@ -6,13 +6,147 @@
   </div>
 </div>
 <div class="api-key-wrapper">
-  <p>
-    Hello, this is the API Keys page. Thank you.
-  </p>
+
   <div id="api-access-id-label">Access ID</div>
   <div id="api-access-id"><%= current_user.uid %></div>
   <div id="api-secret-key-label">Secret Key</div>
   <div id="api-secret-key"><%= current_user.secret_key %></div>
+
+  <p>Z features an API to allow Short URL creation directly from your applications.</p>
+  <p>Z is configured to use <strong>JSON Web Tokens</strong> (or <strong>JWT</strong>, <a href="https://jwt.io">https://jwt.io</a>) to ensure secure communications between the client and server. This is a popular method that has libraries for most popular programming languages. See their website for specific language support.</p>
+  <p>Z has one API endpoint, <strong><a href="http://z.umn.edu/api/v1/urls">z.umn.edu/api/v1/urls</a></strong>. You can POST to this endpoint with your <strong>Access ID</strong> and the <strong>JWT</strong> (signed by your <strong>secret key</strong>), separated by a colon in an <strong>Authorization</strong> Header, like so:</p>
+  <pre>
+  <code>Header Name: Authorization
+  Header Value: access_id:jwt
+  </code></pre>
+  <ul>
+  <li><a href="#token-information">Token Information</a>
+  <ul>
+  <li><a href="#header">Header</a></li>
+  <li><a href="#payload">Payload</a>
+  <ul>
+  <li><a href="#supported-keys">Supported keys</a></li>
+  </ul>
+  </li>
+  <li><a href="#signature">Signature</a></li>
+  </ul>
+  </li>
+  <li><a href="#return-values">Return Values</a></li>
+  <li><a href="#complete-example">A Complete Example in Ruby</a></li>
+  </ul>
+  <h2><a id="Token_Information_20"></a>Token Information</h2>
+  <hr>
+  <p>The JWT is an encrypted string that has three components - a <strong>header</strong>, <strong>payload</strong>, and <strong>signature</strong>, each separated by a period.</p>
+  <h3><a id="Header_22"></a>Header</h3>
+  <hr>
+  <p>The header is the standard configuration for H256.</p>
+  <pre>
+  <code>Header:
+  {
+    &quot;alg&quot;: &quot;HS256&quot;,
+    &quot;typ&quot;: &quot;JWT&quot;
+  }
+  </code></pre>
+  <h3><a id="Payload_33"></a>Payload</h3>
+  <hr>
+  <p>The payload is a single JSON object, containing one key, “urls”. This key contains an array of JSON objects for each URL you would like created. Example:</p>
+  <pre>
+  <code>Payload:
+  {
+    &quot;urls&quot;: [
+      { &quot;url&quot;: &quot;http://google.com&quot;, },
+      {
+        &quot;url&quot;: &quot;http://example.com/internet&quot;,
+        &quot;keyword&quot;: &quot;einter&quot;
+      },
+      ...
+    ]
+  }
+  </code></pre>
+  <h4><a id="Supported_keys_50"></a>Supported keys</h4>
+  <p>The supported keys for a URL are as follows:</p>
+  <ul>
+  <li>&quot;<strong>url</strong>&quot; : The URL you would like shortened (required)</li>
+  <li>&quot;<strong>keyword</strong>&quot; : The keyword you would prefer (optional)</li>
+  <li>&quot;<strong>collection</strong>&quot; : The collection name you would like this URL to be placed into. (optional).</li>
+  </ul>
+  <p>If no keyword or collection are specified, Z will auto-generate a short URL for you. If the “keyword” you request is already taken, the URL will not be created. If a “collection” name cannot be found, the URL will not be created.</p>
+  <h3><a id="Signature_58"></a>Signature</h3>
+  <hr>
+  <p>The final signature is an encoded string containing the header, the payload, and signed with your secret key.</p>
+  <pre><code>Signature:
+  HMACSHA256(
+    base64UrlEncode(header) + &quot;.&quot; +
+    base64UrlEncode(payload),
+    &lt;secret_key&gt;
+  )
+  </code></pre>
+  <h2><a id="Return_values_70"></a>Return values</h2>
+  <hr>
+  <p>Upon sending the request, the you can expect the response to be an array of JSON objects, with each item containing the original URL data from the request, as well as a result object that contains two items.</p>
+  <p>The first result key is “status”, which will either be “success” or “error”.</p>
+  <p>The second result key is “message”, which will either contain a string with the new Short URL for your item, or an array of errors returned by the system.</p>
+  <pre>
+  <code>Result:
+  [
+    {
+      &quot;url&quot;: 'http://google.com',
+      &quot;result&quot;:
+        {
+          &quot;status&quot;: 'success',
+          &quot;message&quot;: 'http://localhost:3000/2siu'
+        }
+    },
+    {
+      &quot;url&quot;: 'http://example.com/internet',
+      &quot;keyword&quot;: 'einter',
+      &quot;result&quot;:
+        {
+          &quot;status&quot;: 'error',
+          &quot;message&quot;: [
+            'Keyword has already been taken.'
+          ]
+        }
+    }
+  ]
+  </code></pre>
+  <p>Requests that are sent with invalid tokens, incorrect headers, or invalid access IDs, will be returned with a response of <strong>401 Unauthorized</strong>.</p>
+  <h2><a id="Complete_Example_104"></a>Complete Example</h2>
+  <hr>
+  <p>Thankfully, many JWT libraries do most of the hard work for us -- we just provide the payload and secret key and the library will create the token for us.</p>
+  <p>Here’s a full example using Ruby with a JWT library (<a href="https://github.com/jwt/ruby-jwt">https://github.com/jwt/ruby-jwt</a>).</p>
+  <p>Here, we assume that your Access ID is “12345asdf”, your secret key is “SuperSecretKey”, and you want to create a short URL for the website &quot;<a href="http://example.com/fun/site/12345/neat.php">http://example.com/fun/site/12345/neat.php</a>&quot;</p>
+  <pre>
+  <code>require 'jwt'
+  require 'net/http'
+  require 'uri'
+
+  secret_key = 'SuperSecretKey'
+  access_id = '12345asdf'
+
+  payload = {
+    urls: [
+      { url: 'http://example.com/fun/site/12345/neat.php' }
+    ]
+  }
+
+  jwt = JWT.encode payload, secret_key, 'HS256'
+
+  # jwt =
+  # eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1cmxzIjpbeyJ1cmwiOiJodHRwOi8vZXhhbXBsZS5jb20vZnVuL3NpdGUvMTIzNDUvbmVhdC5waHAifV19.l8oAAw6SeJgyrE7v65Pxdxz7Yya8UZYCcc3kj5Amieo
+
+  url = URI.parse('https://z.umn.edu/api/v1/urls')
+  req = Net::HTTP::Post.new(url.path)
+  req.add_field('Authorization', &quot;#{access_id}:#{jwt}&quot;)
+
+  res = Net::HTTP.new(url.host, url.port).start do |http|
+    http.request(req)
+  end
+
+  puts res.body
+  </code></pre>
+
+
 
   <%= link_to 'Generate a new secret key', api_keys_path, method: :post %>
 </div>
