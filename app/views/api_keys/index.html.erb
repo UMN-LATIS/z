@@ -51,10 +51,10 @@
   <li><a href="#return-values">Return Values</a></li>
   <li><a href="#complete-example">A Complete Example in Ruby</a></li>
   </ul>
-  <h2><a id="Token_Information_20"></a>Token Information</h2>
+  <a name="token-information" id="token-information"></a><h2>Token Information</h2>
   <hr>
   <p>The JWT is an encrypted string that has three components - a <strong>header</strong>, <strong>payload</strong>, and <strong>signature</strong>, each separated by a period.</p>
-  <h3><a id="Header_22"></a>Header</h3>
+ <a name="header" id="header"></a><h3>Header</h3>
   <hr>
   <p>The header is the standard configuration for H256.</p>
   <pre>
@@ -64,7 +64,7 @@
     &quot;typ&quot;: &quot;JWT&quot;
   }
   </code></pre>
-  <h3><a id="Payload_33"></a>Payload</h3>
+  <a name="payload" id="payload"></a><h3>Payload</h3>
   <hr>
   <p>The payload is a single JSON object, containing one key, “urls”. This key contains an array of JSON objects for each URL you would like created. Example:</p>
   <pre>
@@ -80,7 +80,7 @@
     ]
   }
   </code></pre>
-  <h4><a id="Supported_keys_50"></a>Supported keys</h4>
+<a name="supported-keys" id="supported-keys"></a><h4>Supported keys</h4>
   <p>The supported keys for a URL are as follows:</p>
   <ul>
   <li>&quot;<strong>url</strong>&quot; : The URL you would like shortened (required)</li>
@@ -88,7 +88,7 @@
   <li>&quot;<strong>collection</strong>&quot; : The collection name you would like this URL to be placed into. (optional).</li>
   </ul>
   <p>If no keyword or collection are specified, Z will auto-generate a short URL for you. If the “keyword” you request is already taken, the URL will not be created. If a “collection” name cannot be found, the URL will not be created.</p>
-  <h3><a id="Signature_58"></a>Signature</h3>
+  <a name="signature" id="signature"></a><h3>Signature</h3>
   <hr>
   <p>The final signature is an encoded string containing the header, the payload, and signed with your secret key.</p>
   <pre><code>Signature:
@@ -98,7 +98,7 @@
     &lt;secret_key&gt;
   )
   </code></pre>
-  <h2><a id="Return_values_70"></a>Return values</h2>
+  <a name="return-values" id="return-values"></a><h2>Return values</h2>
   <hr>
   <p>Upon sending the request, the you can expect the response to be an array of JSON objects, with each item containing the original URL data from the request, as well as a result object that contains two items.</p>
   <p>The first result key is “status”, which will either be “success” or “error”.</p>
@@ -128,7 +128,7 @@
   ]
   </code></pre>
   <p>Requests that are sent with invalid tokens, incorrect headers, or invalid access IDs, will be returned with a response of <strong>401 Unauthorized</strong>.</p>
-  <h2><a id="Complete_Example_104"></a>Complete Example</h2>
+  <a name="complete-example" id="complete-example"></a><h2>Complete Example</h2>
   <hr>
   <p>Thankfully, many JWT libraries do most of the hard work for us -- we just provide the payload and secret key and the library will create the token for us.</p>
   <p>Here’s a full example using Ruby with a JWT library (<a href="https://github.com/jwt/ruby-jwt">https://github.com/jwt/ruby-jwt</a>).</p>
