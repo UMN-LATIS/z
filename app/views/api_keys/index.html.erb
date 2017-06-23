@@ -30,7 +30,7 @@
   </div>
 
   <p>Z features an API to allow Short URL creation directly from your applications.</p>
-  <p>Z is configured to use <strong>JSON Web Tokens</strong> (or <strong>JWT</strong>, <a href="https://jwt.io">https://jwt.io</a>) to ensure secure communications between the client and server. This is a popular method that has libraries for most popular programming languages. See their website for specific language support.</p>
+  <p>The API is configured to use <strong>JSON Web Tokens</strong> (or <strong>JWT</strong>, <a href="https://jwt.io">https://jwt.io</a>) to ensure secure communications between the client and server. This is a popular method that has libraries for most popular programming languages. See their website for specific language support.</p>
   <p>Z has one API endpoint, <strong><a href="http://z.umn.edu/api/v1/urls"><%= "#{request.base_url}#{api_v1_urls_path}" %></a></strong>. You can POST to this endpoint with your <strong>Access ID</strong> and the <strong>JWT</strong> (signed by your <strong>secret key</strong>), separated by a colon in an <strong>Authorization</strong> Header, like so:</p>
   <pre>
   <code>Header Name: Authorization
