@@ -32,7 +32,7 @@ describe '[API: URLs]', type: :api do
       collection.users << user
       payload = {
         urls: [
-          { url: url3_url, collection_name: collection.name },
+          { url: url3_url, collection: collection.name },
           { url: url2_url, keyword: url2_keyword }
         ]
       }

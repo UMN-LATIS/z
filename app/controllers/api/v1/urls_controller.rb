@@ -4,8 +4,8 @@ class Api::V1::UrlsController < Api::V1::BaseController
 
     urls.each do |url|
       # Find group_id to use for new URL
-      if url['collection_name']
-        group_id = @current_user.groups.find_by(name: url['collection_name']).try(:id)
+      if url['collection']
+        group_id = @current_user.groups.find_by(name: url['collection']).try(:id)
         if group_id.blank?
           url['result'] = { status: :error, message: 'Cannot find collection with that name.' }
           next
