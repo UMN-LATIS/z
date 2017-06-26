@@ -124,7 +124,7 @@
               <tr>
                 <td><%= t('views.urls.show.all_time')%></td>
                 <td><%= pluralize(@url.total_clicks, 'hit') %></td>
-                <td><%= (@url.total_clicks / ((Time.now.to_ms - @url.created_at.to_ms) / 1000 / 60 / 60 / 24.0)).round(2) %> <%= t('views.urls.show.per_day') %></td>
+                <td><%= (@url.total_clicks / ((Time.now.to_ms - @url.created_at.to_ms) / 1000 / 60 / 60 / 24.0).ceil).round(2) %> <%= t('views.urls.show.per_day') %></td>
               </tr>
             </tbody>
           </table>
