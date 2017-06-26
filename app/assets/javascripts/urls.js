@@ -6,10 +6,12 @@ $(document).on({
     ajaxStart: function () {
         $('body').css( 'cursor', 'progress' );
         $('a').css( 'cursor', 'progress' );
+        $('button').css( 'cursor', 'progress' );
     },
     ajaxStop: function () {
         $('body').css( 'cursor', '' );
         $('a').css( 'cursor', '' );
+        $('button').css( 'cursor', '' );
     }
 });
 
