@@ -41,6 +41,7 @@ class User < ApplicationRecord
   end
 
   before_save { generate_token(:remember_token) }
+  before_create { generate_authentication_token }
 
   after_initialize do
     @display_name_loaded = nil
@@ -102,6 +103,10 @@ class User < ApplicationRecord
   def update_context_group_id!(group_id)
     update_context_group_id(group_id)
     save
+  end
+
+  def generate_authentication_token
+    generate_token(:secret_key)
   end
 
   private

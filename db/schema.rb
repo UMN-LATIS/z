@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170509175646) do
+ActiveRecord::Schema.define(version: 20170606004310) do
 
   create_table "clicks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "country_code"
@@ -106,6 +106,7 @@ ActiveRecord::Schema.define(version: 20170509175646) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.string   "remember_token"
+    t.string   "secret_key"
     t.index ["context_group_id"], name: "index_users_on_context_group_id", using: :btree
     t.index ["default_group_id"], name: "index_users_on_default_group_id", using: :btree
   end

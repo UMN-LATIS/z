@@ -22,6 +22,14 @@
                    </span>
                  <% end %>
                </li>
+               <li class="<%= current_page?(api_keys_path) ? "selected" : "" %>">
+                <%= link_to (api_keys_path) do  %>
+                  <span>
+                    <i class="fa fa-key" aria-hidden="true"></i>
+                    <span><%= t('views.application.nav.api') %></span>
+                  </span>
+                <% end %>
+               </li>
 
                <%if current_user.admin? %>
 

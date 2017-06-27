@@ -4,6 +4,13 @@ Rails.application.routes.draw do
 
   mount Starburst::Engine => "/starburst"
 
+  # Handle API
+  namespace :api do
+    namespace :v1 do
+      resources :urls, only: [:create]
+    end
+  end
+
   # Handle Auth
   post '/auth/:provider/callback', to: 'sessions#create'
   get '/auth/:provider/callback', to: 'sessions#create'
@@ -91,7 +98,10 @@ Rails.application.routes.draw do
     # api_keys/:id/update	api_keys	update	post
     # api_keys/create	api_keys	create	put
     # api_keys/destroy	api_keys	destroy	delete
-    resources :api_keys, only: [:index, :new, :show, :update, :create, :destroy]
+    resources :api_keys, only: [:index, :create] do
+      delete 'delete', on: :collection
+    end
+
 
     # group_context/update	group_context	show	get
     resources :group_context, only: [:show]
