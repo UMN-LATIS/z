@@ -38,6 +38,7 @@ en:
         help: "Help"
         contact_us: "Contact Us!"
         faq: "Read our FAQ"
+        whatsnew: "What's New in Z"
         org_url: "http://latis.umn.edu/"
         admin:
           all_urls: "View all URLs"
