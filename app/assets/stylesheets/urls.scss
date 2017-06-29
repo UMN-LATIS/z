@@ -1,5 +1,9 @@
 @import 'variables';
 
+button:disabled {
+  opacity: 0.65;
+}
+
 .url {
 	display: inline;
 }
