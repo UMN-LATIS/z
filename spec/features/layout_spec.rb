@@ -34,5 +34,10 @@ describe 'the layout' do
     it 'should have a Collections link' do
       expect(page).to have_link 'Collections'
     end
+
+    it 'should have a Whats new link' do
+      click_link 'Help'
+      expect(page).to have_link "What's New in Z"
+    end
   end
 end
