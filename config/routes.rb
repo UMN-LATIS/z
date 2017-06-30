@@ -71,6 +71,7 @@ Rails.application.routes.draw do
     end
 
     resources :move_to_group, only: [:new, :create]
+    resources :batch_delete, only: [:new, :create]
 
     # groups	groups	index	get
     # groups/:id	groups	show	get
