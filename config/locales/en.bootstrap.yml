@@ -38,6 +38,7 @@ en:
         help: "Help"
         contact_us: "Contact Us!"
         faq: "Read our FAQ"
+        whatsnew: "What's New in Z"
         org_url: "http://latis.umn.edu/"
         admin:
           all_urls: "View all URLs"
@@ -81,7 +82,7 @@ en:
         title: "API"
     urls:
       copy_success: "Copied shortlink to clipboard"
-      move_confirm: "Are you sure you with to move short URL {{keyword}} to collection {{collection}}?"
+      move_confirm: "Are you sure you wish to move short URL {{keyword}} to collection {{collection}}?"
       transfer_button: "Give to a different user"
       move_button: "Move to a different collection"
       batch_delete_button: "Delete"

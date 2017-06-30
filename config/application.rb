@@ -15,5 +15,6 @@ module Z
 
     # Set default time zone
     config.time_zone = 'Central Time (US & Canada)'
+    config.middleware.insert_before Rack::Runtime, 'InvalidDataInterceptor'
   end
 end

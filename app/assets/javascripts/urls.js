@@ -2,6 +2,22 @@ $(document).on("click", ".cancel-new-url", function(e) {
     e.preventDefault();
     $(this).closest("tr").remove();
 });
+$(document).on({
+    ajaxStart: function () {
+        $('body').css( 'cursor', 'progress' );
+        $('a').css( 'cursor', 'progress' );
+        $('button').css( 'cursor', 'progress' );
+    },
+    ajaxStop: function () {
+        $('body').css( 'cursor', '' );
+        $('a').css( 'cursor', '' );
+        $('button').css( 'cursor', '' );
+    }
+});
+
+$(document).on("submit", "form", function(e) {
+    $(this).find(":submit").prop("disabled", true);
+});
 
 $(document).on("click", ".cancel-edit", function(e) {
     e.preventDefault();
