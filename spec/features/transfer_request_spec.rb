@@ -12,9 +12,9 @@ describe 'creating a transfer request', js: true do
     end
 
     describe 'with no urls' do
-      describe 'the transfer button' do
+      describe 'the bulk actions button ' do
         it 'should be disabled' do
-          expect(page.find('.js-transfer-urls')[:class]).to(
+          expect(page.find('.table-options')[:class]).to(
             have_content('disabled')
           )
         end
@@ -26,12 +26,13 @@ describe 'creating a transfer request', js: true do
         FactoryGirl.create(:url, group: @user.context_group)
         FactoryGirl.create(:url, group: @user.context_group)
         visit urls_path
+        wait_for_ajax
       end
 
       describe 'with no urls selected' do
-        describe 'the transfer button', js: true do
+        describe 'the bulk actions button ', js: true do
           it 'should be disabled' do
-            expect(page.find('.js-transfer-urls')[:class]).to(
+            expect(page.find('.table-options')[:class]).to(
               have_content('disabled')
             )
           end
@@ -48,6 +49,7 @@ describe 'creating a transfer request', js: true do
             visit urls_path
             find("#url-#{@selected_url.id} > .select-checkbox").click
             find("#url-#{@new_group_url.id} > .select-checkbox").click
+            find('.table-options').click
             find('.js-transfer-urls').click
             wait_for_ajax
           end
@@ -77,14 +79,11 @@ describe 'creating a transfer request', js: true do
 
 
       describe 'with a single url selected' do
-        before { find("#url-#{@selected_url.id} > .select-checkbox").click }
-        describe 'the transfer button' do
-          it 'should be enabled' do
-            expect(page.find('.js-transfer-urls')[:class]).to_not(
-              have_content('disabled')
-            )
-          end
-        end
+        before {
+          find("#url-#{@selected_url.id} > .select-checkbox").click
+          wait_for_ajax
+          find('.table-actions').click
+        }
 
         describe 'clicking the tranfser button' do
           before do
