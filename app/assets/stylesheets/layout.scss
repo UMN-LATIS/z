@@ -229,6 +229,10 @@ though the color below doesn't improve much.
   margin-right: 5%;
 }
 
+.padding-left-right{
+  padding-left:20px;
+  padding-right:20px;
+}
 #left_text {
   text-align: left;
   font-size: 1em;
@@ -700,6 +704,10 @@ div.dataTables_wrapper{
       }
     }
   }
+}
+
+.modal-body{
+    word-wrap:break-word;
 }
 
 #starburst-close {
