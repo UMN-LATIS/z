@@ -211,6 +211,7 @@ table.dataTable{
 	// box-shadow: 1px 1px 2px rgba(0,0,0,0.1), -1px 1px 2px rgba(0,0,0,0.1);
 	font-size:13px;
 	border: 1px solid #ddd;
+
 	.short-url{
 		font-weight:500;
 		// white-space:nowrap;
@@ -228,6 +229,10 @@ table.dataTable{
 			/* display: inline-block; */
 		}
 	}
+	tbody tr td .dropdown .dropdown-menu.dropdown-menu-right a{
+		color:black;
+	}
+
 	.long-url{
 		margin-top:1px;
 		a{
@@ -317,7 +322,6 @@ table.dataTable{
 			input{
 				margin:0;
 			}
-
 		}
 		.z-hero-title{
 			color: #666;
@@ -330,6 +334,39 @@ table.dataTable{
 		width:300px !important;
 	}
 }
+.table-options{
+	&.disabled{
+		cursor: not-allowed;
+	}
+	i{
+		margin-left: 5px !important;
+		vertical-align: top;
+	}
+}
+.dt-button-collection.dropdown-menu{
+	padding:0;
+	overflow:hidden;
+	li.btn{
+		padding:0;
+		display:block;
+		text-align:left;
+		a{
+			padding: 14px 32px;
+		}
+		&.btn-danger{
+			border-radius:0;
+			border:none;
+			color:white;
+			a{
+				color:white;
+				&:hover{
+					background-color: transparent;
+				}
+			}
+		}
+
+	}
+}
 @media screen and (max-width:900px){
 	.table-row-edit-main{
 		.super-input{
@@ -337,7 +374,6 @@ table.dataTable{
 					width:100px;
 			}
 		}
-
 	}
 }
 table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:after, table.dataTable thead .sorting_asc_disabled:after, table.dataTable thead .sorting_desc_disabled:after{
@@ -741,6 +777,7 @@ $superInputHeight: 50px;
 			overflow:hidden;
 		}
 	}
+
 	.dropdown-menu{
 		padding:0;
 		a{

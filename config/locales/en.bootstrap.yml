@@ -85,6 +85,8 @@ en:
       move_confirm: "Are you sure you wish to move short URL {{keyword}} to collection {{collection}}?"
       transfer_button: "Give to a different user"
       move_button: "Move to a different collection"
+      batch_delete_button: "Delete"
+      bulk_actions: "Bulk Actions"
       index:
         transfer_requests:
           to_others: "URLs you gave that are pending approval"
@@ -229,4 +231,11 @@ en:
         urls_title: "URLs you are moving"
         submit: "Move URLs"
         submit_confirm: "Are you sure you want to move these URLs?"
+        cancel: "Cancel"
+    batch_delete:
+      new:
+        title: "Delete URLs"
+        urls_title: "URLs you are deleting"
+        submit: "Delete URLs"
+        submit_confirm: "Are you sure you want to delete these URLs?"
         cancel: "Cancel"
