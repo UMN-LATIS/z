@@ -72,6 +72,7 @@ describe 'groups index page', js: true do
       sign_in @user
       wait_for_ajax
       visit groups_path
+      wait_for_ajax
     end
 
     describe 'page content' do

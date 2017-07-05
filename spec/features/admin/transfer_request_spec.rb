@@ -14,7 +14,7 @@ describe 'admin urls index page' do
     describe 'with no urls' do
       describe 'the transfer button' do
         it 'should be disabled' do
-          expect(page.find('.js-transfer-urls')[:class]).to(
+          expect(page.find('.table-options')[:class]).to(
               have_content('disabled')
           )
         end
@@ -28,11 +28,13 @@ describe 'admin urls index page' do
         FactoryGirl.create(:url, group: @user.context_group)
         FactoryGirl.create(:url, group: @user.context_group)
         visit admin_urls_path
+        wait_for_ajax
       end
       describe 'as an admin' do
         describe ' and not in the group of of the url' do
           before do
             find("#url-#{@users_url.id} > .select-checkbox").click
+            page.find('.table-options').click
             page.find('.js-transfer-urls').click
             wait_for_ajax
             @to_user = FactoryGirl.create(:user)
@@ -48,6 +50,7 @@ describe 'admin urls index page' do
         describe 'and in the group of the url' do
           before do
             find("#url-#{@admins_url.id} > .select-checkbox").click
+            page.find('.table-options').click
             page.find('.js-transfer-urls').click
             wait_for_ajax
             @to_user = FactoryGirl.create(:user)
@@ -64,7 +67,7 @@ describe 'admin urls index page' do
       describe 'with no urls selected' do
         describe 'the transfer button' do
           it 'should be disabled' do
-            expect(page.find('.js-transfer-urls')[:class]).to(
+            expect(page.find('.table-options')[:class]).to(
                 have_content('disabled')
             )
           end
@@ -77,7 +80,7 @@ describe 'admin urls index page' do
         end
         describe 'the transfer button' do
           it 'should be enabled' do
-            expect(page.find('.js-transfer-urls')[:class]).to_not(
+            expect(page.find('.table-options')[:class]).to_not(
                 have_content('disabled')
             )
           end
@@ -85,6 +88,7 @@ describe 'admin urls index page' do
 
         describe 'clicking the transfer button' do
           before do
+            page.find('.table-options').click
             page.find('.js-transfer-urls').click
             wait_for_ajax
           end

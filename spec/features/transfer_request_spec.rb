@@ -9,6 +9,7 @@ describe 'creating a transfer request', js: true do
   describe 'on the urls index page' do
     before do
       visit urls_path
+      wait_for_ajax
     end
 
     describe 'with no urls' do
@@ -77,12 +78,12 @@ describe 'creating a transfer request', js: true do
         end
       end
 
-
       describe 'with a single url selected' do
         before {
+          visit urls_path
           find("#url-#{@selected_url.id} > .select-checkbox").click
           wait_for_ajax
-          find('.table-actions').click
+          find('.table-options').click
         }
 
         describe 'clicking the tranfser button' do
