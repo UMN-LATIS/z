@@ -2,6 +2,22 @@ $(document).on("click", ".cancel-new-url", function(e) {
     e.preventDefault();
     $(this).closest("tr").remove();
 });
+$(document).on({
+    ajaxStart: function () {
+        $('body').css( 'cursor', 'progress' );
+        $('a').css( 'cursor', 'progress' );
+        $('button').css( 'cursor', 'progress' );
+    },
+    ajaxStop: function () {
+        $('body').css( 'cursor', '' );
+        $('a').css( 'cursor', '' );
+        $('button').css( 'cursor', '' );
+    }
+});
+
+$(document).on("submit", "form", function(e) {
+    $(this).find(":submit").prop("disabled", true);
+});
 
 $(document).on("click", ".cancel-edit", function(e) {
     e.preventDefault();
@@ -92,6 +108,7 @@ $(document).on('shown.bs.tab', function(e) {
     }
 })
 
+//these three should be one function.
 function transferUrl(transferPath, keywords) {
     $.ajax({
         url: transferPath,
@@ -101,7 +118,15 @@ function transferUrl(transferPath, keywords) {
         dataType: 'script'
     });
 }
-
+function batchDelete(batchDeletePath, keywords) {
+    $.ajax({
+        url: batchDeletePath,
+        data: {
+            keywords: keywords
+        },
+        dataType: 'script'
+    });
+}
 function moveUrl(movePath, keywords) {
     $.ajax({
         url: movePath,
@@ -126,6 +151,8 @@ function changeGroup(groupPath, keyword) {
 function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColumn, showMoveButton, collectionSelect) {
     var transferText = '<i class="fa fa-exchange"></i> ' + I18n.t("views.urls.transfer_button");
     var moveText = '<i class="fa fa-share-square-o "></i> ' + I18n.t("views.urls.move_button");
+    var batchDeleteText = '<i class="fa fa-trash-o "></i> ' + I18n.t("views.urls.batch_delete_button");
+    var bulkActionsText = I18n.t("views.urls.bulk_actions") + '<i class="fa fa-sort-desc "></i> ';
 
     var $urlsTable = $('#urls-table');
     var userTable = $urlsTable.DataTable({
@@ -204,6 +231,8 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
             }
         },
         fnDrawCallback: function() {
+            enableDisableTableOptions();
+
 						//for all the select pickers in the table
             $("table#urls-table .selectpicker").each(function(index, selectPicker) {
 
@@ -231,7 +260,7 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
 	                        return false;
 	                    }
 
-											//else, update its old stored value. 
+											//else, update its old stored value.
 	                    $target.data("prev", this.value);
 	                });
             });
@@ -254,6 +283,23 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
             $(".loading-indicator-wrapper").remove();
         }
     });
+
+    //function for disabling bulk table options dropdown
+    function enableDisableTableOptions(){
+      var selectedRows = userTable.rows('.selected');
+      if (selectedRows[0].length){
+        $(".table-options").removeClass("disabled");
+      }
+      else{
+        $(".table-options").addClass("disabled");
+
+      }
+    }
+
+    //use the function for disabling bulk table options dropdown
+    userTable.on('select', enableDisableTableOptions);
+    userTable.on('deselect', enableDisableTableOptions);
+
     $('table.data-table').on("page.dt", function(e) {
         userTable.rows().deselect();
         $("#select-all").prop("checked", false);
@@ -267,7 +313,7 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
     var transfer_button = {
         extend: 'selected',
         text: transferText,
-        className: 'btn-primary js-transfer-urls',
+        className: 'btn js-transfer-urls',
         action: function(e, dt, node, config) {
             var keywords = [];
             userTable.rows('.selected').data().map(function(row) {
@@ -279,7 +325,7 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
 
     var move_button = {
         extend: 'selected',
-        className: 'btn-primary js-move-urls',
+        className: 'btn js-move-urls',
         text: moveText,
         action: function(e, dt, node, config) {
             var keywords = [];
@@ -291,15 +337,38 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
         }
     }
 
+    var batch_delete_button = {
+        extend: 'selected',
+        className: 'btn btn-danger js-delete-urls',
+        text: batchDeleteText,
+        action: function(e, dt, node, config) {
+            var keywords = [];
+            userTable.rows('.selected').data().map(function(row) {
+                keywords.push(row['DT_RowData']['keyword'])
+            });
+
+            batchDelete($('.route-info').data('new-batch-delete-path'), keywords);
+        }
+    }
+
     buttons = []
     if (showMoveButton) {
-        buttons = [transfer_button, move_button]
+        buttons = [transfer_button, move_button, batch_delete_button]
     } else {
         buttons = [transfer_button]
     }
 
-    new $.fn.dataTable.Buttons(userTable, {
+    var dropdown_button = {
+        extend: 'collection',
+        text: bulkActionsText,
+        className: 'table-options',
+        autoClose: true,
+        fade: 200,
         buttons: buttons
+    }
+
+    new $.fn.dataTable.Buttons(userTable, {
+        buttons: [dropdown_button]
     });
 
     userTable
@@ -309,7 +378,6 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
 
     $(".col-sm-6 .dt-buttons").removeClass("btn-group");
 }
-
 
 $(document).ready(function() {
     //url share actions

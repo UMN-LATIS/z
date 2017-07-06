@@ -1,0 +1,28 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"  ><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title" id="myModalLabel"><%= t('views.batch_delete.new.title')%> </h4>
+    </div>
+    <%= form_tag batch_delete_index_path, data: {remote: true}, id: 'batch_delete' do |f| %>
+      <div class="modal-body">
+        <h5><%= t('views.batch_delete.new.urls_title')%></h4>
+        <% @urls.map do |url| %>
+        <dl class="padding-left-right">
+          <div>
+            <span>
+              <input type="hidden" name="keywords[]" value="<%= url.keyword %>">
+              <%= full_url(url) %>
+            </span>
+          </div>
+        </dl>
+          <br/>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><%= t('views.collection_moves.new.cancel') %></button>
+        <input type="submit" class="btn btn-danger" value="<%= t('views.batch_delete.new.submit') %>" data-confirm="<%= t('views.batch_delete.new.submit_confirm') %>">
+      </div>
+    <% end %>
+  </div>
+</div>

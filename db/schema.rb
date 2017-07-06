@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20170606004310) do
     t.integer  "url_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.index ["url_id"], name: "index_clicks_on_url_id", using: :btree
   end
 
   create_table "frequently_asked_questions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -42,7 +43,7 @@ ActiveRecord::Schema.define(version: 20170606004310) do
     t.index ["user_id"], name: "index_groups_users_on_user_id", using: :btree
   end
 
-  create_table "perid_umndid", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "perid_umndid", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "perid"
     t.string "umndid"
     t.string "uid"
@@ -124,6 +125,7 @@ ActiveRecord::Schema.define(version: 20170606004310) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
   end
 
+  add_foreign_key "clicks", "urls"
   add_foreign_key "groups_users", "groups"
   add_foreign_key "groups_users", "users"
   add_foreign_key "transfer_request_urls", "transfer_requests"

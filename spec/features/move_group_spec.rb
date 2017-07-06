@@ -14,26 +14,15 @@ describe 'moving urls to a group', js: true do
       visit urls_path
     end
 
-    describe 'with no extra groups' do
-      describe 'the move group button' do
-        it 'should not be visible' do
-          expect(page).to_not have_link 'Move to a different group'
-        end
-      end
-    end
-
     describe 'with extra groups' do
       before do
         visit urls_path
       end
 
       describe 'without urls' do
-        describe 'the move collection button' do
-          it 'should be visible' do
-            expect(page).to have_link 'Move to a different collection'
-          end
+        describe 'the table bulk actions button' do
           it 'should be disabled' do
-            expect(page.find_link('Move to a different collection')[:class]).to(
+            expect(page.find('.table-options')[:class]).to(
               have_content('disabled')
             )
           end
@@ -47,12 +36,9 @@ describe 'moving urls to a group', js: true do
         end
 
         describe 'none selected' do
-          describe 'the move group button' do
-            it 'should be visible' do
-              expect(page).to have_link 'Move to a different collection'
-            end
+          describe 'the table buld actions button' do
             it 'should be disabled' do
-              expect(page.find('.js-move-urls')[:class]).to(
+              expect(page.find('.table-options')[:class]).to(
                 have_content('disabled')
               )
             end
@@ -64,16 +50,19 @@ describe 'moving urls to a group', js: true do
             find("#url-#{@url.id} .select-checkbox").click
           end
 
-          describe 'the move group button' do
+          describe 'the table bulk actions button' do
             it 'should be enabled' do
-              expect(page.find('.js-move-urls')[:class]).to_not(
+              expect(page.find('.table-options')[:class]).to_not(
                 have_content('disabled')
               )
             end
           end
 
           describe 'clicking the move group button' do
-            before { click_link 'Move to a different collection' }
+            before {
+              find('.table-options').click
+              click_link 'Move to a different collection'
+            }
             it 'should display the modal' do
               expect(page).to have_selector('#index-modal', visible: true)
             end

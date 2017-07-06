@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   root 'home#index'
   get 'shortener', to: 'urls#index'
 
-  get "/pages/:page" => "pages#show"
+  get "/pages/:page" => "pages#show", as: :pages
 
   # This will allow us to run the meat of the app at z.umn.edu/shortener and
   # assume that all other z.umn.edu/:keywords are requests for short urls.
@@ -71,6 +71,7 @@ Rails.application.routes.draw do
     end
 
     resources :move_to_group, only: [:new, :create]
+    resources :batch_delete, only: [:new, :create]
 
     # groups	groups	index	get
     # groups/:id	groups	show	get
