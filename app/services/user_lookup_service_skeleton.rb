@@ -11,10 +11,6 @@ class UserLookupServiceSkeleton
     @query_type = params[:query_type] if params
   end
 
-  def ping
-    true
-  end
-
   def search
     return nil unless @query.present? && @query_type.present?
 
