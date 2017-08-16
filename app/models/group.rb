@@ -65,7 +65,7 @@ class Group < ApplicationRecord
     self.versions.each do |v|
       g = v.reify unless v.event.equal? "create"
       h.concat "<b>What Happened: </b> #{v.event} <br/>"
-      h.concat "<b>Who Made It: </b>  #{v.whodunnit_name}<br/>"
+      h.concat "<b>Who Made It: </b>  #{User.find(v.whodunnit).internet_id}<br/>"
       h.concat "<b>Previous Name: </b>  #{g ? g.name : 'N/A'}<br/>"
       h.concat "<b>Previous Description: </b>  #{g ? g.description : 'N/A'}<br/>"
       h.concat "<b>Date of Change: </b>  #{g ? g.updated_at : 'N/A'}<br/>"

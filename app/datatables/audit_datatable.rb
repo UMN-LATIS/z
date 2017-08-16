@@ -1,13 +1,11 @@
 class AuditDatatable < AjaxDatatablesRails::Base
-  def_delegators :@view, :display_whodunnit_email
+  def_delegators :@view, :display_whodunnit_internet_id
 
   def view_columns
     @view_columns ||= {
         item_type: { source: 'Audit.item_type' },
         event: { source: 'Audit.event' },
         whodunnit: { source: 'Audit.whodunnit' },
-        whodunnit_email: { source: 'Audit.whodunnit_email' },
-        whodunnit_name: { source: 'Audit.whodunnit_name' },
         audit_history: { source: 'Audit.version_history' },
         created_at: { source: 'Audit.created_at' }
     }
@@ -29,9 +27,7 @@ class AuditDatatable < AjaxDatatablesRails::Base
           # example: record.attribute,
           item_type: record.item_type,
           event: record.event,
-          whodunnit: display_whodunnit_email(record),
-          whodunnit_email: record.whodunnit_email,
-          whodunnit_name: record.whodunnit_name,
+          whodunnit: display_whodunnit_internet_id(record),
           audit_history: record.version_history,
           created_at: record.created_at.to_s(:created_on_formatted),
           'DT_RowId' => "audit-#{record.id}"

@@ -18,10 +18,6 @@ class ApplicationController < ActionController::Base
     # can be any key-value pairs
   end
 
-  def info_for_paper_trail
-    { whodunnit_name: current_user.internet_id, whodunnit_email: current_user.email } if signed_in?
-  end
-
   def ensure_signed_in
     redirect_to signin_path unless signed_in?
   end

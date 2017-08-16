@@ -79,11 +79,12 @@ class User < ApplicationRecord
 
 
   def load_user_data
-    # sets this objects UserData attrs
-    me = UserLookup.new(
+    me = Rails.cache.fetch("#{uid}/user_data", expires_in: 24.hours) do
+      UserLookup.new(
         query: uid,
         query_type: 'umndid'
-    ).search.try(:first)
+      ).search.try(:first)
+    end
 
     @display_name_loaded = 'Unknown'
     @internet_id_loaded = 'Unknown'
