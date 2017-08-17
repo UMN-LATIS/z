@@ -13,6 +13,7 @@
 #
 require 'uri'
 class Url < ApplicationRecord
+  include VersionUser
   has_paper_trail :ignore => [:total_clicks]
   after_save :version_history
   before_destroy :version_history
@@ -124,7 +125,7 @@ class Url < ApplicationRecord
     self.versions.each do |v|
       g = v.reify unless v.event.equal? "create"
       h.concat "<b>What Happened: </b> #{v.event} <br/>"
-      h.concat "<b>Who Made It: </b>  #{User.find(v.whodunnit).internet_id}<br/>"
+      h.concat "<b>Who Made It: </b>  #{self.class.version_user(v)}<br/>"
       h.concat "<b>Previous URL: </b>  #{g ? g.url : 'N/A'}<br/>"
       h.concat "<b>Previous Keyword: </b>  #{g ? g.keyword : 'N/A'}<br/>"
       h.concat "<b>Previous Group Name: </b>  #{g && g.group ? g.group.name : 'N/A(Group doesnt exist)'}<br/>"
