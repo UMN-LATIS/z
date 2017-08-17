@@ -10,15 +10,6 @@ class UserLookupService
     @query_type = params[:query_type] if params
   end
 
-  def ping
-    begin
-      @connection.bind
-    rescue Net::LDAP::ConnectionRefusedError
-      return false
-    end
-    true
-  end
-
   def search
     return nil unless @query.present? && @query_type.present?
     results = nil

@@ -9,7 +9,6 @@ class ApplicationController < ActionController::Base
   helper Starburst::AnnouncementsHelper
 
   before_action :set_paper_trail_whodunnit
-  before_action :ping_lookup_service
   before_action :expire_cache_headers
 
   before_action :set_notification
@@ -17,10 +16,6 @@ class ApplicationController < ActionController::Base
   def set_notification
     request.env['exception_notifier.exception_data'] = { 'server' => request.env['SERVER_NAME'] }
     # can be any key-value pairs
-  end
-
-  def info_for_paper_trail
-    { whodunnit_name: current_user.internet_id, whodunnit_email: current_user.email } if signed_in?
   end
 
   def ensure_signed_in
@@ -48,13 +43,6 @@ class ApplicationController < ActionController::Base
   def user_not_authorized
     flash[:error] = I18n.t :error_with_help, scope: 'pundit', default: :default
     redirect_to(request.referer || root_path)
-  end
-
-  def ping_lookup_service
-    unless UserLookup.new.ping
-      flash.now[:error] = I18n.t 'controllers.application.lookup_service_down'
-      render file: 'public/lookup_service_down.html', layout: false
-    end
   end
 
   def redirect_to_urls_if_logged_in

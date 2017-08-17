@@ -12,6 +12,7 @@
 #
 
 class TransferRequest < ApplicationRecord
+  include VersionUser
   has_paper_trail
   after_save :version_history
   before_destroy :version_history
@@ -81,7 +82,7 @@ class TransferRequest < ApplicationRecord
     self.versions.each do |v|
       g = v.reify #unless v.event.equal? "create"
       h.concat "<b>What Happened: </b> #{v.event} <br/>"
-      h.concat "<b>Who Made It: </b>  #{v.whodunnit_name}<br/>"
+      h.concat "<b>Who Made It: </b>  #{self.class.version_user(v)}<br/>"
       h.concat "<b>Previous Status: </b>  #{g ? g.status : 'N/A'}<br/>"
       h.concat "<br/><br/>"
     end

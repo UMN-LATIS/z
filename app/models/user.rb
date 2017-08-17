@@ -31,8 +31,8 @@ class User < ApplicationRecord
   before_validation(on: :create) do
     if context_group_id.blank?
       new_context = Group.create(
-          name: internet_id,
-          description: uid
+        name: internet_id,
+        description: uid
       )
       groups << new_context
       self.context_group_id = new_context.id
@@ -57,40 +57,32 @@ class User < ApplicationRecord
   end
 
   def display_name
-    if @display_name_loaded.nil?
-      load_user_data
-    end
+    load_user_data if @display_name_loaded.nil?
     @display_name_loaded
   end
 
   def email
-    if @internet_id_loaded.nil?
-      load_user_data
-    end
+    load_user_data if @internet_id_loaded.nil?
     "#{@internet_id_loaded}@umn.edu"
   end
 
   def internet_id
-    if @internet_id_loaded.nil?
-      load_user_data
-    end
+    load_user_data if @internet_id_loaded.nil?
     @internet_id_loaded
   end
 
-
   def load_user_data
-    # sets this objects UserData attrs
-    me = UserLookup.new(
+    me = Rails.cache.fetch("#{uid}/user_data", expires_in: 24.hours) do
+      UserLookup.new(
         query: uid,
         query_type: 'umndid'
-    ).search.try(:first)
+      ).search.try(:first)
+    end
 
     @display_name_loaded = 'Unknown'
     @internet_id_loaded = 'Unknown'
 
     if me.present?
-      # Sometimes this data is not present
-      # so we try for it
       @display_name_loaded = me[:display_name] || 'Name not available'
       @internet_id_loaded = me[:internet_id] || 'Unknown'
     end
@@ -114,8 +106,8 @@ class User < ApplicationRecord
   def user_belongs_to_context_group_validation
     unless new_record? || context_group.nil? || in_group?(context_group)
       errors.add(
-          :context_group,
-          "#{uid} is not a member of #{context_group.name}: #{context_group.description} and so cannot switch contexts to it."
+        :context_group,
+        "#{uid} is not a member of #{context_group.name}: #{context_group.description} and so cannot switch contexts to it."
       )
     end
   end
