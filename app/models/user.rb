@@ -77,7 +77,6 @@ class User < ApplicationRecord
     @internet_id_loaded
   end
 
-
   def load_user_data
     me = Rails.cache.fetch("#{uid}/user_data", expires_in: 24.hours) do
       UserLookup.new(
@@ -90,8 +89,6 @@ class User < ApplicationRecord
     @internet_id_loaded = 'Unknown'
 
     if me.present?
-      # Sometimes this data is not present
-      # so we try for it
       @display_name_loaded = me[:display_name] || 'Name not available'
       @internet_id_loaded = me[:internet_id] || 'Unknown'
     end
