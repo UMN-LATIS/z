@@ -80,12 +80,16 @@ class Url < ApplicationRecord
   end
 
   def add_click!(client_ip)
-    uri = URI.parse("http://freegeoip.net/json/#{client_ip}")
+    begin
+      uri = URI.parse("http://freegeoip.net/json/#{client_ip}")
 
-    result = Net::HTTP.start(uri.host, uri.port) do |http|
-      request = Net::HTTP::Get.new uri
-      response = http.request request
-      response.body
+      result = Net::HTTP.start(uri.host, uri.port) do |http|
+        request = Net::HTTP::Get.new uri
+        response = http.request request
+        response.body
+      end
+    rescue
+      result = ''
     end
 
     country_code = if result.include?('country_code')
