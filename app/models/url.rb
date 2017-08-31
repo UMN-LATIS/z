@@ -79,7 +79,19 @@ class Url < ApplicationRecord
     where.not("#{table_name}.id IN (?)", url_ids) if url_ids.present?
   end
 
-  def add_click!(country_code)
+  def add_click!(client_ip)
+    uri = URI.parse("http://freegeoip.net/json/#{client_ip}")
+
+    result = Net::HTTP.start(uri.host, uri.port) do |http|
+      request = Net::HTTP::Get.new uri
+      response = http.request request
+      response.body
+    end
+
+    country_code = if result.include?('country_code')
+                     JSON.parse(result)['country_code']
+                   end
+
     Click.create(country_code: country_code, url_id: id)
     update_columns(total_clicks: total_clicks + 1)
   end
