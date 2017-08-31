@@ -74,9 +74,6 @@ gem 'starburst'
 gem 'exception_notification'
 gem 'slack-notifier'
 
-# For country information
-gem 'geocoder'
-
 # For URL migration
 gem 'addressable'
 
