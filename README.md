@@ -14,6 +14,7 @@ Z is a custom URL shortener developed at LATIS@UMN. Instead of using a third par
 - Administrative dashboard
 - History of link changes
 - Responsive design
+- Link creation API
 
 ## Installation ([Docker](https://www.docker.com))
 
@@ -57,6 +58,7 @@ The application has a a comprehensive testing suite using Rspec and Capybara. Fr
 - [Google Charts](https://developers.google.com/chart/), for click visualization
 - [Barby](https://github.com/toretore/barby), for QR code generation
 - [Rubocop](https://github.com/bbatsov/rubocop), to enforce best practices
+- [Starburst](https://github.com/csm123/starburst), for in-app announcements
 
 ## Customization
 Z was designed to be forkable and customizable. Most of the language has been extracted into a [single localization file](https://github.umn.edu/latis-sw/z/blob/develop/config/locales/en.bootstrap.yml). This allows you to change any language and make Z applicable to your environment. Z uses [OmniAuth](https://github.com/omniauth/omniauth), which supports a wide variety of [authentication strategies](https://github.com/omniauth/omniauth/wiki/list-of-strategies).
