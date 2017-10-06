@@ -29,11 +29,23 @@ The included `docker-composer.yml` and `Dockerfile` files should allow this appl
  and connect to your localhost on port 3000.
 
 ## Installation (Dockerless)
-[TODO] Install this fresh and see what you have to do...
+Make sure that config/database.yml is correctly configured with database credentials, and config/lda.yml is correctly configured with LDAP credentials, and an instance of MySQL is running.
+
+	rvm install 2.3.1
+	gem install bundler
+	bundle install
+	rails db:reseed
+
+To launch the application, run
+
+	 rails s
+
+ and connect to your localhost on port 3000.
 
 ## Technology and Dependencies
 - Rails 5.0.2
 - MySQL
+- LDAP (for directory lookup)
 
 ### Auth
 - [OmniAuth](https://github.com/omniauth/omniauth), for authentication
