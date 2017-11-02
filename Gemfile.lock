@@ -83,6 +83,8 @@ GEM
     capistrano-bundler (1.2.0)
       capistrano (~> 3.1)
       sshkit (~> 1.2)
+    capistrano-linked-files (1.2.0)
+      capistrano (~> 3.1)
     capistrano-passenger (0.2.0)
       capistrano (~> 3.0)
     capistrano-rails (1.2.3)
@@ -337,6 +339,7 @@ DEPENDENCIES
   byebug
   capistrano
   capistrano-bundler
+  capistrano-linked-files
   capistrano-passenger (>= 0.1.1)
   capistrano-rails
   capistrano-rbenv
@@ -385,4 +388,4 @@ DEPENDENCIES
   web-console
 
 BUNDLED WITH
-   1.14.5
+   1.15.1
