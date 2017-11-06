@@ -22,8 +22,11 @@ ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 # Don't use `:all`, it's a meta role.
 
 role :app, %w{cla-z-dev.oit.umn.edu}
+role :app, %w{cla-z-stage.oit.umn.edu}
 role :web, %w{cla-z-dev.oit.umn.edu}
+role :web, %w{cla-z-stage.oit.umn.edu}
 role :db,  %w{cla-z-dev.oit.umn.edu}
+role :db,  %w{cla-z-stage.oit.umn.edu}
 
 
 # Configuration
