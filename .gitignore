@@ -28,3 +28,4 @@
 # Ignore authention information
 config/ldap.yml
 config/database.yml
+config/secrets.yml
