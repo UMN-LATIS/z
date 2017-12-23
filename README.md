@@ -14,6 +14,7 @@ Z is a custom URL shortener developed at LATIS@UMN. Instead of using a third par
 - Administrative dashboard
 - History of link changes
 - Responsive design
+- Link creation API
 
 ## Installation ([Docker](https://www.docker.com))
 
@@ -29,11 +30,23 @@ The included `docker-composer.yml` and `Dockerfile` files should allow this appl
  and connect to your localhost on port 3000.
 
 ## Installation (Dockerless)
-[TODO] Install this fresh and see what you have to do...
+Make sure that config/database.yml is correctly configured with database credentials, and config/lda.yml is correctly configured with LDAP credentials, and an instance of MySQL is running.
+
+	rvm install 2.3.1
+	gem install bundler
+	bundle install
+	rails db:reseed
+
+To launch the application, run
+
+	 rails s
+
+ and connect to your localhost on port 3000.
 
 ## Technology and Dependencies
 - Rails 5.0.2
 - MySQL
+- LDAP (for directory lookup)
 
 ### Auth
 - [OmniAuth](https://github.com/omniauth/omniauth), for authentication
@@ -57,6 +70,7 @@ The application has a a comprehensive testing suite using Rspec and Capybara. Fr
 - [Google Charts](https://developers.google.com/chart/), for click visualization
 - [Barby](https://github.com/toretore/barby), for QR code generation
 - [Rubocop](https://github.com/bbatsov/rubocop), to enforce best practices
+- [Starburst](https://github.com/csm123/starburst), for in-app announcements
 
 ## Customization
 Z was designed to be forkable and customizable. Most of the language has been extracted into a [single localization file](https://github.umn.edu/latis-sw/z/blob/develop/config/locales/en.bootstrap.yml). This allows you to change any language and make Z applicable to your environment. Z uses [OmniAuth](https://github.com/omniauth/omniauth), which supports a wide variety of [authentication strategies](https://github.com/omniauth/omniauth/wiki/list-of-strategies).
