@@ -16,5 +16,9 @@ module Z
     # Set default time zone
     config.time_zone = 'Central Time (US & Canada)'
     config.middleware.insert_before Rack::Runtime, 'InvalidDataInterceptor'
+    
+    # Set to true to do geocoding on a backgroud queue. 
+    config.use_background_queue = true
+
   end
 end
