@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170606004310) do
+ActiveRecord::Schema.define(version: 20180524122211) do
 
   create_table "clicks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "country_code"
@@ -41,6 +41,16 @@ ActiveRecord::Schema.define(version: 20170606004310) do
     t.boolean "notify_user_changes", default: false, null: false
     t.index ["group_id"], name: "index_groups_users_on_group_id", using: :btree
     t.index ["user_id"], name: "index_groups_users_on_user_id", using: :btree
+  end
+
+  create_table "ip2location_db1", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "ip_from"
+    t.integer "ip_to"
+    t.string  "country_code", limit: 2
+    t.string  "country_name"
+    t.index ["ip_from", "ip_to"], name: "index_ip2location_db1_on_ip_from_and_ip_to", using: :btree
+    t.index ["ip_from"], name: "index_ip2location_db1_on_ip_from", using: :btree
+    t.index ["ip_to"], name: "index_ip2location_db1_on_ip_to", using: :btree
   end
 
   create_table "perid_umndid", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

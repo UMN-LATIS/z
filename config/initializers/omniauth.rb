@@ -1,5 +1,5 @@
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :developer unless Rails.env.production? || Rails.env.staging?
+  provider :developer unless Rails.env.production? || Rails.env.staging? || Rails.env.remotedev?
   provider :shibboleth, {
     uid_field: 'umnDID'
   }

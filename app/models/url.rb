@@ -12,6 +12,8 @@
 #  updated_at   :datetime         not null
 #
 require 'uri'
+require 'ipaddr'
+
 class Url < ApplicationRecord
   include VersionUser
   has_paper_trail :ignore => [:total_clicks]
@@ -34,10 +36,10 @@ class Url < ApplicationRecord
   validates :keyword, uniqueness: { case_sensitive: false }, presence: true
   validates :url, presence: true
   validates :keyword, format: {
-                        with: /^[a-zA-Z0-9\-_]*$/,
-                        multiline: true,
-                        message: 'special characters are not permitted. Only letters, and numbers, dashes ("-") and underscores ("_")'
-                    }
+    with: /^[a-zA-Z0-9\-_]*$/,
+    multiline: true,
+    message: 'special characters are not permitted. Only letters, and numbers, dashes ("-") and underscores ("_")'
+  }
   validate :check_for_valid_url
 
   before_validation do
@@ -80,21 +82,18 @@ class Url < ApplicationRecord
   end
 
   def add_click!(client_ip)
-    begin
-      uri = URI.parse("http://freegeoip.net/json/#{client_ip}")
 
-      result = Net::HTTP.start(uri.host, uri.port) do |http|
-        request = Net::HTTP::Get.new uri
-        response = http.request request
-        response.body
+    client_ip_decimal = IPAddr.new(client_ip).to_i
+
+    begin
+      @location = IpLocation.where('? >= ip_from AND ? < ip_to', client_ip_decimal, client_ip_decimal)
+
+      if(@location.first!.country_code)
+        country_code = @location.first!.country_code
       end
     rescue
-      result = ''
+      country_code = ''
     end
-
-    country_code = if result.include?('country_code')
-                     JSON.parse(result)['country_code']
-                   end
 
     Click.create(country_code: country_code, url_id: id)
     update_columns(total_clicks: total_clicks + 1)
