@@ -5,8 +5,9 @@ class AddIpLookupTable < ActiveRecord::Migration[5.0]
   	 	t.integer :ip_to
   	 	t.column(:country_code, 'char(2)')
   	 	t.string :country_name
-  	 	add_index :ip2location_db1, :ip_from
-  	 	add_index :ip2location_db1, :ip_to
-  	 	add_index :ip2location_db1, [:ip_from, :ip_to]
+  	 	t.index :ip_from
+  	 	t.index :ip_to
+  	 	t.index [:ip_from, :ip_to]
+     end
   end
 end
