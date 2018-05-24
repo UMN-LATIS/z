@@ -12,8 +12,6 @@ ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 set :deploy_to, '/swadm/web/z/'
 
 
-set :monitrc_path, '/swadm/etc/monit.d/' 
-
 # Default value for :scm is :git
 # set :scm, :git
 
@@ -46,11 +44,5 @@ namespace :deploy do
     end
   end
 end
-
-namespace :deploy do
-  task :restart => 'monit:restart'
-end
-
-after 'deploy:apache', 'deploy:restart'
 
 after 'deploy:symlink:release', 'deploy:apache'

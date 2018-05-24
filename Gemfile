@@ -124,14 +124,9 @@ group :development do
   gem 'capistrano-passenger', '>= 0.1.1'
   gem 'capistrano-rbenv'
   gem 'capistrano-rails'
-  gem 'capistrano3-monit', github: 'naps62/capistrano3-monit'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-# resque handles background queues for geolookup
-gem 'resque'
-
-# browser allows us to sniff for bots and ignore them.
 gem 'browser'

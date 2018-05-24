@@ -8,12 +8,7 @@ class RedirectController < ActionController::Base
       redirect_to(url.url)
       browser = Browser.new(request.user_agent, accept_language: "en-us")
       if(!browser.bot?)
-        url.add_click!
-        begin
-          Resque.enqueue(GeoClickJob, url.id, request.remote_ip, Time.now)
-        rescue => ex
-          url.add_geo_click!(request.remote_ip, Time.now)
-        end
+      	url.add_click!(request.remote_ip)
       end
     end
   end
