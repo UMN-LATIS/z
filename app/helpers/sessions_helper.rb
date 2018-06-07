@@ -4,6 +4,8 @@ module SessionsHelper
     # by reloading it.
     user.reload
     session[:remember_token] = user.remember_token
+    # expire in four hours
+    session[:expires_at] = Time.now + 4.hours
     self.current_user = user
   end
 
@@ -16,7 +18,10 @@ module SessionsHelper
   end
 
   def current_user
-    @current_user ||= User.find_by_remember_token(session[:remember_token])
+    # if the user is carrying an expired session, just return nil and force them to sign in again
+    if session[:expires_at] && session[:expires_at] > Time.now
+      @current_user ||= User.find_by_remember_token(session[:remember_token])
+    end
   end
 
   def sign_out

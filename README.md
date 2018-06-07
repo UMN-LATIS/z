@@ -51,9 +51,14 @@ To launch the application, run
 ### Auth
 - [OmniAuth](https://github.com/omniauth/omniauth), for authentication
 - [Pundit](https://github.com/elabs/pundit), for authorization
+
 ### Deployment
 - [Capistrano](https://github.com/capistrano/capistrano), for deployment
 - Apache/[Passenger](https://github.com/phusion/passenger), as our server stack
+
+### Data
+
+After deploying, populate the ip2location_db1 table with the content from the [IP2Location LITE IP-Country Database](https://lite.ip2location.com/database/ip-country).
 
 ### Testing
 - [Rspec](https://github.com/rspec/rspec)/[Capybara](https://github.com/teamcapybara/capybara), for testing
