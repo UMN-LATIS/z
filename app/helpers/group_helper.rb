@@ -5,6 +5,6 @@ module GroupHelper
   end
 
   def group_names_and_ids_for_select(groups)
-    groups.collect { |group| [display_name(group), group['id'] ] }
+    groups.collect { |group| [display_name(group), group['id'] ] }.sort
   end
 end
