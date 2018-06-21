@@ -5,6 +5,6 @@ module GroupHelper
   end
 
   def group_names_and_ids_for_select(groups)
-    groups.collect { |group| [display_name(group), group['id'] ] }.sort
+    groups.collect { |group| [display_name(group), group['id'] ] }.sort_by{ |group| [ group.first == "No Collection" ? 0 : 1, group.first.downcase ] }
   end
 end
