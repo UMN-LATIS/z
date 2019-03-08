@@ -17,5 +17,6 @@ module Z
     config.time_zone = 'Central Time (US & Canada)'
     config.middleware.insert_before Rack::Runtime, 'InvalidDataInterceptor'
     config.action_dispatch.ip_spoofing_check = false
+    config.middleware.use Rack::Deflater
   end
 end
