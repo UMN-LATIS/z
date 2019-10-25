@@ -99,7 +99,7 @@ Rails.application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
 
-
+  config.middleware.insert_before Rack::Runtime, InvalidDataInterceptor
   config.middleware.use ExceptionNotification::Rack,
                         email: {
                             email_prefix: Rails.env,

@@ -8,7 +8,7 @@ Rails.application.configure do
 
   # Do not eager load code on boot.
   config.eager_load = false
-
+  
   # Show full error reports.
   config.consider_all_requests_local = true
 
@@ -42,4 +42,5 @@ Rails.application.configure do
 
   # Set the omniauth provider
   config.omniauth_provider = 'developer'
+  config.middleware.insert_before Rack::Runtime, InvalidDataInterceptor
 end
