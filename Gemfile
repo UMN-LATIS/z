@@ -2,14 +2,14 @@ source 'https://rubygems.org'
 
 gem 'passenger'
 
-gem 'ajax-datatables-rails', github: 'antillas21/ajax-datatables-rails', branch: 'v-0-4-0'
+gem 'ajax-datatables-rails', github: 'jbox-web/ajax-datatables-rails', branch: 'v0.4.x'
 # Use OmniAuth to support any type of auth
 gem 'omniauth'
 gem 'omniauth-shibboleth'
 gem 'omniauth-shibboleth-passive'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '>= 5.0.0', '< 5.1'
+gem 'rails', '>= 5.0.0', '< 6.0'
 # Use mysql2 as the database for Active Record
 gem 'mysql2'
 # Use sqlite also
@@ -24,6 +24,8 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
+
+gem "lograge"
 
 # For javascript translations
 gem "i18n-js"
