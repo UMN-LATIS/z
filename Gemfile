@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'passenger'
 
-gem 'ajax-datatables-rails', github: 'jbox-web/ajax-datatables-rails', branch: 'v0.4.x'
+gem 'ajax-datatables-rails', github: 'jbox-web/ajax-datatables-rails', :ref => '6769547aa032a72fc632344904c49d32359d9b52'
 # Use OmniAuth to support any type of auth
 gem 'omniauth'
 gem 'omniauth-shibboleth'
