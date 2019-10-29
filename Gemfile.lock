@@ -16,11 +16,11 @@ GIT
 
 GIT
   remote: https://github.com/jbox-web/ajax-datatables-rails.git
-  revision: 6769547aa032a72fc632344904c49d32359d9b52
-  ref: 6769547aa032a72fc632344904c49d32359d9b52
+  revision: 70513cb0e0990f26b52626ba13674e67104c03c6
+  ref: 70513cb0e0990f26b52626ba13674e67104c03c6
   specs:
-    ajax-datatables-rails (0.4.0)
-      railties (>= 3.2)
+    ajax-datatables-rails (0.4.3)
+      railties (>= 4.0)
 
 GEM
   remote: https://rubygems.org/
