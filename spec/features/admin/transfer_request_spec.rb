@@ -9,6 +9,7 @@ describe 'admin urls index page' do
   describe 'creating a transfer request', js: true do
     before do
       visit admin_urls_path
+      wait_for_ajax
     end
 
     describe 'with no urls' do
