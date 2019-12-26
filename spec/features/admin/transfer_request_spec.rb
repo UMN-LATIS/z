@@ -15,6 +15,7 @@ describe 'admin urls index page' do
     describe 'with no urls' do
       describe 'the transfer button' do
         it 'should be disabled' do
+          wait_for_ajax
           expect(page.find('.table-options')[:class]).to(
               have_content('disabled')
           )
