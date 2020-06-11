@@ -97,6 +97,7 @@ group :development, :test do
   gem 'fuubar'
 
   # Add some pry/rails console helpers for development
+  gem 'pry', '0.12.2'
   gem 'pry-coolline'
   gem 'pry-byebug'
   gem 'awesome_print'

@@ -339,7 +339,7 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
         action: function(e, dt, node, config) {
             var keywords = [];
             userTable.rows('.selected').data().map(function(row) {
-                keywords.push(row['DT_RowData']['keyword'])
+                keywords.push(row['DT_RowData_keyword'])
             });
             transferUrl($('.route-info').data('new-transfer-request-path'), keywords);
         }
@@ -352,7 +352,7 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
         action: function(e, dt, node, config) {
             var keywords = [];
             userTable.rows('.selected').data().map(function(row) {
-                keywords.push(row['DT_RowData']['keyword'])
+                keywords.push(row['DT_RowData_keyword'])
             });
 
             moveUrl($('.route-info').data('new-move-to-group-path'), keywords);
@@ -366,7 +366,7 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
         action: function(e, dt, node, config) {
             var keywords = [];
             userTable.rows('.selected').data().map(function(row) {
-                keywords.push(row['DT_RowData']['keyword'])
+                keywords.push(row['DT_RowData_keyword'])
             });
 
             batchDelete($('.route-info').data('new-batch-delete-path'), keywords);

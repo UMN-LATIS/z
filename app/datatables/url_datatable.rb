@@ -48,7 +48,8 @@ class UrlDatatable < AjaxDatatablesRails::Base
           partial: 'urls/in_row_actions',
           locals: { url: record, admin_view: false }
         ),
-        'DT_RowData' => { 'url' => record.url, 'keyword' => record.keyword },
+        'DT_RowData_keyword' =>  record.keyword ,
+        'DT_RowData_url' => record.url,
         'DT_RowId' => "url-#{record.id}"
       }
     end

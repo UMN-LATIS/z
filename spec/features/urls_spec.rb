@@ -86,13 +86,13 @@ describe 'urls show page', js: true do
       wait_for_ajax
       visit url_path(@url.keyword)
       wait_for_ajax
-      find('.selectpicker.dropdown-toggle').click
+      find('.bootstrap-select .dropdown-toggle').click
       find('.dropdown-menu.open').find('li', text: @new_group.name).click
       wait_for_ajax
     }
 
     it 'should change the collection' do
-      expect(page).to have_selector('.selectpicker.dropdown-toggle', text: @new_group.name)
+      expect(page).to have_selector('.bootstrap-select .dropdown-toggle', text: @new_group.name)
     end
     it 'should update the urls collection in the database' do
       @url.reload
@@ -374,7 +374,7 @@ describe 'urls index page', js: true do
         wait_for_ajax
         visit urls_path
         wait_for_ajax
-        find('table .selectpicker.dropdown-toggle').click
+        find('table .bootstrap-select .dropdown-toggle').click
       }
 
       describe 'when changing collection' do
@@ -384,7 +384,7 @@ describe 'urls index page', js: true do
         }
 
         it 'should change the collection' do
-          expect(page).to have_selector('table .selectpicker.dropdown-toggle', text: @new_group.name)
+          expect(page).to have_selector('table .bootstrap-select .dropdown-toggle', text: @new_group.name)
         end
         it 'should update the urls collection in the database' do
           @url.reload
@@ -415,7 +415,7 @@ describe 'urls index page', js: true do
           }
 
           it 'should update collection picker in table' do
-            expect(page).to have_selector('table .selectpicker.dropdown-toggle', text: @new_group_name)
+            expect(page).to have_selector('table .bootstrap-select .dropdown-toggle', text: @new_group_name)
           end
           it 'should update url in database' do
             @url.reload
