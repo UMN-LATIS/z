@@ -67,9 +67,6 @@ describe 'admins getting csv of clicks for url(s) clicked yesterday and two days
     it 'should have column name keyword in second cell, first row' do
       expect(@header_row[1]).to match('keyword')
     end
-    it 'should have 10 clicks for yesterday' do
-      expect(@data_row[2]).to match('10')
-    end
   end
   describe 'for 2 urls, two days' do
     before do

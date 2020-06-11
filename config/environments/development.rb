@@ -42,5 +42,5 @@ Rails.application.configure do
 
   # Set the omniauth provider
   config.omniauth_provider = 'developer'
-  config.middleware.insert_before Rack::Runtime, InvalidDataInterceptor
+  # config.middleware.insert_before Rack::Runtime, InvalidDataInterceptor
 end

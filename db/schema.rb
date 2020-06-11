@@ -122,7 +122,7 @@ ActiveRecord::Schema.define(version: 2018_05_24_122211) do
     t.index ["default_group_id"], name: "index_users_on_default_group_id"
   end
 
-  create_table "versions", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "versions", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci", force: :cascade do |t|
     t.string "item_type", limit: 191, null: false
     t.integer "item_id", null: false
     t.string "event", null: false
