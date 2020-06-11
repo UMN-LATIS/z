@@ -6,13 +6,13 @@ describe RedirectController do
   describe 'GET /:keyword' do
     describe 'url exists' do
       it 'redirects back to the referring page' do
-        get :index, keyword: url.keyword
+        get :index, params: { keyword: url.keyword }
         expect(response).to redirect_to url.url
       end
     end
     describe 'url does not exist' do
       it 'redirects back to the root path' do
-        get :index, keyword: "5#{url.keyword}"
+        get :index, params: {keyword: "5#{url.keyword}" }
         expect(response).to redirect_to root_path
       end
     end
@@ -23,7 +23,7 @@ describe RedirectController do
       it 'should not count' do
         initialClicks = url.total_clicks
         @request.user_agent = "Googlebot/2.1"
-        get :index, keyword: url.keyword
+        get :index, params: { keyword: url.keyword }
         newURL = Url.find(url.id)
         expect(url.total_clicks).to eq(newURL.total_clicks)
       end
@@ -32,7 +32,7 @@ describe RedirectController do
       it 'should count' do
         initialClicks = url.total_clicks
         @request.user_agent = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"
-        get :index, keyword: url.keyword
+        get :index, params: { keyword: url.keyword }
         newURL = Url.find(url.id)
         expect(url.total_clicks).not_to eq(newURL.total_clicks)
       end
