@@ -21,7 +21,7 @@ class Url < ApplicationRecord
   before_destroy :version_history
 
   belongs_to :group
-  has_many :clicks, dependent: :destroy
+  has_many :clicks, dependent: :delete_all
   has_and_belongs_to_many :transfer_requests, join_table: :transfer_request_urls
 
   # this next bit of magic removes any associations in the transfer_request_urls

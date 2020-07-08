@@ -2,14 +2,14 @@ source 'https://rubygems.org'
 
 gem 'passenger'
 
-gem 'ajax-datatables-rails', github: 'jbox-web/ajax-datatables-rails', ref: '6769547aa032a72fc632344904c49d32359d9b52'
+gem 'ajax-datatables-rails', github: 'jbox-web/ajax-datatables-rails', ref: '70513cb0e0990f26b52626ba13674e67104c03c6'
 # Use OmniAuth to support any type of auth
 gem 'omniauth'
 gem 'omniauth-shibboleth'
 gem 'omniauth-shibboleth-passive'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '>= 5.0.0', '< 6.0'
+gem 'rails', '~> 5.2.0'
 # Use mysql2 as the database for Active Record
 gem 'mysql2'
 # Use sqlite also
@@ -21,7 +21,7 @@ gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.1.0'
+gem 'coffee-rails', '~> 4.2.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
@@ -69,7 +69,7 @@ gem 'pundit'
 
 # announcements to the seething masses
 # https://github.com/csm123/starburst#
-gem 'starburst'
+gem 'starburst',  git: 'git://github.com/csm123/starburst'
 
 #notify someone when exceptions occur
 #and notify slack channel
@@ -97,6 +97,7 @@ group :development, :test do
   gem 'fuubar'
 
   # Add some pry/rails console helpers for development
+  gem 'pry', '0.12.2'
   gem 'pry-coolline'
   gem 'pry-byebug'
   gem 'awesome_print'
