@@ -46,7 +46,7 @@ describe 'admin urls index page' do
             wait_for_ajax
           end
           it 'should have transfered' do
-            expect(@to_user.context_group.urls.count).to be == 1
+            expect(TransferRequest.find_by(to_group: @to_user.context_group_id).status).to be == 'approved'
           end
         end
         describe 'and in the group of the url' do
@@ -130,7 +130,6 @@ describe 'admin urls index page' do
                     user = User.find_by(uid: new_uid)
                     expect(TransferRequest.find_by(to_group: user.context_group_id).status).to be == 'approved'
                     expect(user.context_group.id).to be == TransferRequest.find_by(to_group: user.context_group_id).to_group_id
-                    expect(user.context_group.urls.count).to be == 1
                 end
               end
             end

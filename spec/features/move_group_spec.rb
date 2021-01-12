@@ -12,11 +12,13 @@ describe 'moving urls to a group', js: true do
   describe 'on the urls index page' do
     before do
       visit urls_path
+      wait_for_ajax
     end
 
     describe 'with extra groups' do
       before do
         visit urls_path
+        wait_for_ajax
       end
 
       describe 'without urls' do

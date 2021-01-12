@@ -7,4 +7,3 @@ Rails.application.configure do
     { time: Time.now }
   end
 end
-
