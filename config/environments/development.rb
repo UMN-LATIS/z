@@ -39,7 +39,10 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
-
+  
+  # enable this line to test local 404
+  # config.consider_all_requests_local = false
+  
   # Set the omniauth provider
   config.omniauth_provider = 'developer'
   # config.middleware.insert_before Rack::Runtime, InvalidDataInterceptor
