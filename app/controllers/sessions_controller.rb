@@ -6,6 +6,12 @@ class SessionsController < ApplicationController
   end
 
   def create
+    if !Rails.env.development? && auth_hash["extra"]["raw_info"]["isGuest"] == "Y"
+      redirect_to root_path
+    end
+
+
+
     @user = User.find_or_create_by(
       uid: auth_hash[:uid]
     )
