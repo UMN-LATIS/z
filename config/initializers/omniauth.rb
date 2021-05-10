@@ -1,16 +1,10 @@
 Rails.application.config.middleware.use OmniAuth::Builder do
   provider :developer unless Rails.env.production? || Rails.env.staging? || Rails.env.remotedev?
   provider :shibboleth, {
-    uid_field: 'umnDID',
-    :extra_fields => [
-      :isGuest,
-    ]
+    uid_field: 'umnDID'
   }
   provider :shibboleth_passive, {
     uid_field: 'umnDID'
-    :extra_fields => [
-      :isGuest,
-    ]
   }
 end
 
