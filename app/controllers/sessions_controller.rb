@@ -6,11 +6,12 @@ class SessionsController < ApplicationController
   end
 
   def create
+    # Filter out isGuest shibboleth requests. This is almost surely the wrong way to filter logins with
+    # omniAuth. TODO: refactor.
     if !Rails.env.development? && auth_hash["extra"]["raw_info"]["isGuest"] == "Y"
       redirect_to root_path
+      return
     end
-
-
 
     @user = User.find_or_create_by(
       uid: auth_hash[:uid]
