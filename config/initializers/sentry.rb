@@ -10,8 +10,4 @@ Sentry.init do |config|
   else 
     config.traces_sample_rate = 0.5
   end
-  # or
-  config.traces_sampler = lambda do |context|
-    true
-  end
 end
