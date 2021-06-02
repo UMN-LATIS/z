@@ -10,6 +10,7 @@ Rails.application.configure do
   config.eager_load = false
   
   # Show full error reports.
+  # set this to false to test 404 pages
   config.consider_all_requests_local = true
 
   config.cache_store = :memory_store, { size: 32.megabytes }
