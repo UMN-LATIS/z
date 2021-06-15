@@ -10,6 +10,7 @@ Rails.application.configure do
   config.eager_load = false
   
   # Show full error reports.
+  # set this to false to test 404 pages
   config.consider_all_requests_local = true
 
   config.cache_store = :memory_store, { size: 32.megabytes }
@@ -39,7 +40,10 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
-
+  
+  # enable this line to test local 404
+  # config.consider_all_requests_local = false
+  
   # Set the omniauth provider
   config.omniauth_provider = 'developer'
   # config.middleware.insert_before Rack::Runtime, InvalidDataInterceptor

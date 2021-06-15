@@ -7,6 +7,7 @@ class UrlsController < ApplicationController
   # GET /urls
   # GET /urls.json
   def index
+
     @group = Group.find(current_user.context_group_id)
 
     @urls =

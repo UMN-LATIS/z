@@ -3,7 +3,7 @@ class PagesController < ApplicationController
     if valid_page?
       render template: "pages/#{params[:page]}"
     else
-      render file: "public/404.html", status: :not_found
+      raise ActiveRecord::RecordNotFound
     end
   end
 

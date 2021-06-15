@@ -3,7 +3,7 @@ class RedirectController < ActionController::Base
     url = Url.find_by(keyword: params[:keyword])
 
     if url.nil?
-      redirect_to root_path
+      raise ActiveRecord::RecordNotFound
     else
       redirect_to(url.url)
       browser = Browser.new(request.user_agent, accept_language: "en-us")
