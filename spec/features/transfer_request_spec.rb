@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'creating a transfer request', js: true do
   before do
-    @user = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
     sign_in(@user)
   end
 
@@ -23,9 +23,9 @@ describe 'creating a transfer request', js: true do
     end
     describe 'with urls' do
       before do
-        @selected_url = FactoryGirl.create(:url, group: @user.context_group)
-        FactoryGirl.create(:url, group: @user.context_group)
-        FactoryGirl.create(:url, group: @user.context_group)
+        @selected_url = FactoryBot.create(:url, group: @user.context_group)
+        FactoryBot.create(:url, group: @user.context_group)
+        FactoryBot.create(:url, group: @user.context_group)
         visit urls_path
         wait_for_ajax
       end
@@ -43,9 +43,9 @@ describe 'creating a transfer request', js: true do
       describe 'with multiple urls selected' do
         describe 'from different groups' do
           before do
-            @new_group = FactoryGirl.create(:group)
+            @new_group = FactoryBot.create(:group)
             @new_group.users << @user
-            @new_group_url = FactoryGirl.create(:url, group: @new_group)
+            @new_group_url = FactoryBot.create(:url, group: @new_group)
             sign_in @user
             visit urls_path
             find("#url-#{@selected_url.id} > .select-checkbox").click
@@ -65,7 +65,7 @@ describe 'creating a transfer request', js: true do
 
           describe 'submitting a transfer request' do
             before do
-              @other_user = FactoryGirl.create(:user)
+              @other_user = FactoryBot.create(:user)
               first('input#transfer_request_to_group', visible: false).set @other_user.uid
               find('#new_transfer_request  input[type="submit"]').click
               click_button 'Confirm'
@@ -99,7 +99,7 @@ describe 'creating a transfer request', js: true do
           describe 'filling out the form' do
             describe 'with valid information' do
               before do
-                @other_user = FactoryGirl.create(:user)
+                @other_user = FactoryBot.create(:user)
                 first('input#transfer_request_to_group', visible: false).set @other_user.uid
               end
 
@@ -176,7 +176,7 @@ describe 'creating a transfer request', js: true do
 
   describe 'on the urls details', js: true do
     before do
-      @url = FactoryGirl.create(:url, group: @user.context_group)
+      @url = FactoryBot.create(:url, group: @user.context_group)
       visit url_path(@url.keyword)
     end
 
@@ -200,8 +200,8 @@ describe 'creating a transfer request', js: true do
 
   describe 'intereacting with transfer request', js: true do
     before do
-      @other_url = FactoryGirl.create(:url)
-      @transfer = FactoryGirl.create(
+      @other_url = FactoryBot.create(:url)
+      @transfer = FactoryBot.create(
         :transfer_request,
         to_group_id: @user.context_group_id,
         from_group_id: @other_url.group_id,

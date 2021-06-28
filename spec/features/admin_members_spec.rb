@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'admin members index page' do
   before do
-    @user = FactoryGirl.create(:user, admin: true, uid: 'wozniak')
+    @user = FactoryBot.create(:user, admin: true, uid: 'wozniak')
     sign_in(@user)
     visit admin_members_path(@user)
   end
@@ -21,7 +21,7 @@ describe 'admin members index page' do
 
   describe 'creating and deleting a admin member', js: true do
     describe 'to an existing group of admins' do
-      let(:group) { FactoryGirl.create(:group) }
+      let(:group) { FactoryBot.create(:group) }
       it 'add and then set the new member admin flag to true' do
         find('#uid', visible: false).set 'andersen'
         click_button 'Add'
@@ -61,7 +61,7 @@ describe 'admin members index page' do
 end
 describe 'visiting the admin member list as a non-admin' do
   before do
-    bad_user = FactoryGirl.create(:user, uid: 'jones')
+    bad_user = FactoryBot.create(:user, uid: 'jones')
     sign_in(bad_user)
     visit admin_members_path(bad_user)
   end

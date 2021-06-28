@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe RedirectController do
-  let(:url) { FactoryGirl.create(:url) }
+  let(:url) { FactoryBot.create(:url) }
 
   describe 'GET /:keyword' do
     describe 'url exists' do

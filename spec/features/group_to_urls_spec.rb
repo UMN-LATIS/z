@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 describe 'with a group that has URLs', js: true do
-  let(:group) { FactoryGirl.create(:group) }
-  let(:other_group) { FactoryGirl.create(:group) }
-  let(:user) { FactoryGirl.create(:user) }
-  let(:url) { FactoryGirl.create(:url) }
+  let(:group) { FactoryBot.create(:group) }
+  let(:other_group) { FactoryBot.create(:group) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:url) { FactoryBot.create(:url) }
   before do
     user.groups << group
     user.groups << other_group

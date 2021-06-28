@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'admin urls index page' do
   before do
-    @admin = FactoryGirl.create(:admin)
+    @admin = FactoryBot.create(:admin)
     sign_in(@admin)
   end
 
@@ -24,11 +24,11 @@ describe 'admin urls index page' do
     end
     describe 'with urls' do
       before do
-        @user = FactoryGirl.create(:user)
-        @users_url = FactoryGirl.create(:url, group: @user.context_group)
-        @admins_url = FactoryGirl.create(:url, group: @admin.context_group)
-        FactoryGirl.create(:url, group: @user.context_group)
-        FactoryGirl.create(:url, group: @user.context_group)
+        @user = FactoryBot.create(:user)
+        @users_url = FactoryBot.create(:url, group: @user.context_group)
+        @admins_url = FactoryBot.create(:url, group: @admin.context_group)
+        FactoryBot.create(:url, group: @user.context_group)
+        FactoryBot.create(:url, group: @user.context_group)
         visit admin_urls_path
         wait_for_ajax
       end
@@ -39,7 +39,7 @@ describe 'admin urls index page' do
             page.find('.table-options').click
             page.find('.js-transfer-urls').click
             wait_for_ajax
-            @to_user = FactoryGirl.create(:user)
+            @to_user = FactoryBot.create(:user)
             first('input#transfer_request_to_group', visible: false).set @to_user.uid
             find('#new_transfer_request  input[type="submit"]').click
             click_button 'Confirm'
@@ -55,7 +55,7 @@ describe 'admin urls index page' do
             page.find('.table-options').click
             page.find('.js-transfer-urls').click
             wait_for_ajax
-            @to_user = FactoryGirl.create(:user)
+            @to_user = FactoryBot.create(:user)
             first('input#transfer_request_to_group', visible: false).set @to_user.uid
             find('#new_transfer_request  input[type="submit"]').click
             click_button 'Confirm'
@@ -102,7 +102,7 @@ describe 'admin urls index page' do
           describe 'filling out the form' do
             describe 'with valid information' do
               before do
-                @other_user = FactoryGirl.create(:user)
+                @other_user = FactoryBot.create(:user)
                 first('input#transfer_request_to_group', visible: false).set @other_user.uid
               end
               it 'should not create a transfer request' do

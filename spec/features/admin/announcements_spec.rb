@@ -2,8 +2,8 @@ require 'rails_helper'
 
 describe 'as a non-admin user visiting the admin page' do
   before do
-    @user = FactoryGirl.create(:user)
-    @announcement = FactoryGirl.create(:announcement)
+    @user = FactoryBot.create(:user)
+    @announcement = FactoryBot.create(:announcement)
     sign_in(@user)
     visit admin_announcements_path
   end
@@ -16,8 +16,8 @@ end
 
 describe 'as a valid user' do
   before do
-    @user = FactoryGirl.create(:user)
-    @announcement = FactoryGirl.create(:announcement)
+    @user = FactoryBot.create(:user)
+    @announcement = FactoryBot.create(:announcement)
     sign_in(@user)
     visit urls_path
   end
@@ -32,7 +32,7 @@ end
 
 describe 'as a valid admin user' do
   before do
-    @admin = FactoryGirl.create(:admin)
+    @admin = FactoryBot.create(:admin)
     sign_in(@admin)
     visit admin_announcements_path
   end
@@ -55,7 +55,7 @@ describe 'as a valid admin user' do
   end
   describe 'with an announcement' do
     before do
-      @announcement = FactoryGirl.create(:announcement)
+      @announcement = FactoryBot.create(:announcement)
       visit admin_announcements_path
     end
     it 'should not display invitation to add an announcement' do

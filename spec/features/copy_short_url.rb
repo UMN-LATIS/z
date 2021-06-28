@@ -2,13 +2,13 @@ require 'rails_helper'
 
 describe 'copy url button ' do
   before do
-    @user = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
     sign_in(@user)
   end
 
   describe 'on the urls', js: true do
     before do
-      @new_url = FactoryGirl.create(:url, group: @user.context_group)
+      @new_url = FactoryBot.create(:url, group: @user.context_group)
     end
 
     describe 'index page', js: true do
@@ -25,7 +25,7 @@ describe 'copy url button ' do
 
     describe 'details page', js: true do
       before do
-        @new_url = FactoryGirl.create(:url, group: @user.context_group)
+        @new_url = FactoryBot.create(:url, group: @user.context_group)
         visit url_path(@new_url.keyword)
       end
 
