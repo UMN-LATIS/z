@@ -1,18 +1,9 @@
 GIT
-  remote: git://github.com/csm123/starburst
+  remote: https://github.com/csm123/starburst.git
   revision: ff8fd1f8fbb7b466580a0f9484849c4de207e111
   specs:
     starburst (2.0.0.rc0)
       rails (>= 4.2.0, < 6.1)
-
-GIT
-  remote: git://github.com/pgate/twitter-typeahead-rails
-  revision: 105a036048eb4c19a1d5c0bb7aec55346c8b506d
-  specs:
-    twitter-typeahead-rails (0.11.1)
-      actionpack (>= 3.1)
-      jquery-rails
-      railties (>= 3.1)
 
 GIT
   remote: https://github.com/jbox-web/ajax-datatables-rails.git
@@ -21,6 +12,15 @@ GIT
   specs:
     ajax-datatables-rails (0.4.3)
       railties (>= 4.0)
+
+GIT
+  remote: https://github.com/pgate/twitter-typeahead-rails.git
+  revision: 105a036048eb4c19a1d5c0bb7aec55346c8b506d
+  specs:
+    twitter-typeahead-rails (0.11.1)
+      actionpack (>= 3.1)
+      jquery-rails
+      railties (>= 3.1)
 
 GEM
   remote: https://rubygems.org/
@@ -437,4 +437,4 @@ DEPENDENCIES
   web-console
 
 BUNDLED WITH
-   2.2.16
+   2.2.20
