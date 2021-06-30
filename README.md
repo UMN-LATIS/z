@@ -20,39 +20,43 @@ Z is a custom URL shortener developed at LATIS@UMN. Instead of using a third par
 
 The included `docker-composer.yml` and `Dockerfile` files should allow this application to be run in [Docker](https://www.docker.com). To get started, run
 
-	 docker-compose run web rake db:create
-	 docker-compose run web rails db:migrate RAILS_ENV=development
-
- To launch the application, run
-
-	 docker-compose up
-
- and connect to your localhost on port 3000.
-
-## Installation (Dockerless)
-Make sure that config/database.yml is correctly configured with database credentials, and config/lda.yml is correctly configured with LDAP credentials, and an instance of MySQL is running.
-
-	rvm install 2.3.1
-	gem install bundler
-	bundle install
-	rails db:reseed
+     docker-compose run web rake db:create
+     docker-compose run web rails db:migrate RAILS_ENV=development
 
 To launch the application, run
 
-	 rails s
+     docker-compose up
 
- and connect to your localhost on port 3000.
+and connect to your localhost on port 3000.
+
+## Installation (Dockerless)
+
+Make sure that config/database.yml is correctly configured with database credentials, and config/lda.yml is correctly configured with LDAP credentials, and an instance of MySQL is running.
+
+    rvm install 2.3.1
+    gem install bundler
+    bundle install
+    rails db:reseed
+
+To launch the application, run
+
+     rails s
+
+and connect to your localhost on port 3000.
 
 ## Technology and Dependencies
+
 - Rails 5.0.2
 - MySQL
 - LDAP (for directory lookup)
 
 ### Auth
+
 - [OmniAuth](https://github.com/omniauth/omniauth), for authentication
 - [Pundit](https://github.com/elabs/pundit), for authorization
 
 ### Deployment
+
 - [Capistrano](https://github.com/capistrano/capistrano), for deployment
 - Apache/[Passenger](https://github.com/phusion/passenger), as our server stack
 
@@ -61,14 +65,16 @@ To launch the application, run
 After deploying, populate the ip2location_db1 table with the content from the [IP2Location LITE IP-Country Database](https://lite.ip2location.com/database/ip-country).
 
 ### Testing
+
 - [Rspec](https://github.com/rspec/rspec)/[Capybara](https://github.com/teamcapybara/capybara), for testing
-- [PhantomJS](http://phantomjs.org)/[Poltergeist](https://github.com/teampoltergeist/poltergeist), for browser emulation
+- [PhantomJS](http://phantomjs.org)/[Apparition](https://github.com/twalpole/apparition), for browser emulation
 
-The application has a a comprehensive testing suite using Rspec and Capybara. Front end tests are configured to run with PhantomJS and Poltergeist. The test suite can be ran by running:
+The application has a a comprehensive testing suite using Rspec and Capybara. Front end tests are configured to run with PhantomJS and Apparition. The test suite can be ran by running:
 
-	rspec
+    RAILS_ENV=development bundle exec rspec
 
 ### Other tech
+
 - [Paper trail](https://github.com/airblade/paper_trail), for URL version history
 - [Turbolinks](https://github.com/turbolinks/turbolinks), for faster browsing
 - [Typeahead](https://github.com/twitter/typeahead.js/), for user autocomplete
@@ -78,6 +84,7 @@ The application has a a comprehensive testing suite using Rspec and Capybara. Fr
 - [Starburst](https://github.com/csm123/starburst), for in-app announcements
 
 ## Customization
+
 Z was designed to be forkable and customizable. Most of the language has been extracted into a [single localization file](https://github.umn.edu/latis-sw/z/blob/develop/config/locales/en.bootstrap.yml). This allows you to change any language and make Z applicable to your environment. Z uses [OmniAuth](https://github.com/omniauth/omniauth), which supports a wide variety of [authentication strategies](https://github.com/omniauth/omniauth/wiki/list-of-strategies).
 
 ## Contribute

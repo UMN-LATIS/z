@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'Visiting root' do
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryBot.create(:user) }
   describe 'not signed in' do
     before { visit '/' }
 

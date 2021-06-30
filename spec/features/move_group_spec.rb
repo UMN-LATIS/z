@@ -2,10 +2,10 @@ require 'rails_helper'
 
 describe 'moving urls to a group', js: true do
   before do
-    @user = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
     sign_in(@user)
 
-    @other_group = FactoryGirl.create(:group)
+    @other_group = FactoryBot.create(:group)
     @user.groups << @other_group
   end
 
@@ -33,7 +33,7 @@ describe 'moving urls to a group', js: true do
 
       describe 'with urls' do
         before do
-          @url = FactoryGirl.create(:url, group: @user.context_group)
+          @url = FactoryBot.create(:url, group: @user.context_group)
           visit urls_path
         end
 

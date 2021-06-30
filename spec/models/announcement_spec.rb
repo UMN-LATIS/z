@@ -16,7 +16,7 @@ require 'rails_helper'
 
 RSpec.describe Admin::Announcement, type: :model do
   before do
-    @announcement = FactoryGirl.build(:announcement)
+    @announcement = FactoryBot.build(:announcement)
   end
 
   subject { @announcement }

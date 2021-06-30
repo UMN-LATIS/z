@@ -2,13 +2,13 @@ require 'rails_helper'
 
 describe 'visit the faq page ' do
   before do
-    @user = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
     sign_in(@user)
   end
 
   describe 'index page', js: true do
     before do
-      FactoryGirl.create(:frequently_asked_question)
+      FactoryBot.create(:frequently_asked_question)
       visit faq_path
     end
     it 'should give you the title of the page' do

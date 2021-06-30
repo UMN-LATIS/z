@@ -6,12 +6,12 @@ describe TransferRequestPolicy do
   subject { described_class }
 
   before do
-    @admin_user = FactoryGirl.create(:user, admin: true)
-    @bad_user = FactoryGirl.create(:user, admin: false)
-    @good_user = FactoryGirl.create(:user)
-    @group = FactoryGirl.create(:group)
+    @admin_user = FactoryBot.create(:user, admin: true)
+    @bad_user = FactoryBot.create(:user, admin: false)
+    @good_user = FactoryBot.create(:user)
+    @group = FactoryBot.create(:group)
     @group.add_user(@good_user, false)
-    @transfer_request = FactoryGirl.create(:transfer_request)
+    @transfer_request = FactoryBot.create(:transfer_request)
     @transfer_request.update(from_group: @group)
   end
 

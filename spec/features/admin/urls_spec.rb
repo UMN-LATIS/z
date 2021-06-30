@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'as a non-admin user' do
   before do
-    @user = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
     sign_in(@user)
     visit admin_urls_path
   end
@@ -15,7 +15,7 @@ end
 
 describe 'as a valid admin user' do
   before do
-    @admin = FactoryGirl.create(:admin)
+    @admin = FactoryBot.create(:admin)
     sign_in(@admin)
   end
 
@@ -31,7 +31,7 @@ describe 'as a valid admin user' do
 
     describe 'with an existing URL', js: true do
       before do
-        @url = FactoryGirl.create(:url)
+        @url = FactoryBot.create(:url)
         visit admin_urls_path
       end
 
@@ -67,7 +67,7 @@ describe 'as a valid admin user' do
             describe '[keyword]' do
               describe 'already taken' do
                 before do
-                  @other_url = FactoryGirl.create(:url)
+                  @other_url = FactoryBot.create(:url)
                   find('#url_keyword').set @other_url.keyword
                 end
                 it 'should not save upon clicking Create' do

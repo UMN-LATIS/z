@@ -1,18 +1,9 @@
 GIT
-  remote: git://github.com/csm123/starburst
+  remote: https://github.com/csm123/starburst.git
   revision: ff8fd1f8fbb7b466580a0f9484849c4de207e111
   specs:
     starburst (2.0.0.rc0)
       rails (>= 4.2.0, < 6.1)
-
-GIT
-  remote: git://github.com/pgate/twitter-typeahead-rails
-  revision: 105a036048eb4c19a1d5c0bb7aec55346c8b506d
-  specs:
-    twitter-typeahead-rails (0.11.1)
-      actionpack (>= 3.1)
-      jquery-rails
-      railties (>= 3.1)
 
 GIT
   remote: https://github.com/jbox-web/ajax-datatables-rails.git
@@ -21,6 +12,15 @@ GIT
   specs:
     ajax-datatables-rails (0.4.3)
       railties (>= 4.0)
+
+GIT
+  remote: https://github.com/pgate/twitter-typeahead-rails.git
+  revision: 105a036048eb4c19a1d5c0bb7aec55346c8b506d
+  specs:
+    twitter-typeahead-rails (0.11.1)
+      actionpack (>= 3.1)
+      jquery-rails
+      railties (>= 3.1)
 
 GEM
   remote: https://rubygems.org/
@@ -73,6 +73,9 @@ GEM
     annotate (3.1.0)
       activerecord (>= 3.2, < 7.0)
       rake (>= 10.4, < 14.0)
+    apparition (0.6.0)
+      capybara (~> 3.13, < 4)
+      websocket-driver (>= 0.6.5)
     arel (9.0.0)
     ast (2.4.1)
     awesome_print (1.8.0)
@@ -113,7 +116,6 @@ GEM
       xpath (~> 3.2)
     chunky_png (1.3.11)
     clipboard-rails (1.7.1)
-    cliver (0.3.2)
     coderay (1.1.3)
     coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
@@ -138,11 +140,11 @@ GEM
       actionmailer (>= 4.0, < 7)
       activesupport (>= 4.0, < 7)
     execjs (2.7.0)
-    factory_girl (4.9.0)
-      activesupport (>= 3.0.0)
-    factory_girl_rails (4.9.0)
-      factory_girl (~> 4.9.0)
-      railties (>= 3.0.0)
+    factory_bot (6.2.0)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.2.0)
+      factory_bot (~> 6.2.0)
+      railties (>= 5.0.0)
     faraday (1.4.1)
       faraday-excon (~> 1.1)
       faraday-net_http (~> 1.0)
@@ -224,10 +226,6 @@ GEM
       etc
       rack
       rake (>= 0.8.1)
-    poltergeist (1.18.1)
-      capybara (>= 2.1, < 4)
-      cliver (~> 0.3.1)
-      websocket-driver (>= 0.2.0)
     powerpack (0.1.2)
     pry (0.12.2)
       coderay (~> 1.1.0)
@@ -376,6 +374,7 @@ DEPENDENCIES
   addressable
   ajax-datatables-rails!
   annotate
+  apparition
   awesome_print
   barby
   better_errors
@@ -395,7 +394,7 @@ DEPENDENCIES
   data-confirm-modal
   database_cleaner
   exception_notification
-  factory_girl_rails
+  factory_bot_rails
   font-awesome-rails
   fuubar
   i18n-js
@@ -412,7 +411,6 @@ DEPENDENCIES
   omniauth-shibboleth-passive
   paper_trail
   passenger
-  poltergeist
   pry (= 0.12.2)
   pry-byebug
   pry-coolline
@@ -437,4 +435,4 @@ DEPENDENCIES
   web-console
 
 BUNDLED WITH
-   2.2.16
+   2.2.20

@@ -1,4 +1,5 @@
-class RedirectController < ActionController::Base
+# class RedirectController < ActionController::Base
+class RedirectController < ApplicationController
   def index
     url = Url.find_by(keyword: params[:keyword])
 

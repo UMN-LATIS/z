@@ -3,11 +3,11 @@ require 'rails_helper'
 
 describe 'groups members index page' do
   before do
-    @user = FactoryGirl.create(:user, uid: 'wozniak')
+    @user = FactoryBot.create(:user, uid: 'wozniak')
   end
 
   describe 'visiting the group membership page' do
-    let(:group) { FactoryGirl.create(:group) }
+    let(:group) { FactoryBot.create(:group) }
     let(:user) { User.where(:uid => @user.uid).first }
     before do
       group.users << @user
@@ -33,7 +33,7 @@ describe 'groups members index page' do
 
   describe 'creating and deleting a group member', js: true do
     describe 'to an existing group' do
-      let(:group) { FactoryGirl.create(:group) }
+      let(:group) { FactoryBot.create(:group) }
       before do
         group.users << @user
         group.save
