@@ -1,5 +1,24 @@
 require 'rails_helper'
 
+
+# Uses javascript to select an element and set the attribute.
+# 
+# An alternative to capybara's find and set methods.
+# Only selects the first element that matches.
+#
+#   js_set_attr("#my-hidden-input", "type", "text")
+def js_set_attr(selector, attr_name, attr_value)
+  js = "document" \
+    ".querySelector('#{selector}')" \
+    ".setAttribute('#{attr_name}','#{attr_value}')"
+  page.execute_script(js)
+end
+
+# uses JS to make a hidden input visible
+def js_make_input_visible(input_selector)
+  js_set_attr(input_selector, "type", "text")
+end
+
 describe 'admin urls index page' do
   before do
     @admin = FactoryBot.create(:admin)
@@ -35,12 +54,16 @@ describe 'admin urls index page' do
             find("#url-#{@users_url.id} > .select-checkbox").click
             page.find('.table-options').click
             page.find('.js-transfer-urls').click
-
             @to_user = FactoryBot.create(:user)
-            first('input#transfer_request_to_group', visible: false).set @to_user.uid
+            
+            # Use JS Make hidden input visible for testing
+            # as a workaround for the option "visible: false"
+            # which doesn't seem to work on this test
+            js_make_input_visible("#transfer_request_to_group")
+            first('#transfer_request_to_group').set @to_user.uid
             find('#new_transfer_request  input[type="submit"]').click
             click_button 'Confirm'
-
+            wait_for_ajax
           end
           it 'should have transfered' do
             expect(TransferRequest.find_by(to_group: @to_user.context_group_id).status).to be == 'approved'
@@ -53,7 +76,8 @@ describe 'admin urls index page' do
             page.find('.js-transfer-urls').click
 
             @to_user = FactoryBot.create(:user)
-            first('input#transfer_request_to_group', visible: false).set @to_user.uid
+            js_make_input_visible("input#transfer_request_to_group")
+            first('input#transfer_request_to_group').set @to_user.uid
             find('#new_transfer_request  input[type="submit"]').click
             click_button 'Confirm'
 
@@ -92,14 +116,15 @@ describe 'admin urls index page' do
           end
 
           it 'should display the modal' do
-            expect(page).to have_selector('#index-modal', visible: true)
+            expect(page).to have_selector('#index-modal')
           end
 
           describe 'filling out the form' do
             describe 'with valid information' do
               before do
                 @other_user = FactoryBot.create(:user)
-                first('input#transfer_request_to_group', visible: false).set @other_user.uid
+                js_make_input_visible("input#transfer_request_to_group")
+                first('input#transfer_request_to_group').set @other_user.uid
               end
               it 'should not create a transfer request' do
                 expect do
@@ -109,7 +134,8 @@ describe 'admin urls index page' do
               describe 'user does not exist' do
                 let(:new_uid) { 'notauser123456' }
                 before do
-                  first('input#transfer_request_to_group', visible: false).set new_uid
+                  js_make_input_visible("input#transfer_request_to_group")
+                  first('input#transfer_request_to_group').set new_uid
                 end
                 it 'should create a new user' do
                   expect do
@@ -130,7 +156,8 @@ describe 'admin urls index page' do
               let(:new_uid) { '' }
               describe 'uid is blank' do
                 before do
-                  first('input#transfer_request_to_group', visible: false).set new_uid
+                  js_make_input_visible("input#transfer_request_to_group")
+                  first('input#transfer_request_to_group').set new_uid
                 end
                 it 'should display an error' do
                   find('#new_transfer_request input[type="submit"]').click
