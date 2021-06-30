@@ -33,9 +33,7 @@ describe 'admin urls index page' do
     describe 'with no urls' do
       describe 'the transfer button' do
         it 'should be disabled' do
-          expect(page.find('.table-options')[:class]).to(
-              have_content('disabled')
-          )
+          expect(page).to have_css('.table-options.disabled')
         end
       end
     end
@@ -63,10 +61,12 @@ describe 'admin urls index page' do
             first('#transfer_request_to_group').set @to_user.uid
             find('#new_transfer_request  input[type="submit"]').click
             click_button 'Confirm'
-            wait_for_ajax
           end
           it 'should have transfered' do
-            expect(TransferRequest.find_by(to_group: @to_user.context_group_id).status).to be == 'approved'
+            # check that the modal has been dismissed
+            expect(page).to have_no_css('#new_transfer_request')
+            transfer = TransferRequest.find_by(to_group: @to_user.context_group_id)
+            expect(transfer.status).to eql('approved')
           end
         end
         describe 'and in the group of the url' do
@@ -139,17 +139,22 @@ describe 'admin urls index page' do
                   expect do
                     find('#new_transfer_request input[type="submit"]').click
                     click_button 'Confirm'
-                    wait_for_ajax
+
+                    # check that the modal has been dismissed
+                    expect(page).to have_no_css('#new_transfer_request')
                   end.to change(User, :count).by(1)
                 end
                 it 'should create an approved transfer request to the new user' do
                     find('#new_transfer_request input[type="submit"]').click
                     click_button 'Confirm'
-                    wait_for_ajax
-                    
+
+                    # check that the modal has been dismissed
+                    expect(page).to have_no_css('#new_transfer_request')
                     user = User.find_by(uid: new_uid)
-                    expect(TransferRequest.find_by(to_group: user.context_group_id).status).to be == 'approved'
-                    expect(user.context_group.id).to be == TransferRequest.find_by(to_group: user.context_group_id).to_group_id
+
+                    transfer = TransferRequest.find_by(to_group: user.context_group_id)
+                    expect(transfer.status).to eql('approved')
+                    expect(user.context_group.id).to eql(transfer.to_group_id)
                 end
               end
             end
