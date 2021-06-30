@@ -90,9 +90,7 @@ describe 'admin urls index page' do
       describe 'with no urls selected' do
         describe 'the transfer button' do
           it 'should be disabled' do
-            expect(page.find('.table-options')[:class]).to(
-                have_content('disabled')
-            )
+            expect(page).to have_css('.table-options.disabled')
           end
         end
       end
@@ -141,11 +139,14 @@ describe 'admin urls index page' do
                   expect do
                     find('#new_transfer_request input[type="submit"]').click
                     click_button 'Confirm'
+                    wait_for_ajax
                   end.to change(User, :count).by(1)
                 end
                 it 'should create an approved transfer request to the new user' do
                     find('#new_transfer_request input[type="submit"]').click
                     click_button 'Confirm'
+                    wait_for_ajax
+                    
                     user = User.find_by(uid: new_uid)
                     expect(TransferRequest.find_by(to_group: user.context_group_id).status).to be == 'approved'
                     expect(user.context_group.id).to be == TransferRequest.find_by(to_group: user.context_group_id).to_group_id
