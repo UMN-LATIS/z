@@ -94,10 +94,10 @@ group :development, :test do
   # debugger console
   gem 'byebug', platform: :mri
 
-  # Use Rspec, capybara, and poltergeist for testing
+  # Use Rspec, capybara, and apparition for testing
   gem 'rspec-rails'
   gem 'capybara'
-  gem 'poltergeist'
+  gem 'apparition'
   gem 'launchy'
   gem 'factory_bot_rails'
   gem 'database_cleaner'

@@ -10,11 +10,10 @@ require 'support/factory_bot'
 require 'support/database_cleaner'
 require 'support/utilities'
 require 'capybara/rspec'
-require 'capybara/poltergeist'
-
 require 'paper_trail/frameworks/rspec'
+require 'capybara/apparition'
 
-Capybara.javascript_driver = :poltergeist
+Capybara.javascript_driver = :apparition
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
