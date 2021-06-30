@@ -8,3 +8,7 @@ module BenchmarkHelper
     result
   end
 end
+
+RSpec.configure do |config|
+  config.include BenchmarkHelper, type: :feature
+end
