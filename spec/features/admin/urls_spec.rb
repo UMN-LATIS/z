@@ -70,16 +70,11 @@ describe 'as a valid admin user' do
                   @other_url = FactoryBot.create(:url)
                   find('#url_keyword').set @other_url.keyword
                 end
-                it 'should not save upon clicking Create' do
+                it 'displays an error and does not save upon clicking Create' do
                   expect do
                     find('.js-url-submit').click
-                    wait_for_ajax
+                    expect(page).to have_content('taken')
                   end.to change(Url, :count).by(0)
-                end
-                it 'should display an error' do
-                  find('.js-url-submit').click
-                  wait_for_ajax
-                  expect(page).to have_content('taken')
                 end
               end
             end
