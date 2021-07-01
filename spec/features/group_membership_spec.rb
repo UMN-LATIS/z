@@ -39,10 +39,10 @@ describe 'groups members index page' do
         group.save
         sign_in(@user)
         visit group_members_path(group)
-        #       p page.body
       end
       it 'adding should increase the user count of the group by 1' do
         expect do
+          js_make_all_inputs_visible
           find("#uid", visible: false).set '5scyi59j8'
           click_button 'Add'
           click_button 'Confirm'
