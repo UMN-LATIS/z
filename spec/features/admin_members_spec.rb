@@ -23,7 +23,7 @@ describe 'admin members index page' do
 
   describe 'creating and deleting a admin member', js: true do
     before do
-      js_make_input_visible('#uid')
+      js_make_all_inputs_visible
     end
 
     it 'adds admin a new admin to an existing group of admins' do

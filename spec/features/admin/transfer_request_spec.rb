@@ -1,24 +1,5 @@
 require 'rails_helper'
 
-
-# Uses javascript to select an element and set the attribute.
-# 
-# An alternative to capybara's find and set methods.
-# Only selects the first element that matches.
-#
-#   js_set_attr("#my-hidden-input", "type", "text")
-def js_set_attr(selector, attr_name, attr_value)
-  js = "document" \
-    ".querySelector('#{selector}')" \
-    ".setAttribute('#{attr_name}','#{attr_value}')"
-  page.execute_script(js)
-end
-
-# uses JS to make a hidden input visible
-def js_make_input_visible(input_selector)
-  js_set_attr(input_selector, "type", "text")
-end
-
 describe 'admin urls index page' do
   before do
     @admin = FactoryBot.create(:admin)
@@ -57,7 +38,7 @@ describe 'admin urls index page' do
             # Use JS Make hidden input visible for testing
             # as a workaround for the option "visible: false"
             # which doesn't seem to work on this test
-            js_make_input_visible("#transfer_request_to_group")
+            js_make_all_inputs_visible
             first('#transfer_request_to_group').set @to_user.uid
             find('#new_transfer_request  input[type="submit"]').click
             click_button 'Confirm'
@@ -76,7 +57,7 @@ describe 'admin urls index page' do
             page.find('.js-transfer-urls').click
 
             @to_user = FactoryBot.create(:user)
-            js_make_input_visible("input#transfer_request_to_group")
+            js_make_all_inputs_visible
             first('input#transfer_request_to_group').set @to_user.uid
             find('#new_transfer_request  input[type="submit"]').click
             click_button 'Confirm'
@@ -121,7 +102,7 @@ describe 'admin urls index page' do
             describe 'with valid information' do
               before do
                 @other_user = FactoryBot.create(:user)
-                js_make_input_visible("input#transfer_request_to_group")
+                js_make_all_inputs_visible
                 first('input#transfer_request_to_group').set @other_user.uid
               end
               it 'should not create a transfer request' do
@@ -132,7 +113,7 @@ describe 'admin urls index page' do
               describe 'user does not exist' do
                 let(:new_uid) { 'notauser123456' }
                 before do
-                  js_make_input_visible("input#transfer_request_to_group")
+                  js_make_all_inputs_visible
                   first('input#transfer_request_to_group').set new_uid
                 end
                 it 'should create a new user' do
@@ -162,7 +143,7 @@ describe 'admin urls index page' do
               let(:new_uid) { '' }
               describe 'uid is blank' do
                 before do
-                  js_make_input_visible("input#transfer_request_to_group")
+                  js_make_all_inputs_visible
                   first('input#transfer_request_to_group').set new_uid
                 end
                 it 'should display an error' do
