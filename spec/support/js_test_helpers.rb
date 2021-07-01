@@ -7,25 +7,35 @@ module JSTestHelpers
   # Only selects the first element that matches.
   #
   #   js_set_attr("#my-hidden-input", "type", "text")
-  def js_set_attr(selector, attr_name, attr_value)
+
+  # uses JS to make a hidden input visible
+  def js_make_input_visible(input_selector)
     js = "
-      // define a vanilla js ready fn so that we can 
-      // wait until page loads
-      let ready = (fn) => document.readyState !== 'loading'
+    let ready = (fn) => (document.readyState !== 'loading') 
+    ? fn()
+    : document.addEventListener('DOMContentLoaded', fn)
+    
+    ready(() => 
+        document
+          .querySelector('#{selector}')
+          .setAttribute('type','text')
+      )"
+    execute_script(js)
+  end
+
+  def js_make_all_inputs_visible()
+    js = "
+      let ready = (fn) => (document.readyState !== 'loading') 
         ? fn()
         : document.addEventListener('DOMContentLoaded', fn)
       
       ready(() => 
         document
-          .querySelector('#{selector}')
-          .setAttribute('#{attr_name}','#{attr_value}')
-      )"
-    execute_script(js)
-  end
+          .querySelectorAll('input[type=hidden]')
+          .forEach(input => input.setAttribute('type','text'))
 
-  # uses JS to make a hidden input visible
-  def js_make_input_visible(input_selector)
-    js_set_attr(input_selector, "type", "text")
+      )"
+  execute_script(js)  
   end
 end
 
