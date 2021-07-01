@@ -27,6 +27,5 @@ describe 'visit the faq page ' do
       click_link('Question')
       expect(page).to have_content 'Answer'
     end
-
   end
 end

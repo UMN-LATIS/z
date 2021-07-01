@@ -20,7 +20,7 @@ module SessionsHelper
   def current_user
     # if the user is carrying an expired session, just return nil and force them to sign in again
     if session[:expires_at] && session[:expires_at] > Time.now
-      @current_user ||= User.find_by_remember_token(session[:remember_token])
+      @current_user ||= User.find_by(remember_token: session[:remember_token])
     end
   end
 

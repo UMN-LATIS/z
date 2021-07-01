@@ -18,6 +18,6 @@ module Z
     # config.middleware.insert_before Rack::Runtime, 'InvalidDataInterceptor'
     config.action_dispatch.ip_spoofing_check = false
     config.middleware.use Rack::Deflater
-    config.exceptions_app = self.routes
+    config.exceptions_app = routes
   end
 end

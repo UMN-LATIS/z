@@ -1,4 +1,4 @@
-require "pundit/rspec"
+require 'pundit/rspec'
 require 'rails_helper'
 
 describe AdminMembershipPolicy do
@@ -17,5 +17,4 @@ describe AdminMembershipPolicy do
       expect(subject).not_to permit(@bad_user)
     end
   end
-
 end

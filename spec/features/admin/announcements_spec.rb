@@ -10,9 +10,7 @@ describe 'as a non-admin user visiting the admin page' do
   it 'should display an access violation' do
     expect(page).to have_content 'You are not authorized to perform this action.'
   end
-
 end
-
 
 describe 'as a valid user' do
   before do
@@ -25,10 +23,7 @@ describe 'as a valid user' do
   it 'should display the announcement ' do
     expect(page).to have_content 'The Court is in Session'
   end
-
 end
-
-
 
 describe 'as a valid admin user' do
   before do

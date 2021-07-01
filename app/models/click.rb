@@ -11,9 +11,9 @@
 class Click < ApplicationRecord
   belongs_to :url
 
-  scope :within, ->(time) do
+  scope :within, lambda { |time|
     where('created_at >= ?', time.ago)
-  end
+  }
 
   # Click.group_by_time_ago
   # Purpose: Group the clicks by a specified time period

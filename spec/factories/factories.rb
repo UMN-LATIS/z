@@ -13,11 +13,11 @@ FactoryBot.define do
   factory :audit do
     item_type	{ 'url' }
     item_id	{ '1' }
-    event	{ 'create'} 
+    event	{ 'create' }
     whodunnit { FactoryBot.create(:user) }
     object	{ 'test_keyword' }
     whodunnit_email { 'abc.def,com' }
-    whodunnit_name {'Julia Child'}
+    whodunnit_name { 'Julia Child' }
   end
 
   factory :url do
@@ -26,11 +26,11 @@ FactoryBot.define do
     group { FactoryBot.create(:user).context_group }
   end
 
-  factory :announcement, :class => Admin::Announcement do
+  factory :announcement, class: Admin::Announcement do
     title	{ 'Whoa Nelly!' }
-    body { 'The Court is in Session, here comes the judge!'}
-    start_delivering_at	{ (DateTime.now - 30.days).strftime("%Y-%m-%d") }
-    stop_delivering_at { (DateTime.now + 30.days).strftime("%Y-%m-%d") }
+    body { 'The Court is in Session, here comes the judge!' }
+    start_delivering_at	{ (DateTime.now - 30.days).strftime('%Y-%m-%d') }
+    stop_delivering_at { (DateTime.now + 30.days).strftime('%Y-%m-%d') }
   end
 
   factory :group do
@@ -48,8 +48,8 @@ FactoryBot.define do
   end
 
   factory :frequently_asked_question do
-    header { "Header" }
-    question { "Question" }
-    answer { "Answer" }
+    header { 'Header' }
+    question { 'Question' }
+    answer { 'Answer' }
   end
 end

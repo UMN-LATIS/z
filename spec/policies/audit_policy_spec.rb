@@ -1,4 +1,4 @@
-require "pundit/rspec"
+require 'pundit/rspec'
 require 'rails_helper'
 
 describe AuditPolicy do
@@ -17,5 +17,4 @@ describe AuditPolicy do
       expect(subject).not_to permit(@bad_user)
     end
   end
-
 end

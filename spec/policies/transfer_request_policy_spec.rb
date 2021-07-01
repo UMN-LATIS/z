@@ -1,6 +1,5 @@
-require "pundit/rspec"
+require 'pundit/rspec'
 require 'rails_helper'
-
 
 describe TransferRequestPolicy do
   subject { described_class }
@@ -15,7 +14,7 @@ describe TransferRequestPolicy do
     @transfer_request.update(from_group: @group)
   end
 
-  permissions :destroy?, :update?, :show?, :confirm?  do
+  permissions :destroy?, :update?, :show?, :confirm? do
     it 'allows access if user is an admin' do
       expect(subject).to permit(@admin_user, @transfer_request)
     end

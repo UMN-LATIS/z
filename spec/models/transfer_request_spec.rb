@@ -23,16 +23,16 @@ RSpec.describe TransferRequest, type: :model do
   end
 
   describe 'for admin in the from group of the request' do
-      before do
-        @admin_user = FactoryBot.create(:admin)
-        @transfer_url = FactoryBot.create(:url)
-        @transfer_url.group_id = @admin_user.context_group_id
-        @transfer_request.urls << @transfer_url
-        @transfer_request.save
-      end
-      it 'status should be pending' do
-        expect(@transfer_request.status.eql? 'pending').to be true
-      end
+    before do
+      @admin_user = FactoryBot.create(:admin)
+      @transfer_url = FactoryBot.create(:url)
+      @transfer_url.group_id = @admin_user.context_group_id
+      @transfer_request.urls << @transfer_url
+      @transfer_request.save
+    end
+    it 'status should be pending' do
+      expect(@transfer_request.status.eql?('pending')).to be true
+    end
   end
 
   describe 'for an admin not in either of the groups of a url' do
@@ -42,21 +42,20 @@ RSpec.describe TransferRequest, type: :model do
       @admin_user = FactoryBot.create(:admin)
 
       @transfer_request.from_group_id =
-          @user1.context_group_id
+        @user1.context_group_id
       @transfer_request.to_group_id =
-          @user2.context_group_id
+        @user2.context_group_id
 
       @transfer_request.from_user =
-          @admin_user
-      @transfer_request.to_user=
-          @user2
+        @admin_user
+      @transfer_request.to_user =
+        @user2
       @transfer_request.save
     end
     it 'status should be approved' do
-      expect(@transfer_request.status.eql? 'approved').to be true
+      expect(@transfer_request.status.eql?('approved')).to be true
     end
   end
-
 
   describe 'invalid TransferRequest' do
     describe '[to_group]' do
@@ -87,7 +86,7 @@ RSpec.describe TransferRequest, type: :model do
         describe 'and is an admin' do
           before do
             @transfer_request.from_group_id =
-                FactoryBot.create(:admin).context_group_id
+              FactoryBot.create(:admin).context_group_id
           end
 
           it 'should be valid' do

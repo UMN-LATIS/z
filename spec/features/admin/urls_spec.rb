@@ -10,7 +10,6 @@ describe 'as a non-admin user' do
   it 'should display an access violation' do
     expect(page).to have_content 'You are not authorized to perform this action.'
   end
-
 end
 
 describe 'as a valid admin user' do
@@ -44,10 +43,10 @@ describe 'as a valid admin user' do
         let(:new_keyword) { 'face' }
 
         describe 'when editing', js: true do
-          before {
+          before do
             find('.dropdown .actions-dropdown-button').click
             find('.dropdown-menu .edit-url').click
-          }
+          end
 
           describe 'with new valid content' do
             it 'should update the url in the db' do
@@ -87,7 +86,7 @@ describe 'as a valid admin user' do
               expect do
                 find('.dropdown .actions-dropdown-button').click
                 find('.dropdown-menu .delete-url').click
-                click_button "Confirm"
+                click_button 'Confirm'
                 wait_for_ajax
               end.to change(Url, :count).by(-1)
             end

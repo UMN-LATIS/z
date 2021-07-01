@@ -1,6 +1,6 @@
 # controllers/groups_controller.rb
 class GroupsController < ApplicationController
-  before_action :set_group, only: [:show, :edit, :update, :destroy]
+  before_action :set_group, only: %i[show edit update destroy]
   before_action :ensure_signed_in
 
   def index
@@ -23,9 +23,7 @@ class GroupsController < ApplicationController
     @group = Group.new
     @group_identifier = Time.now.to_ms
 
-    if params[:keyword]
-      @url = Url.find_by(keyword: params[:keyword])
-    end
+    @url = Url.find_by(keyword: params[:keyword]) if params[:keyword]
     respond_to do |format|
       format.js { render layout: false }
     end
@@ -36,9 +34,7 @@ class GroupsController < ApplicationController
     @group = Group.new(group_params)
     @group.users << current_user
 
-    if params[:keyword]
-      @group.urls << Url.find_by(keyword: params[:keyword])
-    end
+    @group.urls << Url.find_by(keyword: params[:keyword]) if params[:keyword]
 
     respond_to do |format|
       if @group.save
@@ -47,7 +43,7 @@ class GroupsController < ApplicationController
         sign_in current_user
         format.js { render :create }
       elsif params[:modal]
-        format.js { render "groups/new", layout: false}
+        format.js { render 'groups/new', layout: false }
       else
         format.js { render :edit }
       end
