@@ -2,8 +2,8 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see
   # http://guides.rubyonrails.org/routing.html
 
-  mount Starburst::Engine => '/starburst'
-
+  mount Starburst::Engine => "/starburst"
+  
   # Handle API
   namespace :api do
     namespace :v1 do
@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   root 'home#index'
   get 'shortener', to: 'urls#index'
 
-  get '/pages/:page' => 'pages#show', as: :pages
+  get "/pages/:page" => "pages#show", as: :pages
 
   # This will allow us to run the meat of the app at z.umn.edu/shortener and
   # assume that all other z.umn.edu/:keywords are requests for short urls.
@@ -70,8 +70,8 @@ Rails.application.routes.draw do
       post 'confirm', on: :member
     end
 
-    resources :move_to_group, only: %i[new create]
-    resources :batch_delete, only: %i[new create]
+    resources :move_to_group, only: [:new, :create]
+    resources :batch_delete, only: [:new, :create]
 
     # groups	groups	index	get
     # groups/:id	groups	show	get
@@ -85,8 +85,8 @@ Rails.application.routes.draw do
       # groups/:id/members/new	group_memberships	new	get
       # groups/:id/members/create	group_memberships	create	put
       # groups/:id/members/destroy	group_memberships	destroy	delete
-      resources :members, only: %i[index new create destroy], controller: 'group_memberships' do
-        get 'new/:search_terms', to: 'group_memberships#new', on: :collection
+      resources :members, only: [:index, :new, :create, :destroy], controller: 'group_memberships' do
+          get 'new/:search_terms', to: 'group_memberships#new', on: :collection
       end
     end
 
@@ -99,9 +99,10 @@ Rails.application.routes.draw do
     # api_keys/:id/update	api_keys	update	post
     # api_keys/create	api_keys	create	put
     # api_keys/destroy	api_keys	destroy	delete
-    resources :api_keys, only: %i[index create] do
+    resources :api_keys, only: [:index, :create] do
       delete 'delete', on: :collection
     end
+
 
     # group_context/update	group_context	show	get
     resources :group_context, only: [:show]
@@ -112,7 +113,7 @@ Rails.application.routes.draw do
       # admin/transfer_requests/confirm	admin::transfer_requests	confirm	post
       # admin/transfer_requests/create	admin::transfer_requests	create	put
       # admin/transfer_requests/:id/show	admin::transfer_requests	show	get
-      resources :transfer_requests, only: %i[index new create show] do
+      resources :transfer_requests, only: [:index, :new, :create, :show] do
         post 'confirm', on: :member
       end
 
@@ -121,7 +122,7 @@ Rails.application.routes.draw do
       # admin/urls/update	admin::urls	update	post
       # admin/urls/delete	admin::urls	destroy	delete
       # admin/urls/create	admin::urls	create	put
-      resources :urls, only: %i[index edit show update destroy create] do
+      resources :urls, only: [:index, :edit, :show, :update, :destroy, :create] do
         get 'datatable', to: 'urls_datatable#index', on: :collection
         get 'csv/:duration/:time_unit',
             on: :collection,
@@ -131,7 +132,7 @@ Rails.application.routes.draw do
 
       # admin/audits/:search	admin::urls	index	get
       # admin/audits/:id	admin::urls	show	get
-      resources :audits, only: %i[index show] do
+      resources :audits, only: [:index, :show] do
         get 'datatable', to: 'audits_datatable#index', on: :collection
       end
 
@@ -141,22 +142,25 @@ Rails.application.routes.draw do
       # admin/members/:id	admin::members	show	get
       # admin/members/delete	admin::members	destroy	delete
       # admin/members/create	admin::members	create	put
-      resources :members, only: %i[index new create destroy], controller: 'members' do
+      resources :members, only: [:index, :new, :create, :destroy], controller: 'members' do
         get 'new/:search_terms', to: 'members#new', on: :collection
       end
 
       # admin/admins	admin::admins	index	get
       # admin/admins/delete	admin::admins	destroy	delete
       # admin/admins/create	admin::admins	create	put
-      resources :admins, only: %i[index destroy create]
+      resources :admins, only: [:index, :destroy, :create]
 
-      resources :announcements, only: %i[index new edit show update destroy create]
+      resources :announcements, only: [:index, :new, :edit, :show, :update, :destroy, :create]
+
+
     end
   end
 
-  match '/404', to: 'errors#not_found', via: :all
-  match '/500', to: 'errors#internal_server_error', via: :all
-
+  match "/404", to: "errors#not_found", via: :all
+  match "/500", to: "errors#internal_server_error", via: :all
+  
   # /:keyword	redirect index	get
   get '/*keyword', to: 'redirect#index'
+  
 end

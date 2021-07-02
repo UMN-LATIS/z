@@ -2,6 +2,7 @@ class Admin::MembersController < ApplicationController
   before_action :ensure_signed_in
   before_action :ensure_is_admin
 
+
   def index
     @admins = User.where(admin: true)
     authorize :admin_membership
@@ -17,12 +18,12 @@ class Admin::MembersController < ApplicationController
   def create
     authorize :admin_membership
     member = User.where(uid: params[:uid]).first
-    member ||= User.create(user_params)
+    member = User.create(user_params) unless member
     member.admin = true
     member.save
     respond_to do |format|
       if member.admin?
-        format.js { render inline: 'location.reload();' }
+        format.js { render inline: "location.reload();" }
       else
         format.html { render :new }
         format.json { render json: member.errors, status: :unprocessable_entity }
@@ -30,6 +31,7 @@ class Admin::MembersController < ApplicationController
       end
     end
   end
+
 
   def destroy
     @member = User.find(params[:id])
@@ -42,17 +44,12 @@ class Admin::MembersController < ApplicationController
         # current user is redirect to signin page if they remove their own admin status,
         # resigning the current user in allows the redirect to urls work properly
         sign_in current_user
-        format.html do
-          redirect_to shortener_url,
-                      notice: 'Admin Membership: You have successfully removed your administrative privileges and have been routed back to your home page.'
-        end
+        format.html { redirect_to shortener_url, notice: 'Admin Membership: You have successfully removed your administrative privileges and have been routed back to your home page.' }
       else
-        format.html do
-          redirect_to admin_members_url,
-                      notice: "Admin Membership: #{@member.display_name} (#{@member.internet_id}) has been removed."
-        end
+        format.html { redirect_to admin_members_url, notice: "Admin Membership: #{@member.display_name} (#{@member.internet_id}) has been removed." }
       end
     end
+
   end
 
   private
@@ -60,4 +57,5 @@ class Admin::MembersController < ApplicationController
   def user_params
     params.permit(:uid)
   end
+
 end

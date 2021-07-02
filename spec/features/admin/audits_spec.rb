@@ -10,6 +10,7 @@ describe 'as a non-admin user' do
   it 'should display an access violation' do
     expect(page).to have_content 'You are not authorized to perform this action.'
   end
+
 end
 
 describe 'as a valid admin user' do
@@ -42,4 +43,5 @@ describe 'as a valid admin user' do
   it 'should display  When col header' do
     expect(page).to have_content 'As Of'
   end
+
 end

@@ -8,11 +8,11 @@ module Arel
     class MySQL < Arel::Visitors::ToSql
       private
 
-      def visit_Arel_Nodes_Regexp(o, collector)
+      def visit_Arel_Nodes_Regexp o, collector
         infix_value o, collector, ' REGEXP '
       end
 
-      def visit_Arel_Nodes_NotRegexp(o, collector)
+      def visit_Arel_Nodes_NotRegexp o, collector
         infix_value o, collector, ' NOT REGEXP '
       end
     end

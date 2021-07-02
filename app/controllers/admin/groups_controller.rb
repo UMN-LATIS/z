@@ -6,4 +6,5 @@ class Admin::GroupsController < ApplicationController
   def index
     @groups = Group.not_default
   end
+
 end

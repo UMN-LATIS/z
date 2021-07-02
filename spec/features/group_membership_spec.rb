@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+
 describe 'groups members index page' do
   before do
     @user = FactoryBot.create(:user, uid: 'wozniak')
@@ -7,7 +8,7 @@ describe 'groups members index page' do
 
   describe 'visiting the group membership page' do
     let(:group) { FactoryBot.create(:group) }
-    let(:user) { User.where(uid: @user.uid).first }
+    let(:user) { User.where(:uid => @user.uid).first }
     before do
       group.users << @user
       group.save
@@ -42,12 +43,13 @@ describe 'groups members index page' do
       it 'adding should increase the user count of the group by 1' do
         expect do
           js_make_all_inputs_visible
-          find('#uid', visible: false).set '5scyi59j8'
+          find("#uid", visible: false).set '5scyi59j8'
           click_button 'Add'
           click_button 'Confirm'
           wait_for_ajax
           group.reload
         end.to change(group.users, :count).by(1)
+
       end
       it 'clicking delete decrease the user count by one' do
         expect do
@@ -56,6 +58,7 @@ describe 'groups members index page' do
           wait_for_ajax
         end.to change(group.users, :count).by(-1)
       end
+
     end
   end
 end

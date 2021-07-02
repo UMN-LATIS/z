@@ -7,7 +7,7 @@ module UrlHelper
     truncate(url, length: max_length)
   end
 
-  def display_keyword_url(keyword, _max_length = 35)
+  def display_keyword_url(keyword, max_length = 35)
     # "#{request.host_with_port}/#{truncate(keyword, length: max_length)}"
     "#{request.host_with_port}/#{keyword}"
   end

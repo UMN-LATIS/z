@@ -16,23 +16,24 @@ class UserLookupServiceSkeleton
 
     # Query the cache or make a connection to LDAP to find results.
     # results = Rails.cache.fetch("#{@query}/#{@query_type}/search", expires_in: 12.hours) do
-    # Query LDAP
-    # Left as an example
-    # if @connection.bind
-    #   @connection.search(
-    #       filter: get_filter,
-    #       return_result: true
-    #   )
-    # end
+      # Query LDAP
+      # Left as an example
+      # if @connection.bind
+      #   @connection.search(
+      #       filter: get_filter,
+      #       return_result: true
+      #   )
+     # end
     # end
 
     # Dummy results
-    [
+    results = [
       umndid: 'testuid',
       display: 'Ryan Doe (testinternetid@umn.edu)',
       internet_id: 'testinternetid',
       display_name: 'Ryan Doe'
     ]
+    results
   end
 
   private

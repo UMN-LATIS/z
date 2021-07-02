@@ -7,8 +7,10 @@ class RedirectController < ApplicationController
       raise ActiveRecord::RecordNotFound
     else
       redirect_to(url.url)
-      browser = Browser.new(request.user_agent, accept_language: 'en-us')
-      url.add_click!(request.remote_ip) unless browser.bot?
+      browser = Browser.new(request.user_agent, accept_language: "en-us")
+      if(!browser.bot?)
+      	url.add_click!(request.remote_ip)
+      end
     end
   end
 end

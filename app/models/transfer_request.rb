@@ -17,8 +17,8 @@ class TransferRequest < ApplicationRecord
   after_save :version_history
   before_destroy :version_history
 
-  belongs_to :from_group, class_name: 'Group'
-  belongs_to :to_group, class_name: 'Group'
+  belongs_to :from_group, foreign_key: 'from_group_id', class_name: 'Group'
+  belongs_to :to_group, foreign_key: 'to_group_id', class_name: 'Group'
   belongs_to :from_user, foreign_key: 'from_group_requestor_id', class_name: 'User'
   belongs_to :to_user, primary_key: 'default_group_id', foreign_key: 'to_group_id', class_name: 'User'
 
@@ -47,7 +47,6 @@ class TransferRequest < ApplicationRecord
     url_groups = urls.map(&:group_id)
     user_groups = from_user.groups.pluck(:id)
     return if (url_groups - user_groups).empty? || from_group.try(:admin?) || from_user.try(:admin?)
-
     errors.add(:from_user, 'must own URLs')
   end
 
@@ -70,25 +69,28 @@ class TransferRequest < ApplicationRecord
     save
   end
 
+
   def version_history
     h = "<b> Requested By: #{from_user.internet_id} </b><br/>"
     h.concat "<b> To User: #{to_user.internet_id} </b><br/>"
     h.concat "<b> Current Status: #{status} </b><br/>"
-    h.concat '<br/><b>URLs:</b><br/>'
-    urls.each do |url|
+    h.concat "<br/><b>URLs:</b><br/>"
+    self.urls.each do |url|
       h.concat "<a href=\"#{url.url}\">#{url.keyword}</a><br/>"
     end
-    h.concat '<h3>History</h3><hr>'
-    versions.each do |v|
-      g = v.reify # unless v.event.equal? "create"
+    h.concat "<h3>History</h3><hr>"
+    self.versions.each do |v|
+      g = v.reify #unless v.event.equal? "create"
       h.concat "<b>What Happened: </b> #{v.event} <br/>"
       h.concat "<b>Who Made It: </b>  #{self.class.version_user(v)}<br/>"
       h.concat "<b>Previous Status: </b>  #{g ? g.status : 'N/A'}<br/>"
-      h.concat '<br/><br/>'
+      h.concat "<br/><br/>"
     end
-    versions.each do |v|
+    self.versions.each do |v|
       v.version_history = h
       v.save
     end
   end
+
+
 end

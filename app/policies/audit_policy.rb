@@ -1,4 +1,5 @@
 class AuditPolicy < ApplicationPolicy
+
   def index?
     user_has_access?
   end
@@ -11,7 +12,7 @@ class AuditPolicy < ApplicationPolicy
 
   def user_has_access?
     return true if user.admin?
-
     false
   end
+
 end

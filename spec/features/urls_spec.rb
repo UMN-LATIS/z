@@ -11,17 +11,17 @@ describe 'urls show page', js: true do
     wait_for_ajax
 
     @url = FactoryBot.create(
-      :url,
-      group: @user.context_group,
-      keyword: keyword,
-      url: url,
-      created_at: created_at
+        :url,
+        group: @user.context_group,
+        keyword: keyword,
+        url: url,
+        created_at: created_at
     )
     # add 10 clicks to yesterday
     10.times do
       @url.clicks << Click.create(
-        country_code: 'US',
-        created_at: Time.now - 1.day
+          country_code: 'US',
+          created_at: Time.now - 1.day
       )
       @url.total_clicks += 1
       @url.save
@@ -30,8 +30,8 @@ describe 'urls show page', js: true do
     # add 5 clicks to today
     5.times do
       @url.clicks << Click.create(
-        country_code: 'US',
-        created_at: Time.now
+          country_code: 'US',
+          created_at: Time.now
       )
       @url.total_clicks += 1
       @url.save
@@ -79,7 +79,7 @@ describe 'urls show page', js: true do
   end
 
   describe 'collection dropdown' do
-    before do
+    before {
       @new_group = FactoryBot.create(:group)
       @new_group.users << @user
       sign_in(@user)
@@ -89,7 +89,7 @@ describe 'urls show page', js: true do
       find('.bootstrap-select .dropdown-toggle').click
       find('.dropdown-menu.open').find('li', text: @new_group.name).click
       wait_for_ajax
-    end
+    }
 
     it 'should change the collection' do
       expect(page).to have_selector('.bootstrap-select .dropdown-toggle', text: @new_group.name)
@@ -107,9 +107,7 @@ describe 'urls index page', js: true do
     wait_for_ajax
   end
   describe 'creating new url ', js: true do
-    let(:url) do
-      'http://www.gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg.com'
-    end
+    let(:url) { 'http://www.gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg.com' }
     let(:keyword) { 'goog' }
     before do
       visit urls_path
@@ -125,7 +123,7 @@ describe 'urls index page', js: true do
       end
     end
     describe 'that has a camel case' do
-      before { find('.js-new-url-keyword').set 'aCamelCaseKeyword' }
+      before {find('.js-new-url-keyword').set 'aCamelCaseKeyword'}
       it 'should display the correct case' do
         find('.js-url-submit').click
         wait_for_ajax
@@ -177,15 +175,15 @@ describe 'urls index page', js: true do
           expect(page).to have_selector('.url-blurb', visible: true)
         end
         it 'should have the newly created short url' do
-          expect(page.find('.url-blurb-short-url')).to have_content(keyword)
+           expect(page.find(".url-blurb-short-url")).to have_content(keyword)
         end
         it 'should have the newly created short url' do
-          expect(page.find('.url-blurb-source')).to have_content(url)
+           expect(page.find(".url-blurb-source")).to have_content(url)
         end
-        it 'should display the share to twitter button' do
+        it "should display the share to twitter button" do
           expect(page).to have_selector('.url-blurb .url-share-button-twitter', visible: true)
         end
-        it 'should display the download QR code button' do
+        it "should display the download QR code button" do
           expect(page).to have_selector('.url-blurb .url-share-button-qr', visible: true)
         end
 
@@ -259,7 +257,7 @@ describe 'urls index page', js: true do
         expect(page).to have_content @url.url
       end
       it 'should display short url host' do
-        expect(page).to have_content page.current_host.sub(%r{^https?://(www.)?}, '')
+        expect(page).to have_content page.current_host.sub(/^https?\:\/\/(www.)?/,'')
       end
       it 'should display the url\'s keyword' do
         expect(page).to have_content @url.keyword
@@ -271,8 +269,7 @@ describe 'urls index page', js: true do
         expect(page).to have_selector('.actions-column .actions-dropdown-button')
       end
       it 'should display the default urls display_name' do
-        expect(page).to have_selector("[data-id='url-collection-#{@url.id}']",
-                                      text: I18n.t('views.urls.index.table.collection_filter.none'))
+        expect(page).to have_selector("[data-id='url-collection-#{@url.id}']", text: I18n.t('views.urls.index.table.collection_filter.none'))
       end
 
       describe 'when filtering on collection', js: true do
@@ -283,7 +280,7 @@ describe 'urls index page', js: true do
           @new_url = FactoryBot.create(:url, group: new_group)
           wait_for_ajax
           find('[data-id="collection-filter"]').click
-          find('.dropdown-menu.open li', text: new_group.name).click
+          find('.dropdown-menu.open li', text: (new_group.name) ).click
         end
         it 'should display urls from that collection' do
           expect(page).to have_content @new_url.keyword
@@ -295,10 +292,10 @@ describe 'urls index page', js: true do
     end
 
     describe 'when sharing existing url', js: true do
-      before do
+      before {
         find('.dropdown .actions-dropdown-button').click
         find('.dropdown-menu .share-url').hover
-      end
+      }
 
       describe 'when clicking the share button' do
         it 'should display the share to twitter button' do
@@ -322,10 +319,10 @@ describe 'urls index page', js: true do
       end
     end
     describe 'when editing existing url', js: true do
-      before do
+      before {
         find('.dropdown .actions-dropdown-button').click
         find('.dropdown-menu .edit-url').click
-      end
+      }
 
       describe 'with new valid content' do
         it 'should update the url in the db' do
@@ -349,7 +346,7 @@ describe 'urls index page', js: true do
           expect do
             find('.dropdown .actions-dropdown-button').click
             find('.dropdown-menu .delete-url').click
-            click_button 'Confirm'
+            click_button "Confirm"
             wait_for_ajax
           end.to change(Url, :count).by(-1)
         end
@@ -370,7 +367,7 @@ describe 'urls index page', js: true do
     end
 
     describe 'collection dropdown' do
-      before do
+      before {
         @new_group = FactoryBot.create(:group)
         @new_group.users << @user
         sign_in(@user)
@@ -378,13 +375,13 @@ describe 'urls index page', js: true do
         visit urls_path
         wait_for_ajax
         find('table .bootstrap-select .dropdown-toggle').click
-      end
+      }
 
       describe 'when changing collection' do
-        before do
+        before{
           find('.dropdown-menu.open').find('li', text: @new_group.name).click
           wait_for_ajax
-        end
+        }
 
         it 'should change the collection' do
           expect(page).to have_selector('table .bootstrap-select .dropdown-toggle', text: @new_group.name)
@@ -396,26 +393,26 @@ describe 'urls index page', js: true do
       end
 
       describe 'when creating a new collection' do
-        before do
+        before{
           find('table .dropdown-menu.open .bottom-action-option').click
           wait_for_ajax
-        end
+        }
 
         it 'should display the modal' do
           expect(page).to have_selector('#index-modal', visible: true)
         end
 
         describe 'filling out form' do
-          before do
-            @new_group_name = 'new group'
-            @new_group_description = 'new group description'
+          before{
+            @new_group_name = "new group"
+            @new_group_description = "new group description"
             find('.modal input#group_name').set @new_group_name
             find('.modal input#group_description').set @new_group_description
             find('.modal input[type="submit"]').click
             wait_for_ajax
-            click_button 'Confirm'
+            click_button "Confirm"
             wait_for_ajax
-          end
+          }
 
           it 'should update collection picker in table' do
             expect(page).to have_selector('table .bootstrap-select .dropdown-toggle', text: @new_group_name)
@@ -424,6 +421,7 @@ describe 'urls index page', js: true do
             @url.reload
             expect(@url.group.name).to eq(@new_group_name)
           end
+
         end
       end
     end

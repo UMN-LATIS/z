@@ -4,8 +4,8 @@ require 'rails_helper'
 
 RSpec.describe UserLookupService, type: :service do
   describe 'it can lookup by umndid' do
-    let(:umndid) { '2qggnq4v3' }
-    let(:fakeumndid) { 'as;ldfjoqujfas;lkdfjalsk;dfj' }
+    let(:umndid) { "2qggnq4v3" }
+    let(:fakeumndid) { "as;ldfjoqujfas;lkdfjalsk;dfj" }
 
     it 'should find users' do
       users = UserLookupService.new(

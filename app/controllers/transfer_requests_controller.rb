@@ -1,6 +1,6 @@
 class TransferRequestsController < ApplicationController
   before_action :set_transfer_request,
-                only: %i[edit update destroy show confirm]
+                only: [:edit, :update, :destroy, :show, :confirm]
   def index
     @transfer_requests_to =
       TransferRequest.where(to_group_id: current_user.id)

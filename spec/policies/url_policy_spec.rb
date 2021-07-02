@@ -1,5 +1,6 @@
-require 'pundit/rspec'
+require "pundit/rspec"
 require 'rails_helper'
+
 
 describe UrlPolicy do
   subject { described_class }
@@ -9,11 +10,11 @@ describe UrlPolicy do
     @bad_user = FactoryBot.create(:user)
     @admin_user = FactoryBot.create(:user, admin: true, uid: 'wozniak')
     @url = FactoryBot.create(
-      :url,
-      group: @good_user.context_group,
-      keyword: 'keyword',
-      url: 'http://google.com',
-      created_at: 'created_at'
+        :url,
+        group: @good_user.context_group,
+        keyword: 'keyword',
+        url: 'http://google.com',
+        created_at: 'created_at'
     )
   end
 
@@ -37,4 +38,5 @@ describe UrlPolicy do
       expect(subject).not_to permit(@bad_user, @url)
     end
   end
+
 end

@@ -126,7 +126,7 @@ describe 'groups index page', js: true do
             expect do
               find('.js-group-actions-dropdown').click
               find('.delete-group').click
-              click_button 'Confirm'
+              click_button "Confirm"
               wait_for_ajax
             end.to change(Group, :count).by(0)
           end
@@ -136,7 +136,7 @@ describe 'groups index page', js: true do
             expect do
               find('.js-group-actions-dropdown').click
               find('.delete-group').click
-              click_button 'Confirm'
+              click_button "Confirm"
               wait_for_ajax
             end.to change(Group, :count).by(-1)
           end
@@ -156,4 +156,6 @@ describe 'groups index page', js: true do
       end
     end
   end
+
+
 end

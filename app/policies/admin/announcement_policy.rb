@@ -1,4 +1,5 @@
 class Admin::AnnouncementPolicy < ApplicationPolicy
+
   def index?
     user_has_access?
   end
@@ -23,7 +24,7 @@ class Admin::AnnouncementPolicy < ApplicationPolicy
 
   def user_has_access?
     return true if user.admin?
-
     false
   end
+
 end

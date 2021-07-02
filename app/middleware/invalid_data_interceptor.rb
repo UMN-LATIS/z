@@ -4,11 +4,7 @@ class InvalidDataInterceptor
   end
 
   def call(env)
-    query = begin
-      Rack::Utils.parse_nested_query(env['QUERY_STRING'].to_s)
-    rescue StandardError
-      :bad_query
-    end
+    query = Rack::Utils.parse_nested_query(env['QUERY_STRING'].to_s) rescue :bad_query
 
     headers = { 'Content-Type' => 'text/plain' }
 

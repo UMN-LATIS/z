@@ -1,12 +1,13 @@
 # controllers/url_controller.rb
 class UrlsController < ApplicationController
-  before_action :set_url, only: %i[edit update destroy]
+  before_action :set_url, only: [:edit, :update, :destroy]
   before_action :set_url_friendly, only: [:show]
   before_action :ensure_signed_in
 
   # GET /urls
   # GET /urls.json
   def index
+
     @group = Group.find(current_user.context_group_id)
 
     @urls =

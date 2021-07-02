@@ -13,4 +13,5 @@ class Audit < ApplicationRecord
   self.table_name = 'versions'
 
   belongs_to :user, foreign_key: 'whodunnit'
+
 end

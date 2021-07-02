@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
   def create
     # Filter out isGuest shibboleth requests. This is almost surely the wrong way to filter logins with
     # omniAuth. TODO: refactor.
-    if !Rails.env.development? && auth_hash['extra']['raw_info']['isGuest'] == 'Y'
+    if !Rails.env.development? && auth_hash["extra"]["raw_info"]["isGuest"] == "Y"
       redirect_to root_path
       return
     end
@@ -35,4 +35,5 @@ class SessionsController < ApplicationController
   def auth_hash
     request.env['omniauth.auth']
   end
+
 end

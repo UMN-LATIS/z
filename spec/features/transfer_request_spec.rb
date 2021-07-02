@@ -1,17 +1,17 @@
 require 'rails_helper'
-require 'pp'
+require "pp"
 
 def wait_for_urls_page_load
-  expect(page).to have_content('Bulk Actions')
-  expect(page).to have_no_content('Processing')
+  expect(page).to have_content("Bulk Actions")
+  expect(page).to have_no_content("Processing")
 end
 
 def wait_for_modal_to_load
-  expect(page).to have_css('#new_transfer_request')
+  expect(page).to have_css("#new_transfer_request")
 end
 
 def wait_for_modal_to_dismiss
-  expect(page).to have_no_css('#new_transfer_request')
+  expect(page).to have_no_css("#new_transfer_request")
 end
 
 describe 'creating a transfer request', js: true do
@@ -81,12 +81,12 @@ describe 'creating a transfer request', js: true do
       end
 
       describe 'with a single url selected' do
-        before do
+        before {
           visit urls_path
           find("#url-#{@selected_url.id} > .select-checkbox").click
           wait_for_ajax
           find('.table-options').click
-        end
+        }
 
         describe 'clicking the tranfser button' do
           before do
@@ -109,23 +109,23 @@ describe 'creating a transfer request', js: true do
               it 'should create a transfer request' do
                 expect do
                   find('#new_transfer_request  input[type="submit"]').click
-                  click_button 'Confirm'
+                  click_button "Confirm"
                   wait_for_modal_to_dismiss
                 end.to change(TransferRequest, :count).by(1)
               end
 
               it 'should display the pending request on your screen' do
                 find('#new_transfer_request input[type="submit"]').click
-                click_button 'Confirm'
+                click_button "Confirm"
                 wait_for_modal_to_dismiss
                 expect(page).to have_content 'URLs you gave that are pending approval'
               end
 
               it 'should display the pending request on their screen' do
                 find('#new_transfer_request  input[type="submit"]').click
-                click_button 'Confirm'
+                click_button "Confirm"
                 wait_for_modal_to_dismiss
-                save_screenshot('test.png')
+                save_screenshot("test.png")
                 sign_in(@other_user)
                 visit urls_path
                 wait_for_urls_page_load
@@ -140,14 +140,14 @@ describe 'creating a transfer request', js: true do
                 it 'should create a new user' do
                   expect do
                     find('#new_transfer_request input[type="submit"]').click
-                    click_button 'Confirm'
+                    click_button "Confirm"
                     wait_for_modal_to_dismiss
                   end.to change(User, :count).by(1)
                 end
                 it 'should create a transfer request' do
                   expect do
                     find('#new_transfer_request  input[type="submit"]').click
-                    click_button 'Confirm'
+                    click_button "Confirm"
                     wait_for_modal_to_dismiss
                   end.to change(TransferRequest, :count).by(1)
                 end
@@ -162,7 +162,7 @@ describe 'creating a transfer request', js: true do
                 end
                 it 'should display an error' do
                   find('#new_transfer_request input[type="submit"]').click
-                  click_button 'Confirm'
+                  click_button "Confirm"
                   wait_for_ajax
                   expect(page).to have_content 'To group must exist'
                 end
@@ -191,7 +191,7 @@ describe 'creating a transfer request', js: true do
         expect(page).to have_selector('.js-transfer-urls')
       end
 
-      describe 'when clicked' do
+      describe "when clicked" do
         before do
           page.find('.js-transfer-urls').click
           wait_for_ajax
@@ -249,14 +249,14 @@ describe 'creating a transfer request', js: true do
       it 'should change the status of the the transfer request' do
         expect do
           find('.js-reject-transfer').click
-          click_button 'Confirm'
+          click_button "Confirm"
           wait_for_ajax
         end.to change(TransferRequest.pending, :count).by(-1)
       end
       it 'should change the status of the transfer to rejected' do
         expect do
           find('.js-reject-transfer').click
-          click_button 'Confirm'
+          click_button "Confirm"
           wait_for_ajax
           @transfer.reload
         end.to change(@transfer, :status).to('rejected')

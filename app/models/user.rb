@@ -16,9 +16,11 @@ class User < ApplicationRecord
   has_many :groups, through: :groups_users
 
   belongs_to :default_group,
+             foreign_key: 'default_group_id',
              class_name: 'Group'
 
   belongs_to :context_group,
+             foreign_key: 'context_group_id',
              class_name: 'Group'
 
   validates :context_group, presence: true

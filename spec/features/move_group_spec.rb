@@ -61,10 +61,10 @@ describe 'moving urls to a group', js: true do
           end
 
           describe 'clicking the move group button' do
-            before do
+            before {
               find('.table-options').click
               click_link 'Move to a different collection'
-            end
+            }
             it 'should display the modal' do
               expect(page).to have_selector('#index-modal', visible: true)
             end

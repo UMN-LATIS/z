@@ -1,5 +1,6 @@
-require 'pundit/rspec'
+require "pundit/rspec"
 require 'rails_helper'
+
 
 describe GroupPolicy do
   subject { described_class }
@@ -23,4 +24,7 @@ describe GroupPolicy do
       expect(subject).to permit(@good_user, @group)
     end
   end
+
 end
+
+

@@ -16,7 +16,7 @@ require 'ipaddr'
 
 class Url < ApplicationRecord
   include VersionUser
-  has_paper_trail ignore: [:total_clicks]
+  has_paper_trail :ignore => [:total_clicks]
   after_save :version_history
   before_destroy :version_history
 
@@ -54,41 +54,44 @@ class Url < ApplicationRecord
     end
   end
 
-  scope :created_by_id, lambda { |group_id|
+  scope :created_by_id, ->(group_id) do
     where('group_id = ?', group_id)
-  }
+  end
 
-  scope :created_by_ids, lambda { |group_ids|
+  scope :created_by_ids, ->(group_ids) do
     where('group_id IN (?)', group_ids)
-  }
+  end
 
-  scope :created_by_name, lambda { |group_name|
+  scope :created_by_name, ->(group_name) do
     owner_to_search = "%#{group_name}%"
     possible_groups = Group.where('name LIKE ?', owner_to_search).map(&:id)
     where('group_id IN (?)', possible_groups)
-  }
+  end
 
-  scope :by_keyword, lambda { |keyword|
+  scope :by_keyword, ->(keyword) do
     where('keyword LIKE ?', "%#{keyword.try(:downcase)}%")
-  }
+  end
 
-  scope :by_keywords, lambda { |keywords|
+  scope :by_keywords, ->(keywords) do
     where('keyword IN (?)', "%#{keywords.map(&:downcase)}%")
-  }
+  end
 
-  scope :not_in_pending_transfer_request, lambda {
+  scope :not_in_pending_transfer_request, -> do
     url_ids = TransferRequest.pending.joins(:urls).pluck(:url_id)
     where.not("#{table_name}.id IN (?)", url_ids) if url_ids.present?
-  }
+  end
 
   def add_click!(client_ip)
+
     client_ip_decimal = IPAddr.new(client_ip).to_i
 
     begin
       @location = IpLocation.where('? >= ip_from AND ? < ip_to', client_ip_decimal, client_ip_decimal)
 
-      country_code = @location.first!.country_code if @location.first!.country_code
-    rescue StandardError
+      if(@location.first!.country_code)
+        country_code = @location.first!.country_code
+      end
+    rescue
       country_code = ''
     end
 
@@ -103,48 +106,51 @@ class Url < ApplicationRecord
         csv << [url, keyword, click.country_code, click.created_at.to_s(:created_on_formatted)]
       end
     end
-    %w[url keyword country_code url_created_on].to_csv + data
+    return %w{url keyword country_code url_created_on}.to_csv + data
   end
 
   def self.to_csv(duration, time_unit, urls)
     # ex: http://localhost:3000/shortener/urls/csv/24/days.csv
     col_names = nil
-    formats = { days: '%m/%d', hours: '%I:%M%p' }
+    formats = {days: '%m/%d', hours: '%I:%M%p'}
     data = CSV.generate(headers: true) do |csv|
       urls.each do |url|
         res = url.clicks.group_by_time_ago(duration.to_i.send(time_unit), formats[time_unit.to_sym])
-        col_names = %w[url keyword] + res.keys
+        col_names = %w{url keyword} + res.keys
         col_values = [url.url, url.keyword] + res.values
         csv << col_values
       end
     end
-    col_names.to_csv + data
+    return col_names.to_csv + data
   end
 
   def check_for_valid_url
-    URI.parse(url)
-  rescue URI::InvalidURIError
-    errors.add(:url, 'is not valid.')
+    begin
+      URI.parse(url)
+    rescue URI::InvalidURIError
+      errors.add(:url, 'is not valid.')
+    end
   end
 
   def version_history
     h = "<b> Current URL: #{url} </b><br/>"
     h.concat "<b>Current Keyword: #{keyword}</b><br/>"
     h.concat "<b>Current Group: #{group.name}</b><br/>"
-    h.concat '<h3>History</h3><hr>'
-    versions.each do |v|
-      g = v.reify unless v.event.equal? 'create'
+    h.concat "<h3>History</h3><hr>"
+    self.versions.each do |v|
+      g = v.reify unless v.event.equal? "create"
       h.concat "<b>What Happened: </b> #{v.event} <br/>"
       h.concat "<b>Who Made It: </b>  #{self.class.version_user(v)}<br/>"
       h.concat "<b>Previous URL: </b>  #{g ? g.url : 'N/A'}<br/>"
       h.concat "<b>Previous Keyword: </b>  #{g ? g.keyword : 'N/A'}<br/>"
       h.concat "<b>Previous Group Name: </b>  #{g && g.group ? g.group.name : 'N/A(Group doesnt exist)'}<br/>"
       h.concat "<b>Date of Change: </b>  #{g ? g.updated_at : 'N/A'}<br/>"
-      h.concat '<br/><br/>'
+      h.concat "<br/><br/>"
     end
-    versions.each do |v|
+    self.versions.each do |v|
       v.version_history = h
       v.save
     end
   end
+
 end

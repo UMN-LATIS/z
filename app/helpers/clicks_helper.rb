@@ -31,6 +31,6 @@ module ClicksHelper
   end
 
   def region_data_formatter(clicks)
-    clicks.dup.unshift %w[Country Clicks]
+    clicks.dup.unshift %w(Country Clicks)
   end
 end

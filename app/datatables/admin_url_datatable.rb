@@ -1,6 +1,5 @@
 class AdminUrlDatatable < AjaxDatatablesRails::Base
-  def_delegators :@view, :link_to, :full_url, :display_long_url, :display_keyword_url, :select_tag,
-                 :options_from_collection_for_select, :url_path, :render
+  def_delegators :@view, :link_to, :full_url, :display_long_url, :display_keyword_url, :select_tag, :options_from_collection_for_select, :url_path, :render
 
   def view_columns
     @view_columns ||= {
@@ -22,8 +21,8 @@ class AdminUrlDatatable < AjaxDatatablesRails::Base
         # example: record.attribute,
         group_id: record.group_id,
         group_name: record.group.name,
-        url: link_to(display_long_url(record.url), record.url, target: '_blank', rel: 'noopener'),
-        keyword: link_to(display_keyword_url(record.keyword), full_url(record), target: '_blank', rel: 'noopener'),
+        url: link_to(display_long_url(record.url), record.url, target: '_blank'),
+        keyword: link_to(display_keyword_url(record.keyword), full_url(record), target: '_blank'),
         total_clicks: record.total_clicks,
         created_at: record.created_at.to_s(:created_on_formatted),
         actions: render(
@@ -31,7 +30,7 @@ class AdminUrlDatatable < AjaxDatatablesRails::Base
           partial: 'urls/in_row_actions',
           locals: { url: record, admin_view: true }
         ),
-        'DT_RowData_keyword' => record.keyword,
+        'DT_RowData_keyword' =>  record.keyword ,
         'DT_RowData_url' => record.url,
         'DT_RowId' => "url-#{record.id}"
       }

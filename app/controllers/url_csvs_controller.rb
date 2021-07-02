@@ -3,11 +3,12 @@ class UrlCsvsController < ApplicationController
   def show_aggregated
     @duration = params[:duration]
     @time_unit = params[:time_unit]
-    @urls = if params[:url_id].present?
-              [Url.find(params[:url_id])]
-            else
-              Url.created_by_id(current_user.context_group_id).not_in_pending_transfer_request
-            end
+    if params[:url_id].present?
+      @urls = [Url.find(params[:url_id])]
+    else
+      @urls =
+          Url.created_by_id(current_user.context_group_id).not_in_pending_transfer_request
+    end
 
     # Sneaky bad guy figures out url of target website and wants the good stuff
     # logs in only to find he is not in the group to which this url(s) belong?
@@ -25,4 +26,5 @@ class UrlCsvsController < ApplicationController
       format.csv { send_data url.click_data_to_csv }
     end
   end
+
 end

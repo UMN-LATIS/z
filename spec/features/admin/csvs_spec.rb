@@ -17,24 +17,24 @@ describe 'admins getting csv of clicks for url(s) clicked yesterday and two days
     # tests should use user urls not admins to tst that the urls are viewable by admin
     # though not necessarily owned by admin
     @url = FactoryBot.create(
-      :url,
-      group: @user.context_group,
-      keyword: keyword,
-      url: url,
-      created_at: created_at
+        :url,
+        group: @user.context_group,
+        keyword: keyword,
+        url: url,
+        created_at: created_at
     )
     @url2 = FactoryBot.create(
-      :url,
-      group: @user.context_group,
-      keyword: keyword2,
-      url: url2,
-      created_at: created_at2
+        :url,
+        group: @user.context_group,
+        keyword: keyword2,
+        url: url2,
+        created_at: created_at2
     )
     # add 10 clicks to yesterday for first url
     10.times do
       @url.clicks << Click.create(
-        country_code: 'US',
-        created_at: Time.now - 1.day
+          country_code: 'US',
+          created_at: Time.now - 1.day
       )
       @url.total_clicks += 1
       @url.save
@@ -42,8 +42,8 @@ describe 'admins getting csv of clicks for url(s) clicked yesterday and two days
     # add 5 clicks to yesterday for second url
     5.times do
       @url2.clicks << Click.create(
-        country_code: 'US',
-        created_at: Time.now - 2.days
+          country_code: 'US',
+          created_at: Time.now - 2.day
       )
       @url2.total_clicks += 1
       @url2.save

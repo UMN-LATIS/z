@@ -1,4 +1,5 @@
 class GroupPolicy < ApplicationPolicy
+
   def index?
     user_has_access?
   end
@@ -25,7 +26,7 @@ class GroupPolicy < ApplicationPolicy
     return true if user.admin?
     return true if record.is_a?(Group) && record.users.exists?(user.id)
     return true if record.is_a?(Array) && record.all? { |rec| rec.users.exists?(user.id) }
-
     false
   end
+
 end

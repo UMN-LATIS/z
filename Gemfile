@@ -29,10 +29,10 @@ gem 'coffee-rails', '~> 4.2.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
-gem 'lograge'
+gem "lograge"
 
 # For javascript translations
-gem 'i18n-js'
+gem "i18n-js"
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -51,10 +51,10 @@ gem 'net-ldap'
 gem 'twitter-bootstrap-rails'
 # Use special bootstrap select
 gem 'bootstrap-select-rails'
-# Use font awesome for icons
-gem 'font-awesome-rails'
+#Use font awesome for icons
+gem "font-awesome-rails"
 
-# Use clipboard js plugin
+#Use clipboard js plugin
 gem 'clipboard-rails'
 
 # better confirm dialogs
@@ -64,19 +64,19 @@ gem 'data-confirm-modal'
 gem 'paper_trail'
 
 # Use barby to generate QR codes
+gem 'rqrcode'
 gem 'barby'
 gem 'chunky_png'
-gem 'rqrcode'
 
 # authorization lugin
 gem 'pundit'
 
 # announcements to the seething masses
 # https://github.com/csm123/starburst#
-gem 'starburst', git: 'https://github.com/csm123/starburst.git'
+gem 'starburst',  git: 'https://github.com/csm123/starburst.git'
 
-# notify someone when exceptions occur
-# and notify slack channel
+#notify someone when exceptions occur
+#and notify slack channel
 gem 'exception_notification'
 gem 'slack-notifier'
 
@@ -86,8 +86,8 @@ gem 'addressable'
 # For API Authentication
 gem 'jwt'
 
-gem 'sentry-rails'
-gem 'sentry-ruby'
+gem "sentry-ruby"
+gem "sentry-rails"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a
@@ -95,27 +95,27 @@ group :development, :test do
   gem 'byebug', platform: :mri
 
   # Use Rspec, capybara, and apparition for testing
-  gem 'apparition'
-  gem 'capybara'
-  gem 'database_cleaner'
-  gem 'factory_bot_rails'
-  gem 'fuubar'
-  gem 'launchy'
   gem 'rspec-rails'
+  gem 'capybara'
+  gem 'apparition'
+  gem 'launchy'
+  gem 'factory_bot_rails'
+  gem 'database_cleaner'
+  gem 'fuubar'
 
   # Add some pry/rails console helpers for development
-  gem 'awesome_print'
   gem 'pry', '0.12.2'
-  gem 'pry-byebug'
   gem 'pry-coolline'
+  gem 'pry-byebug'
+  gem 'awesome_print'
   gem 'pry-rails'
 end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere
   # in the code.
-  gem 'listen', '~> 3.0.5'
   gem 'web-console'
+  gem 'listen', '~> 3.0.5'
   # Spring speeds up development by keeping your application running in the
   # background. Read more: https://github.com/rails/spring
 
@@ -124,8 +124,7 @@ group :development do
   gem 'binding_of_caller'
 
   # rubocop for styled code
-  gem 'rubocop', require: false
-  gem 'rubocop-rails', require: false
+  gem 'rubocop', '~> 0.47.1', require: false
 
   # Use annotate to list the attributes of models
   gem 'annotate'
@@ -133,11 +132,11 @@ group :development do
   gem 'capistrano'
   gem 'capistrano-bundler'
   gem 'capistrano-passenger', '>= 0.1.1'
-  gem 'capistrano-rails'
   gem 'capistrano-rbenv'
+  gem 'capistrano-rails'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'browser'

@@ -1,5 +1,6 @@
 # app/policies/admin_membership_policy.rb
-AdminMembershipPolicy = Struct.new(:user, :admin_membership) do
+class AdminMembershipPolicy < Struct.new(:user, :admin_membership)
+
   def index?
     user.admin?
   end
@@ -11,4 +12,5 @@ AdminMembershipPolicy = Struct.new(:user, :admin_membership) do
   def destroy?
     user.admin?
   end
+
 end

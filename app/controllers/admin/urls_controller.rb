@@ -1,5 +1,5 @@
 class Admin::UrlsController < ApplicationController
-  before_action :set_url, only: %i[show edit update destroy]
+  before_action :set_url, only: [:show, :edit, :update, :destroy]
   before_action :ensure_signed_in
   before_action :set_admin_view
 
@@ -8,7 +8,9 @@ class Admin::UrlsController < ApplicationController
     @urls = Url.by_keyword(params[:url_filter_keyword])
     authorize @urls unless @urls.nil?
     # If owner filter present, filter further
-    @urls = @urls.created_by_name('params[:url_filter_owner]') if params[:url_filter_owner].present?
+    if params[:url_filter_owner].present?
+      @urls = @urls.created_by_name('params[:url_filter_owner]')
+    end
   end
 
   # GET /urls/1

@@ -9,6 +9,7 @@ describe '[API: URLs]', type: :api do
     let(:url2_keyword) { 'ex' }
     let(:url3_url) { 'example.com/example' }
 
+
     it 'should let you add urls' do
       # Basic, singular URL
       payload = {

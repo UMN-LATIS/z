@@ -12,7 +12,6 @@ class UserLookupService
 
   def search
     return nil unless @query.present? && @query_type.present?
-
     results = nil
     if @connection.bind
       if @query_type == 'all'
@@ -47,14 +46,8 @@ class UserLookupService
       end
     end
     return nil unless results
-
     results = results.promote(results.detect { |x| x[:uid] == [@query] })
-    if results.present?
-      results = results.map do |x|
-        { umndid: umndid(x), display: display(x), internet_id: internet_id(x),
-          display_name: result_name(x) }
-      end.flatten
-    end
+    results = results.map { |x| { umndid: umndid(x), display: display(x), internet_id: internet_id(x), display_name: result_name(x) } }.flatten unless results.blank?
     results
   end
 
@@ -65,15 +58,15 @@ class UserLookupService
   end
 
   def display_name(x)
-    x.try(:displayname).try(:first) || 'Name not available'
+    x.try(:displayname).try(:first) ? x.try(:displayname).try(:first) : 'Name not available'
   end
 
   def result_name(x)
-    x.try(:displayname).try(:first) || '(name not available)'
+    x.try(:displayname).try(:first) ? x.try(:displayname).try(:first) : '(name not available)'
   end
 
   def internet_id(x)
-    x.try(:uid).try(:first) || 'Internet ID not available'
+    x.try(:uid).try(:first) ? x.try(:uid).try(:first) : 'Internet ID not available'
   end
 
   def display(x)
