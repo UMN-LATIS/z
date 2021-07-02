@@ -727,3 +727,7 @@ $loader-color: $primaryColor;
 .loading-indicator{
   @include loader01;
 }
+
+img {
+  max-width: 100%;
+}
