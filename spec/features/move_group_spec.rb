@@ -1,5 +1,10 @@
 require 'rails_helper'
 
+def expect_urls_page_to_finish_loading
+  expect(page).to have_content("Bulk Actions")
+  expect(page).to have_no_content("Processing")
+end
+
 describe 'moving urls to a group', js: true do
   before do
     @user = FactoryBot.create(:user)
@@ -12,21 +17,14 @@ describe 'moving urls to a group', js: true do
   describe 'on the urls index page' do
     before do
       visit urls_path
-      wait_for_ajax
+      expect_urls_page_to_finish_loading
     end
 
     describe 'with extra groups' do
-      before do
-        visit urls_path
-        wait_for_ajax
-      end
-
       describe 'without urls' do
         describe 'the table bulk actions button' do
           it 'should be disabled' do
-            expect(page.find('.table-options')[:class]).to(
-              have_content('disabled')
-            )
+            expect(page).to have_css('.table-options.disabled')
           end
         end
       end
@@ -36,13 +34,12 @@ describe 'moving urls to a group', js: true do
           @url = FactoryBot.create(:url, group: @user.context_group)
           visit urls_path
         end
-
+        
         describe 'none selected' do
           describe 'the table buld actions button' do
             it 'should be disabled' do
-              expect(page.find('.table-options')[:class]).to(
-                have_content('disabled')
-              )
+              expect_urls_page_to_finish_loading
+              expect(page).to have_css('.table-options.disabled')
             end
           end
         end
