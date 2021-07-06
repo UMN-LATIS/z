@@ -5,8 +5,8 @@ describe AuditPolicy do
   subject { described_class }
 
   before do
-    @admin_user = FactoryGirl.create(:user, admin: true, uid: 'wozniak')
-    @bad_user = FactoryGirl.create(:user, admin: false, uid: 'andersen')
+    @admin_user = FactoryBot.create(:user, admin: true, uid: 'wozniak')
+    @bad_user = FactoryBot.create(:user, admin: false, uid: 'andersen')
   end
 
   permissions :index? do

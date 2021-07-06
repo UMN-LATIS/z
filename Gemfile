@@ -42,7 +42,7 @@ gem 'turbolinks', '~> 5.x'
 gem 'jbuilder', '~> 2.0'
 
 # Use this as the autocompleter library
-gem 'twitter-typeahead-rails', git: 'git://github.com/pgate/twitter-typeahead-rails'
+gem 'twitter-typeahead-rails', git: 'https://github.com/pgate/twitter-typeahead-rails.git'
 
 # Use net-ldap for LDAP lookup integration
 gem 'net-ldap'
@@ -73,7 +73,7 @@ gem 'pundit'
 
 # announcements to the seething masses
 # https://github.com/csm123/starburst#
-gem 'starburst',  git: 'git://github.com/csm123/starburst'
+gem 'starburst',  git: 'https://github.com/csm123/starburst.git'
 
 #notify someone when exceptions occur
 #and notify slack channel
@@ -94,12 +94,12 @@ group :development, :test do
   # debugger console
   gem 'byebug', platform: :mri
 
-  # Use Rspec, capybara, and poltergeist for testing
+  # Use Rspec, capybara, and apparition for testing
   gem 'rspec-rails'
   gem 'capybara'
-  gem 'poltergeist'
+  gem 'apparition'
   gem 'launchy'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'database_cleaner'
   gem 'fuubar'
 

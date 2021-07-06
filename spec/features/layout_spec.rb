@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'the layout' do
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryBot.create(:user) }
   describe 'not signed in' do
     before { visit '/' }
 

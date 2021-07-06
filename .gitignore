@@ -29,3 +29,6 @@
 config/ldap.yml
 config/database.yml
 config/secrets.yml
+
+.env*
+!.env.example

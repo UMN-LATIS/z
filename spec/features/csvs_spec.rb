@@ -10,17 +10,17 @@ describe 'getting csv of clicks for url(s) clicked yesterday and two days ago' d
   let(:created_at2) { Time.now - 1.day }
 
   before do
-    @user = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
     sign_in(@user)
 
-    @url = FactoryGirl.create(
+    @url = FactoryBot.create(
         :url,
         group: @user.context_group,
         keyword: keyword,
         url: url,
         created_at: created_at
     )
-    @url2 = FactoryGirl.create(
+    @url2 = FactoryBot.create(
         :url,
         group: @user.context_group,
         keyword: keyword2,

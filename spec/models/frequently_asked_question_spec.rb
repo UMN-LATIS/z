@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe FrequentlyAskedQuestion, type: :model do
   before do
-    @frequently_asked_question = FactoryGirl.build(:frequently_asked_question)
+    @frequently_asked_question = FactoryBot.build(:frequently_asked_question)
   end
 
   subject { @frequently_asked_question }

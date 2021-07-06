@@ -6,11 +6,11 @@ describe 'urls show page', js: true do
   let(:created_at) { Time.now - 1.day }
 
   before do
-    @user = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
     sign_in(@user)
     wait_for_ajax
 
-    @url = FactoryGirl.create(
+    @url = FactoryBot.create(
         :url,
         group: @user.context_group,
         keyword: keyword,
@@ -80,7 +80,7 @@ describe 'urls show page', js: true do
 
   describe 'collection dropdown' do
     before {
-      @new_group = FactoryGirl.create(:group)
+      @new_group = FactoryBot.create(:group)
       @new_group.users << @user
       sign_in(@user)
       wait_for_ajax
@@ -102,7 +102,7 @@ describe 'urls show page', js: true do
 end
 describe 'urls index page', js: true do
   before do
-    @user = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
     sign_in(@user)
     wait_for_ajax
   end
@@ -223,7 +223,7 @@ describe 'urls index page', js: true do
       describe '[keyword]' do
         describe 'already taken' do
           before do
-            @other_url = FactoryGirl.create(:url)
+            @other_url = FactoryBot.create(:url)
             find('#url_keyword').set @other_url.keyword
           end
           it 'should not save upon clicking Create' do
@@ -247,7 +247,7 @@ describe 'urls index page', js: true do
     let(:new_url) { 'http://www.facebook.com' }
     let(:new_keyword) { 'face' }
     before do
-      @url = FactoryGirl.create(:url, group: @user.context_group)
+      @url = FactoryBot.create(:url, group: @user.context_group)
       visit urls_path
       wait_for_ajax
     end
@@ -274,10 +274,10 @@ describe 'urls index page', js: true do
 
       describe 'when filtering on collection', js: true do
         before do
-          new_group = FactoryGirl.create(:group)
+          new_group = FactoryBot.create(:group)
           new_group.users << @user
           sign_in(@user)
-          @new_url = FactoryGirl.create(:url, group: new_group)
+          @new_url = FactoryBot.create(:url, group: new_group)
           wait_for_ajax
           find('[data-id="collection-filter"]').click
           find('.dropdown-menu.open li', text: (new_group.name) ).click
@@ -355,8 +355,8 @@ describe 'urls index page', js: true do
 
     describe 'when attempting to edit someone elses url' do
       before do
-        @new_user = FactoryGirl.create(:user)
-        @new_url = FactoryGirl.create(:url, group: @new_user.context_group)
+        @new_user = FactoryBot.create(:user)
+        @new_url = FactoryBot.create(:url, group: @new_user.context_group)
         visit edit_url_path(@new_url)
       end
       describe 'page content' do
@@ -368,7 +368,7 @@ describe 'urls index page', js: true do
 
     describe 'collection dropdown' do
       before {
-        @new_group = FactoryGirl.create(:group)
+        @new_group = FactoryBot.create(:group)
         @new_group.users << @user
         sign_in(@user)
         wait_for_ajax

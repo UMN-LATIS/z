@@ -1,19 +1,19 @@
 require 'rails_helper'
 
 describe RedirectController do
-  let(:url) { FactoryGirl.create(:url) }
+  let(:url) { FactoryBot.create(:url) }
 
   describe 'GET /:keyword' do
-    describe 'url exists' do
-      it 'redirects back to the referring page' do
+    describe 'when url exists' do
+      it 'redirects back to the referring page if url exists' do
         get :index, params: { keyword: url.keyword }
         expect(response).to redirect_to url.url
       end
     end
-    describe 'url does not exist' do
-      it 'redirects back to the root path' do
-        get :index, params: {keyword: "5#{url.keyword}" }
-        expect(response).to redirect_to root_path
+    describe 'when url does not exist' do
+      it 'responds with a 404' do
+        get :index, params: {keyword: "test404#{url.keyword}" } 
+        expect(response.status).to eq(404)
       end
     end
   end
