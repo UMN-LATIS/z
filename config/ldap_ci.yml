@@ -1,0 +1,8 @@
+:host: <%= ENV['LDAP_HOST'] %>
+:port: 636
+:encryption: :simple_tls
+:base: <%= ENV['LDAP_BASE'] %>
+:auth:
+  :method: :simple
+  :username: <%= ENV['LDAP_USERNAME'] %>
+  :password: <%= ENV['LDAP_PASSWORD'] %>
