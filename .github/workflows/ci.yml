@@ -21,8 +21,6 @@ jobs:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     env:
-      LDAP_HOST: "${{ secrets.LDAP_HOST }}"
-      LDAP_BASE: "${{ secrets.LDAP_BASE }}"
       LDAP_USERNAME: "${{ secrets.LDAP_USERNAME }}"
       LDAP_PASSWORD: "${{ secrets.LDAP_PASSWORD }}"
       DB_HOST: 127.0.0.1
