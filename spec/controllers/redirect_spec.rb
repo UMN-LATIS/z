@@ -15,6 +15,14 @@ describe RedirectController do
         get :index, params: {keyword: "test404#{url.keyword}" } 
         expect(response.status).to eq(404)
       end
+
+      it 'renders 404 page regardless of format param' do
+        get :index, params: {keyword: "test404#{url.keyword}", format: nil }
+        expect(response.status).to eq(404)
+
+        get :index, params: {keyword: "test404#{url.keyword}", format: "php" }
+        expect(response.status).to eq(404)
+      end
     end
   end
 
