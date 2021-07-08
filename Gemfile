@@ -103,9 +103,12 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'fuubar'
 
+  # Watch files for changes and re-run tests
+  gem 'guard'
+  gem 'guard-rspec', require: false
+
   # Add some pry/rails console helpers for development
-  gem 'pry', '0.12.2'
-  gem 'pry-coolline'
+  gem 'pry', '~> 0.13.1'
   gem 'pry-byebug'
   gem 'awesome_print'
   gem 'pry-rails'
