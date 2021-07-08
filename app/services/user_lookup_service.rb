@@ -3,9 +3,13 @@ require 'net/ldap' # gem install net-ldap
 
 class UserLookupService
   def initialize(params = nil)
-    @connection = Net::LDAP.new(
-      YAML.load(File.open('config/ldap.yml'))
-    )
+    # ldap.yml may contain embedded erb to 
+    # fetch environment variables so parse this
+    # before loading the config
+    raw_config = File.read('config/ldap.yml')
+    processed_config = ERB.new(raw_config).result
+
+    @connection = Net::LDAP.new(YAML.load(processed_config))
     @query = params[:query] if params
     @query_type = params[:query_type] if params
   end
