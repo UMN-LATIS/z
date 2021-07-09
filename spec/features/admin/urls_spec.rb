@@ -51,6 +51,7 @@ describe 'as a valid admin user' do
 
           describe 'with new valid content' do
             it 'should update the url in the db' do
+              expect(page).to have_css('#url_url')
               find('#url_url').set new_url
               find('.js-url-submit').click
               wait_for_ajax
