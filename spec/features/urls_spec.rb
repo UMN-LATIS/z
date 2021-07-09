@@ -87,7 +87,9 @@ describe 'urls show page', js: true do
       visit url_path(@url.keyword)
       wait_for_ajax
       find('.bootstrap-select .dropdown-toggle').click
+      accept_confirm do
       find('.dropdown-menu.open').find('li', text: @new_group.name).click
+      end
       wait_for_ajax
     }
 
@@ -379,7 +381,9 @@ describe 'urls index page', js: true do
 
       describe 'when changing collection' do
         before{
+          accept_confirm do
           find('.dropdown-menu.open').find('li', text: @new_group.name).click
+          end
           wait_for_ajax
         }
 
