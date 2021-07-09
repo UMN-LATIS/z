@@ -1,0 +1,54 @@
+.error-page {
+  --black: #000;
+  --maroon: #7a0019;
+  color: var(--black);
+  line-height: 1.4;
+}
+
+.error-page a {
+  color: var(--maroon);
+}
+
+.error-page p {
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.error-page__image {
+  display: block;
+  margin: 1rem auto 3rem;
+  width: 50%;
+  min-width: 12rem;
+  max-width: 30rem;
+}
+
+.error-page__heading {
+  font-size: 6rem;
+  margin-bottom: 1rem;
+}
+
+.error-page__subheading {
+  font-size: 3rem;
+  margin-top: 0;
+}
+
+.error-page__message {
+  font-size: 1.25rem;
+  max-width: 30rem;
+  margin: auto;
+}
+
+@media (max-width: 32rem) {
+  body {
+    border: 3px solid blue;
+  }
+  .error-page__heading {
+    font-size: 4rem;
+  }
+  .error-page__subheading {
+    font-size: 2rem;
+  }
+  .error-page__message {
+    font-size: 1rem;
+  }
+}
