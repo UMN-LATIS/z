@@ -106,6 +106,9 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'fuubar'
 
+  # for retrying flaky tests until they can be fixed
+  gem "rspec-retry", "~> 0.6.2"
+
   # Watch files for changes and re-run tests
   gem 'guard'
   gem 'guard-rspec', require: false
