@@ -40,7 +40,7 @@ describe 'admin members index page' do
       # Admin table should have two entries now.
       # one for :test_admin_uid and :new_admin_uid
       within 'table' do
-        expect(page).to have_selector 'tr', count: 2
+        expect(page).to have_selector 'tbody > tr', count: 2
       end
     end
 
@@ -53,11 +53,8 @@ describe 'admin members index page' do
       wait_for_admin_page_to_load
       page.all(:css, '.delete-admin-member')[1].click
       click_button 'Confirm'
-
-      visit admin_members_path(@user)
-      wait_for_admin_page_to_load
-      expect(User.where(uid: :new_admin_uid, admin: true)).not_to exist
       expect(page).to have_content 'has been removed.'
+      expect(User.where(uid: :new_admin_uid, admin: true)).not_to exist
     end
 
     it 'when removing oneself from the admins, one should not view the admin pages' do
