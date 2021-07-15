@@ -27,7 +27,7 @@ class SessionsController < ApplicationController
 
   def destroy
     sign_out
-    if Rails.env.development?
+    if is_dev_or_test_env?
       redirect_to root_path
     else
       redirect_to shib_logout_url
