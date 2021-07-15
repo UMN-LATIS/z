@@ -70,6 +70,7 @@ describe 'urls show page', js: true do
     before { find('.url-share-button-qr').click }
 
     it 'should be a png type' do
+      expect(page.status_code).to eq 200
       expect(page.response_headers['Content-Type']).to eq('image/png')
     end
 
@@ -87,7 +88,9 @@ describe 'urls show page', js: true do
       visit url_path(@url.keyword)
       wait_for_ajax
       find('.bootstrap-select .dropdown-toggle').click
-      find('.dropdown-menu.open').find('li', text: @new_group.name).click
+      accept_confirm do
+         find('.dropdown-menu.open').find('li', text: @new_group.name).click
+      end
       wait_for_ajax
     }
 
@@ -153,6 +156,7 @@ describe 'urls index page', js: true do
     let(:keyword) { 'goog' }
     before do
       visit urls_path
+      expect(page).to have_selector('.js-new-url-url')
       find('.js-new-url-url').set url
       find('.js-new-url-keyword').set keyword
     end
@@ -379,7 +383,9 @@ describe 'urls index page', js: true do
 
       describe 'when changing collection' do
         before{
-          find('.dropdown-menu.open').find('li', text: @new_group.name).click
+          accept_confirm do
+            find('.dropdown-menu.open').find('li', text: @new_group.name).click
+          end
           wait_for_ajax
         }
 

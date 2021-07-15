@@ -2,7 +2,7 @@
 # lock '3.6.1'
 
 set :application, 'z'
-set :repo_url, 'git@github.umn.edu:latis-sw/z.git'
+set :repo_url, 'git@github.com:UMN-LATIS/z.git'
 set :rbenv_ruby, File.read('.ruby-version').strip
 
 # Default branch is :master
