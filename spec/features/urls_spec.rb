@@ -156,7 +156,6 @@ describe 'urls index page', js: true do
     let(:keyword) { 'goog' }
     before do
       visit urls_path
-      expect(page).to have_selector('.js-new-url-url')
       find('.js-new-url-url').set url
       find('.js-new-url-keyword').set keyword
     end
@@ -194,7 +193,7 @@ describe 'urls index page', js: true do
         describe 'downloading qr code', js: true do
           before { find('.url-share-button-qr').click }
 
-          it 'should be a png type' do
+          it 'should be a png type', retry: 3 do
             expect(page.response_headers['Content-Type']).to eq('image/png')
           end
 
@@ -312,7 +311,7 @@ describe 'urls index page', js: true do
         describe 'downloading qr code', js: true do
           before { find('.url-share-button-qr').click }
 
-          it 'should be a png type' do
+          it 'should be a png type', retry: 3 do
             expect(page.response_headers['Content-Type']).to eq('image/png')
           end
 

@@ -18,12 +18,11 @@ describe 'creating a transfer request', js: true do
   before do
     @user = FactoryBot.create(:user)
     sign_in(@user)
-    visit urls_path
-    wait_for_urls_page_load
   end
 
   describe 'the urls index page' do
-    it 'should have a disabled bulk action button if there are no urls' do
+    it 'should have a disabled bulk action button if there are no urls', retry: 3 do
+      visit urls_path
       expect(page).to have_css('.table-options.disabled')
     end
 
@@ -32,11 +31,10 @@ describe 'creating a transfer request', js: true do
         @selected_url = FactoryBot.create(:url, group: @user.context_group)
         FactoryBot.create(:url, group: @user.context_group)
         FactoryBot.create(:url, group: @user.context_group)
-        visit urls_path
-        wait_for_urls_page_load
       end
-
-      it 'should have a disabled bulk action button if no urls are selected' do
+      
+      it 'should have a disabled bulk action button if no urls are selected', retry: 3 do
+        visit urls_path
         expect(page).to have_css('.table-options.disabled')
       end
 
@@ -224,6 +222,7 @@ describe 'creating a transfer request', js: true do
         end.to change(TransferRequest.pending, :count).by(-1)
       end
       it 'should change the status of the transfer to approved' do
+        expect(page).to have_css('.js-approve-transfer');
         expect do
           find('.js-approve-transfer').click
           wait_for_ajax
