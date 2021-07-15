@@ -125,7 +125,6 @@ describe 'creating a transfer request', js: true do
                 find('#new_transfer_request  input[type="submit"]').click
                 click_button "Confirm"
                 wait_for_modal_to_dismiss
-                save_screenshot("test.png")
                 sign_in(@other_user)
                 visit urls_path
                 wait_for_urls_page_load
