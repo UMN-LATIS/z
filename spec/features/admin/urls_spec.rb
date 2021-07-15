@@ -65,19 +65,15 @@ describe 'as a valid admin user' do
             end
           end
           describe 'with invalid content' do
-            describe '[keyword]' do
-              describe 'already taken' do
-                before do
-                  @other_url = FactoryBot.create(:url)
-                  find('#url_keyword').set @other_url.keyword
-                end
-                it 'displays an error and does not save upon clicking Create' do
-                  expect do
-                    find('.js-url-submit').click
-                    expect(page).to have_content('taken')
-                  end.to change(Url, :count).by(0)
-                end
-              end
+            it 'displays an error and does not save upon clicking Create if keyword is already taken' do
+              @other_url = FactoryBot.create(:url)
+              expect(page).to have_selector('#url_keyword');
+              find('#url_keyword').set @other_url.keyword
+
+              expect do
+                find('.js-url-submit').click
+                expect(page).to have_content('taken')
+              end.to change(Url, :count).by(0)
             end
           end
         end
