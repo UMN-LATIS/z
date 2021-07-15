@@ -73,7 +73,7 @@ After deploying, populate the ip2location_db1 table with the content from the [I
 
 The application has a a comprehensive testing suite using Rspec and Capybara. Front end tests are configured to run with PhantomJS and Apparition. The test suite can be ran by running:
 
-    RAILS_ENV=development bundle exec rspec
+    bundle exec rspec
 
 ### Other tech
 

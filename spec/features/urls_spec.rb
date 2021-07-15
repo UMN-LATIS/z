@@ -69,7 +69,7 @@ describe 'urls show page', js: true do
   describe 'downloading qr code', js: true do
     before { find('.url-share-button-qr').click }
 
-    it 'should be a png type' do
+    it 'should be a png type', retry: 3 do
       expect(page.status_code).to eq 200
       expect(page.response_headers['Content-Type']).to eq('image/png')
     end
