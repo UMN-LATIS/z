@@ -100,6 +100,7 @@ group :development, :test do
   # Use Rspec, capybara, and apparition for testing
   gem 'rspec-rails'
   gem 'capybara'
+  gem 'capybara-screenshot', "~> 1.0"
   gem 'apparition'
   gem 'launchy'
   gem 'factory_bot_rails'
