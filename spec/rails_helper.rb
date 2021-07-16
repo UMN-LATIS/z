@@ -10,10 +10,15 @@ require 'support/factory_bot'
 require 'support/database_cleaner'
 require 'support/utilities'
 require 'capybara/rspec'
+require 'capybara-screenshot/rspec'
 require 'paper_trail/frameworks/rspec'
 require 'capybara/apparition'
 
 Capybara.javascript_driver = :apparition
+
+# For better looking HTML screenshots
+# See: https://github.com/mattheworiordan/capybara-screenshot
+Capybara.asset_host = 'http://localhost:3000'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
