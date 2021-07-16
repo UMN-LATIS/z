@@ -412,7 +412,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  addressable (~> 2.7)
+  addressable (~> 2.8)
   ajax-datatables-rails!
   annotate (~> 3.1)
   apparition (~> 0.6)

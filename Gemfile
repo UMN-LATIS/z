@@ -81,7 +81,7 @@ gem 'exception_notification', "~> 4.4"
 gem 'slack-notifier', "~> 2.3"
 
 # For URL migration
-gem 'addressable', "~> 2.7"
+gem 'addressable', "~> 2.8"
 
 # For API Authentication
 gem 'jwt', "~> 2.2"
