@@ -15,3 +15,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
 end
 
 OmniAuth.config.logger = Rails.logger
+
+# See: https://github.com/omniauth/omniauth/wiki/Resolving-CVE-2015-9284
+# We're using shibboleth and not Oauth for authentication.
+OmniAuth.config.allowed_request_methods = [:post, :get]
