@@ -23,7 +23,9 @@ class Admin::MembersController < ApplicationController
     member.save
     respond_to do |format|
       if member.admin?
+        # rubocop: disable Rails/RenderInline
         format.js { render inline: "location.reload();" }
+        # rubocop: enable Rails/RenderInline
       else
         format.html { render :new }
         format.json { render json: member.errors, status: :unprocessable_entity }

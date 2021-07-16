@@ -8,13 +8,15 @@ module Arel
     class MySQL < Arel::Visitors::ToSql
       private
 
-      def visit_Arel_Nodes_Regexp o, collector
-        infix_value o, collector, ' REGEXP '
-      end
+      # rubocop:disable Naming/MethodName
 
-      def visit_Arel_Nodes_NotRegexp o, collector
-        infix_value o, collector, ' NOT REGEXP '
+      def visit_Arel_Nodes_Regexp(obj, collector)
+        infix_value obj, collector, ' REGEXP '
       end
+      def visit_Arel_Nodes_NotRegexp(obj, collector)
+        infix_value obj, collector, ' NOT REGEXP '
+      end
+      # rubocop:enable Naming/MethodName
     end
   end
 end

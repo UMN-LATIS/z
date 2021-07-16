@@ -20,7 +20,9 @@ class GroupMembershipsController < ApplicationController
     @group.add_user(member)
     respond_to do |format|
       if @group.user?(member)
+        # rubocop: disable Rails/RenderInline
         format.js { render inline: "location.reload();" }
+        # rubocop: enable Rails/RenderInline
       else
         format.html { render :new }
         format.json { render json: @group.errors, status: :unprocessable_entity }

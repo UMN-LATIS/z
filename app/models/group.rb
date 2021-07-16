@@ -12,8 +12,8 @@
 class Group < ApplicationRecord
   include VersionUser
   has_paper_trail
-  after_save :version_history
   before_destroy :version_history
+  after_save :version_history
 
   has_many :groups_users, dependent: :destroy
   has_many :users, through: :groups_users

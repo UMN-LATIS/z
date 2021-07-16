@@ -17,8 +17,8 @@ require 'ipaddr'
 class Url < ApplicationRecord
   include VersionUser
   has_paper_trail :ignore => [:total_clicks]
-  after_save :version_history
   before_destroy :version_history
+  after_save :version_history
 
   belongs_to :group
   has_many :clicks, dependent: :delete_all
@@ -55,17 +55,17 @@ class Url < ApplicationRecord
   end
 
   scope :created_by_id, ->(group_id) do
-    where('group_id = ?', group_id)
+    where(group_id: group_id)
   end
 
   scope :created_by_ids, ->(group_ids) do
-    where('group_id IN (?)', group_ids)
+    where(group_id: group_ids)
   end
 
   scope :created_by_name, ->(group_name) do
     owner_to_search = "%#{group_name}%"
     possible_groups = Group.where('name LIKE ?', owner_to_search).map(&:id)
-    where('group_id IN (?)', possible_groups)
+    where(group_id: possible_groups)
   end
 
   scope :by_keyword, ->(keyword) do
@@ -73,7 +73,7 @@ class Url < ApplicationRecord
   end
 
   scope :by_keywords, ->(keywords) do
-    where('keyword IN (?)', "%#{keywords.map(&:downcase)}%")
+    where(keyword: "%#{keywords.map(&:downcase)}%")
   end
 
   scope :not_in_pending_transfer_request, -> do
@@ -111,12 +111,12 @@ class Url < ApplicationRecord
 
   def self.to_csv(duration, time_unit, urls)
     # ex: http://localhost:3000/shortener/urls/csv/24/days.csv
-    col_names = nil
+    col_names = %w{url keyword}
     formats = {days: '%m/%d', hours: '%I:%M%p'}
     data = CSV.generate(headers: true) do |csv|
       urls.each do |url|
         res = url.clicks.group_by_time_ago(duration.to_i.send(time_unit), formats[time_unit.to_sym])
-        col_names = %w{url keyword} + res.keys
+        col_names += res.keys
         col_values = [url.url, url.keyword] + res.values
         csv << col_values
       end

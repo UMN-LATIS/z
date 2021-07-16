@@ -14,8 +14,9 @@
 class TransferRequest < ApplicationRecord
   include VersionUser
   has_paper_trail
-  after_save :version_history
+  before_save :pre_approve
   before_destroy :version_history
+  after_save :version_history
 
   belongs_to :from_group, foreign_key: 'from_group_id', class_name: 'Group'
   belongs_to :to_group, foreign_key: 'to_group_id', class_name: 'Group'
@@ -28,7 +29,6 @@ class TransferRequest < ApplicationRecord
 
   validate :from_user_must_own_urls_or_from_user_is_admin
 
-  before_save :pre_approve
 
   scope :pending, -> { where(status: 'pending') }
 

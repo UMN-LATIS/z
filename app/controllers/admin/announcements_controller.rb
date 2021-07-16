@@ -68,7 +68,7 @@ class Admin::AnnouncementsController < ApplicationController
     @admin_announcement = Admin::Announcement.find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
+  # Never trust parameters from the scary internet, only allow the allowlist through.
   def admin_announcement_params
     params.require(:admin_announcement).permit(:title, :body, :start_delivering_at, :stop_delivering_at)
   end

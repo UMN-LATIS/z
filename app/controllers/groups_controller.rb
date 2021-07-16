@@ -97,7 +97,7 @@ class GroupsController < ApplicationController
     @group_identifier = @group.id
   end
 
-  # Never trust parameters from the scary internet, only allow the white list
+  # Never trust parameters from the scary internet, only permit the allowlist
   # through.
   def group_params
     params.require(:group).permit(:name, :description)

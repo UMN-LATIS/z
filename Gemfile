@@ -133,8 +133,12 @@ group :development do
   gem 'better_errors', "~> 2.7"
   gem 'binding_of_caller', "~> 0.8"
 
-  # rubocop for styled code
-  gem 'rubocop', '~> 0.47', require: false
+  # rubocop for linting
+  gem 'rubocop', '~> 1.18', require: false
+  gem "rubocop-performance", "~> 1.11", require: false
+  gem "rubocop-rails", "~> 2.11", require: false
+  gem "rubocop-rspec", "~> 2.4", require: false
+  gem "rubocop-rake", "~> 0.6.0", require: false
 
   # Use annotate to list the attributes of models
   gem 'annotate', "~> 3.1"
