@@ -25,6 +25,7 @@ jobs:
       DB_PORT: 3306
       DB_USERNAME: root
       DB_PASSWORD: root
+      RAILS_ENV: test
     steps:
       - name: Verify mysql connection
         run: |
@@ -47,5 +48,3 @@ jobs:
           ./bin/rails db:migrate
       - name: Run RSpec
         run: bundle exec rspec
-        env:
-          RAILS_ENV: test

@@ -13,7 +13,8 @@ describe 'admin urls index page' do
 
     describe 'with no urls' do
       describe 'the transfer button' do
-        it 'should be disabled' do
+        # FIXME: flakey test. Adding retry for now.
+        it 'should be disabled', retry: 3 do
           expect(page).to have_css('.table-options.disabled')
         end
       end
