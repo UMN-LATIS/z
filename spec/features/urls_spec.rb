@@ -69,7 +69,8 @@ describe 'urls show page', js: true do
   describe 'downloading qr code', js: true do
     before { find('.url-share-button-qr').click }
 
-    it 'should be a png type' do
+    it 'should be a png type', retry: 3 do
+      expect(page.status_code).to eq 200
       expect(page.response_headers['Content-Type']).to eq('image/png')
     end
 
@@ -87,7 +88,9 @@ describe 'urls show page', js: true do
       visit url_path(@url.keyword)
       wait_for_ajax
       find('.bootstrap-select .dropdown-toggle').click
-      find('.dropdown-menu.open').find('li', text: @new_group.name).click
+      accept_confirm do
+         find('.dropdown-menu.open').find('li', text: @new_group.name).click
+      end
       wait_for_ajax
     }
 
@@ -190,7 +193,7 @@ describe 'urls index page', js: true do
         describe 'downloading qr code', js: true do
           before { find('.url-share-button-qr').click }
 
-          it 'should be a png type' do
+          it 'should be a png type', retry: 3 do
             expect(page.response_headers['Content-Type']).to eq('image/png')
           end
 
@@ -308,7 +311,7 @@ describe 'urls index page', js: true do
         describe 'downloading qr code', js: true do
           before { find('.url-share-button-qr').click }
 
-          it 'should be a png type' do
+          it 'should be a png type', retry: 3 do
             expect(page.response_headers['Content-Type']).to eq('image/png')
           end
 
@@ -379,7 +382,9 @@ describe 'urls index page', js: true do
 
       describe 'when changing collection' do
         before{
-          find('.dropdown-menu.open').find('li', text: @new_group.name).click
+          accept_confirm do
+            find('.dropdown-menu.open').find('li', text: @new_group.name).click
+          end
           wait_for_ajax
         }
 

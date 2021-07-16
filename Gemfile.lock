@@ -323,6 +323,8 @@ GEM
       rspec-expectations (~> 3.9)
       rspec-mocks (~> 3.9)
       rspec-support (~> 3.9)
+    rspec-retry (0.6.2)
+      rspec-core (> 3.3)
     rspec-support (3.9.3)
     rubocop (0.47.1)
       parser (>= 2.3.3.1, < 3.0)
@@ -450,6 +452,7 @@ DEPENDENCIES
   rails (~> 5.2.0)
   rqrcode
   rspec-rails
+  rspec-retry (~> 0.6.2)
   rubocop (~> 0.47.1)
   sass-rails (~> 5.0)
   sentry-rails
