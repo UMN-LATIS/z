@@ -153,3 +153,5 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'browser', "~> 4.2"
+
+gem "webpacker", "~> 5.4"
