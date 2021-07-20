@@ -62,6 +62,10 @@ and connect to your localhost on port 3000.
 - [Capistrano](https://github.com/capistrano/capistrano), for deployment
 - Apache/[Passenger](https://github.com/phusion/passenger), as our server stack
 
+```console
+bundle exec cap <environmentname> deploy
+```
+
 ### Data
 
 After deploying, populate the ip2location_db1 table with the content from the [IP2Location LITE IP-Country Database](https://lite.ip2location.com/database/ip-country).
