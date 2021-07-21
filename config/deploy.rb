@@ -48,3 +48,17 @@ namespace :deploy do
 end
 
 after 'deploy:symlink:release', 'deploy:apache'
+
+# Compile assets on every deployment, even if JS and CSS have not changed
+# See: https://github.com/rails/webpacker/blob/master/docs/deployment.md
+before "deploy:assets:precompile", "deploy:yarn_install"
+namespace :deploy do
+  desc "Run rake yarn install"
+  task :yarn_install do
+    on roles(:web) do
+      within release_path do
+        execute("cd #{release_path} && yarn install --silent --no-progress --no-audit --no-optional")
+      end
+    end
+  end
+end
