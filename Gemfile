@@ -13,13 +13,13 @@ gem 'omniauth-shibboleth-passive', "~> 0.1"
 
 # gem 'mimemagic', github: 'mimemagicrb/mimemagic', ref: '01f92d86d15d85cfd0f20dabd025dcbd36a8a60f'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2'
+gem 'rails', '~> 6.0'
 # Use mysql2 as the database for Active Record
 gem 'mysql2', "~> 0.5"
 # Use sqlite also
 gem 'sqlite3', "~> 1.4"
 # Use Puma as the app server
-gem 'puma', '~> 3.12'
+gem 'puma', '~> 4.3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -48,7 +48,8 @@ gem 'twitter-typeahead-rails', git: 'https://github.com/pgate/twitter-typeahead-
 gem 'net-ldap', "~> 0.16"
 
 # Use bootstrap for styling
-gem 'twitter-bootstrap-rails', "~> 4.0"
+gem 'twitter-bootstrap-rails', git: 'https://github.com/seyhunak/twitter-bootstrap-rails.git'
+
 # Use special bootstrap select
 gem 'bootstrap-select-rails', "~> 1.13"
 #Use font awesome for icons
@@ -101,7 +102,7 @@ group :development, :test do
   gem 'rspec-rails', "~> 4.0"
   gem 'capybara', "~> 3.15"
   gem 'capybara-screenshot', "~> 1.0"
-  gem 'apparition', "~> 0.6"
+  gem 'apparition', github: 'twalpole/apparition'
   gem 'launchy', "~> 2.4"
   gem 'factory_bot_rails', "~> 6.2"
   gem 'database_cleaner', "~> 1.8"
@@ -156,3 +157,5 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'browser', "~> 4.2"
+
+gem "webpacker", "~> 5.4"

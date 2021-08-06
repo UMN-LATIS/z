@@ -2,17 +2,17 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `rails
+# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_180_524_122_211) do
+ActiveRecord::Schema.define(version: 2021_07_19_171642) do
 
-  create_table "clicks", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "clicks", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "country_code"
     t.integer "url_id"
     t.datetime "created_at", null: false
@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 20_180_524_122_211) do
     t.index ["url_id"], name: "index_clicks_on_url_id"
   end
 
-  create_table "frequently_asked_questions", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "frequently_asked_questions", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "header"
     t.text "question"
     t.text "answer"
@@ -28,14 +28,14 @@ ActiveRecord::Schema.define(version: 20_180_524_122_211) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "groups", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "groups", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "groups_users", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "groups_users", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "group_id"
     t.integer "user_id"
     t.boolean "notify_user_changes", default: false, null: false
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 20_180_524_122_211) do
     t.index ["user_id"], name: "index_groups_users_on_user_id"
   end
 
-  create_table "ip2location_db1", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "ip2location_db1", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "ip_from", unsigned: true
     t.integer "ip_to", unsigned: true
     t.string "country_code", limit: 2
@@ -53,13 +53,13 @@ ActiveRecord::Schema.define(version: 20_180_524_122_211) do
     t.index ["ip_to"], name: "index_ip2location_db1_on_ip_to"
   end
 
-  create_table "perid_umndid", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "perid_umndid", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "perid"
     t.string "umndid"
     t.string "uid"
   end
 
-  create_table "starburst_announcement_views", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "starburst_announcement_views", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "user_id"
     t.integer "announcement_id"
     t.datetime "created_at"
@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 20_180_524_122_211) do
     t.index ["user_id", "announcement_id"], name: "starburst_announcement_view_index", unique: true
   end
 
-  create_table "starburst_announcements", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "starburst_announcements", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "title"
     t.text "body"
     t.datetime "start_delivering_at"
@@ -78,14 +78,14 @@ ActiveRecord::Schema.define(version: 20_180_524_122_211) do
     t.text "category"
   end
 
-  create_table "transfer_request_urls", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "transfer_request_urls", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "transfer_request_id"
     t.integer "url_id"
     t.index ["transfer_request_id"], name: "index_transfer_request_urls_on_transfer_request_id"
     t.index ["url_id"], name: "index_transfer_request_urls_on_url_id"
   end
 
-  create_table "transfer_requests", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "transfer_requests", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "to_group_id"
     t.integer "from_group_id"
     t.integer "from_group_requestor_id"
@@ -97,7 +97,7 @@ ActiveRecord::Schema.define(version: 20_180_524_122_211) do
     t.index ["to_group_id"], name: "index_transfer_requests_on_to_group_id"
   end
 
-  create_table "urls", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "urls", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "url"
     t.string "keyword"
     t.integer "total_clicks", default: 0
@@ -109,7 +109,7 @@ ActiveRecord::Schema.define(version: 20_180_524_122_211) do
     t.index ["keyword"], name: "index_urls_on_keyword", unique: true
   end
 
-  create_table "users", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "users", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "uid"
     t.integer "context_group_id"
     t.integer "default_group_id"
@@ -127,7 +127,7 @@ ActiveRecord::Schema.define(version: 20_180_524_122_211) do
     t.integer "item_id", null: false
     t.string "event", null: false
     t.string "whodunnit"
-    t.text "object", limit: 4294967295
+    t.text "object", size: :long
     t.datetime "created_at"
     t.string "whodunnit_email"
     t.string "whodunnit_name"
