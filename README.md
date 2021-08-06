@@ -62,9 +62,11 @@ and connect to your localhost on port 3000.
 - [Capistrano](https://github.com/capistrano/capistrano), for deployment
 - Apache/[Passenger](https://github.com/phusion/passenger), as our server stack
 
-```console
-bundle exec cap <environmentname> deploy
-```
+  ```console
+  bundle exec cap <environmentname> deploy
+  ```
+
+If a deployment requires a Ruby version bump or other platform updates, see: [LATIS ansible playbook](https://github.umn.edu/latis-sw/ansible_playbooks)
 
 ### Data
 
