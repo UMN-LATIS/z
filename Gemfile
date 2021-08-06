@@ -102,7 +102,7 @@ group :development, :test do
   gem 'rspec-rails', "~> 4.0"
   gem 'capybara', "~> 3.15"
   gem 'capybara-screenshot', "~> 1.0"
-  gem 'apparition', "~> 0.6"
+  gem 'apparition', github: 'twalpole/apparition'
   gem 'launchy', "~> 2.4"
   gem 'factory_bot_rails', "~> 6.2"
   gem 'database_cleaner', "~> 1.8"
