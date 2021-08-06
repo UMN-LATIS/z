@@ -66,6 +66,24 @@ describe 'groups members index page' do
           wait_for_ajax
         end.to change(group.users, :count).by(-1)
       end
+
+      it 'prevents blank submissions' do
+        # by default the button should be disabled
+        # until a value is entered
+        expect(page).to have_button('Add member', disabled: true)
+
+        # enter a value
+        fill_in 'Add a new member to this collection', with: 'johnsojr'
+        # the button should now be enabled
+        expect(page).to have_button('Add member', disabled: false)
+
+        # remove the text
+        fill_in 'Add a new member to this collection', with: ''
+        # the button should now be disabled again
+        expect(page).to have_button('Add member', disabled: true)
+      end
+
+      it 'displays error if a bad username is submitted'
     end
   end
 end
