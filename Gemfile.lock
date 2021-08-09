@@ -35,6 +35,7 @@ GIT
 GIT
   remote: https://github.com/twalpole/apparition.git
   revision: ca86be4d54af835d531dbcd2b86e7b2c77f85f34
+  ref: ca86be4
   specs:
     apparition (0.6.0)
       capybara (~> 3.13, < 4)
