@@ -51,6 +51,7 @@ describe 'groups members index page' do
       it 'adding should increase the user count of the group by 1' do
         expect do
           js_make_all_inputs_visible
+          fill_in('Add a new member', with: 'test-user')
           find("#uid", visible: false).set '5scyi59j8'
           click_button 'Add'
           click_button 'Confirm'
@@ -82,8 +83,6 @@ describe 'groups members index page' do
         # the button should now be disabled again
         expect(page).to have_button('Add member', disabled: true)
       end
-
-      it 'displays error if a bad username is submitted'
     end
   end
 end
