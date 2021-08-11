@@ -2,7 +2,7 @@
 
 [![tests](https://github.com/UMN-LATIS/z/actions/workflows/ci.yml/badge.svg)](https://github.com/UMN-LATIS/z/actions/workflows/ci.yml)
 
-Z is a custom URL shortener developed at LATIS@UMN. Instead of using a third party service, we use Z to create and manage University branded short links, for example: http://z.umn.edu/mycoolsite. The goal of this project is to provide a modern, open source solution to University branded short links.
+Z is a custom URL shortener developed at LATIS@UMN. Instead of using a third party service, we use Z to create and manage University branded short links, for example: <http://z.umn.edu/mycoolsite>. The goal of this project is to provide a modern, open source solution to University branded short links.
 
 ## Features
 
@@ -20,14 +20,18 @@ Z is a custom URL shortener developed at LATIS@UMN. Instead of using a third par
 
 ## Installation ([Docker](https://www.docker.com))
 
-The included `docker-composer.yml` and `Dockerfile` files should allow this application to be run in [Docker](https://www.docker.com). To get started, run
+The included `docker-composer.yml` and `Dockerfile` files should allow this application to be run in [Docker](https://www.docker.com). To get started, run:
 
+   ```console
      docker-compose run web rake db:create
      docker-compose run web rails db:migrate RAILS_ENV=development
+     ```
 
 To launch the application, run
 
-     docker-compose up
+   ```console
+   docker-compose up
+   ```
 
 and connect to your localhost on port 3000.
 
@@ -35,14 +39,18 @@ and connect to your localhost on port 3000.
 
 Make sure that config/database.yml is correctly configured with database credentials, and config/lda.yml is correctly configured with LDAP credentials, and an instance of MySQL is running.
 
+   ```console
     rvm install 2.3.1
     gem install bundler
     bundle install
     rails db:reseed
+    ```
 
 To launch the application, run
 
+   ```console
      rails s
+   ```
 
 and connect to your localhost on port 3000.
 
@@ -61,12 +69,15 @@ and connect to your localhost on port 3000.
 
 - [Capistrano](https://github.com/capistrano/capistrano), for deployment
 - Apache/[Passenger](https://github.com/phusion/passenger), as our server stack
+- [LATIS Ansible Playbook](https://github.umn.edu/latis-sw/ansible_playbooks), for larger platform changes like a ruby version bump.
 
   ```console
   bundle exec cap <environmentname> deploy
   ```
+  
+#### Production Deployment
 
-If a deployment requires a Ruby version bump or other platform updates, see: [LATIS ansible playbook](https://github.umn.edu/latis-sw/ansible_playbooks)
+Please see the [Deploying to Production](./deploy_to_production.md) page.
 
 ### Data
 
@@ -97,8 +108,8 @@ Z was designed to be forkable and customizable. Most of the language has been ex
 
 ## Contribute
 
-- Issue Tracker: https://github.umn.edu/latis-sw/z/issues
-- Source Code: https://github.umn.edu/latis-sw/z
+- Issue Tracker: <https://github.umn.edu/latis-sw/z/issues>
+- Source Code: <https://github.umn.edu/latis-sw/z>
 
 ## Support
 
