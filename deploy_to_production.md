@@ -2,7 +2,7 @@
 
 Deploying `z` to production involves a few more steps since there are multiple servers and a load balancer involved. Here are some notes.
 
-## THE PLAYERS
+## 👥 THE PLAYERS
 
 - <https://z.umn.edu> points to a load balancer. The service provides an SSL cert and balances traffic between:
 - `cla-z-prd.oit.umn.edu`: Production server 1.
@@ -11,21 +11,21 @@ Deploying `z` to production involves a few more steps since there are multiple s
 
 Just like `dev` and `staging` deployments, we'll use Ansible for updating the platform and Capistrano for deploying the app.
 
-## THE PROCESS
+## ⚡️ THE PROCESS
 
-### T-minus 2 weeks
+### 2 WEEKS BEFORE
 
-0. When Z is ready for production deployment, create a release branch following gitflow style. Deploy to staging.
+1. When Z is ready for production deployment, create a release branch following gitflow style. Deploy to staging.
 
-1. Because Z is critical UMN infrastructure, user-impacting deployments should receive approval from the [Enterprise Change Approval Board (CAB)](https://it.umn.edu/resources-it-staff-partners/change-management/change-approval-board).
+2. Because Z is critical UMN infrastructure, user-impacting deployments should receive approval from the [Enterprise Change Approval Board (CAB)](https://it.umn.edu/resources-it-staff-partners/change-management/change-approval-board).
    1. Ping LATIS' CAB representative to let them know a Z deployment will be upcoming and you're submitting a CAB request.
    2. Schedule a time for deployment. Invite a [LATIS system engineer](https://neighborhood.cla.umn.edu/latis/people/latis-staff-list) to help with load balancing hokey pokey.
    3. Complete the CAB request.
    4. Proceed if approval from CAB, or defer change if not approved.
 
-### Deploy Day
+### DEPLOY DAY
 
-#### Prep
+#### PREP
 
    1. Connect to VPN
    2. Start tailing log files on production servers with `tail -f /swadm/web/z/current/log/*log`
@@ -33,25 +33,26 @@ Just like `dev` and `staging` deployments, we'll use Ansible for updating the pl
    4. Open z.umn.edu repo locally
    5. Open `/etc/hosts` locally. Add entries for `cla-z-prd.oit.umn.edu` and `cla-z-prd-2.oit.umn.edu`. {: #config-etc-hosts }
 
-     ```
-     # /etc/hosts
+      ```
+      # /etc/hosts
 
-     # Z DEPLOYMENT
-     # Uncomment to force z.umn.edu to resolve to a particular
-     # production server. Used when testing that a production 
-     # deploy is successful.
+      # Z DEPLOYMENT
+      # Uncomment to force z.umn.edu to resolve to a particular
+      # production server. Used when testing that a production 
+      # deploy is successful.
 
-     # cla-z-prd
-     # 128.101.122.117 z.umn.edu
-     
-     # cla-z-prd-2
-     # 128.101.122.224 z.umn.edu
-     ```
+      # cla-z-prd
+      # 128.101.122.117 z.umn.edu
 
-     **Wait. Why do we need to do this? Isn't testing `cla-z-prd` directly good enough?**
-     If you type `cla-z-prd.oit.umn.edu` into your browser and try to sign in, it'll redirect you to `z.umn.edu`. This makes sure any redirects to `z.umn.edu` also resolve to `cla-z-prd.oit.umn.edu`.
+      # cla-z-prd-2
+      # 128.101.122.224 z.umn.edu
+      ```
 
-### Deployment to `cla-z-prd.oit.umn.edu`
+ > **🙋‍♀️ Wait?! Why do we need to do this?**
+ >
+ > If you type `cla-z-prd.oit.umn.edu` into your browser and try to sign in, it'll redirect you to `z.umn.edu`. Configuring `/etc/hosts` will make sure any redirects to `z.umn.edu` also resolve to `cla-z-prd.oit.umn.edu`.
+
+### DEPLOYING TO EACH PRODUCTION SERVER (`cla-z-prd.oit.umn.edu`)
 
 Complete this for each server you're deploying to. In the example below, we'll use `cla-z-prd.oit.umn.edu` as our first target.
 
@@ -68,7 +69,7 @@ Complete this for each server you're deploying to. In the example below, we'll u
 
   Verify that `z.umn.edu` resolves locally to the correct IP with `ping z.umn.edu`.
 
-#### Ansible
+#### USE ANSIBLE TO CONVERGE HOST CHANGES
 
 Ansible is not needed for every Z deployment, but will be required when doing things like bumping a ruby version.
 
@@ -99,7 +100,7 @@ If Ansible-ing, open the [ansible playbook](https://github.umn.edu/latis-sw/ansi
    ansible-playbook -i inventory.yml z.yml
    ```
 
-#### Capistrano
+#### CAPISTRANO
 
 Use Capistrano to deploy Rails:
 
@@ -126,16 +127,16 @@ Use Capistrano to deploy Rails:
 
 3. Verify:
 
-   - [] Go to: <http://z.umn.edu>. If we configured our `/etc/hosts` file correclty, this should resolve to our recently deployed server: `cla-z-prod.oit.umn.edu`.
-   - [ ] Home Page renders.
-   - [ ] Login works.
-   - [ ] Previously created Z-links exist.
-   - [ ] Test a previously created zlink: <https://z.umn.edu/latis>
-   - [ ] Create a zlink.
-   - [ ] Click the new zlink and verify it redirects.
-   - [ ] Check logs for errors.
+   - [x] Go to: <http://z.umn.edu>. If we configured our `/etc/hosts` file correctly, this should resolve to our recently deployed server: `cla-z-prod.oit.umn.edu`.
+   - [x] Home Page renders.
+   - [x] Login works.
+   - [x] Previously created Z-links exist.
+   - [x] Test a previously created zlink: <https://z.umn.edu/latis>
+   - [x] Create a zlink.
+   - [x] Click the new zlink and verify it redirects.
+   - [x] Check logs for errors.
 
-#### Next Steps
+#### NEXT STEPS
 
 1. Add `cla-z-prd.oit.umn.edu` back to load balanced group.
 2. Monitor traffic for unexpected errors once it's receiving traffic again.
@@ -145,61 +146,18 @@ Use Capistrano to deploy Rails:
 
 After successful deployment:
 
-- [ ] Log in to Team Dynamix, and mark the CAB ticket as completed.
-- [ ] Merge the release branch into main and develop using `
+- [x] Log in to Team Dynamix, and mark the CAB ticket as completed.
+- [x] Merge the release branch into main and develop using `git flow release finish <version>`
+- [x] Push merged branches and tags to git:
 
-###### Ansible
+   ```
+   git checkout develop
+   git push
 
-Deploying z prod 2
-Target cla-z-prd-2 with ansible hosts. z.yml
+   git checkout main
+   git push
 
-Running ansible-playbook -i inventory.yml
+   git push --tags
+   ```
 
-Running into Unable to find `ssl/cla-z-prd-2.crt`
-
-`cla-z-prd`
-Missing files for cla-z-prd-2. Colin added to ansible.
-
-SSL connection to z.umn.edu terminates at the load balancer, so the SSL cert doesn't really matter.
-
-Running ansible
-     - SSL certi shows up in yellow, but that's normal
-     - Install Ruby takes a long time.
-
-Update `/etc/hosts` so that z.umn.edu points directly to prd-2
-128.101.122.244 z.umn.edu
-
-We get a little traffic to prod-2 while deploying. Colin thinks `robots.txt` could handle that.
-
-Ran into a error in LastPass.
-
-##### Cap
-
-Colin edits the `config/deploy/production.rb` file.
-
-- `lograge_production.log`
-
-Repeat with `prd1`
-
-# Deploying to prd
-
-Repeat. Update hosts file.
-
-Ran into issues with deploying
-
-Manually changed:
-
-- In Z app production.rb
-- z.yml file
-
-Local:
-
-- /etc/hosts
-
-## ACTION ITEMS
-
-- Add test for datatables filters
-- Change production.rb
-- Investigate why traffic we're getting traffic.
-- Close out release branch
-- Get on Datatables release branch
+- [x] Check github for [latest release](https://github.com/UMN-LATIS/z/releases)
