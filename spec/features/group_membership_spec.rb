@@ -3,11 +3,11 @@ require 'rails_helper'
 
 describe 'groups members index page' do
   before do
-    @user = FactoryGirl.create(:user, uid: 'wozniak')
+    @user = FactoryBot.create(:user, uid: 'wozniak')
   end
 
   describe 'visiting the group membership page' do
-    let(:group) { FactoryGirl.create(:group) }
+    let(:group) { FactoryBot.create(:group) }
     let(:user) { User.where(:uid => @user.uid).first }
     before do
       group.users << @user
@@ -33,16 +33,16 @@ describe 'groups members index page' do
 
   describe 'creating and deleting a group member', js: true do
     describe 'to an existing group' do
-      let(:group) { FactoryGirl.create(:group) }
+      let(:group) { FactoryBot.create(:group) }
       before do
         group.users << @user
         group.save
         sign_in(@user)
         visit group_members_path(group)
-        #       p page.body
       end
       it 'adding should increase the user count of the group by 1' do
         expect do
+          js_make_all_inputs_visible
           find("#uid", visible: false).set '5scyi59j8'
           click_button 'Add'
           click_button 'Confirm'

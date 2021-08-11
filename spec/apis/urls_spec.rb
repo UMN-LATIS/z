@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe '[API: URLs]', type: :api do
   describe 'adding urls' do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
     let(:secret_key) { user.secret_key }
     let(:url1_url) { 'example.com' }
     let(:url2_url) { 'example.com/example' }
@@ -28,7 +28,7 @@ describe '[API: URLs]', type: :api do
       expect(results.first['result']['status']).to eq('success')
 
       # Multiple URLs, one with a keyword, one with a collection name
-      collection = FactoryGirl.create(:group)
+      collection = FactoryBot.create(:group)
       collection.users << user
       payload = {
         urls: [
@@ -49,7 +49,7 @@ describe '[API: URLs]', type: :api do
       end
     end
 
-    let(:existing_url) { FactoryGirl.create(:url) }
+    let(:existing_url) { FactoryBot.create(:url) }
     it 'should not let you add URLs' do
       # Taken keyword
       payload = {

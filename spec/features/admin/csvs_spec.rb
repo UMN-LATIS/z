@@ -10,20 +10,20 @@ describe 'admins getting csv of clicks for url(s) clicked yesterday and two days
   let(:created_at2) { Time.now - 1.day }
 
   before do
-    @admin = FactoryGirl.create(:admin)
-    @user  = FactoryGirl.create(:user)
+    @admin = FactoryBot.create(:admin)
+    @user  = FactoryBot.create(:user)
     sign_in(@admin)
 
     # tests should use user urls not admins to tst that the urls are viewable by admin
     # though not necessarily owned by admin
-    @url = FactoryGirl.create(
+    @url = FactoryBot.create(
         :url,
         group: @user.context_group,
         keyword: keyword,
         url: url,
         created_at: created_at
     )
-    @url2 = FactoryGirl.create(
+    @url2 = FactoryBot.create(
         :url,
         group: @user.context_group,
         keyword: keyword2,

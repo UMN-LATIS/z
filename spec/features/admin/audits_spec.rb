@@ -2,8 +2,8 @@ require 'rails_helper'
 
 describe 'as a non-admin user' do
   before do
-    @user = FactoryGirl.create(:user)
-    @audit = FactoryGirl.create(:audit, whodunnit: @user.id)
+    @user = FactoryBot.create(:user)
+    @audit = FactoryBot.create(:audit, whodunnit: @user.id)
     sign_in(@user)
     visit admin_audits_path
   end
@@ -15,7 +15,7 @@ end
 
 describe 'as a valid admin user' do
   before do
-    @admin = FactoryGirl.create(:admin)
+    @admin = FactoryBot.create(:admin)
     sign_in(@admin)
     visit admin_audits_path
   end

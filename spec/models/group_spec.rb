@@ -12,7 +12,7 @@ require 'rails_helper'
 
 RSpec.describe Group, type: :model do
   before do
-    @group = FactoryGirl.build(:group)
+    @group = FactoryBot.build(:group)
   end
 
   subject { @group }
@@ -42,8 +42,8 @@ RSpec.describe Group, type: :model do
 
   describe 'calling add_user' do
     before do
-      @user = FactoryGirl.create(:user)
-      @group = FactoryGirl.create(:group)
+      @user = FactoryBot.create(:user)
+      @group = FactoryBot.create(:group)
     end
     describe 'should add a user' do
       before {@group.add_user @user}
@@ -55,9 +55,9 @@ RSpec.describe Group, type: :model do
 
   describe 'calling user?' do
     before do
-      @user = FactoryGirl.create(:user)
-      @user_not = FactoryGirl.create(:user)
-      @group = FactoryGirl.create(:group)
+      @user = FactoryBot.create(:user)
+      @user_not = FactoryBot.create(:user)
+      @group = FactoryBot.create(:group)
       @group.add_user @user
     end
     describe 'should have a user' do
@@ -74,8 +74,8 @@ RSpec.describe Group, type: :model do
 
   describe 'calling remove_user' do
     before do
-      @user = FactoryGirl.create(:user)
-      @group = FactoryGirl.create(:group)
+      @user = FactoryBot.create(:user)
+      @group = FactoryBot.create(:group)
       @group.add_user @user
     end
     describe 'should have and remove user:' do
@@ -88,7 +88,7 @@ RSpec.describe Group, type: :model do
 
   describe 'calling default?' do
     before do
-      @default_group = FactoryGirl.create(:user).default_group
+      @default_group = FactoryBot.create(:user).default_group
     end
 
     it 'should be false for non-default groups' do

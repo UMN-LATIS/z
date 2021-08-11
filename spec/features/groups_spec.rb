@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'groups index page', js: true do
   before do
-    @user = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
     sign_in(@user)
     wait_for_ajax
   end
@@ -65,7 +65,7 @@ describe 'groups index page', js: true do
   describe 'with an existing group', js: true do
     let(:new_name) { 'My Second Group' }
     let(:new_description) { 'second group of urls' }
-    let(:group) { FactoryGirl.create(:group) }
+    let(:group) { FactoryBot.create(:group) }
     before do
       group.users << @user
       group.save
@@ -121,7 +121,7 @@ describe 'groups index page', js: true do
     describe 'deleting an existing group', js: true do
       describe 'clicking delete' do
         describe 'on a group with urls' do
-          before { group.urls << FactoryGirl.create(:url) }
+          before { group.urls << FactoryBot.create(:url) }
           it 'should not delete the group' do
             expect do
               find('.js-group-actions-dropdown').click
@@ -147,7 +147,7 @@ describe 'groups index page', js: true do
 
   describe 'when attempting to edit someone elses group' do
     before do
-      unauthed_group = FactoryGirl.create(:group)
+      unauthed_group = FactoryBot.create(:group)
       visit edit_group_path(unauthed_group)
     end
     describe 'page content' do

@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   include Pundit
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
 
   helper Starburst::AnnouncementsHelper
 
@@ -38,6 +39,10 @@ class ApplicationController < ActionController::Base
     @admin_view = true
   end
 
+  def render_not_found
+    render template: 'errors/not_found', layout: 'layouts/application', status: 404, formats: [ :html ]
+  end
+
   private
 
   def user_not_authorized
@@ -54,4 +59,5 @@ class ApplicationController < ActionController::Base
     response.headers['Pragma'] = 'no-cache'
     response.headers['Expires'] = 'Fri, 01 Jan 1990 00:00:00 GMT'
   end
+
 end

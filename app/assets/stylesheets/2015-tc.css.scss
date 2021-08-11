@@ -46,7 +46,7 @@ body { margin: 0; }
 
 .mobile input[type="text"] { -webkit-appearance: none; -moz-border-radius: 0; border-radius: 0; }
 
-#umnhf-h-st { position: absolute; right: 30px; width: 175px; height: 22px; padding-left: 3px; cursor: text; color: #8a8a8a; border: 0; background-color: #fff; font-size: 0.77778rem; line-height: 18px; -webkit-appearance: none; -moz-border-radius: 0; border-radius: 0; }
+#umnhf-h-st { position: absolute; right: 30px; width: 175px; height: 22px; padding-left: 3px; cursor: text; color: #333; border: 0; background-color: #fff; font-size: 0.77778rem; line-height: 18px; -webkit-appearance: none; -moz-border-radius: 0; border-radius: 0; }
 
 #umnhf-h-sb { position: absolute; top: 0; right: 0; overflow: hidden; width: 22px; height: 22px; cursor: pointer; white-space: nowrap; color: #7a0019; border: 0; font: bold 0.925em/1.35em arial,helvetica,clean,sans-serif; background: transparent asset-url("sprites/lock-search-wht.png") 0 -12px no-repeat; }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 192dpi) { #umnhf-h-sb { background: transparent asset-url("sprites/lock-search-wht.png") 0 -12px no-repeat; background-size: 22px 34px; } }

@@ -6,11 +6,11 @@ describe GroupPolicy do
   subject { described_class }
 
   before do
-    @group = FactoryGirl.create(:group)
-    @good_user = FactoryGirl.create(:user)
+    @group = FactoryBot.create(:group)
+    @good_user = FactoryBot.create(:user)
     @group.add_user(@good_user, false)
-    @bad_user = FactoryGirl.create(:user)
-    @admin_user = FactoryGirl.create(:user, admin: true, uid: 'wozniak')
+    @bad_user = FactoryBot.create(:user)
+    @admin_user = FactoryBot.create(:user, admin: true, uid: 'wozniak')
   end
 
   permissions :update?, :destroy?, :show?, :index? do

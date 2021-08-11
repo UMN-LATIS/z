@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe TransferRequest, type: :model do
   before do
-    @transfer_request = FactoryGirl.build(:transfer_request)
+    @transfer_request = FactoryBot.build(:transfer_request)
   end
 
   subject { @transfer_request }
@@ -24,8 +24,8 @@ RSpec.describe TransferRequest, type: :model do
 
   describe 'for admin in the from group of the request' do
       before do
-        @admin_user = FactoryGirl.create(:admin)
-        @transfer_url = FactoryGirl.create(:url)
+        @admin_user = FactoryBot.create(:admin)
+        @transfer_url = FactoryBot.create(:url)
         @transfer_url.group_id = @admin_user.context_group_id
         @transfer_request.urls << @transfer_url
         @transfer_request.save
@@ -37,9 +37,9 @@ RSpec.describe TransferRequest, type: :model do
 
   describe 'for an admin not in either of the groups of a url' do
     before do
-      @user1 = FactoryGirl.create(:user)
-      @user2 = FactoryGirl.create(:user)
-      @admin_user = FactoryGirl.create(:admin)
+      @user1 = FactoryBot.create(:user)
+      @user2 = FactoryBot.create(:user)
+      @admin_user = FactoryBot.create(:admin)
 
       @transfer_request.from_group_id =
           @user1.context_group_id
@@ -78,7 +78,7 @@ RSpec.describe TransferRequest, type: :model do
       end
       describe "doesn't own urls" do
         describe 'and is not admin' do
-          before { @transfer_request.urls = [FactoryGirl.create(:url)] }
+          before { @transfer_request.urls = [FactoryBot.create(:url)] }
 
           it 'should not be valid' do
             expect(@transfer_request).to_not be_valid
@@ -87,7 +87,7 @@ RSpec.describe TransferRequest, type: :model do
         describe 'and is an admin' do
           before do
             @transfer_request.from_group_id =
-                FactoryGirl.create(:admin).context_group_id
+                FactoryBot.create(:admin).context_group_id
           end
 
           it 'should be valid' do

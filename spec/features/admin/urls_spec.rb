@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'as a non-admin user' do
   before do
-    @user = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
     sign_in(@user)
     visit admin_urls_path
   end
@@ -15,7 +15,7 @@ end
 
 describe 'as a valid admin user' do
   before do
-    @admin = FactoryGirl.create(:admin)
+    @admin = FactoryBot.create(:admin)
     sign_in(@admin)
   end
 
@@ -31,7 +31,7 @@ describe 'as a valid admin user' do
 
     describe 'with an existing URL', js: true do
       before do
-        @url = FactoryGirl.create(:url)
+        @url = FactoryBot.create(:url)
         visit admin_urls_path
       end
 
@@ -51,6 +51,7 @@ describe 'as a valid admin user' do
 
           describe 'with new valid content' do
             it 'should update the url in the db' do
+              expect(page).to have_css('#url_url')
               find('#url_url').set new_url
               find('.js-url-submit').click
               wait_for_ajax
@@ -64,24 +65,15 @@ describe 'as a valid admin user' do
             end
           end
           describe 'with invalid content' do
-            describe '[keyword]' do
-              describe 'already taken' do
-                before do
-                  @other_url = FactoryGirl.create(:url)
-                  find('#url_keyword').set @other_url.keyword
-                end
-                it 'should not save upon clicking Create' do
-                  expect do
-                    find('.js-url-submit').click
-                    wait_for_ajax
-                  end.to change(Url, :count).by(0)
-                end
-                it 'should display an error' do
-                  find('.js-url-submit').click
-                  wait_for_ajax
-                  expect(page).to have_content('taken')
-                end
-              end
+            it 'displays an error and does not save upon clicking Create if keyword is already taken' do
+              @other_url = FactoryBot.create(:url)
+              expect(page).to have_selector('#url_keyword');
+              find('#url_keyword').set @other_url.keyword
+
+              expect do
+                find('.js-url-submit').click
+                expect(page).to have_content('taken')
+              end.to change(Url, :count).by(0)
             end
           end
         end

@@ -16,7 +16,7 @@ require 'rails_helper'
 
 RSpec.describe Url, type: :model do
   before do
-    @url = FactoryGirl.build(:url)
+    @url = FactoryBot.build(:url)
   end
 
   subject { @url }
@@ -41,7 +41,7 @@ RSpec.describe Url, type: :model do
     describe '[keyword]' do
       describe 'already exists' do
         before do
-          other_url = FactoryGirl.create(:url)
+          other_url = FactoryBot.create(:url)
           @url.keyword = other_url.keyword
         end
         it 'should not be valid' do

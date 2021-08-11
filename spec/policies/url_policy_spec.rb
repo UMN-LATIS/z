@@ -6,10 +6,10 @@ describe UrlPolicy do
   subject { described_class }
 
   before do
-    @good_user = FactoryGirl.create(:user)
-    @bad_user = FactoryGirl.create(:user)
-    @admin_user = FactoryGirl.create(:user, admin: true, uid: 'wozniak')
-    @url = FactoryGirl.create(
+    @good_user = FactoryBot.create(:user)
+    @bad_user = FactoryBot.create(:user)
+    @admin_user = FactoryBot.create(:user, admin: true, uid: 'wozniak')
+    @url = FactoryBot.create(
         :url,
         group: @good_user.context_group,
         keyword: 'keyword',
