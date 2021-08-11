@@ -28,7 +28,7 @@ Just like `dev` and `staging` deployments, we'll use Ansible for updating the pl
 #### PREP
 
    1. Connect to VPN
-   2. Start tailing log files on production servers with `tail -f /swadm/web/z/current/log/*log`
+   2. Start tailing log files on production servers with `tail -f /swadm/web/z/current/log/lograge_production.log`
    3. Open Ansible Playbook locally
    4. Open z.umn.edu repo locally
    5. Open `/etc/hosts` locally. Add entries for `cla-z-prd.oit.umn.edu` and `cla-z-prd-2.oit.umn.edu`. {: #config-etc-hosts }
