@@ -20,9 +20,9 @@
 role :app, %w(swadm@cla-z-prd.oit.umn.edu)
 role :web, %w(swadm@cla-z-prd.oit.umn.edu)
 role :db,  %w(swadm@cla-z-prd.oit.umn.edu)
-role :app, %w(swadm@cla-z-prd-2.oit.umn.edu)
-role :web, %w(swadm@cla-z-prd-2.oit.umn.edu)
-role :db,  %w(swadm@cla-z-prd-2.oit.umn.edu)
+# role :app, %w(swadm@cla-z-prd-2.oit.umn.edu)
+# role :web, %w(swadm@cla-z-prd-2.oit.umn.edu)
+# role :db,  %w(swadm@cla-z-prd-2.oit.umn.edu)
 
 
 
