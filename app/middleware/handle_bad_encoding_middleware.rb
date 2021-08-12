@@ -1,4 +1,6 @@
-# Handles bad encoding errors like GET `/%c0`
+# frozen_string_literal: true
+
+# Handling malformed quesy strings like /?%=
 class HandleBadEncodingMiddleware
   def initialize(app)
     @app = app
@@ -10,7 +12,7 @@ class HandleBadEncodingMiddleware
     rescue Rack::Utils::InvalidParameterError
       env['QUERY_STRING'] = ''
     end
-    
+
     @app.call(env)
   end
 end

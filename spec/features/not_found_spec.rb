@@ -13,8 +13,10 @@ describe 'Not Found' do
     expect(page).to have_content('Not Found')
   end
 
-  it 'shows Not Found if query string has malformed parameter' do
-    visit '/?alsdkjflakjdf%$$$)$%'
+  it 'shows Not Found if query string is malformed', js: true do
+    # This is hard to test with RackTest, so using
+    # js: true to use a different test driver
+    visit '/someplace?alsdkjflakjdf%$$$)$%='
     expect(page).to have_content('Not Found')
   end
 end
