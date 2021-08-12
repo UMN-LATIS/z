@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   include Pundit
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
+  rescue_from ActionController::BadRequest, with: :render_not_found
 
   helper Starburst::AnnouncementsHelper
 
