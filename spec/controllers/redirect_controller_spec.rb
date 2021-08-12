@@ -25,6 +25,13 @@ describe RedirectController do
           expect(response.status).to eq(404)
         end
       end
+
+      # TODO: Should this be a controller test?
+      it 'responds with 400 if url has bad encoding' do
+        bad_encoding = '/%c0'
+        get :index, params: { keyword: bad_encoding }
+        expect(response.status).to eq(400)
+      end
     end
   end
 
