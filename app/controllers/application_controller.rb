@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
   end
 
   def render_not_found
-    render template: 'errors/not_found', layout: 'layouts/application', status: 404, formats: [ :html ]
+    render template: 'errors/not_found', layout: 'layouts/application', status: :not_found, formats: [:html]
   end
 
   private
@@ -59,5 +59,4 @@ class ApplicationController < ActionController::Base
     response.headers['Pragma'] = 'no-cache'
     response.headers['Expires'] = 'Fri, 01 Jan 1990 00:00:00 GMT'
   end
-
 end
