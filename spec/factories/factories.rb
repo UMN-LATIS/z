@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :user do
     sequence(:uid)
@@ -13,11 +15,11 @@ FactoryBot.define do
   factory :audit do
     item_type	{ 'url' }
     item_id	{ '1' }
-    event	{ 'create'} 
+    event	{ 'create' }
     whodunnit { FactoryBot.create(:user) }
     object	{ 'test_keyword' }
     whodunnit_email { 'abc.def,com' }
-    whodunnit_name {'Julia Child'}
+    whodunnit_name { 'Julia Child' }
   end
 
   factory :url do
@@ -26,9 +28,9 @@ FactoryBot.define do
     group { FactoryBot.create(:user).context_group }
   end
 
-  factory :announcement, :class => Admin::Announcement do
+  factory :announcement, class: 'Admin::Announcement' do
     title	{ 'Whoa Nelly!' }
-    body { 'The Court is in Session, here comes the judge!'}
+    body { 'The Court is in Session, here comes the judge!' }
     start_delivering_at	{ (DateTime.now - 30.days).strftime("%Y-%m-%d") }
     stop_delivering_at { (DateTime.now + 30.days).strftime("%Y-%m-%d") }
   end
@@ -52,4 +54,9 @@ FactoryBot.define do
     question { "Question" }
     answer { "Answer" }
   end
+end
+
+def create_url_for_user(user, factory_opts = nil)
+  url = FactoryBot.create(:url, factory_opts)
+  url.update(group: user.context_group)
 end

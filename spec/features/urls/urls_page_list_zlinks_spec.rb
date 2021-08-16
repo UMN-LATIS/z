@@ -66,7 +66,29 @@ describe 'urls index page: list existing urls', js: true do
     expect(page).not_to have_content url.keyword
   end
 
-  it 'filters on url keyword'
+  it 'filters on url keyword' do
+    create_url_for_user(user, { url: 'https://tc.umn.edu', keyword: 'twin-cities' })
+    create_url_for_user(user, { url: 'https://mrs.umn.edu', keyword: 'morris' })
 
-  it 'filters on long url'
+    # type part of the keyword into the searchbox
+    within '#urls-table_wrapper' do
+      # based on current factory, last letter of a keyword should be a number
+      # unique to the zlink
+      fill_in 'Search', with: 'twin'
+      expect(page).to have_content('twin-cities')
+      expect(page).to have_no_content('morris')
+    end
+  end
+
+  it 'filters on long url' do
+    # create urls associated with the User
+    create_url_for_user(user, { url: 'https://tc.umn.edu', keyword: 'twin-cities' })
+    create_url_for_user(user, { url: 'https://mrs.umn.edu', keyword: 'morris' })
+
+    within '#urls-table_wrapper' do
+      fill_in 'Search', with: 'tc'
+      expect(page).to have_content('twin-cities')
+      expect(page).to have_no_content('morris')
+    end
+  end
 end
