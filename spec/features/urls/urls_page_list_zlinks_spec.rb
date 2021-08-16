@@ -7,7 +7,9 @@ describe 'urls index page: list existing urls', js: true do
   let(:url) { FactoryBot.create(:url) }
 
   before do
+    # set this url to be owned by the user
     url.update(group: user.context_group)
+
     sign_in(user)
     visit urls_path
   end
