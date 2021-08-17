@@ -1,5 +1,4 @@
 require 'rails_helper'
-require "pp"
 
 def wait_for_urls_page_load
   expect(page).to have_content("Bulk Actions")
@@ -59,7 +58,7 @@ describe 'creating a transfer request', js: true do
             expect(page).to have_selector(".new_transfer_request input[value='#{@selected_url.keyword}']")
           end
 
-          it 'displays new group url' do
+          it 'displays new group url', retry: 3 do
             expect(page).to have_selector(".new_transfer_request input[value='#{@new_group_url.keyword}']")
           end
 
