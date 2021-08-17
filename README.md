@@ -1,6 +1,6 @@
 # Z
 
-[![tests](https://github.com/UMN-LATIS/z/actions/workflows/ci.yml/badge.svg)](https://github.com/UMN-LATIS/z/actions/workflows/ci.yml)
+[![tests](https://github.com/UMN-LATIS/z/actions/workflows/test.yml/badge.svg)](https://github.com/UMN-LATIS/z/actions/workflows/test.yml)
 
 Z is a custom URL shortener developed at LATIS@UMN. Instead of using a third party service, we use Z to create and manage University branded short links, for example: <http://z.umn.edu/mycoolsite>. The goal of this project is to provide a modern, open source solution to University branded short links.
 
