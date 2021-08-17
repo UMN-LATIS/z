@@ -1,3 +1,5 @@
+# rubocop:disable all
+
 class CreateFrequentlyAskedQuestions < ActiveRecord::Migration[5.0]
   def change
     create_table :frequently_asked_questions do |t|

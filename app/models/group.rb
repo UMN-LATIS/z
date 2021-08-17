@@ -12,8 +12,8 @@
 class Group < ApplicationRecord
   include VersionUser
   has_paper_trail
-  after_save :version_history
   before_destroy :version_history
+  after_save :version_history
 
   has_many :groups_users, dependent: :destroy
   has_many :users, through: :groups_users
@@ -30,9 +30,9 @@ class Group < ApplicationRecord
   end
 
   # all groups that arent the default group for a user
-  scope :not_default, -> do
+  scope :not_default, lambda {
     where('id not in ( select default_group_id from users )')
-  end
+  }
 
   def user?(user)
     users.exists?(user.id)
@@ -41,7 +41,7 @@ class Group < ApplicationRecord
   def add_user(user, send_group_change_notifications = false)
     users << user unless users.exists?(user.id)
     groups_users.find_by_user_id(user).update(
-        notify_user_changes: send_group_change_notifications
+      notify_user_changes: send_group_change_notifications
     )
   end
 
@@ -63,7 +63,7 @@ class Group < ApplicationRecord
     h = "<b> Current Name: #{name} </b><br/>"
     h.concat "<b>Current Description: #{description}</b><br/>"
     h.concat "<h3>History</h3><hr>"
-    self.versions.each do |v|
+    versions.each do |v|
       g = v.reify unless v.event.equal? "create"
       h.concat "<b>What Happened: </b> #{v.event} <br/>"
       h.concat "<b>Who Made It: </b>  #{self.class.version_user(v)}<br/>"
@@ -72,10 +72,9 @@ class Group < ApplicationRecord
       h.concat "<b>Date of Change: </b>  #{g ? g.updated_at : 'N/A'}<br/>"
       h.concat "<br/><br/>"
     end
-    self.versions.each do |v|
+    versions.each do |v|
       v.version_history = h
       v.save
     end
   end
-
 end

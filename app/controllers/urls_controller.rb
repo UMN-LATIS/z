@@ -1,13 +1,12 @@
 # controllers/url_controller.rb
 class UrlsController < ApplicationController
-  before_action :set_url, only: [:edit, :update, :destroy]
+  before_action :set_url, only: %i[edit update destroy]
   before_action :set_url_friendly, only: [:show]
   before_action :ensure_signed_in
 
   # GET /urls
   # GET /urls.json
   def index
-
     @group = Group.find(current_user.context_group_id)
 
     @urls =
@@ -71,7 +70,7 @@ class UrlsController < ApplicationController
   # GET /urls/new
   def new
     @url = Url.new
-    @url_identifier = Time.now.to_ms
+    @url_identifier = Time.zone.now.to_ms
     respond_to do |format|
       format.js { render layout: false }
     end
@@ -147,7 +146,7 @@ class UrlsController < ApplicationController
   end
 
   # Never trust parameters from the scary internet,
-  # only allow the white list through.
+  # only permit the allowlist through.
   def url_params
     params.require(:url).permit(:url, :keyword, :group_id, :modified_by)
   end

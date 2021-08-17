@@ -30,7 +30,7 @@ class Admin::TransferRequestsController < ApplicationController
     @transfer_request.urls = @urls
 
     respond_to do |format|
-      if @transfer_request.save 
+      if @transfer_request.save
         format.js do
           redirect_to admin_urls_path
         end

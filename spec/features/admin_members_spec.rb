@@ -13,10 +13,12 @@ describe 'admin members index page' do
 
   describe 'visiting the group membership page' do
     let(:user) { User.where(uid: :test_admin_uid).first }
-    it 'should display the admin member internet_id' do
-        expect(page).to have_content user.internet_id
-      end
-    it 'should display the admin member display name' do
+
+    it 'displays the admin member internet_id' do
+      expect(page).to have_content user.internet_id
+    end
+
+    it 'displays the admin member display name' do
       expect(page).to have_content user.display_name
     end
   end
@@ -30,13 +32,13 @@ describe 'admin members index page' do
       find('#uid', visible: false).set :new_admin_uid
       click_button 'Add'
       click_button 'Confirm'
-      
+
       visit admin_members_path(@user)
       wait_for_admin_page_to_load
-      
+
       # DB should be updated
       expect(User.where(uid: :new_admin_uid, admin: true)).to exist
-      
+
       # Admin table should have two entries now.
       # one for :test_admin_uid and :new_admin_uid
       within 'table' do
@@ -77,7 +79,7 @@ describe 'visiting the admin member list as a non-admin' do
     visit admin_members_path(bad_user)
   end
 
-  it 'should display the authorization error' do
+  it 'displays the authorization error' do
     expect(page).to have_content 'not authorized'
   end
 end

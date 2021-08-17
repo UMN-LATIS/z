@@ -6,7 +6,7 @@ def expect_urls_page_to_finish_loading
 end
 
 describe 'moving urls to a group', js: true do
-  before :each do
+  before do
     @user = FactoryBot.create(:user)
     sign_in(@user)
     @other_group = FactoryBot.create(:group)
@@ -14,7 +14,7 @@ describe 'moving urls to a group', js: true do
   end
 
   describe 'page with no urls' do
-    it 'should have a disabled bulk action button' do
+    it 'has a disabled bulk action button' do
       visit urls_path
       expect_urls_page_to_finish_loading
 

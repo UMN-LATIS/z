@@ -3,14 +3,18 @@ require 'rails_helper'
 describe '[API: URLs]', type: :api do
   describe 'adding urls' do
     let(:user) { FactoryBot.create(:user) }
+    let(:existing_url) { FactoryBot.create(:url) }
+    let(:random_key) { "#{user.secret_key}012345" }
     let(:secret_key) { user.secret_key }
     let(:url1_url) { 'example.com' }
     let(:url2_url) { 'example.com/example' }
     let(:url2_keyword) { 'ex' }
     let(:url3_url) { 'example.com/example' }
 
+    let(:random_key) { "#{user.secret_key}012345" }
+    let(:existing_url) { FactoryBot.create(:url) }
 
-    it 'should let you add urls' do
+    it 'lets you add urls' do
       # Basic, singular URL
       payload = {
         urls: [
@@ -23,7 +27,7 @@ describe '[API: URLs]', type: :api do
       header 'Authorization', "#{user.uid}:#{token}"
       post '/api/v1/urls'
 
-      expect(last_response.status).to eql(200)
+      expect(last_response.status).to be(200)
       results = JSON.parse(last_response.body)
       expect(results.first['result']['status']).to eq('success')
 
@@ -42,15 +46,14 @@ describe '[API: URLs]', type: :api do
       header 'Authorization', "#{user.uid}:#{token}"
       post '/api/v1/urls'
 
-      expect(last_response.status).to eql(200)
+      expect(last_response.status).to be(200)
       results = JSON.parse(last_response.body)
       results.each do |result|
         expect(result['result']['status']).to eq('success')
       end
     end
 
-    let(:existing_url) { FactoryBot.create(:url) }
-    it 'should not let you add URLs' do
+    it 'does not let you add URLs' do
       # Taken keyword
       payload = {
         urls: [
@@ -63,7 +66,7 @@ describe '[API: URLs]', type: :api do
       header 'Authorization', "#{user.uid}:#{token}"
       post '/api/v1/urls'
 
-      expect(last_response.status).to eql(200)
+      expect(last_response.status).to be(200)
       results = JSON.parse(last_response.body)
       expect(results.first['result']['status']).to eq('error')
 
@@ -79,13 +82,12 @@ describe '[API: URLs]', type: :api do
       header 'Authorization', "#{user.uid}:#{token}"
       post '/api/v1/urls'
 
-      expect(last_response.status).to eql(200)
+      expect(last_response.status).to be(200)
       results = JSON.parse(last_response.body)
       expect(results.first['result']['status']).to eq('error')
     end
 
-    let(:random_key) { "#{user.secret_key}012345" }
-    it 'should reject incorrect auth payloads' do
+    it 'rejects incorrect auth payloads' do
       # No username
       payload = {
         urls: [
@@ -98,7 +100,7 @@ describe '[API: URLs]', type: :api do
       header 'Authorization', token
       post '/api/v1/urls'
 
-      expect(last_response.status).to eql(401)
+      expect(last_response.status).to be(401)
 
       # Incorrect secret key
       payload = {
@@ -112,7 +114,7 @@ describe '[API: URLs]', type: :api do
       header 'Authorization', "#{user.uid}:#{token}"
       post '/api/v1/urls'
 
-      expect(last_response.status).to eql(401)
+      expect(last_response.status).to be(401)
     end
   end
 end

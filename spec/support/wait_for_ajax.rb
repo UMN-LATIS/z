@@ -7,7 +7,7 @@ module WaitForAjax
   end
 
   def finished_all_ajax_requests?
-    # only check jQuery.active if jQuery is defined 
+    # only check jQuery.active if jQuery is defined
     page.evaluate_script("typeof jQuery !== 'undefined' ? jQuery.active : 0").zero?
   end
 end

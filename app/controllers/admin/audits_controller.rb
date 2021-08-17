@@ -9,5 +9,4 @@ class Admin::AuditsController < ApplicationController
     @audits = Audit.first
     authorize @audits unless @audits.nil?
   end
-
 end

@@ -7,10 +7,10 @@ describe 'as a non-admin user' do
     sign_in(@user)
     visit admin_audits_path
   end
-  it 'should display an access violation' do
+
+  it 'displays an access violation' do
     expect(page).to have_content 'You are not authorized to perform this action.'
   end
-
 end
 
 describe 'as a valid admin user' do
@@ -20,28 +20,27 @@ describe 'as a valid admin user' do
     visit admin_audits_path
   end
 
-  it 'should display the audit title' do
+  it 'displays the audit title' do
     expect(page).to have_content 'Audit Log'
   end
 
-  it 'should display  Audited Item col header' do
+  it 'displays Audited Item col header' do
     expect(page).to have_content 'Item'
   end
 
-  it 'should display  Audited Action col header' do
+  it 'displays Audited Action col header' do
     expect(page).to have_content 'Last Action'
   end
 
-  it 'should display  Whodunnit col header' do
+  it 'displays Whodunnit col header' do
     expect(page).to have_content 'Whodunnit'
   end
 
-  it 'should display  When col header' do
+  it 'displays When col header' do
     expect(page).to have_content 'Change History'
   end
 
-  it 'should display  When col header' do
+  it 'displays When col header' do
     expect(page).to have_content 'As Of'
   end
-
 end
