@@ -27,6 +27,7 @@ describe 'with a group that has URLs', js: true do
         expect(page).to have_content(url.keyword)
       end
     end
+
     describe 'when the group does not have URLs' do
       before do
         click_link(other_group.name)

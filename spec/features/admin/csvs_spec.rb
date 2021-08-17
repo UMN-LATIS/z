@@ -68,6 +68,7 @@ describe 'admins getting csv of clicks for url(s) clicked yesterday and two days
       expect(@header_row[1]).to match('keyword')
     end
   end
+
   describe 'for 2 urls, two days' do
     before do
       # get yesterday's and two days ago csv

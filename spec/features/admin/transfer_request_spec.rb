@@ -19,6 +19,7 @@ describe 'admin urls index page' do
         end
       end
     end
+
     describe 'with urls' do
       before do
         @user = FactoryBot.create(:user)
@@ -51,6 +52,7 @@ describe 'admin urls index page' do
             expect(transfer.status).to eql('approved')
           end
         end
+
         describe 'and in the group of the url' do
           before do
             find("#url-#{@admins_url.id} > .select-checkbox").click
@@ -68,6 +70,7 @@ describe 'admin urls index page' do
           end
         end
       end
+
       describe 'with no urls selected' do
         describe 'the transfer button' do
           it 'should be disabled' do
@@ -139,6 +142,7 @@ describe 'admin urls index page' do
                 end
               end
             end
+
             describe 'with invalid information' do
               let(:new_uid) { '' }
               describe 'uid is blank' do

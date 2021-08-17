@@ -48,6 +48,7 @@ describe 'as a valid admin user' do
       expect(page).to have_content 'No Announcements. Click'
     end
   end
+
   describe 'with an announcement' do
     before do
       @announcement = FactoryBot.create(:announcement)

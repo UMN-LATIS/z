@@ -80,6 +80,7 @@ RSpec.describe Url, type: :model do
         end
       end
     end
+
     describe 'various urls' do
       it 'should be valid' do
         @url.url = 'http://fun.com'

@@ -67,6 +67,7 @@ RSpec.describe TransferRequest, type: :model do
         end
       end
     end
+
     describe '[from_group]' do
       describe "doesn't exist" do
         before { @transfer_request.from_group = nil }
@@ -75,6 +76,7 @@ RSpec.describe TransferRequest, type: :model do
           expect(@transfer_request).to_not be_valid
         end
       end
+
       describe "doesn't own urls" do
         describe 'and is not admin' do
           before { @transfer_request.urls = [FactoryBot.create(:url)] }
@@ -83,6 +85,7 @@ RSpec.describe TransferRequest, type: :model do
             expect(@transfer_request).to_not be_valid
           end
         end
+
         describe 'and is an admin' do
           before do
             @transfer_request.from_group_id =

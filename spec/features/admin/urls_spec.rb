@@ -63,6 +63,7 @@ describe 'as a valid admin user' do
               expect(@url.reload.keyword).to eq(new_keyword)
             end
           end
+
           describe 'with invalid content' do
             it 'displays an error and does not save upon clicking Create if keyword is already taken' do
               @other_url = FactoryBot.create(:url)

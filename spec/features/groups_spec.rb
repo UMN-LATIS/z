@@ -32,6 +32,7 @@ describe 'groups index page', js: true do
           end.to change(GroupsUser, :count).by(1)
         end
       end
+
       describe 'when the description is blank' do
         before { find('#group_description').set '' }
         it 'should save upon clicking Create' do
@@ -42,6 +43,7 @@ describe 'groups index page', js: true do
         end
       end
     end
+
     describe 'with invalid information' do
       describe '[name]' do
         describe 'name is blank' do
@@ -131,6 +133,7 @@ describe 'groups index page', js: true do
             end.to change(Group, :count).by(0)
           end
         end
+
         describe 'on a group without urls' do
           it 'should delete the group' do
             expect do

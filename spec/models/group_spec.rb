@@ -65,6 +65,7 @@ RSpec.describe Group, type: :model do
         expect(@group.user? @user).to be true
       end
     end
+
     describe 'should not have a user' do
       it ' and return true when asked if user?' do
         expect(@group.user? @user_not).to be false
