@@ -1,3 +1,5 @@
+# rubocop:disable all
+
 # This migration comes from starburst (originally 20141004214002)
 class CreateAnnouncementTables < ActiveRecord::Migration[4.2]
 	def change

@@ -1,3 +1,5 @@
+# rubocop:disable all
+
 class ChangeUrlsUrlToText < ActiveRecord::Migration[5.0]
   def self.up
     change_column :urls, :url, :text

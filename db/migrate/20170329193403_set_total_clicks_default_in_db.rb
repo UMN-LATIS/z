@@ -1,3 +1,5 @@
+# rubocop:disable all
+
 class SetTotalClicksDefaultInDb < ActiveRecord::Migration[5.0]
   def up
     change_column :urls, :total_clicks, :integer, default: 0
