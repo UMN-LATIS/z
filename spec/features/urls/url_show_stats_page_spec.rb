@@ -33,7 +33,7 @@ describe 'zlink stats page', js: true do
     5.times do
       @url.clicks << Click.create(
         country_code: 'US',
-        created_at: Time.now
+        created_at: Time.zone.now
       )
       @url.total_clicks += 1
       @url.save
