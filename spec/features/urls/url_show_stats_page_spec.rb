@@ -5,7 +5,7 @@ require 'rails_helper'
 describe 'zlink stats page', js: true do
   let(:keyword) { 'testkeyword' }
   let(:url) { 'http://www.google.com' }
-  let(:created_at) { Time.now - 1.day }
+  let(:created_at) { Time.zone.now - 1.day }
 
   before do
     @user = FactoryBot.create(:user)
@@ -23,7 +23,7 @@ describe 'zlink stats page', js: true do
     10.times do
       @url.clicks << Click.create(
         country_code: 'US',
-        created_at: Time.now - 1.day
+        created_at: Time.zone.now - 1.day
       )
       @url.total_clicks += 1
       @url.save
@@ -63,11 +63,11 @@ describe 'zlink stats page', js: true do
   end
 
   it 'displays the share to twitter button' do
-    expect(page).to have_selector('.url-share-button-twitter', visible: true)
+    expect(page).to have_selector('.url-share-button-twitter')
   end
 
   it 'displays the download QR code button' do
-    expect(page).to have_selector('.url-share-button-qr', visible: true)
+    expect(page).to have_selector('.url-share-button-qr')
   end
 
   describe 'downloading qr code', js: true do
