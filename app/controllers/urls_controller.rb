@@ -70,7 +70,7 @@ class UrlsController < ApplicationController
   # GET /urls/new
   def new
     @url = Url.new
-    @url_identifier = Time.now.to_ms
+    @url_identifier = Time.zone.now.to_ms
     respond_to do |format|
       format.js { render layout: false }
     end

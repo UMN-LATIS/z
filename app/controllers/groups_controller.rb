@@ -21,7 +21,7 @@ class GroupsController < ApplicationController
 
   def new
     @group = Group.new
-    @group_identifier = Time.now.to_ms
+    @group_identifier = Time.zone.now.to_ms
 
     @url = Url.find_by(keyword: params[:keyword]) if params[:keyword]
     respond_to do |format|

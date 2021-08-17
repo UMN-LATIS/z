@@ -3,11 +3,11 @@ require 'rails_helper'
 describe 'admins getting csv of clicks for url(s) clicked yesterday and two days ago' do
   let(:keyword) { 'testkeyword' }
   let(:url) { 'http://www.google.com' }
-  let(:created_at) { Time.now - 1.day }
+  let(:created_at) { Time.zone.now - 1.day }
 
   let(:keyword2) { 'testkeyword2' }
   let(:url2) { 'http://www.google2.com' }
-  let(:created_at2) { Time.now - 1.day }
+  let(:created_at2) { Time.zone.now - 1.day }
 
   before do
     @admin = FactoryBot.create(:admin)
@@ -34,7 +34,7 @@ describe 'admins getting csv of clicks for url(s) clicked yesterday and two days
     10.times do
       @url.clicks << Click.create(
         country_code: 'US',
-        created_at: Time.now - 1.day
+        created_at: Time.zone.now - 1.day
       )
       @url.total_clicks += 1
       @url.save
@@ -43,7 +43,7 @@ describe 'admins getting csv of clicks for url(s) clicked yesterday and two days
     5.times do
       @url2.clicks << Click.create(
         country_code: 'US',
-        created_at: Time.now - 2.days
+        created_at: Time.zone.now - 2.days
       )
       @url2.total_clicks += 1
       @url2.save
