@@ -9,20 +9,20 @@
 # Offense count: 3
 Lint/DuplicateMethods:
   Exclude:
-    - 'app/models/user.rb'
-    - 'app/policies/transfer_request_policy.rb'
+    - "app/models/user.rb"
+    - "app/policies/transfer_request_policy.rb"
 
 # Offense count: 1
 # Configuration parameters: AllowComments.
 Lint/EmptyFile:
   Exclude:
-    - 'config/initializers/paper_trail.rb'
+    - "config/initializers/paper_trail.rb"
 
 # Offense count: 1
 # Cop supports --auto-correct.
-Lint/NonDeterministicRequireOrder:
-  Exclude:
-    - 'spec/rails_helper.rb'
+# Lint/NonDeterministicRequireOrder:
+#   Exclude:
+#     - 'spec/rails_helper.rb'
 
 # Offense count: 22
 # Configuration parameters: IgnoredMethods, CountRepeatedAttributes.
@@ -48,17 +48,17 @@ Metrics/MethodLength:
 # Offense count: 4
 Naming/AccessorMethodName:
   Exclude:
-    - 'app/datatables/admin_url_datatable.rb'
-    - 'app/datatables/audit_datatable.rb'
-    - 'app/datatables/url_datatable.rb'
-    - 'app/services/user_lookup_service_skeleton.rb'
+    - "app/datatables/admin_url_datatable.rb"
+    - "app/datatables/audit_datatable.rb"
+    - "app/datatables/url_datatable.rb"
+    - "app/services/user_lookup_service_skeleton.rb"
 
 # Offense count: 5
 # Configuration parameters: MinNameLength, AllowNamesEndingInNumbers, AllowedNames, ForbiddenNames.
 # AllowedNames: at, by, db, id, in, io, ip, of, on, os, pp, to
 Naming/MethodParameterName:
   Exclude:
-    - 'app/services/user_lookup_service.rb'
+    - "app/services/user_lookup_service.rb"
 
 # Offense count: 1
 # Configuration parameters: NamePrefix, ForbiddenPrefixes, AllowedMethods, MethodDefinitionMacros.
@@ -68,14 +68,14 @@ Naming/MethodParameterName:
 # MethodDefinitionMacros: define_method, define_singleton_method
 Naming/PredicateName:
   Exclude:
-    - 'app/controllers/sessions_controller.rb'
+    - "app/controllers/sessions_controller.rb"
 
 # Offense count: 5
 RSpec/Capybara/VisibilityMatcher:
   Exclude:
-    - 'spec/features/group_to_urls_spec.rb'
-    - 'spec/features/move_group_spec.rb'
-    - 'spec/features/transfer_request_spec.rb'
+    - "spec/features/group_to_urls_spec.rb"
+    - "spec/features/move_group_spec.rb"
+    - "spec/features/transfer_request_spec.rb"
 
 # Offense count: 29
 # Configuration parameters: IgnoredMetadata.
@@ -92,8 +92,8 @@ RSpec/ExampleLength:
 # Include: **/*_spec*rb*, **/spec/**/*
 RSpec/FilePath:
   Exclude:
-    - 'spec/features/copy_short_url.rb'
-    - 'spec/models/announcement_spec.rb'
+    - "spec/features/copy_short_url.rb"
+    - "spec/models/announcement_spec.rb"
 
 # Offense count: 364
 # Configuration parameters: AssignmentOnly.
@@ -103,10 +103,10 @@ RSpec/InstanceVariable:
 # Offense count: 4
 RSpec/MultipleDescribes:
   Exclude:
-    - 'spec/features/admin/announcements_spec.rb'
-    - 'spec/features/admin/audits_spec.rb'
-    - 'spec/features/admin/urls_spec.rb'
-    - 'spec/features/admin_members_spec.rb'
+    - "spec/features/admin/announcements_spec.rb"
+    - "spec/features/admin/audits_spec.rb"
+    - "spec/features/admin/urls_spec.rb"
+    - "spec/features/admin_members_spec.rb"
 
 # Offense count: 7
 # Configuration parameters: AllowSubject.
@@ -117,14 +117,14 @@ RSpec/MultipleMemoizedHelpers:
 # Configuration parameters: IgnoreSharedExamples.
 RSpec/NamedSubject:
   Exclude:
-    - 'spec/models/group_spec.rb'
-    - 'spec/models/transfer_request_spec.rb'
-    - 'spec/models/url_spec.rb'
-    - 'spec/policies/admin_membership_policy_spec.rb'
-    - 'spec/policies/audit_policy_spec.rb'
-    - 'spec/policies/group_policy_spec.rb'
-    - 'spec/policies/transfer_request_policy_spec.rb'
-    - 'spec/policies/url_policy_spec.rb'
+    - "spec/models/group_spec.rb"
+    - "spec/models/transfer_request_spec.rb"
+    - "spec/models/url_spec.rb"
+    - "spec/policies/admin_membership_policy_spec.rb"
+    - "spec/policies/audit_policy_spec.rb"
+    - "spec/policies/group_policy_spec.rb"
+    - "spec/policies/transfer_request_policy_spec.rb"
+    - "spec/policies/url_policy_spec.rb"
 
 # Offense count: 48
 RSpec/NestedGroups:
@@ -133,26 +133,26 @@ RSpec/NestedGroups:
 # Offense count: 2
 RSpec/OverwritingSetup:
   Exclude:
-    - 'spec/apis/urls_spec.rb'
+    - "spec/apis/urls_spec.rb"
 
 # Offense count: 52
 RSpec/RepeatedDescription:
   Exclude:
-    - 'spec/features/admin/audits_spec.rb'
-    - 'spec/models/url_spec.rb'
-    - 'spec/policies/url_policy_spec.rb'
+    - "spec/features/admin/audits_spec.rb"
+    - "spec/models/url_spec.rb"
+    - "spec/policies/url_policy_spec.rb"
 
 # Offense count: 6
 RSpec/RepeatedExample:
   Exclude:
-    - 'spec/models/url_spec.rb'
-    - 'spec/policies/url_policy_spec.rb'
+    - "spec/models/url_spec.rb"
+    - "spec/policies/url_policy_spec.rb"
 
 # Offense count: 1
 # Cop supports --auto-correct.
 Rails/ApplicationController:
   Exclude:
-    - 'app/controllers/api/v1/base_controller.rb'
+    - "app/controllers/api/v1/base_controller.rb"
 
 # Offense count: 2
 # Cop supports --auto-correct.
@@ -162,96 +162,83 @@ Rails/ApplicationController:
 # AllowedReceivers: Gem::Specification
 Rails/DynamicFindBy:
   Exclude:
-    - 'app/helpers/sessions_helper.rb'
-    - 'app/models/group.rb'
+    - "app/helpers/sessions_helper.rb"
+    - "app/models/group.rb"
 
 # Offense count: 1
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: slashes, arguments
 Rails/FilePath:
   Exclude:
-    - 'config/initializers/lograge.rb'
+    - "config/initializers/lograge.rb"
 
 # Offense count: 2
 # Configuration parameters: Include.
 # Include: app/models/**/*.rb
 Rails/HasAndBelongsToMany:
   Exclude:
-    - 'app/models/transfer_request.rb'
-    - 'app/models/url.rb'
+    - "app/models/transfer_request.rb"
+    - "app/models/url.rb"
 
 # Offense count: 1
 # Configuration parameters: Include.
 # Include: app/models/**/*.rb
 Rails/HasManyOrHasOneDependent:
   Exclude:
-    - 'app/models/group.rb'
+    - "app/models/group.rb"
 
 # Offense count: 1
 # Configuration parameters: Include.
 # Include: app/helpers/**/*.rb
 Rails/HelperInstanceVariable:
   Exclude:
-    - 'app/helpers/sessions_helper.rb'
+    - "app/helpers/sessions_helper.rb"
 
 # Offense count: 4
 # Configuration parameters: Include.
 # Include: app/models/**/*.rb
 Rails/InverseOf:
   Exclude:
-    - 'app/models/audit.rb'
-    - 'app/models/group.rb'
-    - 'app/models/transfer_request.rb'
+    - "app/models/audit.rb"
+    - "app/models/group.rb"
+    - "app/models/transfer_request.rb"
 
 # Offense count: 2
 # Configuration parameters: Include.
 # Include: app/controllers/**/*.rb
 Rails/LexicallyScopedActionFilter:
   Exclude:
-    - 'app/controllers/group_memberships_controller.rb'
-    - 'app/controllers/transfer_requests_controller.rb'
+    - "app/controllers/group_memberships_controller.rb"
+    - "app/controllers/transfer_requests_controller.rb"
 
 # Offense count: 3
 # Configuration parameters: ForbiddenMethods, AllowedMethods.
 # ForbiddenMethods: decrement!, decrement_counter, increment!, increment_counter, insert, insert!, insert_all, insert_all!, toggle!, touch, touch_all, update_all, update_attribute, update_column, update_columns, update_counters, upsert, upsert_all
 Rails/SkipsModelValidations:
   Exclude:
-    - 'app/controllers/move_to_group_controller.rb'
-    - 'app/models/transfer_request.rb'
-    - 'app/models/url.rb'
-
-# Offense count: 13
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: strict, flexible
-Rails/TimeZone:
-  Exclude:
-    - 'app/controllers/groups_controller.rb'
-    - 'app/controllers/urls_controller.rb'
-    - 'app/helpers/sessions_helper.rb'
-    - 'config/initializers/lograge.rb'
-    - 'spec/features/admin/csvs_spec.rb'
-    - 'spec/features/csvs_spec.rb'
+    - "app/controllers/move_to_group_controller.rb"
+    - "app/models/transfer_request.rb"
+    - "app/models/url.rb"
 
 # Offense count: 2
 # Configuration parameters: Environments.
 # Environments: development, test, production
 Rails/UnknownEnv:
   Exclude:
-    - 'config/initializers/omniauth.rb'
+    - "config/initializers/omniauth.rb"
 
 # Offense count: 1
 # Cop supports --auto-correct.
 Security/YAMLLoad:
   Exclude:
-    - 'app/services/user_lookup_service.rb'
+    - "app/services/user_lookup_service.rb"
 
 # Offense count: 2
 # Cop supports --auto-correct.
 Style/CaseLikeIf:
   Exclude:
-    - 'app/services/user_lookup_service.rb'
-    - 'app/services/user_lookup_service_skeleton.rb'
+    - "app/services/user_lookup_service.rb"
+    - "app/services/user_lookup_service_skeleton.rb"
 
 # Offense count: 15
 # Cop supports --auto-correct.
@@ -259,28 +246,28 @@ Style/CaseLikeIf:
 # SupportedStyles: nested, compact
 Style/ClassAndModuleChildren:
   Exclude:
-    - 'app/controllers/admin/admins_controller.rb'
-    - 'app/controllers/admin/announcements_controller.rb'
-    - 'app/controllers/admin/audits_controller.rb'
-    - 'app/controllers/admin/audits_datatable_controller.rb'
-    - 'app/controllers/admin/groups_controller.rb'
-    - 'app/controllers/admin/members_controller.rb'
-    - 'app/controllers/admin/transfer_requests_controller.rb'
-    - 'app/controllers/admin/url_csvs_controller.rb'
-    - 'app/controllers/admin/urls_controller.rb'
-    - 'app/controllers/admin/urls_datatable_controller.rb'
-    - 'app/controllers/api/v1/base_controller.rb'
-    - 'app/controllers/api/v1/urls_controller.rb'
-    - 'app/helpers/admin/announcements_helper.rb'
-    - 'app/models/admin/announcement.rb'
-    - 'app/policies/admin/announcement_policy.rb'
+    - "app/controllers/admin/admins_controller.rb"
+    - "app/controllers/admin/announcements_controller.rb"
+    - "app/controllers/admin/audits_controller.rb"
+    - "app/controllers/admin/audits_datatable_controller.rb"
+    - "app/controllers/admin/groups_controller.rb"
+    - "app/controllers/admin/members_controller.rb"
+    - "app/controllers/admin/transfer_requests_controller.rb"
+    - "app/controllers/admin/url_csvs_controller.rb"
+    - "app/controllers/admin/urls_controller.rb"
+    - "app/controllers/admin/urls_datatable_controller.rb"
+    - "app/controllers/api/v1/base_controller.rb"
+    - "app/controllers/api/v1/urls_controller.rb"
+    - "app/helpers/admin/announcements_helper.rb"
+    - "app/models/admin/announcement.rb"
+    - "app/policies/admin/announcement_policy.rb"
 
 # Offense count: 3
 Style/CombinableLoops:
   Exclude:
-    - 'app/models/group.rb'
-    - 'app/models/transfer_request.rb'
-    - 'app/models/url.rb'
+    - "app/models/group.rb"
+    - "app/models/transfer_request.rb"
+    - "app/models/url.rb"
 
 # Offense count: 59
 # Configuration parameters: AllowedConstants.
@@ -298,43 +285,43 @@ Style/FrozenStringLiteralComment:
 # Cop supports --auto-correct.
 Style/GlobalStdStream:
   Exclude:
-    - 'config/environments/production.rb'
-    - 'config/environments/remotedev.rb'
-    - 'config/environments/staging.rb'
+    - "config/environments/production.rb"
+    - "config/environments/remotedev.rb"
+    - "config/environments/staging.rb"
 
 # Offense count: 5
 # Configuration parameters: MinBodyLength.
 Style/GuardClause:
   Exclude:
-    - 'app/controllers/pages_controller.rb'
-    - 'app/controllers/redirect_controller.rb'
-    - 'app/helpers/sessions_helper.rb'
-    - 'app/models/user.rb'
+    - "app/controllers/pages_controller.rb"
+    - "app/controllers/redirect_controller.rb"
+    - "app/helpers/sessions_helper.rb"
+    - "app/models/user.rb"
 
 # Offense count: 1
 # Cop supports --auto-correct.
 Style/IfUnlessModifier:
   Exclude:
-    - 'app/helpers/sessions_helper.rb'
+    - "app/helpers/sessions_helper.rb"
 
 # Offense count: 1
 Style/MultilineBlockChain:
   Exclude:
-    - 'app/helpers/group_helper.rb'
+    - "app/helpers/group_helper.rb"
 
 # Offense count: 1
 # Configuration parameters: AllowedMethods.
 # AllowedMethods: respond_to_missing?
 Style/OptionalBooleanParameter:
   Exclude:
-    - 'app/models/group.rb'
+    - "app/models/group.rb"
 
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: SafeForConstants.
 Style/RedundantFetchBlock:
   Exclude:
-    - 'config/puma.rb'
+    - "config/puma.rb"
 
 # Offense count: 2
 # Cop supports --auto-correct.
@@ -342,8 +329,8 @@ Style/RedundantFetchBlock:
 # AllowedMethods: present?, blank?, presence, try, try!
 Style/SafeNavigation:
   Exclude:
-    - 'app/controllers/api/v1/base_controller.rb'
-    - 'app/models/url.rb'
+    - "app/controllers/api/v1/base_controller.rb"
+    - "app/models/url.rb"
 
 # Offense count: 14
 # Cop supports --auto-correct.
