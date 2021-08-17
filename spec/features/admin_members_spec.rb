@@ -13,10 +13,12 @@ describe 'admin members index page' do
 
   describe 'visiting the group membership page' do
     let(:user) { User.where(uid: :test_admin_uid).first }
-    it 'should display the admin member internet_id' do
+
+    it 'displays the admin member internet_id' do
       expect(page).to have_content user.internet_id
     end
-    it 'should display the admin member display name' do
+
+    it 'displays the admin member display name' do
       expect(page).to have_content user.display_name
     end
   end
@@ -77,7 +79,7 @@ describe 'visiting the admin member list as a non-admin' do
     visit admin_members_path(bad_user)
   end
 
-  it 'should display the authorization error' do
+  it 'displays the authorization error' do
     expect(page).to have_content 'not authorized'
   end
 end

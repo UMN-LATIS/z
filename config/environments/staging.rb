@@ -106,13 +106,13 @@ Rails.application.configure do
                           sender_address: '"Z Exception Notifier" <help@umn.edu>',
                           exception_recipients: ["web-app-errors@cla.umn.edu"]
                         },
-                        :slack => {
-                          :webhook_url => "https://hooks.slack.com/services/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",
-                          :channel => "#sw_z_exceptions",
-                          :username => "Z Staging Environment",
-                          :additional_parameters => {
-                            :icon_emoji => ":zap:",
-                            :mrkdwn => true
+                        slack: {
+                          webhook_url: "https://hooks.slack.com/services/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",
+                          channel: "#sw_z_exceptions",
+                          username: "Z Staging Environment",
+                          additional_parameters: {
+                            icon_emoji: ":zap:",
+                            mrkdwn: true
                           }
                         }
 end

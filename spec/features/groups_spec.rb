@@ -10,6 +10,7 @@ describe 'groups index page', js: true do
   describe 'creating a new group', js: true do
     let(:name) { 'My First Group' }
     let(:description) { 'first group of urls' }
+
     before do
       visit groups_path
       find('.add-new-group').click
@@ -17,15 +18,17 @@ describe 'groups index page', js: true do
       find('#group_name').set name
       find('#group_description').set description
     end
+
     describe 'with valid information' do
       describe 'when both fields are filled in' do
-        it 'should save upon clicking Create' do
+        it 'saves upon clicking Create' do
           expect do
             find('.js-group-submit').click
             wait_for_ajax
           end.to change(Group, :count).by(1)
         end
-        it 'should add the user to the group' do
+
+        it 'adds the user to the group' do
           expect do
             find('.js-group-submit').click
             wait_for_ajax
@@ -35,7 +38,8 @@ describe 'groups index page', js: true do
 
       describe 'when the description is blank' do
         before { find('#group_description').set '' }
-        it 'should save upon clicking Create' do
+
+        it 'saves upon clicking Create' do
           expect do
             find('.js-group-submit').click
             wait_for_ajax
@@ -48,13 +52,15 @@ describe 'groups index page', js: true do
       describe '[name]' do
         describe 'name is blank' do
           before { find('#group_name').set '' }
-          it 'should not save upon clicking Create' do
+
+          it 'does not save upon clicking Create' do
             expect do
               find('.js-group-submit').click
               wait_for_ajax
             end.to change(Group, :count).by(0)
           end
-          it 'should display an error' do
+
+          it 'displays an error' do
             find('.js-group-submit').click
             wait_for_ajax
             expect(page).to have_content('Name can\'t be blank')
@@ -68,6 +74,7 @@ describe 'groups index page', js: true do
     let(:new_name) { 'My Second Group' }
     let(:new_description) { 'second group of urls' }
     let(:group) { FactoryBot.create(:group) }
+
     before do
       group.users << @user
       group.save
@@ -78,17 +85,20 @@ describe 'groups index page', js: true do
     end
 
     describe 'page content' do
-      it 'should display the group name' do
+      it 'displays the group name' do
         expect(page).to have_content group.name
       end
-      it 'should display the group description' do
+
+      it 'displays the group description' do
         expect(page).to have_content group.description
       end
-      it 'should display an edit button' do
+
+      it 'displays an edit button' do
         find('.js-group-actions-dropdown').click
         expect(page).to have_content 'Edit'
       end
-      it 'should display a delete button' do
+
+      it 'displays a delete button' do
         find('.js-group-actions-dropdown').click
         expect(page).to have_content 'Delete'
       end
@@ -101,7 +111,7 @@ describe 'groups index page', js: true do
       end
 
       describe 'with new valid content' do
-        it 'should update the group name in the db' do
+        it 'updates the group name in the db' do
           find('#group_name').set new_name
           find('.js-group-submit').click
           wait_for_ajax
@@ -109,7 +119,8 @@ describe 'groups index page', js: true do
           find('.edit-group').click
           expect(find('#group_name')['value']).to eq(new_name)
         end
-        it 'should update the group description in the db' do
+
+        it 'updates the group description in the db' do
           find('#group_description').set new_description
           find('.js-group-submit').click
           wait_for_ajax
@@ -124,7 +135,8 @@ describe 'groups index page', js: true do
       describe 'clicking delete' do
         describe 'on a group with urls' do
           before { group.urls << FactoryBot.create(:url) }
-          it 'should not delete the group' do
+
+          it 'does not delete the group' do
             expect do
               find('.js-group-actions-dropdown').click
               find('.delete-group').click
@@ -135,7 +147,7 @@ describe 'groups index page', js: true do
         end
 
         describe 'on a group without urls' do
-          it 'should delete the group' do
+          it 'deletes the group' do
             expect do
               find('.js-group-actions-dropdown').click
               find('.delete-group').click
@@ -153,8 +165,9 @@ describe 'groups index page', js: true do
       unauthed_group = FactoryBot.create(:group)
       visit edit_group_path(unauthed_group)
     end
+
     describe 'page content' do
-      it 'should display the not authorized message' do
+      it 'displays the not authorized message' do
         expect(page).to have_content 'You are not authorized to perform this action.'
       end
     end

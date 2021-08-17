@@ -13,6 +13,7 @@ describe AdminMembershipPolicy do
     it 'allows access if user is an admin' do
       expect(subject).to permit(@admin_user)
     end
+
     it 'denies access if user is not admin' do
       expect(subject).not_to permit(@bad_user)
     end

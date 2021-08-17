@@ -18,9 +18,11 @@ describe TransferRequestPolicy do
     it 'allows access if user is an admin' do
       expect(subject).to permit(@admin_user, @transfer_request)
     end
+
     it 'allows access if user is in the from group of the transfer' do
       expect(subject).to permit(@good_user, @transfer_request)
     end
+
     it 'denies access if user is not in group and not admin' do
       expect(subject).not_to permit(@bad_user, @transfer_request)
     end

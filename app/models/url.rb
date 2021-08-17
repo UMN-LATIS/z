@@ -16,7 +16,7 @@ require 'ipaddr'
 
 class Url < ApplicationRecord
   include VersionUser
-  has_paper_trail :ignore => [:total_clicks]
+  has_paper_trail ignore: [:total_clicks]
   before_destroy :version_history
   after_save :version_history
 
@@ -87,10 +87,8 @@ class Url < ApplicationRecord
     begin
       @location = IpLocation.where('? >= ip_from AND ? < ip_to', client_ip_decimal, client_ip_decimal)
 
-      if @location.first!.country_code
-        country_code = @location.first!.country_code
-      end
-    rescue
+      country_code = @location.first!.country_code if @location.first!.country_code
+    rescue StandardError
       country_code = ''
     end
 
@@ -105,12 +103,12 @@ class Url < ApplicationRecord
         csv << [url, keyword, click.country_code, click.created_at.to_s(:created_on_formatted)]
       end
     end
-    return %w{url keyword country_code url_created_on}.to_csv + data
+    %w[url keyword country_code url_created_on].to_csv + data
   end
 
   def self.to_csv(duration, time_unit, urls)
     # ex: http://localhost:3000/shortener/urls/csv/24/days.csv
-    col_names = %w{url keyword}
+    col_names = %w[url keyword]
     formats = { days: '%m/%d', hours: '%I:%M%p' }
     data = CSV.generate(headers: true) do |csv|
       urls.each do |url|
@@ -120,15 +118,13 @@ class Url < ApplicationRecord
         csv << col_values
       end
     end
-    return col_names.to_csv + data
+    col_names.to_csv + data
   end
 
   def check_for_valid_url
-    begin
-      URI.parse(url)
-    rescue URI::InvalidURIError
-      errors.add(:url, 'is not valid.')
-    end
+    URI.parse(url)
+  rescue URI::InvalidURIError
+    errors.add(:url, 'is not valid.')
   end
 
   def version_history
@@ -136,7 +132,7 @@ class Url < ApplicationRecord
     h.concat "<b>Current Keyword: #{keyword}</b><br/>"
     h.concat "<b>Current Group: #{group.name}</b><br/>"
     h.concat "<h3>History</h3><hr>"
-    self.versions.each do |v|
+    versions.each do |v|
       g = v.reify unless v.event.equal? "create"
       h.concat "<b>What Happened: </b> #{v.event} <br/>"
       h.concat "<b>Who Made It: </b>  #{self.class.version_user(v)}<br/>"
@@ -146,7 +142,7 @@ class Url < ApplicationRecord
       h.concat "<b>Date of Change: </b>  #{g ? g.updated_at : 'N/A'}<br/>"
       h.concat "<br/><br/>"
     end
-    self.versions.each do |v|
+    versions.each do |v|
       v.version_history = h
       v.save
     end

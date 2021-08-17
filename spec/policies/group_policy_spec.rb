@@ -16,9 +16,11 @@ describe GroupPolicy do
     it 'allows access if user is an admin' do
       expect(subject).to permit(@admin_user, @group)
     end
+
     it 'denies access if user is not part of the group' do
       expect(subject).not_to permit(@bad_user, @group)
     end
+
     it 'allows access if user is part of the group' do
       expect(subject).to permit(@good_user, @group)
     end

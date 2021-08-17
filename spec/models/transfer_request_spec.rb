@@ -1,24 +1,24 @@
 require 'rails_helper'
 
 RSpec.describe TransferRequest, type: :model do
+  subject { @transfer_request }
+
   before do
     @transfer_request = FactoryBot.build(:transfer_request)
   end
 
-  subject { @transfer_request }
+  it { is_expected.to be_valid }
+  it { is_expected.to respond_to 'to_group' }
+  it { is_expected.to respond_to 'to_group_id' }
+  it { is_expected.to respond_to 'from_group' }
+  it { is_expected.to respond_to 'from_group_id' }
 
-  it { should be_valid }
-  it { should respond_to 'to_group' }
-  it { should respond_to 'to_group_id' }
-  it { should respond_to 'from_group' }
-  it { should respond_to 'from_group_id' }
-
-  it { should respond_to 'created_at' }
-  it { should respond_to 'updated_at' }
+  it { is_expected.to respond_to 'created_at' }
+  it { is_expected.to respond_to 'updated_at' }
 
   describe 'Versioning' do
-    it 'should be enabled' do
-      is_expected.to be_versioned
+    it 'is enabled' do
+      expect(subject).to be_versioned
     end
   end
 
@@ -30,8 +30,9 @@ RSpec.describe TransferRequest, type: :model do
       @transfer_request.urls << @transfer_url
       @transfer_request.save
     end
+
     it 'status should be pending' do
-      expect(@transfer_request.status.eql? 'pending').to be true
+      expect(@transfer_request.status.eql?('pending')).to be true
     end
   end
 
@@ -52,8 +53,9 @@ RSpec.describe TransferRequest, type: :model do
         @user2
       @transfer_request.save
     end
+
     it 'status should be approved' do
-      expect(@transfer_request.status.eql? 'approved').to be true
+      expect(@transfer_request.status.eql?('approved')).to be true
     end
   end
 
@@ -62,8 +64,8 @@ RSpec.describe TransferRequest, type: :model do
       describe "doesn't exist" do
         before { @transfer_request.to_group = nil }
 
-        it 'should not be valid' do
-          expect(@transfer_request).to_not be_valid
+        it 'is not valid' do
+          expect(@transfer_request).not_to be_valid
         end
       end
     end
@@ -72,8 +74,8 @@ RSpec.describe TransferRequest, type: :model do
       describe "doesn't exist" do
         before { @transfer_request.from_group = nil }
 
-        it 'should not be valid' do
-          expect(@transfer_request).to_not be_valid
+        it 'is not valid' do
+          expect(@transfer_request).not_to be_valid
         end
       end
 
@@ -81,8 +83,8 @@ RSpec.describe TransferRequest, type: :model do
         describe 'and is not admin' do
           before { @transfer_request.urls = [FactoryBot.create(:url)] }
 
-          it 'should not be valid' do
-            expect(@transfer_request).to_not be_valid
+          it 'is not valid' do
+            expect(@transfer_request).not_to be_valid
           end
         end
 
@@ -92,7 +94,7 @@ RSpec.describe TransferRequest, type: :model do
               FactoryBot.create(:admin).context_group_id
           end
 
-          it 'should be valid' do
+          it 'is valid' do
             expect(@transfer_request).to be_valid
           end
         end

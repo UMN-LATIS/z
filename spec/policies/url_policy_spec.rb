@@ -21,9 +21,11 @@ describe UrlPolicy do
     it 'allows access if user is part of the Urls group' do
       expect(subject).to permit(@good_user, @url)
     end
+
     it 'allows access if user is an admin' do
       expect(subject).to permit(@admin_user, @url)
     end
+
     it 'denies access if user is not part of the urls group' do
       expect(subject).not_to permit(@bad_user, @url)
     end
@@ -33,6 +35,7 @@ describe UrlPolicy do
     it 'allows access if user is an admin' do
       expect(subject).to permit(@admin_user, @url)
     end
+
     it 'denies access if user is not an admin' do
       expect(subject).not_to permit(@bad_user, @url)
     end

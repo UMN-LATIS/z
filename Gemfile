@@ -65,9 +65,9 @@ gem 'data-confirm-modal', "~> 1.6"
 gem 'paper_trail', "~> 10.3"
 
 # Use barby to generate QR codes
-gem 'rqrcode', "~> 1.1"
 gem 'barby', "~> 0.6"
 gem 'chunky_png', "~> 1.3"
+gem 'rqrcode', "~> 1.1"
 
 # authorization lugin
 gem 'pundit', "~> 2.1"
@@ -87,8 +87,8 @@ gem 'addressable', "~> 2.8"
 # For API Authentication
 gem 'jwt', "~> 2.2"
 
-gem "sentry-ruby", "~> 4.4"
 gem "sentry-rails", "~> 4.4"
+gem "sentry-ruby", "~> 4.4"
 
 # Load ENV variables from .env file
 gem 'dotenv-rails', "~> 2.7"
@@ -99,17 +99,17 @@ group :development, :test do
   gem 'byebug', "~> 11.1", platform: :mri
 
   # Use Rspec, capybara, and apparition for testing
-  gem 'rspec-rails', "~> 4.0"
   gem 'capybara', "~> 3.15"
   gem 'capybara-screenshot', "~> 1.0"
+  gem 'rspec-rails', "~> 4.0"
 
   # Using github for source until change in twalpole/apparition#79
   # is released. Change back to gem version after.
   gem 'apparition', github: 'twalpole/apparition', ref: 'ca86be4'
-  gem 'launchy', "~> 2.4"
-  gem 'factory_bot_rails', "~> 6.2"
   gem 'database_cleaner', "~> 1.8"
+  gem 'factory_bot_rails', "~> 6.2"
   gem 'fuubar', "~> 2.5"
+  gem 'launchy', "~> 2.4"
 
   # for retrying flaky tests until they can be fixed
   gem "rspec-retry", "~> 0.6"
@@ -119,17 +119,17 @@ group :development, :test do
   gem 'guard-rspec', "~> 4.7", require: false
 
   # Add some pry/rails console helpers for development
+  gem 'awesome_print', "~> 1.8"
   gem 'pry', '~> 0.13'
   gem 'pry-byebug', "~> 3.9"
-  gem 'awesome_print', "~> 1.8"
   gem 'pry-rails', "~> 0.3"
 end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere
   # in the code.
-  gem 'web-console', "~> 3.7"
   gem 'listen', '~> 3.0'
+  gem 'web-console', "~> 3.7"
   # Spring speeds up development by keeping your application running in the
   # background. Read more: https://github.com/rails/spring
 
@@ -141,19 +141,19 @@ group :development do
   gem 'rubocop', '~> 1.18', require: false
   gem "rubocop-performance", "~> 1.11", require: false
   gem "rubocop-rails", "~> 2.11", require: false
-  gem "rubocop-rspec", "~> 2.4", require: false
   gem "rubocop-rake", "~> 0.6.0", require: false
+  gem "rubocop-rspec", "~> 2.4", require: false
 
   # Use annotate to list the attributes of models
   gem 'annotate', "~> 3.1"
 
+  gem 'bcrypt_pbkdf', "~> 1.1"
   gem 'capistrano', "~> 3.14"
   gem 'capistrano-bundler', "~> 1.6"
   gem 'capistrano-passenger', '~> 0.2'
-  gem 'capistrano-rbenv', "~> 2.1"
   gem 'capistrano-rails', "~> 1.5"
+  gem 'capistrano-rbenv', "~> 2.1"
   gem 'ed25519', "~> 1.2"
-  gem 'bcrypt_pbkdf', "~> 1.1"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

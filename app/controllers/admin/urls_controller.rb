@@ -8,9 +8,7 @@ class Admin::UrlsController < ApplicationController
     @urls = Url.by_keyword(params[:url_filter_keyword])
     authorize @urls unless @urls.nil?
     # If owner filter present, filter further
-    if params[:url_filter_owner].present?
-      @urls = @urls.created_by_name('params[:url_filter_owner]')
-    end
+    @urls = @urls.created_by_name('params[:url_filter_owner]') if params[:url_filter_owner].present?
   end
 
   # GET /urls/1

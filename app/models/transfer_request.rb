@@ -18,8 +18,8 @@ class TransferRequest < ApplicationRecord
   before_destroy :version_history
   after_save :version_history
 
-  belongs_to :from_group, foreign_key: 'from_group_id', class_name: 'Group'
-  belongs_to :to_group, foreign_key: 'to_group_id', class_name: 'Group'
+  belongs_to :from_group, class_name: 'Group'
+  belongs_to :to_group, class_name: 'Group'
   belongs_to :from_user, foreign_key: 'from_group_requestor_id', class_name: 'User'
   belongs_to :to_user, primary_key: 'default_group_id', foreign_key: 'to_group_id', class_name: 'User'
 
@@ -74,18 +74,18 @@ class TransferRequest < ApplicationRecord
     h.concat "<b> To User: #{to_user.internet_id} </b><br/>"
     h.concat "<b> Current Status: #{status} </b><br/>"
     h.concat "<br/><b>URLs:</b><br/>"
-    self.urls.each do |url|
+    urls.each do |url|
       h.concat "<a href=\"#{url.url}\">#{url.keyword}</a><br/>"
     end
     h.concat "<h3>History</h3><hr>"
-    self.versions.each do |v|
+    versions.each do |v|
       g = v.reify # unless v.event.equal? "create"
       h.concat "<b>What Happened: </b> #{v.event} <br/>"
       h.concat "<b>Who Made It: </b>  #{self.class.version_user(v)}<br/>"
       h.concat "<b>Previous Status: </b>  #{g ? g.status : 'N/A'}<br/>"
       h.concat "<br/><br/>"
     end
-    self.versions.each do |v|
+    versions.each do |v|
       v.version_history = h
       v.save
     end

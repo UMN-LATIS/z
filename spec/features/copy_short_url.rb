@@ -17,7 +17,7 @@ describe 'copy url button ' do
       end
 
       describe 'the copy button' do
-        it 'should be present' do
+        it 'is present' do
           expect(page).to have_selector('.clipboard-btn')
         end
       end
@@ -30,7 +30,7 @@ describe 'copy url button ' do
       end
 
       describe 'the copy button' do
-        it 'should be present' do
+        it 'is present' do
           expect(page).to have_selector('.clipboard-btn')
         end
       end

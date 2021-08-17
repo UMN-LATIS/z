@@ -64,14 +64,21 @@ end
 
 FrequentlyAskedQuestion.create(
   [{ header: 'general', question: 'What is z.umn.edu (Z)?', answer: 'Z is a URL shortening service which allows for longer URLs to be be shortened. A shortened URL is helpful for social media, printed pieces, or just sharing with others.' },
-   { header: 'general', question: 'When should I use z.umn.edu?', answer: 'We recommend using Z for cases in which you need a shortened URL for University-related content that will be published or posted for many users to view, or for material which may need to be retyped by users.' },
-   { header: 'general', question: 'Who can create a Z link?', answer: 'Anybody with a University of Minnesota X500 login may create URLs. The URLs that are created are accessible to anyone, with no need for an X500 account. This means you can create a URL and share it with non-UMN audiences.' },
-   { header: 'general', question: 'Are there limitations on the use of the “custom” field?', answer: 'We reserve the right to revoke “custom” URLs if the short name is intended to defraud or deceive, or if it is in violation of the University of Minnesota Acceptable Use policy. We recommend you avoid using custom URLs that are too generic or which may be confusing to users.' },
-   { header: 'general', question: 'What if the custom URL I want is already in use?', answer: 'Once a URL has been claimed by creating a custom URL, no other URL can be created using the same URL.  If it looks like a URL is claimed, but no longer in use, you can reach out to us.  We’ll ask the current owner if they’re willing to relinquish it.' },
+   { header: 'general', question: 'When should I use z.umn.edu?',
+     answer: 'We recommend using Z for cases in which you need a shortened URL for University-related content that will be published or posted for many users to view, or for material which may need to be retyped by users.' },
+   { header: 'general', question: 'Who can create a Z link?',
+     answer: 'Anybody with a University of Minnesota X500 login may create URLs. The URLs that are created are accessible to anyone, with no need for an X500 account. This means you can create a URL and share it with non-UMN audiences.' },
+   { header: 'general', question: 'Are there limitations on the use of the “custom” field?',
+     answer: 'We reserve the right to revoke “custom” URLs if the short name is intended to defraud or deceive, or if it is in violation of the University of Minnesota Acceptable Use policy. We recommend you avoid using custom URLs that are too generic or which may be confusing to users.' },
+   { header: 'general', question: 'What if the custom URL I want is already in use?',
+     answer: 'Once a URL has been claimed by creating a custom URL, no other URL can be created using the same URL.  If it looks like a URL is claimed, but no longer in use, you can reach out to us.  We’ll ask the current owner if they’re willing to relinquish it.' },
    { header: 'general', question: 'How long are URLs active?', answer: 'URLs never expire.' },
-   { header: 'general', question: 'What happens to the URLs I created if I graduate or leave the U?', answer: 'The ownership of a URL can be transferred to another individual or group to ensure they can be updated and modified. The owner can do this themselves right from the site.' },
-   { header: 'general', question: 'Is there a limit as to how many URLs I can create and have active?', answer: 'There is currently no limit, though we request that the service be used for U-related work/projects/events only.' },
-   { header: 'general', question: 'What software does Z use?', answer: 'Z is an open source application developed by LATIS at the University of Minnesota.  You can view the source code and learn about installing it yourself at github.com/umn-latis/z.' },
+   { header: 'general', question: 'What happens to the URLs I created if I graduate or leave the U?',
+     answer: 'The ownership of a URL can be transferred to another individual or group to ensure they can be updated and modified. The owner can do this themselves right from the site.' },
+   { header: 'general', question: 'Is there a limit as to how many URLs I can create and have active?',
+     answer: 'There is currently no limit, though we request that the service be used for U-related work/projects/events only.' },
+   { header: 'general', question: 'What software does Z use?',
+     answer: 'Z is an open source application developed by LATIS at the University of Minnesota.  You can view the source code and learn about installing it yourself at github.com/umn-latis/z.' },
    { header: 'general', question: 'How reliable are click counts for a given URL?',
      answer: 'In general, the Z counts should be reliable. The application itself definitely counts any time it redirects someone. We say "in general" because some browsers cache these types of redirects. So, if the same person clicked a given link a few times, with the same browser, Z might only count the first click.' }]
 )

@@ -13,8 +13,7 @@ class Admin::AnnouncementsController < ApplicationController
 
   # GET /admin/announcements/1
   # GET /admin/announcements/1.json
-  def show
-  end
+  def show; end
 
   # GET /admin/announcements/new
   def new
@@ -22,8 +21,7 @@ class Admin::AnnouncementsController < ApplicationController
   end
 
   # GET /admin/announcements/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /admin/announcements
   # POST /admin/announcements.json

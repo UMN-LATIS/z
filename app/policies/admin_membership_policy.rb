@@ -1,5 +1,5 @@
 # app/policies/admin_membership_policy.rb
-class AdminMembershipPolicy < Struct.new(:user, :admin_membership)
+AdminMembershipPolicy = Struct.new(:user, :admin_membership) do
   def index?
     user.admin?
   end

@@ -43,7 +43,7 @@ describe 'admins getting csv of clicks for url(s) clicked yesterday and two days
     5.times do
       @url2.clicks << Click.create(
         country_code: 'US',
-        created_at: Time.now - 2.day
+        created_at: Time.now - 2.days
       )
       @url2.total_clicks += 1
       @url2.save
@@ -58,13 +58,16 @@ describe 'admins getting csv of clicks for url(s) clicked yesterday and two days
       @header_row = @csv.shift
       @data_row = @csv.shift
     end
-    it 'should have two rows a header and data for one url' do
+
+    it 'has two rows a header and data for one url' do
       expect(CSV.parse(Url.to_csv('2', 'days', @urls)).size).to match(2)
     end
-    it 'should have column name url in first cell, first row' do
+
+    it 'has column name url in first cell, first row' do
       expect(@header_row[0]).to match('url')
     end
-    it 'should have column name keyword in second cell, first row' do
+
+    it 'has column name keyword in second cell, first row' do
       expect(@header_row[1]).to match('keyword')
     end
   end
@@ -78,13 +81,16 @@ describe 'admins getting csv of clicks for url(s) clicked yesterday and two days
       @yesterday = @csv.shift
       @two_days_ago = @csv.shift
     end
-    it 'should have three rows a header and 2 riws data for 2 url' do
+
+    it 'has three rows a header and 2 riws data for 2 url' do
       expect(CSV.parse(Url.to_csv('2', 'days', @urls)).size).to match(3)
     end
-    it 'should have column name url in first cell, first row' do
+
+    it 'has column name url in first cell, first row' do
       expect(@header_row[0]).to match('url')
     end
-    it 'should have column name keyword in second cell, first row' do
+
+    it 'has column name keyword in second cell, first row' do
       expect(@header_row[1]).to match('keyword')
     end
   end

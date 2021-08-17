@@ -23,9 +23,7 @@ class GroupsController < ApplicationController
     @group = Group.new
     @group_identifier = Time.now.to_ms
 
-    if params[:keyword]
-      @url = Url.find_by(keyword: params[:keyword])
-    end
+    @url = Url.find_by(keyword: params[:keyword]) if params[:keyword]
     respond_to do |format|
       format.js { render layout: false }
     end
@@ -36,9 +34,7 @@ class GroupsController < ApplicationController
     @group = Group.new(group_params)
     @group.users << current_user
 
-    if params[:keyword]
-      @group.urls << Url.find_by(keyword: params[:keyword])
-    end
+    @group.urls << Url.find_by(keyword: params[:keyword]) if params[:keyword]
 
     respond_to do |format|
       if @group.save

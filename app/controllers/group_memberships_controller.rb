@@ -2,8 +2,7 @@ class GroupMembershipsController < ApplicationController
   before_action :set_params, only: %i[show index update create destroy]
   before_action :ensure_signed_in
 
-  def index
-  end
+  def index; end
 
   def new
     render json: UserLookup.new(
@@ -36,7 +35,7 @@ class GroupMembershipsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to groups_url, notice: 'Group was successfully updated, user removed.' }
       format.json { head :no_content }
-      format.js { render :layout => false }
+      format.js { render layout: false }
     end
   end
 

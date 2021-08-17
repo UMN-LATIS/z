@@ -2,13 +2,15 @@ require 'rails_helper'
 
 describe 'Visiting root' do
   let(:user) { FactoryBot.create(:user) }
+
   describe 'not signed in' do
     before { visit '/' }
 
-    it 'should say Welcome' do
+    it 'says Welcome' do
       expect(page).to have_content 'Welcome'
     end
-    it 'should display Login to Z button' do
+
+    it 'displays Login to Z button' do
       expect(page).to have_content 'Sign In to Z'
     end
   end
@@ -19,11 +21,12 @@ describe 'Visiting root' do
       visit '/'
     end
 
-    it 'should direct you to the home page' do
+    it 'directs you to the home page' do
       expect(page).to have_content 'z.umn.edu'
     end
+
     it 'not display Login to Z button' do
-      expect(page).to_not have_content 'Login to Z'
+      expect(page).not_to have_content 'Login to Z'
     end
   end
 end

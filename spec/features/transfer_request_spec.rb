@@ -21,7 +21,7 @@ describe 'creating a transfer request', js: true do
   end
 
   describe 'the urls index page' do
-    it 'should have a disabled bulk action button if there are no urls', retry: 3 do
+    it 'has a disabled bulk action button if there are no urls', retry: 3 do
       visit urls_path
       expect(page).to have_css('.table-options.disabled')
     end
@@ -33,7 +33,7 @@ describe 'creating a transfer request', js: true do
         FactoryBot.create(:url, group: @user.context_group)
       end
 
-      it 'should have a disabled bulk action button if no urls are selected', retry: 3 do
+      it 'has a disabled bulk action button if no urls are selected', retry: 3 do
         visit urls_path
         expect(page).to have_css('.table-options.disabled')
       end
@@ -55,11 +55,11 @@ describe 'creating a transfer request', js: true do
             js_make_all_inputs_visible
           end
 
-          it 'should display default group url' do
+          it 'displays default group url' do
             expect(page).to have_selector(".new_transfer_request input[value='#{@selected_url.keyword}']")
           end
 
-          it 'should display new group url' do
+          it 'displays new group url' do
             expect(page).to have_selector(".new_transfer_request input[value='#{@new_group_url.keyword}']")
           end
 
@@ -71,7 +71,8 @@ describe 'creating a transfer request', js: true do
               click_button 'Confirm'
               wait_for_modal_to_dismiss
             end
-            it 'should have all of the urls in the request' do
+
+            it 'has all of the urls in the request' do
               expect(TransferRequest.last.urls - [@selected_url, @new_group_url]).to be_empty
             end
           end
@@ -79,12 +80,12 @@ describe 'creating a transfer request', js: true do
       end
 
       describe 'with a single url selected' do
-        before {
+        before do
           visit urls_path
           find("#url-#{@selected_url.id} > .select-checkbox").click
           wait_for_ajax
           find('.table-options').click
-        }
+        end
 
         describe 'clicking the tranfser button' do
           before do
@@ -92,7 +93,7 @@ describe 'creating a transfer request', js: true do
             wait_for_ajax
           end
 
-          it 'should display the modal' do
+          it 'displays the modal' do
             expect(page).to have_selector('#index-modal', visible: true)
           end
 
@@ -104,7 +105,7 @@ describe 'creating a transfer request', js: true do
                 first('input#transfer_request_to_group', visible: false).set @other_user.uid
               end
 
-              it 'should create a transfer request' do
+              it 'creates a transfer request' do
                 expect do
                   find('#new_transfer_request  input[type="submit"]').click
                   click_button "Confirm"
@@ -112,14 +113,14 @@ describe 'creating a transfer request', js: true do
                 end.to change(TransferRequest, :count).by(1)
               end
 
-              it 'should display the pending request on your screen' do
+              it 'displays the pending request on your screen' do
                 find('#new_transfer_request input[type="submit"]').click
                 click_button "Confirm"
                 wait_for_modal_to_dismiss
                 expect(page).to have_content 'URLs you gave that are pending approval'
               end
 
-              it 'should display the pending request on their screen' do
+              it 'displays the pending request on their screen' do
                 find('#new_transfer_request  input[type="submit"]').click
                 click_button "Confirm"
                 wait_for_modal_to_dismiss
@@ -131,17 +132,20 @@ describe 'creating a transfer request', js: true do
 
               describe 'user does not exist' do
                 let(:new_uid) { 'notauser123456' }
+
                 before do
                   first('input#transfer_request_to_group', visible: false).set new_uid
                 end
-                it 'should create a new user' do
+
+                it 'creates a new user' do
                   expect do
                     find('#new_transfer_request input[type="submit"]').click
                     click_button "Confirm"
                     wait_for_modal_to_dismiss
                   end.to change(User, :count).by(1)
                 end
-                it 'should create a transfer request' do
+
+                it 'creates a transfer request' do
                   expect do
                     find('#new_transfer_request  input[type="submit"]').click
                     click_button "Confirm"
@@ -153,17 +157,20 @@ describe 'creating a transfer request', js: true do
 
             describe 'with invalid information' do
               let(:new_uid) { '' }
+
               describe 'uid is blank' do
                 before do
                   first('input#transfer_request_to_group', visible: false).set new_uid
                 end
-                it 'should display an error' do
+
+                it 'displays an error' do
                   find('#new_transfer_request input[type="submit"]').click
                   click_button "Confirm"
                   wait_for_ajax
                   expect(page).to have_content 'To group must exist'
                 end
-                it 'should not create a transfer request' do
+
+                it 'does not create a transfer request' do
                   expect do
                     find('#new_transfer_request input[type="submit"]').click
                     wait_for_ajax
@@ -184,7 +191,7 @@ describe 'creating a transfer request', js: true do
     end
 
     describe 'the trasnfer button' do
-      it 'should be present' do
+      it 'is present' do
         expect(page).to have_selector('.js-transfer-urls')
       end
 
@@ -194,7 +201,7 @@ describe 'creating a transfer request', js: true do
           wait_for_ajax
         end
 
-        it 'should display the modal' do
+        it 'displays the modal' do
           expect(page).to have_selector('#index-modal', visible: true)
         end
       end
@@ -215,28 +222,31 @@ describe 'creating a transfer request', js: true do
     end
 
     describe 'accepting' do
-      it 'should update the status of the transfer request' do
+      it 'updates the status of the transfer request' do
         expect do
           find('.js-approve-transfer').click
           wait_for_ajax
         end.to change(TransferRequest.pending, :count).by(-1)
       end
-      it 'should change the status of the transfer to approved' do
-        expect(page).to have_css('.js-approve-transfer');
+
+      it 'changes the status of the transfer to approved' do
+        expect(page).to have_css('.js-approve-transfer')
         expect do
           find('.js-approve-transfer').click
           wait_for_ajax
           @transfer.reload
         end.to change(@transfer, :status).to('approved')
       end
-      it 'should change the owner of the url' do
+
+      it 'changes the owner of the url' do
         expect do
           find('.js-approve-transfer').click
           wait_for_ajax
           @other_url.reload
         end.to change(@other_url, :group_id).to(@user.context_group_id)
       end
-      it 'should display the url in your list' do
+
+      it 'displays the url in your list' do
         find('.js-approve-transfer').click
         wait_for_ajax
         expect(page).to have_selector("#url-#{@other_url.id}")
@@ -244,14 +254,15 @@ describe 'creating a transfer request', js: true do
     end
 
     describe 'rejecting' do
-      it 'should change the status of the the transfer request' do
+      it 'changes the status of the the transfer request' do
         expect do
           find('.js-reject-transfer').click
           click_button "Confirm"
           wait_for_ajax
         end.to change(TransferRequest.pending, :count).by(-1)
       end
-      it 'should change the status of the transfer to rejected' do
+
+      it 'changes the status of the transfer to rejected' do
         expect do
           find('.js-reject-transfer').click
           click_button "Confirm"
@@ -259,17 +270,19 @@ describe 'creating a transfer request', js: true do
           @transfer.reload
         end.to change(@transfer, :status).to('rejected')
       end
-      it 'should not change the owner of the url' do
+
+      it 'does not change the owner of the url' do
         expect do
           find('.js-reject-transfer').click
           wait_for_ajax
           @other_url.reload
-        end.to_not change(@other_url, :group_id)
+        end.not_to change(@other_url, :group_id)
       end
-      it 'should not display the url in your list' do
+
+      it 'does not display the url in your list' do
         find('.js-reject-transfer').click
         wait_for_ajax
-        expect(page).to_not have_selector("#url-#{@other_url.id}")
+        expect(page).not_to have_selector("#url-#{@other_url.id}")
       end
     end
   end

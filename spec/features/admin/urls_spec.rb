@@ -7,7 +7,7 @@ describe 'as a non-admin user' do
     visit admin_urls_path
   end
 
-  it 'should display an access violation' do
+  it 'displays an access violation' do
     expect(page).to have_content 'You are not authorized to perform this action.'
   end
 end
@@ -20,11 +20,12 @@ describe 'as a valid admin user' do
 
   describe 'visiting admin url index' do
     before { visit admin_urls_path }
+
     it 'display the URL title' do
       expect(page).to have_content 'URLs'
     end
 
-    it 'should have the Owner field' do
+    it 'has the Owner field' do
       expect(page).to have_content 'Owner'
     end
 
@@ -34,7 +35,7 @@ describe 'as a valid admin user' do
         visit admin_urls_path
       end
 
-      it 'should display the actions dropdown button' do
+      it 'displays the actions dropdown button' do
         expect(page).to have_selector('.dropdown .actions-dropdown-button')
       end
 
@@ -43,20 +44,21 @@ describe 'as a valid admin user' do
         let(:new_keyword) { 'face' }
 
         describe 'when editing', js: true do
-          before {
+          before do
             find('.dropdown .actions-dropdown-button').click
             find('.dropdown-menu .edit-url').click
-          }
+          end
 
           describe 'with new valid content' do
-            it 'should update the url in the db' do
+            it 'updates the url in the db' do
               expect(page).to have_css('#url_url')
               find('#url_url').set new_url
               find('.js-url-submit').click
               wait_for_ajax
               expect(@url.reload.url).to eq(new_url)
             end
-            it 'should update the keyword in the db' do
+
+            it 'updates the keyword in the db' do
               find('#url_keyword').set new_keyword
               find('.js-url-submit').click
               wait_for_ajax
@@ -67,7 +69,7 @@ describe 'as a valid admin user' do
           describe 'with invalid content' do
             it 'displays an error and does not save upon clicking Create if keyword is already taken' do
               @other_url = FactoryBot.create(:url)
-              expect(page).to have_selector('#url_keyword');
+              expect(page).to have_selector('#url_keyword')
               find('#url_keyword').set @other_url.keyword
 
               expect do
@@ -80,7 +82,7 @@ describe 'as a valid admin user' do
 
         describe 'when deleting existing url', js: true do
           describe 'clicking delete' do
-            it 'should delete the url' do
+            it 'deletes the url' do
               expect do
                 find('.dropdown .actions-dropdown-button').click
                 find('.dropdown-menu .delete-url').click
