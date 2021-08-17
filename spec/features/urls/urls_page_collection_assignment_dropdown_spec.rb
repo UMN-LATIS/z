@@ -4,18 +4,6 @@ require 'rails_helper'
 
 describe 'collection assignment dropdown', js: true do
   let(:user) { FactoryBot.create(:user) }
-  # let(:url) { FactoryBot.create(:url) }
-  # let(:new_group) { FactoryBot.create(:group) }
-
-  # before do
-  #   url.group = user.context_group
-  #   new_group.users << user
-  #   sign_in(user)
-  #   visit urls_path
-  # end
-
-  let(:new_url) { 'http://www.facebook.com' }
-  let(:new_keyword) { 'face' }
 
   before do
     @url = FactoryBot.create(:url, group: user.context_group)
