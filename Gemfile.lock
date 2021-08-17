@@ -35,6 +35,7 @@ GIT
 GIT
   remote: https://github.com/twalpole/apparition.git
   revision: ca86be4d54af835d531dbcd2b86e7b2c77f85f34
+  ref: ca86be4
   specs:
     apparition (0.6.0)
       capybara (~> 3.13, < 4)
@@ -307,6 +308,8 @@ GEM
       rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
+    rack-utf8_sanitizer (1.7.0)
+      rack (>= 1.0, < 3.0)
     rails (6.0.4)
       actioncable (= 6.0.4)
       actionmailbox (= 6.0.4)
@@ -512,6 +515,7 @@ DEPENDENCIES
   pry-rails (~> 0.3)
   puma (~> 4.3)
   pundit (~> 2.1)
+  rack-utf8_sanitizer (~> 1.7)
   rails (~> 6.0)
   rqrcode (~> 1.1)
   rspec-rails (~> 4.0)

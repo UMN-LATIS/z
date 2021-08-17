@@ -102,7 +102,10 @@ group :development, :test do
   gem 'rspec-rails', "~> 4.0"
   gem 'capybara', "~> 3.15"
   gem 'capybara-screenshot', "~> 1.0"
-  gem 'apparition', github: 'twalpole/apparition'
+
+  # Using github for source until change in twalpole/apparition#79
+  # is released. Change back to gem version after.
+  gem 'apparition', github: 'twalpole/apparition', ref: 'ca86be4'
   gem 'launchy', "~> 2.4"
   gem 'factory_bot_rails', "~> 6.2"
   gem 'database_cleaner', "~> 1.8"
@@ -159,3 +162,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'browser', "~> 4.2"
 
 gem "webpacker", "~> 5.4"
+
+gem "rack-utf8_sanitizer", "~> 1.7"
