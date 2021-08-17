@@ -1,7 +1,6 @@
 class GroupMembershipsController < ApplicationController
-  before_action :set_params, only: [:show, :index, :update, :create, :destroy]
+  before_action :set_params, only: %i[show index update create destroy]
   before_action :ensure_signed_in
-
 
   def index
   end
@@ -31,7 +30,6 @@ class GroupMembershipsController < ApplicationController
     end
   end
 
-
   def destroy
     @member = User.find(params[:id])
     @group.remove_user(@member)
@@ -40,7 +38,6 @@ class GroupMembershipsController < ApplicationController
       format.json { head :no_content }
       format.js { render :layout => false }
     end
-
   end
 
   private
@@ -55,5 +52,4 @@ class GroupMembershipsController < ApplicationController
   def user_params
     params.permit(:uid)
   end
-
 end

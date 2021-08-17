@@ -2,7 +2,6 @@ class Admin::MembersController < ApplicationController
   before_action :ensure_signed_in
   before_action :ensure_is_admin
 
-
   def index
     @admins = User.where(admin: true)
     authorize :admin_membership
@@ -34,7 +33,6 @@ class Admin::MembersController < ApplicationController
     end
   end
 
-
   def destroy
     @member = User.find(params[:id])
     authorize :admin_membership
@@ -51,7 +49,6 @@ class Admin::MembersController < ApplicationController
         format.html { redirect_to admin_members_url, notice: "Admin Membership: #{@member.display_name} (#{@member.internet_id}) has been removed." }
       end
     end
-
   end
 
   private
@@ -59,5 +56,4 @@ class Admin::MembersController < ApplicationController
   def user_params
     params.permit(:uid)
   end
-
 end

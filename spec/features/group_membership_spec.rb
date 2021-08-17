@@ -48,7 +48,7 @@ describe 'groups members index page' do
         visit group_members_path(group)
       end
 
-      it 'adding should increase the user count of the group by 1' do
+      it 'adding should increase the user count of the group by 1', retry: 3 do
         expect do
           js_make_all_inputs_visible
           fill_in('Add a new member', with: 'test-user')
@@ -60,7 +60,7 @@ describe 'groups members index page' do
         end.to change(group.users, :count).by(1)
       end
 
-      it 'clicking delete decrease the user count by one' do
+      it 'clicking delete decrease the user count by one', retry: 3 do
         expect do
           find('.delete-group-member').click
           click_button 'Confirm'

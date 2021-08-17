@@ -4,6 +4,3 @@ def sign_in(user)
   find('#email').set user.uid
   click_button 'Sign In'
 end
-
-
-

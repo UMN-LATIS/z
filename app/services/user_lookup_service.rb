@@ -3,7 +3,7 @@ require 'net/ldap' # gem install net-ldap
 
 class UserLookupService
   def initialize(params = nil)
-    # ldap.yml may contain embedded erb to 
+    # ldap.yml may contain embedded erb to
     # fetch environment variables so parse this
     # before loading the config
     raw_config = File.read('config/ldap.yml')
@@ -16,6 +16,7 @@ class UserLookupService
 
   def search
     return nil unless @query.present? && @query_type.present?
+
     results = nil
     if @connection.bind
       if @query_type == 'all'
@@ -50,6 +51,7 @@ class UserLookupService
       end
     end
     return nil unless results
+
     results = results.promote(results.detect { |x| x[:uid] == [@query] })
     results = results.map { |x| { umndid: umndid(x), display: display(x), internet_id: internet_id(x), display_name: result_name(x) } }.flatten unless results.blank?
     results

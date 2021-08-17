@@ -30,7 +30,7 @@ class AdminUrlDatatable < AjaxDatatablesRails::Base
           partial: 'urls/in_row_actions',
           locals: { url: record, admin_view: true }
         ),
-        'DT_RowData_keyword' =>  record.keyword ,
+        'DT_RowData_keyword' => record.keyword,
         'DT_RowData_url' => record.url,
         'DT_RowId' => "url-#{record.id}"
       }

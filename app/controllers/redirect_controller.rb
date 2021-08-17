@@ -8,8 +8,8 @@ class RedirectController < ApplicationController
     else
       redirect_to(url.url)
       browser = Browser.new(request.user_agent, accept_language: "en-us")
-      if(!browser.bot?)
-      	url.add_click!(request.remote_ip)
+      if !browser.bot?
+        url.add_click!(request.remote_ip)
       end
     end
   end

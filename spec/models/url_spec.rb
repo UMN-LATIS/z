@@ -268,7 +268,6 @@ Berners-Lee, et al.         Standards Track                    [Page 36]
 
 RFC 3986                   URI Generic Syntax               January 2005
 
-
 5.4.2.  Abnormal Examples
 
    Although the following abnormal examples are unlikely to occur in
@@ -409,7 +408,6 @@ RFC 3986                   URI Generic Syntax               January 2005
         @url.url = 'g#s/../x'
         expect(@url).to be_valid
       end
-
     end
   end
 end

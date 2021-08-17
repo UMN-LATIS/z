@@ -54,41 +54,40 @@ class Url < ApplicationRecord
     end
   end
 
-  scope :created_by_id, ->(group_id) do
+  scope :created_by_id, lambda { |group_id|
     where(group_id: group_id)
-  end
+  }
 
-  scope :created_by_ids, ->(group_ids) do
+  scope :created_by_ids, lambda { |group_ids|
     where(group_id: group_ids)
-  end
+  }
 
-  scope :created_by_name, ->(group_name) do
+  scope :created_by_name, lambda { |group_name|
     owner_to_search = "%#{group_name}%"
     possible_groups = Group.where('name LIKE ?', owner_to_search).map(&:id)
     where(group_id: possible_groups)
-  end
+  }
 
-  scope :by_keyword, ->(keyword) do
+  scope :by_keyword, lambda { |keyword|
     where('keyword LIKE ?', "%#{keyword.try(:downcase)}%")
-  end
+  }
 
-  scope :by_keywords, ->(keywords) do
+  scope :by_keywords, lambda { |keywords|
     where(keyword: "%#{keywords.map(&:downcase)}%")
-  end
+  }
 
-  scope :not_in_pending_transfer_request, -> do
+  scope :not_in_pending_transfer_request, lambda {
     url_ids = TransferRequest.pending.joins(:urls).pluck(:url_id)
     where.not("#{table_name}.id IN (?)", url_ids) if url_ids.present?
-  end
+  }
 
   def add_click!(client_ip)
-
     client_ip_decimal = IPAddr.new(client_ip).to_i
 
     begin
       @location = IpLocation.where('? >= ip_from AND ? < ip_to', client_ip_decimal, client_ip_decimal)
 
-      if(@location.first!.country_code)
+      if @location.first!.country_code
         country_code = @location.first!.country_code
       end
     rescue
@@ -112,7 +111,7 @@ class Url < ApplicationRecord
   def self.to_csv(duration, time_unit, urls)
     # ex: http://localhost:3000/shortener/urls/csv/24/days.csv
     col_names = %w{url keyword}
-    formats = {days: '%m/%d', hours: '%I:%M%p'}
+    formats = { days: '%m/%d', hours: '%I:%M%p' }
     data = CSV.generate(headers: true) do |csv|
       urls.each do |url|
         res = url.clicks.group_by_time_ago(duration.to_i.send(time_unit), formats[time_unit.to_sym])
@@ -152,5 +151,4 @@ class Url < ApplicationRecord
       v.save
     end
   end
-
 end

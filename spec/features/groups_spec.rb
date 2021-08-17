@@ -156,6 +156,4 @@ describe 'groups index page', js: true do
       end
     end
   end
-
-
 end

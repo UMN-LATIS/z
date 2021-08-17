@@ -30,9 +30,9 @@ class Group < ApplicationRecord
   end
 
   # all groups that arent the default group for a user
-  scope :not_default, -> do
+  scope :not_default, lambda {
     where('id not in ( select default_group_id from users )')
-  end
+  }
 
   def user?(user)
     users.exists?(user.id)
@@ -41,7 +41,7 @@ class Group < ApplicationRecord
   def add_user(user, send_group_change_notifications = false)
     users << user unless users.exists?(user.id)
     groups_users.find_by_user_id(user).update(
-        notify_user_changes: send_group_change_notifications
+      notify_user_changes: send_group_change_notifications
     )
   end
 
@@ -77,5 +77,4 @@ class Group < ApplicationRecord
       v.save
     end
   end
-
 end

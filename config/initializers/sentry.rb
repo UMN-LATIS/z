@@ -7,7 +7,7 @@ Sentry.init do |config|
   # We recommend adjusting this value in production
   if Rails.env.production?
     config.traces_sample_rate = 0
-  else 
+  else
     config.traces_sample_rate = 0.5
   end
 end

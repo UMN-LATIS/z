@@ -32,7 +32,7 @@ describe 'creating a transfer request', js: true do
         FactoryBot.create(:url, group: @user.context_group)
         FactoryBot.create(:url, group: @user.context_group)
       end
-      
+
       it 'should have a disabled bulk action button if no urls are selected', retry: 3 do
         visit urls_path
         expect(page).to have_css('.table-options.disabled')

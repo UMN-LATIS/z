@@ -1,15 +1,14 @@
 class Admin::AnnouncementsController < ApplicationController
-  before_action :set_admin_announcement, only: [:show, :edit, :update, :destroy]
+  before_action :set_admin_announcement, only: %i[show edit update destroy]
   before_action :ensure_signed_in
   before_action :set_admin_view
   before_action :ensure_is_admin
-
 
   # GET /admin/announcements
   # GET /admin/announcements.json
   def index
     @admin_announcements = Admin::Announcement.all
-    authorize @admin_announcements  unless @admin_announcements .nil?
+    authorize @admin_announcements unless @admin_announcements.nil?
   end
 
   # GET /admin/announcements/1
@@ -33,9 +32,9 @@ class Admin::AnnouncementsController < ApplicationController
 
     respond_to do |format|
       if @admin_announcement.save
-        format.html {redirect_to admin_announcements_url, notice: 'Announcement was successfully created.'}
+        format.html { redirect_to admin_announcements_url, notice: 'Announcement was successfully created.' }
       else
-        format.html {render :new}
+        format.html { render :new }
       end
     end
   end
@@ -45,9 +44,9 @@ class Admin::AnnouncementsController < ApplicationController
   def update
     respond_to do |format|
       if @admin_announcement.update(admin_announcement_params)
-        format.html {redirect_to admin_announcements_url, notice: 'Announcement was successfully updated.'}
+        format.html { redirect_to admin_announcements_url, notice: 'Announcement was successfully updated.' }
       else
-        format.html {render :edit}
+        format.html { render :edit }
       end
     end
   end
@@ -57,12 +56,13 @@ class Admin::AnnouncementsController < ApplicationController
   def destroy
     @admin_announcement.destroy
     respond_to do |format|
-      format.html {redirect_to admin_announcements_url, notice: 'Announcement was successfully destroyed.'}
-      format.json {head :no_content}
+      format.html { redirect_to admin_announcements_url, notice: 'Announcement was successfully destroyed.' }
+      format.json { head :no_content }
     end
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_admin_announcement
     @admin_announcement = Admin::Announcement.find(params[:id])

@@ -37,9 +37,9 @@ class UrlDatatable < AjaxDatatablesRails::Base
         ),
         url: link_to(display_long_url(record.url), record.url, target: '_blank'),
         keyword: render(
-            formats: [:html],
-            partial: 'urls/short_url_table_cell',
-            locals: { url: record}
+          formats: [:html],
+          partial: 'urls/short_url_table_cell',
+          locals: { url: record }
         ),
         total_clicks: link_to(record.total_clicks, url_path(record.keyword), target: '_blank'),
         created_at: record.created_at.to_s(:created_on_formatted),
@@ -48,7 +48,7 @@ class UrlDatatable < AjaxDatatablesRails::Base
           partial: 'urls/in_row_actions',
           locals: { url: record, admin_view: false }
         ),
-        'DT_RowData_keyword' =>  record.keyword ,
+        'DT_RowData_keyword' => record.keyword,
         'DT_RowData_url' => record.url,
         'DT_RowId' => "url-#{record.id}"
       }

@@ -13,6 +13,7 @@ module Arel
       def visit_Arel_Nodes_Regexp(obj, collector)
         infix_value obj, collector, ' REGEXP '
       end
+
       def visit_Arel_Nodes_NotRegexp(obj, collector)
         infix_value obj, collector, ' NOT REGEXP '
       end

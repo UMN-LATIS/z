@@ -17,5 +17,4 @@ describe AuditPolicy do
       expect(subject).not_to permit(@bad_user)
     end
   end
-
 end

@@ -1,5 +1,5 @@
 class FaqController < ApplicationController
-	def index
-	  @faqs = FrequentlyAskedQuestion.all
-	end
+  def index
+    @faqs = FrequentlyAskedQuestion.all
+  end
 end

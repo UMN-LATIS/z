@@ -1,6 +1,6 @@
 # controllers/groups_controller.rb
 class GroupsController < ApplicationController
-  before_action :set_group, only: [:show, :edit, :update, :destroy]
+  before_action :set_group, only: %i[show edit update destroy]
   before_action :ensure_signed_in
 
   def index
@@ -47,7 +47,7 @@ class GroupsController < ApplicationController
         sign_in current_user
         format.js { render :create }
       elsif params[:modal]
-        format.js { render "groups/new", layout: false}
+        format.js { render "groups/new", layout: false }
       else
         format.js { render :edit }
       end

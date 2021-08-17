@@ -24,8 +24,6 @@ RSpec.describe Admin::Announcement, type: :model do
   it { should be_valid }
   it { should respond_to 'title' }
   it { should respond_to 'body' }
-  it { should respond_to 'stop_delivering_at'}
-  it { should respond_to 'start_delivering_at'}
-
-
+  it { should respond_to 'stop_delivering_at' }
+  it { should respond_to 'start_delivering_at' }
 end

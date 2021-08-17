@@ -1,5 +1,5 @@
 class Admin::UrlsController < ApplicationController
-  before_action :set_url, only: [:show, :edit, :update, :destroy]
+  before_action :set_url, only: %i[show edit update destroy]
   before_action :ensure_signed_in
   before_action :set_admin_view
 

@@ -46,7 +46,7 @@ RSpec.describe Group, type: :model do
       @group = FactoryBot.create(:group)
     end
     describe 'should add a user' do
-      before {@group.add_user @user}
+      before { @group.add_user @user }
       it ' and include user in group.users' do
         expect(@group.users).to include(@user)
       end
@@ -79,7 +79,7 @@ RSpec.describe Group, type: :model do
       @group.add_user @user
     end
     describe 'should have and remove user:' do
-      before {@group.remove_user @user}
+      before { @group.remove_user @user }
       it 'and then remove it' do
         expect(@group.users).not_to include(@user)
       end

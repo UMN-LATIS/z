@@ -52,10 +52,10 @@ gem 'twitter-bootstrap-rails', git: 'https://github.com/seyhunak/twitter-bootstr
 
 # Use special bootstrap select
 gem 'bootstrap-select-rails', "~> 1.13"
-#Use font awesome for icons
+# Use font awesome for icons
 gem "font-awesome-rails", "~> 4.7"
 
-#Use clipboard js plugin
+# Use clipboard js plugin
 gem 'clipboard-rails', "~> 1.7"
 
 # better confirm dialogs
@@ -76,8 +76,8 @@ gem 'pundit', "~> 2.1"
 # https://github.com/csm123/starburst#
 gem 'starburst',  git: 'https://github.com/csm123/starburst.git'
 
-#notify someone when exceptions occur
-#and notify slack channel
+# notify someone when exceptions occur
+# and notify slack channel
 gem 'exception_notification', "~> 4.4"
 gem 'slack-notifier', "~> 2.3"
 
@@ -157,7 +157,7 @@ group :development do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'browser', "~> 4.2"
 

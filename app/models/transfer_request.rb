@@ -29,7 +29,6 @@ class TransferRequest < ApplicationRecord
 
   validate :from_user_must_own_urls_or_from_user_is_admin
 
-
   scope :pending, -> { where(status: 'pending') }
 
   def pre_approve
@@ -47,6 +46,7 @@ class TransferRequest < ApplicationRecord
     url_groups = urls.map(&:group_id)
     user_groups = from_user.groups.pluck(:id)
     return if (url_groups - user_groups).empty? || from_group.try(:admin?) || from_user.try(:admin?)
+
     errors.add(:from_user, 'must own URLs')
   end
 
@@ -69,7 +69,6 @@ class TransferRequest < ApplicationRecord
     save
   end
 
-
   def version_history
     h = "<b> Requested By: #{from_user.internet_id} </b><br/>"
     h.concat "<b> To User: #{to_user.internet_id} </b><br/>"
@@ -80,7 +79,7 @@ class TransferRequest < ApplicationRecord
     end
     h.concat "<h3>History</h3><hr>"
     self.versions.each do |v|
-      g = v.reify #unless v.event.equal? "create"
+      g = v.reify # unless v.event.equal? "create"
       h.concat "<b>What Happened: </b> #{v.event} <br/>"
       h.concat "<b>Who Made It: </b>  #{self.class.version_user(v)}<br/>"
       h.concat "<b>Previous Status: </b>  #{g ? g.status : 'N/A'}<br/>"
@@ -91,6 +90,4 @@ class TransferRequest < ApplicationRecord
       v.save
     end
   end
-
-
 end

@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
   def show
-    #code
-  end  
+    # code
+  end
 end

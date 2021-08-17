@@ -35,7 +35,7 @@ describe 'admin urls index page' do
             page.find('.table-options').click
             page.find('.js-transfer-urls').click
             @to_user = FactoryBot.create(:user)
-            
+
             # Use JS Make hidden input visible for testing
             # as a workaround for the option "visible: false"
             # which doesn't seem to work on this test
@@ -62,7 +62,6 @@ describe 'admin urls index page' do
             first('input#transfer_request_to_group').set @to_user.uid
             find('#new_transfer_request  input[type="submit"]').click
             click_button 'Confirm'
-
           end
           it 'should not have transferred' do
             expect(@admin.context_group.urls.count).to be == 1
@@ -84,7 +83,7 @@ describe 'admin urls index page' do
         describe 'the transfer button' do
           it 'should be enabled' do
             expect(page.find('.table-options')[:class]).to_not(
-                have_content('disabled')
+              have_content('disabled')
             )
           end
         end
@@ -127,16 +126,16 @@ describe 'admin urls index page' do
                   end.to change(User, :count).by(1)
                 end
                 it 'should create an approved transfer request to the new user' do
-                    find('#new_transfer_request input[type="submit"]').click
-                    click_button 'Confirm'
+                  find('#new_transfer_request input[type="submit"]').click
+                  click_button 'Confirm'
 
-                    # check that the modal has been dismissed
-                    expect(page).to have_no_css('#new_transfer_request')
-                    user = User.find_by(uid: new_uid)
+                  # check that the modal has been dismissed
+                  expect(page).to have_no_css('#new_transfer_request')
+                  user = User.find_by(uid: new_uid)
 
-                    transfer = TransferRequest.find_by(to_group: user.context_group_id)
-                    expect(transfer.status).to eql('approved')
-                    expect(user.context_group.id).to eql(transfer.to_group_id)
+                  transfer = TransferRequest.find_by(to_group: user.context_group_id)
+                  expect(transfer.status).to eql('approved')
+                  expect(user.context_group.id).to eql(transfer.to_group_id)
                 end
               end
             end
