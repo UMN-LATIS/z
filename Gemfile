@@ -13,7 +13,7 @@ gem 'omniauth-shibboleth-passive', "~> 0.1"
 
 # gem 'mimemagic', github: 'mimemagicrb/mimemagic', ref: '01f92d86d15d85cfd0f20dabd025dcbd36a8a60f'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0'
+gem 'rails', '~> 6.1'
 # Use mysql2 as the database for Active Record
 gem 'mysql2', "~> 0.5"
 # Use sqlite also
@@ -62,7 +62,7 @@ gem 'clipboard-rails', "~> 1.7"
 gem 'data-confirm-modal', "~> 1.6"
 
 # use papertrail for auding or versioning
-gem 'paper_trail', "~> 10.3"
+gem 'paper_trail', "~> 12.0"
 
 # Use barby to generate QR codes
 gem 'barby', "~> 0.6"
@@ -73,8 +73,9 @@ gem 'rqrcode', "~> 1.1"
 gem 'pundit', "~> 2.1"
 
 # announcements to the seething masses
-# https://github.com/csm123/starburst#
-gem 'starburst',  git: 'https://github.com/csm123/starburst.git'
+# Using our own fork of starburst to support Rails 6.1 for now
+gem 'starburst',  github: 'UMN-LATIS/starburst'
+
 
 # notify someone when exceptions occur
 # and notify slack channel
