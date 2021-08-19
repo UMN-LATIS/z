@@ -113,7 +113,7 @@ group :development, :test do
 
   # for retrying flaky tests until they can be fixed
   gem "rspec-retry", "~> 0.6"
-  
+
   # Watch files for changes and re-run tests
   gem 'guard', "~> 2.17"
   gem 'guard-rspec', "~> 4.7", require: false
