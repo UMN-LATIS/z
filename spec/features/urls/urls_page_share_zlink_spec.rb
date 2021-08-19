@@ -30,7 +30,7 @@ describe 'when sharing existing url', js: true do
     expect(page).to have_selector('.url-share-button-qr')
   end
 
-  it 'downloads a qr code' do
+  it 'downloads a qr code', retry: 3 do
     expect(page).to have_selector('.dropdown .actions-dropdown-button')
     find('.dropdown .actions-dropdown-button').click
     find('.dropdown-menu .share-url').hover
