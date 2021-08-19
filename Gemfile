@@ -76,7 +76,6 @@ gem 'pundit', "~> 2.1"
 # Using our own fork of starburst to support Rails 6.1 for now
 gem 'starburst',  github: 'UMN-LATIS/starburst'
 
-
 # notify someone when exceptions occur
 # and notify slack channel
 gem 'exception_notification', "~> 4.4"
