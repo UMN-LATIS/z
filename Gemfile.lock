@@ -420,6 +420,8 @@ GEM
       concurrent-ruby
       faraday
     shellany (0.0.1)
+    shoulda-matchers (5.0.0)
+      activesupport (>= 5.2.0)
     slack-notifier (2.4.0)
     sprockets (3.7.2)
       concurrent-ruby (~> 1.0)
@@ -528,6 +530,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   sentry-rails (~> 4.4)
   sentry-ruby (~> 4.4)
+  shoulda-matchers (~> 5.0)
   slack-notifier (~> 2.3)
   sqlite3 (~> 1.4)
   starburst!
