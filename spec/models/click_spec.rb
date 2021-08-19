@@ -39,9 +39,10 @@ RSpec.describe Click, type: :model do
     end
 
     describe('.group_by_time_ago') do
+      year_month_day_strf = '%Y-%m-%d'
+
       # this feels like word salad
       it 'counts url clicks over a given duration, returning a hash keyed by a given time format string' do
-        year_month_day_strf = '%Y-%m-%d'
         expect(url1.clicks.group_by_time_ago(3.days, year_month_day_strf))
           .to eq({
                    2.days.ago.strftime(year_month_day_strf) => 3,
@@ -61,6 +62,19 @@ RSpec.describe Click, type: :model do
                    1.day.ago.strftime(year_month_day_strf) => 2,
                    Time.zone.now.strftime(year_month_day_strf) => 101
                  })
+      end
+
+      it 'is sorted by oldest to most current dates' do
+        # add new clicks, but pretend they're older
+        repeatedly_click(url: url1, times: 1, days_ago: 7)
+        clicks_by_day_hash = url1.clicks.group_by_time_ago(10.days, year_month_day_strf)
+        expect(clicks_by_day_hash.to_a)
+          .to eq([
+                   [7.days.ago.strftime(year_month_day_strf), 1],
+                   [2.days.ago.strftime(year_month_day_strf), 3],
+                   [1.day.ago.strftime(year_month_day_strf), 2],
+                   [Time.zone.now.strftime(year_month_day_strf), 1]
+                 ])
       end
     end
 
