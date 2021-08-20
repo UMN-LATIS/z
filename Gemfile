@@ -123,6 +123,7 @@ group :development, :test do
   gem 'pry', '~> 0.13'
   gem 'pry-byebug', "~> 3.9"
   gem 'pry-rails', "~> 0.3"
+  gem 'shoulda-matchers', '~> 5.0'
 end
 
 group :development do
