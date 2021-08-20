@@ -42,6 +42,12 @@ Rails.application.configure do
   # config.action_cable.mount_path = nil
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
+
+  # We don't want to force_ssl right now.
+  # Z intentionally is able to vend shortened URLs
+  # over http when requested, so that we don't introduce cross protocol issues
+  # for end users. Instead, we use an apache mod_rewrite rule to force any
+  # requests to the user interface side of Z to be https.
   # config.force_ssl = true
 
   # Use the lowest log level to ensure availability of diagnostic information
