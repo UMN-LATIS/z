@@ -135,12 +135,16 @@ class UrlsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_url
     @url = Url.find(params[:id])
+    raise ActiveRecord::RecordNotFound if @url.nil?
+
     authorize @url unless @url.nil?
     @url_identifier = @url.id
   end
 
   def set_url_friendly
     @url = Url.find_by(keyword: params[:id])
+    raise ActiveRecord::RecordNotFound if @url.nil?
+
     authorize @url unless @url.nil?
     @url_identifier = @url.id
   end
