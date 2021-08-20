@@ -32,6 +32,9 @@ Metrics/PerceivedComplexity:
 Metrics/CyclomaticComplexity:
   Enabled: false
 
+Metrics/ClassLength:
+  Enabled: false
+
 # explicit arguments are easier to understand / read without needing to read the docs
 Style/RedundantArgument:
   Enabled: false
