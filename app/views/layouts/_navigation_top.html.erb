@@ -1,86 +1,140 @@
-<header class="cla-header " role="banner">
-  <div class="row main-swooshes container">
-    <nav class="navbar navbar-default" role="navigation">
-       <div class="container-fluid">
+<nav class="app-nav navbar navbar-default" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button 
+        type="button" 
+        class="navbar-toggle collapsed"
+        data-toggle="collapse" 
+        data-target="#app-menu"
+        aria-expanded="false"
+      >
+        <i class="fa fa-bars"></i>
+        Menu
+      </button>
+      <a class="navbar-brand" href="/">
+        <span class="app-nav__name">Z</span>
+        <span class="app-nav__description">Link Shortener</span>
+      </a>
+    </div>
 
-           <ul class="nav navbar-nav navbar-left">
-             <% if signed_in? %>
+    <div class="collapse navbar-collapse" id="app-menu">
+      <ul class="nav navbar-nav navbar-right">
 
-               <li class="<%= current_page?(urls_path) ? "selected" : "" %>">
-                 <%= link_to (urls_path) do  %>
-                   <span>
-                     <i class="fa fa-link" aria-hidden="true"></i>
-                     <span > <%= t('views.application.nav.links') %> </span>
-                   </span>
-                 <% end %>
-               </li>
-               <li class="<%= current_page?(groups_path) || params[:controller] == 'group_memberships' ? "selected" : "" %>">
-                 <%= link_to (groups_path) do  %>
-                   <span>
-                     <i class="fa fa-users" aria-hidden="true"></i>
-                     <span><%= t('views.application.nav.collections') %></span>
-                   </span>
-                 <% end %>
-               </li>
-               <li class="<%= current_page?(api_keys_path) ? "selected" : "" %>">
-                <%= link_to (api_keys_path) do  %>
-                  <span>
-                    <i class="fa fa-key" aria-hidden="true"></i>
-                    <span><%= t('views.application.nav.api') %></span>
-                  </span>
-                <% end %>
-               </li>
+      <% if signed_in? %>
+        <li class="<%= current_page?(urls_path) ? "selected" : "" %>">
+          <%= link_to(urls_path) do  %>
+              <i class="fa fa-link" aria-hidden="true"></i>
+              <%= t('views.application.nav.links') %>
+          <% end %>
+        </li>
 
-               <%if current_user.admin? %>
+        <li class="<%= current_page?(groups_path) || params[:controller] == 'group_memberships' ? "selected" : "" %>">
+          <%= link_to(groups_path) do  %>
+            <i class="fa fa-users" aria-hidden="true"></i>
+            <%= t('views.application.nav.collections') %>
+          <% end %>
+        </li>
 
-               <li>
-                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= t('views.application.nav.admin_menu')%> <span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="<%= admin_urls_path %>"><%= t('views.application.nav.admin.all_urls') %></a></li>
-                    <li><a href="<%= admin_groups_path %>"><%= t('views.application.nav.admin.all_collections') %></a></li>
-                    <li><a href="<%= admin_members_path %>"><%= t('views.application.nav.admin.admins') %></a></li>
-                    <li><a href="<%= admin_audits_path %>"><%= t('views.application.nav.admin.audit_log') %></a></li>
-                    <li><a href="<%= admin_announcements_path %>">Announcements</a></li>
-                  </ul>
-                </li>
+          <li class="<%= current_page?(api_keys_path) ? "selected" : "" %>">
+            <%= link_to(api_keys_path) do  %>
+              <i class="fa fa-key" aria-hidden="true"></i>
+              <%= t('views.application.nav.api') %>
+            <% end %>
+          </li>
 
-               <%end%>
-                 <li>
-                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= t('views.application.nav.help') %>
-                     <span class="caret"></span></a>
-                   <ul class="dropdown-menu">
-                     <li><a href="https://it.umn.edu/z-links-create-manage-z-links"><%= t('views.application.nav.tips') %></a></li>
-                     <li><a href="<%= pages_path(page: :whats_new) %>"><%= t('views.application.nav.whatsnew') %></a></li>
-                     <li><a href="<%= faq_path %>"><%= t('views.application.nav.faq') %></a></li>
-                     <li><a href='mailto:help@umn.edu'><%= t('views.application.nav.contact_us') %></a></li>
-                   </ul>
-                 </li>
-               <li>
-                 <%= link_to (signout_path) do %>
-                   <span>
-                     <i class="fa fa-sign-in " aria-hidden="true"></i>
-                     <span > <%= t('views.application.nav.sign_out') %> </span>
-                   </span>
-                 <% end %>
-               </li>
-             <% else %>
+          <%if current_user.admin? %>
+
+          <li>
+            <a 
+              href="#" 
+              class="dropdown-toggle"
+              data-toggle="dropdown"
+              role="button"
+              aria-haspopup="true" 
+              aria-expanded="false"
+            >
+              <%= t('views.application.nav.admin_menu')%>
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a href="<%= admin_urls_path %>">
+                  <%= t('views.application.nav.admin.all_urls') %>
+                </a>
+              </li>
+              <li>
+                <a href="<%= admin_groups_path %>">
+                  <%= t('views.application.nav.admin.all_collections') %>
+                </a>
+              </li>
+              <li>
+                <a href="<%= admin_members_path %>">
+                  <%= t('views.application.nav.admin.admins') %>
+                </a>
+              </li>
+              <li>
+                <a href="<%= admin_audits_path %>">
+                  <%= t('views.application.nav.admin.audit_log') %>
+                </a>
+              </li>
+              <li>
+                <a href="<%= admin_announcements_path %>">
+                  Announcements
+                </a>
+              </li>
+            </ul><!-- .dropdown-menu -->
+          </li>
+        <%end # end admin menu item %>
+          
+          <li>
+              <a 
+                href="#"
+                class="dropdown-toggle"
+                data-toggle="dropdown"
+                role="button" aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <%= t('views.application.nav.help') %>
+                <span class="caret"></span>
+              </a>
+
+              <ul class="dropdown-menu">
                 <li>
-                 <%= link_to (signin_path) do %>
-                   <span>
-                     <i class="fa fa-sign-out" aria-hidden="true"></i>
-                     <span > <%= t('views.application.nav.sign_in') %></span>
-                   </span>
-                 <% end %>
-               </li>
-             <% end %>
-           </ul>
-       </div>
-     </nav>
-     <div class="panel-pane pane-cla-glue-logo-pane left">
-       <a href=<%= t('views.application.nav.org_url') %> >
-         <img class="logo" src="<%= asset_path('college_of_liberal_arts.png') %>" alt="College of Liberal Arts">
-         <div class="logo-text"></div>
-       </a>
-     </div>
-  </div>
-</header>
+                  <a href="https://it.umn.edu/z-links-create-manage-z-links">
+                    <%= t('views.application.nav.tips') %>
+                  </a>
+                </li>
+                <li>
+                  <a href="<%= pages_path(page: :whats_new) %>">
+                  <%= t('views.application.nav.whatsnew') %></a>
+                </li>
+                <li>
+                  <a href="<%= faq_path %>">
+                    <%= t('views.application.nav.faq') %>
+                  </a>
+                </li>
+                <li>
+                  <a href='mailto:help@umn.edu'>
+                    <%= t('views.application.nav.contact_us') %>
+                  </a>
+                </li>
+              </ul><!-- .dropdown-menu -->
+            </li>
+            <li>
+              <a href="<%= signout_path %>">
+                  <i class="fa fa-sign-in " aria-hidden="true"></i>
+                  <%= t('views.application.nav.sign_out') %>
+              </a>
+            </li>
+        <% else %>
+          <li>
+            <a href="<%= signin_path %>">
+              <i class="fa fa-sign-out" aria-hidden="true"></i>
+              <%= t('views.application.nav.sign_in') %>
+            </a>
+          </li>
+        <% end %>
+      </ul>
+      </div><!-- .navbar-collapse -->
+  </div><!-- .container-fluid -->
+</nav><!-- .navbar -->

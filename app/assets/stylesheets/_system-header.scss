@@ -1,0 +1,87 @@
+.system-header {
+  --maroon: #7a0019;
+  --gold: #fc3;
+  background: var(--maroon);
+  color: #fff; 
+
+  .container {
+    padding: 1rem 0.75rem;
+    display:flex;
+    justify-content: space-between;
+    // remove old bootstrap clearfix
+    // which interfere with flexbox
+    &:before, &:after {
+      content: initial;
+      display: initial;
+    }
+  }
+
+  a {
+    color: #fff;
+  }
+}
+
+.system-header__wordmark {
+  margin-right: 1rem;
+  img {
+    width: 100%;
+    height: 100%;
+    max-width: 20rem;
+  }
+}
+
+.system-header__tools {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.system-header__tools li {
+  margin: 0;
+  margin-left: 1rem;
+}
+
+.umn-search {
+  --border-radius: 0.25rem;
+  input {
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+    color: #333;
+    padding: 0.5rem;
+    border: none;
+  }  
+  button {
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    padding: 0.5rem 1rem;
+    background: var(--gold);
+    color: #333;
+    border: none;
+  }
+}
+
+.umn-search__form-toggle {
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+  background: var(--gold);
+  color: #333;
+  border: none;
+}
+
+
+@media (max-width: 38rem) {
+  .system-header__wordmark {
+    max-width: 12rem;
+  }
+  .system-header__tools li {
+    margin: 0;
+  }
+}
+
+@media (max-width: 29rem) {
+  .system-header__tools {
+    display: none;
+  }
+}
