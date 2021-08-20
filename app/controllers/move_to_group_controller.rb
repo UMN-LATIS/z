@@ -1,4 +1,7 @@
 class MoveToGroupController < ApplicationController
+  before_action :ensure_signed_in
+  rescue_from "ActionController::UnknownFormat", with: :render_not_found
+
   def new
     @urls = Url
             .where(keyword: params[:keywords])
@@ -6,7 +9,6 @@ class MoveToGroupController < ApplicationController
     @groups = current_user.groups
 
     respond_to do |format|
-      format.html
       format.js { render 'move_to_group/new', layout: false }
     end
   end
