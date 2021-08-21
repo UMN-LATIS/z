@@ -1,0 +1,27 @@
+.app-nav {
+  --text-color: #999;
+  margin-bottom: 0;
+  color: var(--text-color);
+  line-height: 1;
+  border-radius: 0;
+
+  // override bootstrap
+  .navbar-inverse .navbar-nav>li>a {
+    border: 1px solid red;
+    color: #999;
+  }
+
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.app-nav__name {
+  color: #aaa;
+  font-size: 1.5rem;
+  margin-right: 0.75rem;
+}
+.app-nav__description {
+  font-size: 1rem;
+}

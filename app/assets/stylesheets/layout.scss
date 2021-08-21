@@ -1,5 +1,11 @@
+
 @import "variables";
 @import "spinthatshit/loaders";
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
 
 /* mixins, variables, etc. */
 @mixin box_sizing {
@@ -16,6 +22,7 @@ $grayDarker: #8c8c8c;
 html {
   overflow-y: scroll;
   font-size: 100%;
+  margin: 0;
 }
 
 body {
@@ -215,8 +222,7 @@ a#home_link:visited {
 /* footer */
 
 footer {
-  margin-top: 45px;
-  padding-top: 5px;
+  padding: 0.5rem 0;
   border-top: 1px solid $grayMediumLight;
   color: $grayLight;
   background-color: #fff;
@@ -358,14 +364,6 @@ footer {
 #edit_button > a {
   color: #fff;
   text-decoration: none;
-}
-
-footer#umnhf-f.umnhf {
-  bottom: 0;
-  background: white;
-  margin: 0;
-  padding-bottom: 10px;
-  z-index: 5;
 }
 
 #umnhf-h-sb {
@@ -534,6 +532,7 @@ $loader-color: $primaryColor;
   @include loader01;
 }
 
-img {
+img, iframe {
   max-width: 100%;
 }
+
