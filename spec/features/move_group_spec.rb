@@ -13,6 +13,14 @@ describe 'moving urls to a group', js: true do
     @user.groups << @other_group
   end
 
+  describe 'accessing html endpoints directly' do
+    it 'sends direct html visits to move_to_group/new to not found page' do
+      # dont give a 500 error for a missing template
+      visit new_move_to_group_path
+      expect(page).to have_content('Not Found')
+    end
+  end
+
   describe 'page with no urls' do
     it 'has a disabled bulk action button' do
       visit urls_path
@@ -45,7 +53,7 @@ describe 'moving urls to a group', js: true do
       find('.table-options').click
       click_link 'Move to a different collection'
 
-      expect(page).to have_selector('#index-modal', visible: true)
+      expect(page).to have_selector('#index-modal')
     end
 
     it 'moves the url immediately upon confirming' do
