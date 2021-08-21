@@ -35,13 +35,6 @@
           <% end %>
         </li>
 
-          <li class="<%= current_page?(api_keys_path) ? "selected" : "" %>">
-            <%= link_to(api_keys_path) do  %>
-              <i class="fa fa-key" aria-hidden="true"></i>
-              <%= t('views.application.nav.api') %>
-            <% end %>
-          </li>
-
           <%if current_user.admin? %>
 
           <li>
@@ -99,6 +92,12 @@
               </a>
 
               <ul class="dropdown-menu">
+                <li class="<%= current_page?(api_keys_path) ? "selected" : "" %>">
+                  <%= link_to(api_keys_path) do  %>
+                    <i class="fa fa-key" aria-hidden="true"></i>
+                    <%= t('views.application.nav.api') %>
+                  <% end %>
+                </li>
                 <li>
                   <a href="https://it.umn.edu/z-links-create-manage-z-links">
                     <%= t('views.application.nav.tips') %>
