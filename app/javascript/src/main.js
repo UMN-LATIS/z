@@ -4,8 +4,11 @@ import HelloWorld from "@/components/HelloWorld.vue";
 
 const app = createApp({ components: { HelloWorld } }).use(TurbolinksAdapter);
 
+const onReady = (fn) =>
+  document.readyState != "loading"
+    ? fn()
+    : document.addEventListener("DOMContentLoaded", fn);
+
 export default () => {
-  document.addEventListener("DOMContentLoaded", () =>
-    app.mount('[data-behavior="vue"]')
-  );
+  onReady(() => app.mount('[data-behavior="vue"]'));
 };
