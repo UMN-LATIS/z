@@ -1,14 +1,16 @@
-$(document).bind('turbolinks:load', function () {
-  var userTable = $('#members-table').DataTable({
-     "pageLength": 25,
-		 "autoWidth": false,
-     "order": [0, "asc"],
-     searching: false,
-     "columnDefs": [ {
-      "targets": 2,
-      "orderable": false
-      } ]
-   });
+$(document).bind("turbolinks:load", function() {
+  var userTable = $("#members-table").DataTable({
+    pageLength: 25,
+    autoWidth: false,
+    order: [0, "asc"],
+    searching: false,
+    columnDefs: [
+      {
+        targets: 2,
+        orderable: false,
+      },
+    ],
+  });
 });
 
 // new member form submit button disabled unless
@@ -21,7 +23,10 @@ $(() => {
     const requiredInputs = document.querySelectorAll(
       ".new_member input[required]"
     );
-    const submitButton = document.querySelector('button[type="submit"]');
+
+    const submitButton = document.querySelector(
+      '.new_member button[type="submit"]'
+    );
 
     const hasValue = (input) => !!input.value.length;
     const isComplete = (inputEls) => [...inputEls].every(hasValue);
