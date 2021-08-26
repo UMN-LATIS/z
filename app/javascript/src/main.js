@@ -1,4 +1,4 @@
-import { createApp } from "vue/dist/vue.esm-bundler";
+import { createApp } from "vue";
 import TurbolinksAdapter from "vue-turbolinks";
 import HelloWorld from "@/components/HelloWorld.vue";
 
