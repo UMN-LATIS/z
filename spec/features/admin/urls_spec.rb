@@ -67,7 +67,7 @@ describe 'as a valid admin user' do
           end
 
           describe 'with invalid content' do
-            it 'displays an error and does not save upon clicking Create if keyword is already taken' do
+            it 'displays an error and does not save upon clicking Create if keyword is already taken', retry: 3 do
               @other_url = FactoryBot.create(:url)
               expect(page).to have_selector('#url_keyword')
               find('#url_keyword').set @other_url.keyword
