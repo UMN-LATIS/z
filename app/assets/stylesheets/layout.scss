@@ -170,21 +170,18 @@ a {
   padding: 9px 23px;
   border: none;
   transition: background-color 0.3s;
-  background: var(--gold);
-  color: #000;
-  // background-color: $primaryColor;
-  &:hover {
-    background-color: var(--gold-dark);
-  }
 }
+
+// many classes to override bootstrap specificity
 .navbar-default .navbar-nav  .btn-primary {
   margin: 0.5rem 0;
   padding: 0.5rem 1rem;
   color: #000;
+  background: var(--gold);
+  &:hover {
+    background-color: var(--gold-dark);
+  }
 }
-
-.navbar-default .navbar-nav  .btn-primary 
-
 
 .btn-primary.disabled {
   background-color: $grayLight;
