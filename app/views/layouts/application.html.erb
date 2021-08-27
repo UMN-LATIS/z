@@ -4,7 +4,7 @@
   <title>Z</title>
   <%= csrf_meta_tags %>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+ <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   <%= javascript_pack_tag 'application' %>
   <%= yield :head %>
   <%= favicon_link_tag 'https://langtest.umn.edu/static/images/favicon.ico' %>
@@ -19,8 +19,7 @@
 </head>
 
 <body class='<%= params[:controller] %> <%= params[:action] %>' data-behavior="vue">
-<hello-world></hello-world>
-<%= render 'layouts/header' %>
+<umn-header></umn-header>
 <%= render 'layouts/navigation_top' %>
 <div class="container-wrapper">
   <div class="container">

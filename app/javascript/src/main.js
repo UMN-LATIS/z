@@ -1,10 +1,14 @@
 import { createApp } from "vue";
 import TurbolinksAdapter from "vue-turbolinks";
-import HelloWorld from "@/components/HelloWorld.vue";
+import {
+  UMNHeader,
+} from "@umn-latis/latis-vue-components";
 
-// const app = createApp({ components: { HelloWorld } }).use(TurbolinksAdapter);
+const components = {
+  "umn-header": UMNHeader,
+};
 const createMyApp = () =>
-  createApp({ components: { HelloWorld } })
+  createApp({ components })
     .use(TurbolinksAdapter)
     .mount('[data-behavior="vue"]');
 
