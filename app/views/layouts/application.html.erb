@@ -18,8 +18,10 @@
   <script src="https://a.umn.edu/templates/web/responsive/current/js/umnhf.js"></script>
 </head>
 
-<body class='<%= params[:controller] %> <%= params[:action] %>' data-behavior="vue">
+<body class='<%= params[:controller] %> <%= params[:action] %>' >
+<div data-behavior="vue">
 <umn-header></umn-header>
+</div>
 <%= render 'layouts/navigation_top' %>
 <div class="container-wrapper">
   <div class="container">
