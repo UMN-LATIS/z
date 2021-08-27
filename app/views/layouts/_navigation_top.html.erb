@@ -1,4 +1,4 @@
-<nav class="app-nav navbar navbar-inverse" role="navigation">
+<nav class="app-nav navbar navbar-default" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button 
@@ -23,14 +23,12 @@
       <% if signed_in? %>
         <li class="<%= current_page?(urls_path) ? "selected" : "" %>">
           <%= link_to(urls_path) do  %>
-              <i class="fa fa-link" aria-hidden="true"></i>
               <%= t('views.application.nav.links') %>
           <% end %>
         </li>
 
         <li class="<%= current_page?(groups_path) || params[:controller] == 'group_memberships' ? "selected" : "" %>">
           <%= link_to(groups_path) do  %>
-            <i class="fa fa-users" aria-hidden="true"></i>
             <%= t('views.application.nav.collections') %>
           <% end %>
         </li>
@@ -120,15 +118,13 @@
               </ul><!-- .dropdown-menu -->
             </li>
             <li>
-              <a href="<%= signout_path %>">
-                  <i class="fa fa-sign-in " aria-hidden="true"></i>
+              <a class="btn btn-primary" href="<%= signout_path %>">
                   <%= t('views.application.nav.sign_out') %>
               </a>
             </li>
         <% else %>
           <li>
-            <a href="<%= signin_path %>">
-              <i class="fa fa-sign-out" aria-hidden="true"></i>
+            <a class="btn btn-primary" href="<%= signin_path %>">
               <%= t('views.application.nav.sign_in') %>
             </a>
           </li>

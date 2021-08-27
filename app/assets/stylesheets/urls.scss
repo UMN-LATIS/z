@@ -109,7 +109,6 @@ body > .modal{
 		// background-color: #eee;
 		padding: 15px 35px;
 		border-radius:5px;
-		border: 1px solid white;
 
 	}
 	#new_url, .new_admin, .new_member{
@@ -128,7 +127,6 @@ body > .modal{
 }
 .z-hero-content{
 	display:inline-block;
-	color:#eee;
 	position:relative;
 	width:100%;
 }
@@ -154,13 +152,13 @@ body > .modal{
 	margin-top:0;
 	width:100%;
 	border-radius:0;
-	background-color:black;
+	background-color:var(--gray-lighter);
 	padding-top:10px;
 	height:180px;
 	text-align:center;
 	&:before{
-		background-color:grey;
-		background-image: image-url("umn-pano.jpg");
+
+		// background-image: image-url("umn-pano.jpg");
 		background-size:cover;
 		background-position:center;
 		background-repeat:no-repeat;;
@@ -505,13 +503,18 @@ $superInputHeight: 50px;
 		vertical-align:middle;
   }
 
+	.js-new-url-url {
+		border-right: 1px solid var(--gray-lighter);
+	}
+
   input{
     background:white;
     border:none;
     font-size:14px;
     height:$superInputHeight;
-    padding:0 30px;
+    padding: 1rem;
     margin:0;
+		width: 100%;
   }
 	input:focus{
 		outline:none;
@@ -528,12 +531,6 @@ $superInputHeight: 50px;
 
 	.super-input-right > * {
 	    display: inline-block;
-	}
-	.divider{
-		height:40%;
-		width:1px;
-		background-color:#ddd;
-		margin:0 15px;
 	}
 
   button{
@@ -555,7 +552,7 @@ $superInputHeight: 50px;
 		display:table-cell;
 	}
 	.keyword-wrapper, .description-wrapper{
-		height:$superInputHeight;
+		padding-left: 1rem;
 		> * {
 			display:inline-block;
 		}
@@ -585,15 +582,7 @@ $superInputHeight: 50px;
 		}
 	}
 }
-@media screen and (max-width:992px){
-	.super-input{
 
-		.js-new-url-url, .js-new-group-name{
-			width:200px;
-		}
-
-	}
-}
 @media screen and (max-width:640px){
 	.url-banner-title{
 		text-align:center;
@@ -638,20 +627,17 @@ $superInputHeight: 50px;
 			display:block;
 			width:auto;
 			white-space:initial;
-			.divider{
-				display:none;
-			}
 		}
 		> * {
 			display:block;
 		}
 		.js-new-url-url, .js-new-group-name{
 			width:100%;
+			border-right: 0;
 			border-bottom:1px solid #eee;
 		}
 		.keyword-wrapper{
 			width:100% ;
-			padding:0 30px;
 			white-space: nowrap;
 			text-align: left;
 			input{
