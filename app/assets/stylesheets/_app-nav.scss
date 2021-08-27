@@ -1,27 +1,40 @@
 .app-nav {
-  --text-color: #999;
+  // --text-color: var(--gray);
   margin-bottom: 0;
-  color: var(--text-color);
+  // color: var(--text-color);
   line-height: 1;
+  border: 0;
   border-radius: 0;
-
-  // override bootstrap
-  .navbar-inverse .navbar-nav>li>a {
-    border: 1px solid red;
-    color: #999;
-  }
-
   .navbar-brand {
     display: flex;
-    align-items: center;
+  }
+  .selected {
+    border-left: 0.25rem solid var(--maroon);
+  }
+
+  // extra classes to override bootstrap specificity
+  &.navbar.navbar-default .selected a {
+    color: var(--maroon);
+  }
+
+  @media (min-width: 768px) {
+    .selected {
+      border-left: none;
+      border-bottom: 0.25rem solid var(--maroon);
+    }
   }
 }
 
+
+
 .app-nav__name {
-  color: #aaa;
-  font-size: 1.5rem;
+  align-items: center;
+  color: var(--maroon);
+  font-size: 2rem;
   margin-right: 0.75rem;
+  font-weight: bold;
 }
 .app-nav__description {
   font-size: 1rem;
+  color: #aaa;
 }

@@ -157,6 +157,8 @@ a {
 
 /* buttons */
 
+
+
 .btn-info {
   color: #fff;
   background-color: #033c73;
@@ -168,15 +170,21 @@ a {
   padding: 9px 23px;
   border: none;
   transition: background-color 0.3s;
-  background-color: $primaryColor;
+  background: var(--gold);
+  color: #000;
+  // background-color: $primaryColor;
   &:hover {
-    background-color: darken($primaryColor, 5%);
+    background-color: var(--gold-dark);
   }
 }
-
-.btn-primary {
-  color: #fff;
+.navbar-default .navbar-nav  .btn-primary {
+  margin: 0.5rem 0;
+  padding: 0.5rem 1rem;
+  color: #000;
 }
+
+.navbar-default .navbar-nav  .btn-primary 
+
 
 .btn-primary.disabled {
   background-color: $grayLight;
