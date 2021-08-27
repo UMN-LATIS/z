@@ -7,10 +7,14 @@ import {
 const components = {
   "umn-header": UMNHeader,
 };
-const createMyApp = () =>
-  createApp({ components })
+const createMyApp = () => {
+  const vueMountEls = document.querySelectorAll('[data-behavior="vue"]');
+  [...vueMountEls].forEach(el => {
+    createApp({ components })
     .use(TurbolinksAdapter)
-    .mount('[data-behavior="vue"]');
+    .mount(el);
+  });
+}
 
 const onReady = (fn) =>
   document.readyState != "loading"
