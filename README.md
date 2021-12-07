@@ -20,27 +20,36 @@ Z is a custom URL shortener developed at LATIS@UMN. Instead of using a third par
 
 ## Installation ([Docker](https://www.docker.com))
 
-The included `docker-composer.yml` and `Dockerfile` files should allow this application to be run in [Docker](https://www.docker.com). To get started, run:
+The included `docker-composer.yml` and `Dockerfile` files should allow this application to be run in [Docker](https://www.docker.com). 
 
-   ```console
-     docker-compose run web rake db:create
-     docker-compose run web rails db:migrate RAILS_ENV=development
-     ```
+Add a basic .env:
+
+```
+DB_HOST=db
+DB_PORT=3306
+DB_USERNAME=root
+DB_PASSWORD=root
+```
 
 To launch the application, run
 
    ```console
    docker-compose up
    ```
+To run the initial migrations, use:
+```console
+     docker-compose run web rake db:create
+     docker-compose run web rails db:migrate RAILS_ENV=development
+     ```
 
-and connect to your localhost on port 3000.
+then connect to your localhost on port 3000.
 
 ## Installation (Dockerless)
 
 Make sure that config/database.yml is correctly configured with database credentials, and config/lda.yml is correctly configured with LDAP credentials, and an instance of MySQL is running.
 
    ```console
-    rvm install 2.3.1
+    rvm install 2.7.3
     gem install bundler
     bundle install
     rails db:reseed
@@ -56,7 +65,7 @@ and connect to your localhost on port 3000.
 
 ## Technology and Dependencies
 
-- Rails 5.0.2
+- Rails 6.1
 - MySQL
 - LDAP (for directory lookup)
 
