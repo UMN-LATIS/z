@@ -45,6 +45,7 @@ describe 'admin urls index page' do
             first('#transfer_request_to_group').set @to_user.uid
             find('#new_transfer_request  input[type="submit"]').click
             click_button 'Confirm'
+            sleep 0.1
           end
 
           it 'has transfered' do
