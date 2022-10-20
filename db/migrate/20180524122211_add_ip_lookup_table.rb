@@ -1,3 +1,5 @@
+# rubocop:disable all
+
 class AddIpLookupTable < ActiveRecord::Migration[5.0]
   def change
   	 create_table :ip2location_db1 do |t|

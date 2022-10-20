@@ -2,7 +2,7 @@
 # lock '3.6.1'
 
 set :application, 'z'
-set :repo_url, 'git@github.umn.edu:latis-sw/z.git'
+set :repo_url, 'git@github.com:UMN-LATIS/z.git'
 set :rbenv_ruby, File.read('.ruby-version').strip
 
 # Default branch is :master
@@ -10,8 +10,6 @@ ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, '/swadm/web/z/'
-
-
 
 # Default value for :scm is :git
 # set :scm, :git
@@ -30,7 +28,8 @@ set :deploy_to, '/swadm/web/z/'
 append :linked_files, 'config/database.yml', 'config/secrets.yml', 'config/ldap.yml'
 
 # Default value for linked_dirs is []
-append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system'
+append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system', 'public/packs', '.bundle',
+       'node_modules'
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -47,3 +46,17 @@ namespace :deploy do
 end
 
 after 'deploy:symlink:release', 'deploy:apache'
+
+# Compile assets on every deployment, even if JS and CSS have not changed
+# See: https://github.com/rails/webpacker/blob/master/docs/deployment.md
+before "deploy:assets:precompile", "deploy:yarn_install"
+namespace :deploy do
+  desc "Run rake yarn install"
+  task :yarn_install do
+    on roles(:web) do
+      within release_path do
+        execute("cd #{release_path} && yarn install --silent --no-progress --no-audit --no-optional")
+      end
+    end
+  end
+end

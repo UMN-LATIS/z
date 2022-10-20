@@ -1,3 +1,7 @@
+def is_dev_or_test_env?
+  Rails.env.development? || Rails.env.test?
+end
+
 class SessionsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
@@ -8,7 +12,7 @@ class SessionsController < ApplicationController
   def create
     # Filter out isGuest shibboleth requests. This is almost surely the wrong way to filter logins with
     # omniAuth. TODO: refactor.
-    if !Rails.env.development? && auth_hash["extra"]["raw_info"]["isGuest"] == "Y"
+    if !is_dev_or_test_env? && auth_hash["extra"]["raw_info"]["isGuest"] == "Y"
       redirect_to root_path
       return
     end
@@ -23,7 +27,7 @@ class SessionsController < ApplicationController
 
   def destroy
     sign_out
-    if Rails.env.development?
+    if is_dev_or_test_env?
       redirect_to root_path
     else
       redirect_to shib_logout_url
@@ -35,5 +39,4 @@ class SessionsController < ApplicationController
   def auth_hash
     request.env['omniauth.auth']
   end
-
 end

@@ -11,42 +11,34 @@
 class Click < ApplicationRecord
   belongs_to :url
 
-  scope :within, ->(time) do
-    where('created_at >= ?', time.ago)
-  end
+  scope :within, lambda { |duration_ago|
+    where('created_at >= ?', duration_ago.ago)
+  }
 
-  # Click.group_by_time_ago
-  # Purpose: Group the clicks by a specified time period
-  #          and count the number of clicks over that period
+  ##
+  # Purpose: Group the clicks by a specified duration
+  #          and count the number of clicks over that duration
   # Arguments:
-  #   time   - a Duration object (e.g. 5.days)
+  #   duration_ago - a Duration object (e.g. 5.days)
   #   format - a string used to determine the grouping of the clicks.
   #            For instance, to group by day, the format string could
   #            be '%m/%d'
-  def self.group_by_time_ago(time, format)
-    duration_type = time.parts[0][0]
-    # Initialize the return array
-    click_counts = {}
-    (0..time.parts[0][1] - 1).reverse_each do |time_ago|
-      click_counts[time_ago.send(duration_type).ago.strftime(format)] = 0
+  # Returns: a hash of the form { formatted time string => count }
+  ##
+  def self.group_by_time_ago(duration, format)
+    clicks_hash = all.within(duration)
+                     .group("date_format(created_at, '%Y%m%d %H')")
+                     .count
+                     .each_with_object({}) do |(datetime, count), acc|
+      time_label = Time.zone.parse(datetime).strftime(format)
+
+      # if label not in use, count is nil so cast nil to 0 for previous count
+      prev_count = acc[time_label].to_i
+      acc[time_label] = prev_count + count
     end
 
-    all.within(time)
-       .group("date_format(created_at, '%Y%m%d %H')")
-       .count
-       .each do |result|
-      time_label = DateTime.parse(result[0])
-                           .in_time_zone(Time.zone)
-                           .strftime(format)
-
-      if click_counts[time_label].nil?
-        click_counts[time_label] = result[1]
-      else
-        click_counts[time_label] += result[1]
-      end
-    end
-
-    click_counts
+    # sorted by datetime
+    clicks_hash.sort_by { |datetime, _clicks| Time.zone.parse(datetime) }.to_h
   end
 
   def self.max_by_day

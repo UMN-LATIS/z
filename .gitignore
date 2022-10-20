@@ -29,3 +29,12 @@
 config/ldap.yml
 config/database.yml
 config/secrets.yml
+
+.env*
+!.env.example
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity

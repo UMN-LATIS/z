@@ -1,10 +1,8 @@
 class GroupMembershipsController < ApplicationController
-  before_action :set_params, only: [:show, :index, :update, :create, :destroy]
+  before_action :set_params, only: %i[show index update create destroy]
   before_action :ensure_signed_in
 
-
-  def index
-  end
+  def index; end
 
   def new
     render json: UserLookup.new(
@@ -20,7 +18,9 @@ class GroupMembershipsController < ApplicationController
     @group.add_user(member)
     respond_to do |format|
       if @group.user?(member)
+        # rubocop: disable Rails/RenderInline
         format.js { render inline: "location.reload();" }
+        # rubocop: enable Rails/RenderInline
       else
         format.html { render :new }
         format.json { render json: @group.errors, status: :unprocessable_entity }
@@ -29,16 +29,14 @@ class GroupMembershipsController < ApplicationController
     end
   end
 
-
   def destroy
     @member = User.find(params[:id])
     @group.remove_user(@member)
     respond_to do |format|
       format.html { redirect_to groups_url, notice: 'Group was successfully updated, user removed.' }
       format.json { head :no_content }
-      format.js { render :layout => false }
+      format.js { render layout: false }
     end
-
   end
 
   private
@@ -53,5 +51,4 @@ class GroupMembershipsController < ApplicationController
   def user_params
     params.permit(:uid)
   end
-
 end

@@ -1,0 +1,15 @@
+default: &default
+  adapter: mysql2
+  host: <%= ENV['DB_HOST'] %>
+  port: <%= ENV['DB_PORT'] %>
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+  encoding: utf8mb4
+
+development:
+  <<: *default
+  database: z
+
+test:
+  <<: *default
+  database: z_test

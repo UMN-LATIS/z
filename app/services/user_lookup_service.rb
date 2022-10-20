@@ -3,15 +3,20 @@ require 'net/ldap' # gem install net-ldap
 
 class UserLookupService
   def initialize(params = nil)
-    @connection = Net::LDAP.new(
-      YAML.load(File.open('config/ldap.yml'))
-    )
+    # ldap.yml may contain embedded erb to
+    # fetch environment variables so parse this
+    # before loading the config
+    raw_config = File.read('config/ldap.yml')
+    processed_config = ERB.new(raw_config).result
+
+    @connection = Net::LDAP.new(YAML.load(processed_config))
     @query = params[:query] if params
     @query_type = params[:query_type] if params
   end
 
   def search
     return nil unless @query.present? && @query_type.present?
+
     results = nil
     if @connection.bind
       if @query_type == 'all'
@@ -46,8 +51,14 @@ class UserLookupService
       end
     end
     return nil unless results
+
     results = results.promote(results.detect { |x| x[:uid] == [@query] })
-    results = results.map { |x| { umndid: umndid(x), display: display(x), internet_id: internet_id(x), display_name: result_name(x) } }.flatten unless results.blank?
+    if results.present?
+      results = results.map do |x|
+        { umndid: umndid(x), display: display(x), internet_id: internet_id(x),
+          display_name: result_name(x) }
+      end.flatten
+    end
     results
   end
 
@@ -58,15 +69,15 @@ class UserLookupService
   end
 
   def display_name(x)
-    x.try(:displayname).try(:first) ? x.try(:displayname).try(:first) : 'Name not available'
+    x.try(:displayname).try(:first) || 'Name not available'
   end
 
   def result_name(x)
-    x.try(:displayname).try(:first) ? x.try(:displayname).try(:first) : '(name not available)'
+    x.try(:displayname).try(:first) || '(name not available)'
   end
 
   def internet_id(x)
-    x.try(:uid).try(:first) ? x.try(:uid).try(:first) : 'Internet ID not available'
+    x.try(:uid).try(:first) || 'Internet ID not available'
   end
 
   def display(x)

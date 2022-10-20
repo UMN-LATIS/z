@@ -11,21 +11,21 @@
 require 'rails_helper'
 
 RSpec.describe Group, type: :model do
-  before do
-    @group = FactoryGirl.build(:group)
-  end
-
   subject { @group }
 
-  it { should be_valid }
-  it { should respond_to 'name' }
-  it { should respond_to 'description' }
-  it { should respond_to 'created_at' }
-  it { should respond_to 'updated_at' }
+  before do
+    @group = FactoryBot.build(:group)
+  end
+
+  it { is_expected.to be_valid }
+  it { is_expected.to respond_to 'name' }
+  it { is_expected.to respond_to 'description' }
+  it { is_expected.to respond_to 'created_at' }
+  it { is_expected.to respond_to 'updated_at' }
 
   describe 'Versioning' do
     it 's should be enabled' do
-      is_expected.to be_versioned
+      expect(subject).to be_versioned
     end
   end
 
@@ -33,8 +33,9 @@ RSpec.describe Group, type: :model do
     describe '[name]' do
       describe 'doesn\'t exist' do
         before { @group.name = '' }
-        it 'should not be valid' do
-          expect(@group).to_not be_valid
+
+        it 'is not valid' do
+          expect(@group).not_to be_valid
         end
       end
     end
@@ -42,11 +43,13 @@ RSpec.describe Group, type: :model do
 
   describe 'calling add_user' do
     before do
-      @user = FactoryGirl.create(:user)
-      @group = FactoryGirl.create(:group)
+      @user = FactoryBot.create(:user)
+      @group = FactoryBot.create(:group)
     end
+
     describe 'should add a user' do
-      before {@group.add_user @user}
+      before { @group.add_user @user }
+
       it ' and include user in group.users' do
         expect(@group.users).to include(@user)
       end
@@ -55,31 +58,35 @@ RSpec.describe Group, type: :model do
 
   describe 'calling user?' do
     before do
-      @user = FactoryGirl.create(:user)
-      @user_not = FactoryGirl.create(:user)
-      @group = FactoryGirl.create(:group)
+      @user = FactoryBot.create(:user)
+      @user_not = FactoryBot.create(:user)
+      @group = FactoryBot.create(:group)
       @group.add_user @user
     end
+
     describe 'should have a user' do
       it ' and return true when asked if user?' do
-        expect(@group.user? @user).to be true
+        expect(@group.user?(@user)).to be true
       end
     end
+
     describe 'should not have a user' do
       it ' and return true when asked if user?' do
-        expect(@group.user? @user_not).to be false
+        expect(@group.user?(@user_not)).to be false
       end
     end
   end
 
   describe 'calling remove_user' do
     before do
-      @user = FactoryGirl.create(:user)
-      @group = FactoryGirl.create(:group)
+      @user = FactoryBot.create(:user)
+      @group = FactoryBot.create(:group)
       @group.add_user @user
     end
+
     describe 'should have and remove user:' do
-      before {@group.remove_user @user}
+      before { @group.remove_user @user }
+
       it 'and then remove it' do
         expect(@group.users).not_to include(@user)
       end
@@ -88,14 +95,14 @@ RSpec.describe Group, type: :model do
 
   describe 'calling default?' do
     before do
-      @default_group = FactoryGirl.create(:user).default_group
+      @default_group = FactoryBot.create(:user).default_group
     end
 
-    it 'should be false for non-default groups' do
+    it 'is false for non-default groups' do
       expect(@group.default?).to eq(false)
     end
 
-    it 'should be true for default groups' do
+    it 'is true for default groups' do
       expect(@default_group.default?).to eq(true)
     end
   end

@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   include Pundit
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
+  rescue_from ActionController::BadRequest, with: :render_not_found
 
   helper Starburst::AnnouncementsHelper
 
@@ -36,6 +38,10 @@ class ApplicationController < ActionController::Base
 
   def set_admin_view
     @admin_view = true
+  end
+
+  def render_not_found
+    render template: 'errors/not_found', layout: 'layouts/application', status: :not_found, formats: [:html]
   end
 
   private

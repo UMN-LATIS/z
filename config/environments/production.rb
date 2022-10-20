@@ -19,7 +19,7 @@ Rails.application.configure do
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   # Compress JavaScripts and CSS.
-  config.assets.js_compressor = :uglifier
+  config.assets.js_compressor = Uglifier.new(harmony: true)
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
@@ -42,6 +42,12 @@ Rails.application.configure do
   # config.action_cable.mount_path = nil
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
+
+  # We don't want to force_ssl right now.
+  # Z intentionally is able to vend shortened URLs
+  # over http when requested, so that we don't introduce cross protocol issues
+  # for end users. Instead, we use an apache mod_rewrite rule to force any
+  # requests to the user interface side of Z to be https.
   # config.force_ssl = true
 
   # Use the lowest log level to ensure availability of diagnostic information
@@ -92,25 +98,26 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-      address:              'mail.socsci.umn.edu',
-      port:                 587,
-      enable_starttls_auto: true  }
+    address: 'mail.socsci.umn.edu',
+    port: 587,
+    enable_starttls_auto: true
+  }
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
-#   config.middleware.insert_before Rack::Runtime, InvalidDataInterceptor
+  #   config.middleware.insert_before Rack::Runtime, InvalidDataInterceptor
   config.middleware.use ExceptionNotification::Rack,
                         email: {
-                            email_prefix: Rails.env,
-                            sender_address: '"Z Exception Notifier" <help@umn.edu>',
-                            exception_recipients: ["web-app-errors@cla.umn.edu"]
+                          email_prefix: Rails.env,
+                          sender_address: '"Z Exception Notifier" <help@umn.edu>',
+                          exception_recipients: ["web-app-errors@cla.umn.edu"]
                         },
-                        :slack => {
-                            :webhook_url => "https://hooks.slack.com/services/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",
-                            :channel => "#sw_z_exceptions",
-                            :username => "Z Production Environment",
-                            :additional_parameters => {
-                                :icon_emoji => ":boom:",
-                                :mrkdwn => true
-                            }
+                        slack: {
+                          webhook_url: "https://hooks.slack.com/services/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",
+                          channel: "#sw_z_exceptions",
+                          username: "Z Production Environment",
+                          additional_parameters: {
+                            icon_emoji: ":boom:",
+                            mrkdwn: true
+                          }
                         }
 end

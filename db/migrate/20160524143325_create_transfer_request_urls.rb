@@ -1,3 +1,5 @@
+# rubocop:disable all
+
 class CreateTransferRequestUrls < ActiveRecord::Migration[5.0]
   def change
     create_table :transfer_request_urls, id: false do |t|

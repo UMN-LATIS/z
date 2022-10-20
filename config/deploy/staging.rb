@@ -1,5 +1,5 @@
 # Default branch is :master
-#set :branch, :develop
+# set :branch, :develop
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # server-based syntax
@@ -11,8 +11,6 @@ ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 # server 'example.com', user: 'deploy', roles: %w{app web}, other_property: :other_value
 # server 'db.example.com', user: 'deploy', roles: %w{db}
 
-
-
 # role-based syntax
 # ==================
 
@@ -21,10 +19,9 @@ ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 # property set. Specify the username and a domain or IP for the server.
 # Don't use `:all`, it's a meta role.
 
-role :app, %w{swadm@cla-z-stage.oit.umn.edu}
-role :web, %w{swadm@cla-z-stage.oit.umn.edu}
-role :db,  %w{swadm@cla-z-stage.oit.umn.edu}
-
+role :app, %w[swadm@cla-z-stage.oit.umn.edu]
+role :web, %w[swadm@cla-z-stage.oit.umn.edu]
+role :db,  %w[swadm@cla-z-stage.oit.umn.edu]
 
 # Configuration
 # =============

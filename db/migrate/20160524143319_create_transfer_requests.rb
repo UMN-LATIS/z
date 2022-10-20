@@ -1,3 +1,5 @@
+# rubocop:disable all
+
 class CreateTransferRequests < ActiveRecord::Migration[5.0]
   def change
     create_table :transfer_requests do |t|
