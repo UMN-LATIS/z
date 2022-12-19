@@ -18,50 +18,35 @@ Z is a custom URL shortener developed at LATIS@UMN. Instead of using a third par
 - Responsive design
 - Link creation API
 
-## Installation ([Docker](https://www.docker.com))
+## Getting Started
 
-The included `docker-composer.yml` and `Dockerfile` files should allow this application to be run in [Docker](https://www.docker.com). 
+1. Prep your system for running [Ruby and Rails with MySQL](https://gorails.com/setup/)
+2. Make sure that `config/database.yml` is correctly configured with database credentials, and `config/ldap.yml` is correctly configured with LDAP credentials, and an instance of MySQL is running.
+3. Install the version of ruby in `.ruby-version`:
 
-Add a basic .env:
-
-```
-DB_HOST=db
-DB_PORT=3306
-DB_USERNAME=root
-DB_PASSWORD=root
-```
-
-To launch the application, run
-
-   ```console
-   docker-compose up
-   ```
-To run the initial migrations, use:
-```console
-     docker-compose run web rake db:create
-     docker-compose run web rails db:migrate RAILS_ENV=development
-     ```
-
-then connect to your localhost on port 3000.
-
-## Installation (Dockerless)
-
-Make sure that config/database.yml is correctly configured with database credentials, and config/lda.yml is correctly configured with LDAP credentials, and an instance of MySQL is running.
-
-   ```console
-    rvm install 2.7.3
-    gem install bundler
-    bundle install
-    rails db:reseed
-    ```
-
-To launch the application, run
-
-   ```console
-     rails s
+   ```sh
+   rbenv install
    ```
 
-and connect to your localhost on port 3000.
+4. Install dependencies with bundler
+
+   ```sh
+   bundle install
+   ```
+
+5. Seed database. Part of this connects to LDAP, so you will need to be on UMN VPN:
+
+   ```sh
+   rails db:reseed
+   ```
+
+6. To launch the application, run:
+
+   ```sh
+   ./bin/rails s
+   ```
+
+Connect to [http://localhost:3000].
 
 ## Technology and Dependencies
 
@@ -80,10 +65,10 @@ and connect to your localhost on port 3000.
 - Apache/[Passenger](https://github.com/phusion/passenger), as our server stack
 - [LATIS Ansible Playbook](https://github.umn.edu/latis-sw/ansible_playbooks), for larger platform changes like a ruby version bump.
 
-  ```console
-  bundle exec cap <environmentname> deploy
-  ```
-  
+```sh
+bundle exec cap <environmentname> deploy
+```
+
 #### Production Deployment
 
 Please see the [Deploying to Production](./deploy_to_production.md) page.
@@ -99,7 +84,9 @@ After deploying, populate the ip2location_db1 table with the content from the [I
 
 The application has a a comprehensive testing suite using Rspec and Capybara. Front end tests are configured to run with PhantomJS and Apparition. The test suite can be ran by running:
 
-    bundle exec rspec
+```sh
+bundle exec rspec
+```
 
 ### Other tech
 
