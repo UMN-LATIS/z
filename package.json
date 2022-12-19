@@ -7,12 +7,16 @@
   "author": "UMN LATIS <latis@umn.edu>",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "cypress": "npx cypress open"
+  },
   "dependencies": {
     "@rails/webpacker": "5.4.0",
     "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12"
   },
   "devDependencies": {
+    "cypress": "^12.1.0",
     "webpack-dev-server": "^3.11.2"
   }
 }
