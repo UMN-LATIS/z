@@ -53,10 +53,10 @@ jobs:
       - name: Run E2E tests with Cypress
         uses: cypress-io/github-action@v5
         with:
-          start: bundle exec rails server -e test -p 5002
-          wait-on: "http://localhost:5002"
+          start: bundle exec rails server -e test -p 5017
+          wait-on: "http://localhost:5017"
           browser: chrome
-          config: baseUrl=http://localhost:5002
+          config: baseUrl=http://localhost:5017
 
       - name: Upload test screenshots if any
         uses: actions/upload-artifact@v3
