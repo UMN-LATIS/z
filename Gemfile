@@ -103,6 +103,9 @@ group :development, :test do
   gem 'capybara-screenshot', "~> 1.0"
   gem 'rspec-rails', "~> 4.0"
 
+  # rails helpers for cypress
+  gem 'cypress-on-rails', '~> 1.0'
+
   # Using github for source until change in twalpole/apparition#79
   # is released. Change back to gem version after.
   gem 'apparition', github: 'twalpole/apparition', ref: 'ca86be4'

@@ -8,7 +8,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "cypress": "npx cypress open"
+    "cypress:rails": "CYPRESS=1 bin/rails server -p 5017",
+    "cypress:open": "npx cypress open",
+    "cypress": "concurrently \"npm run cypress:rails\" \"npm run cypress:open\""
   },
   "dependencies": {
     "@rails/webpacker": "5.4.0",
@@ -16,6 +18,7 @@
     "webpack-cli": "^3.3.12"
   },
   "devDependencies": {
+    "concurrently": "^7.6.0",
     "cypress": "^12.1.0",
     "webpack-dev-server": "^3.11.2"
   }
