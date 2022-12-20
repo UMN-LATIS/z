@@ -15,6 +15,10 @@
 
 // Import commands.js using ES2015 syntax:
 // import 'cypress-on-rails/support/index'
+
+// real clicks instead of just simulated clicks with `.realClick()`
+// useful for copy-past testing
+import "cypress-real-events";
 import "./commands";
 import "./on-rails";
 
