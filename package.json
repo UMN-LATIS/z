@@ -1,16 +1,18 @@
 {
   "name": "z.umn.edu",
   "version": "0.0.0",
-  "description": "Link shortening for the University of Minnesota",
-  "main": "index.js",
-  "repository": "https://github.com/UMN-LATIS/z.git",
-  "author": "UMN LATIS <latis@umn.edu>",
-  "license": "MIT",
   "private": true,
+  "description": "Link shortening for the University of Minnesota",
+  "repository": "https://github.com/UMN-LATIS/z.git",
+  "license": "MIT",
+  "author": "UMN LATIS <latis@umn.edu>",
+  "main": "index.js",
   "scripts": {
-    "cypress:rails": "CYPRESS=1 bin/rails server -p 5017",
+    "cypress": "concurrently \"npm run cypress:rails\" \"npm run cypress:open\"",
+    "cypress:ci": "concurrently \"npm run cypress:rails\" \"npm run cypress:run\"",
     "cypress:open": "npx cypress open",
-    "cypress": "concurrently \"npm run cypress:rails\" \"npm run cypress:open\""
+    "cypress:rails": "CYPRESS=1 bin/rails server -p 5017",
+    "cypress:run": "npx cypress run"
   },
   "dependencies": {
     "@rails/webpacker": "5.4.0",
