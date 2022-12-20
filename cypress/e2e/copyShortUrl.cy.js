@@ -53,6 +53,30 @@ describe("copy short url", () => {
         });
     });
   });
+
+  context("on /shortener/urls/:keyword", () => {
+    beforeEach(() => {
+      // visit the urls page
+      cy.visit("/shortener/urls/cla");
+    });
+
+    it("should copy short url using the url button", () => {
+      cy.get('[data-cy="copy-button"]').should("be.visible").as("copyButton");
+
+      // use a real click to trigger the copy event
+      // rather than the default simulated click
+      // which is a JS event
+      cy.get("@copyButton").realClick();
+
+      // check that the short url was copied to the clipboard
+      cy.window()
+        .then(({ navigator }) => navigator.clipboard.readText())
+        .then((text) => {
+          console.log(text);
+          expect(text).to.contain("/cla");
+        });
+    });
+  });
 });
 
 // require 'rails_helper'

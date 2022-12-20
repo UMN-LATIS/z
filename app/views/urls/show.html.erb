@@ -9,7 +9,7 @@
           <div class="panel-heading"><%= t('views.urls.show.short_url') %></div>
           <div class="panel-body">
             <a target='_blank' href="<%= full_url(@url) %>"><%= full_url(@url) %></a>
-            <button class='btn btn-default clipboard-btn' data-clipboard-text="<%= full_url(@url) %>">
+            <button class='btn btn-default clipboard-btn' data-clipboard-text="<%= full_url(@url) %>" data-cy="copy-button">
               <i class=" fa fa-files-o"></i>
               <%= t('views.urls.show.thing.copy') %>
             </button>
