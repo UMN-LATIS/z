@@ -53,6 +53,19 @@ Cypress.Commands.add("appFixtures", function (options) {
 //  cy.app('clean') // have a look at cypress/app_commands/clean.rb
 // });
 
+/**
+ * fake login a user
+ * @param {Object} details - email, redirect_to
+ * @see: https://github.com/shakacode/cypress-on-rails/blob/master/docs/authentication.md
+ */
+Cypress.Commands.add("login", ({ uid, redirect_to = "/" } = {}) => {
+  if (!uid) throw new Error('You must pass a "uid" to login');
+
+  cy.visit("__cypress__/login", {
+    method: "POST",
+    body: { uid, redirect_to },
+  });
+});
 
 // comment this out if you do not want to attempt to log additional info on test fail
 Cypress.on("fail", (err, runnable) => {
