@@ -1,4 +1,7 @@
 const { defineConfig } = require("cypress");
+const {
+  cypressBrowserPermissionsPlugin,
+} = require("cypress-browser-permissions");
 
 module.exports = defineConfig({
   e2e: {
@@ -6,5 +9,13 @@ module.exports = defineConfig({
     defaultCommandTimeout: 10000,
     supportFile: "cypress/support/index.js",
     excludeSpecPattern: "**/examples/**",
+    setupNodeEvents(on, config) {
+      cypressBrowserPermissionsPlugin(on, config);
+    },
+  },
+  env: {
+    browserPermissions: {
+      clipboard: "allow",
+    },
   },
 });
