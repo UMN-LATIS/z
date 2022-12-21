@@ -88,6 +88,28 @@ describe("/admin", () => {
         });
     });
 
-    it.skip("when removing oneself from the admins, one should not view the admin pages", () => {});
+    it("when removing oneself from the admins, one should not view the admin pages", function () {
+      // remove the admin
+      cy.get("#user-1").contains("Remove").click();
+
+      // confirm the remove
+      cy.get(".modal-body > p").should("contain.text", "Are you sure");
+      cy.contains("Confirm").click();
+
+      // check the db: admin is no longer an admin
+      cy.appEval(`User.find_by(uid: "${this.admin.umndid}").admin`).should(
+        "eq",
+        false
+      );
+
+      // it should redirect to the urls page
+      cy.url().should("eq", Cypress.config().baseUrl + "/shortener/urls");
+
+      // try to visit the admin members page
+      cy.visit("/shortener/admin/members");
+
+      // TODO: this redirects to `shortener` instead of `shortener/urls`. Maybe fix to make it consistent?
+      cy.url().should("eq", Cypress.config().baseUrl + "/shortener");
+    });
   });
 });
