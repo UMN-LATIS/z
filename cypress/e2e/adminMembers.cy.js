@@ -46,24 +46,47 @@ describe("/admin", () => {
       cy.contains(this.admin.display_name).should("be.visible");
     });
 
-    it("adds a new admin to an existing group of admins", () => {
-      // search for a user
-      cy.get("#people_search").type("latis");
+    it("adds/remove a new admin", () => {
+      cy.fixture("user")
+        .as("user")
+        .then((user) => {
+          // search for a user
+          cy.get("#people_search").type(user.internet_id);
 
-      // select the user from the dropdown
-      cy.get(".tt-dataset-people_search").contains("latis").click();
+          // select the user from the dropdown
+          cy.get(".tt-dataset-people_search")
+            .contains(user.internet_id)
+            .click();
 
-      // add them as an admin
-      cy.contains("Add Admin").click();
+          // add them as an admin
+          cy.contains("Add Admin").click();
 
-      // confirm the add
-      cy.contains("Confirm").click();
+          // confirm the add
+          cy.contains("Confirm").click();
 
-      // make sure the new admin is displayed
-      cy.get("#user-2 > :nth-child(2)").should("have.text", "latis");
+          // make sure the new admin is displayed
+          cy.get("#user-2 > :nth-child(2)").should(
+            "have.text",
+            user.internet_id
+          );
+
+          // remove the new admin
+          cy.get("#user-2 > :nth-child(3)").contains("Remove").click();
+
+          // confirm the remove
+          cy.get(".modal-body > p").should("contain.text", "Are you sure");
+          cy.contains("Confirm").click();
+
+          // the new admin should no longer appear
+          cy.get("#user-2").should("not.exist");
+
+          // check the db: user is no longer an admin
+          cy.appEval(`User.find_by(uid: "${user.umndid}").admin`).should(
+            "eq",
+            false
+          );
+        });
     });
-
-    it.skip("deletes an admin and displays a notification", () => {});
 
     it.skip("when removing oneself from the admins, one should not view the admin pages", () => {});
   });
