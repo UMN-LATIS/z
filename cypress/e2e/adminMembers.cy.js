@@ -46,7 +46,7 @@ describe("/admin", () => {
       cy.contains(this.admin.display_name).should("be.visible");
     });
 
-    it.skip("adds/remove a new admin", () => {
+    it("adds/remove a new admin", () => {
       cy.fixture("users/user.json")
         .as("user")
         .then((user) => {
@@ -88,7 +88,7 @@ describe("/admin", () => {
         });
     });
 
-    it.skip("when removing oneself from the admins, one should not view the admin pages", function () {
+    it("when removing oneself from the admins, one should not view the admin pages", function () {
       // remove the admin
       cy.get("#user-1").contains("Remove").click();
 
@@ -103,13 +103,13 @@ describe("/admin", () => {
       );
 
       // it should redirect to the urls page
-      cy.url().should("eq", Cypress.config().baseUrl + "/shortener/urls");
+      cy.url().should("equal", Cypress.config().baseUrl + "/shortener");
 
       // try to visit the admin members page
       cy.visit("/shortener/admin/members");
 
-      // TODO: this redirects to `shortener` instead of `shortener/urls`. Maybe fix to make it consistent?
-      cy.url().should("eq", Cypress.config().baseUrl + "/shortener");
+      // TODO: this redirects to `shortener/urls` instead of `shortener`. Maybe fix to make it consistent?
+      cy.url().should("eq", Cypress.config().baseUrl + "/shortener/urls");
     });
   });
 });
