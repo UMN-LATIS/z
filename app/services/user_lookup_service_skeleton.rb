@@ -17,19 +17,22 @@ class UserLookupServiceSkeleton
     # load the fixtures from cypress into fake_ldap_records
     fixtures_path = Rails.root.join('cypress/fixtures/users')
     Dir.glob("#{fixtures_path}/*.json").each do |file|
-      user_hash = JSON.parse(File.read(file))
+      file_contents = File.read(file)
+      user_hash = JSON.parse(file_contents)
+                      .deep_symbolize_keys
       @fake_ldap_records << user_hash
     end
   end
 
   def search
+    # byebug
     return nil unless @query.present? && @query_type.present?
 
     # find any record that matches the query
     @fake_ldap_records.find_all do |record|
       if @query_type == 'all'
-        record[:umndid] == @query ||
-          record[:internet_id] == @query ||
+        record[:umndid].include?(@query) ||
+          record[:internet_id].include?(@query) ||
           record[:display_name].include?(@query)
       elsif @query_type == 'umndid'
         record[:umndid] == @query
