@@ -1,4 +1,4 @@
-describe("/admin", () => {
+describe("admin members index page", () => {
   beforeEach(() => {
     cy.app("clean");
   });
@@ -10,14 +10,14 @@ describe("/admin", () => {
       cy.login({ uid: "testuser" });
     });
 
-    // FIXME: the error message is actually hidden behind the
-    // hero, so this fails (usually). See #120.
-    it.skip("should not be able to access admin members page", () => {
+    it("should not be able to access admin members page", () => {
       cy.visit("/shortener/admin/members");
 
       // it should redirect to the urls page
-      cy.url().should("eq", Cypress.config().baseUrl + "/shortener/urls");
+      cy.location("pathname").should("eq", "/shortener/urls");
 
+      // FIXME: the error message is actually hidden behind the
+      // hero, so this fails (usually). See #120.
       // it should display an error message
       cy.contains("not authorized", { matchCase: false }).should("be.visible");
     });
@@ -103,13 +103,13 @@ describe("/admin", () => {
       );
 
       // it should redirect to the urls page
-      cy.url().should("equal", Cypress.config().baseUrl + "/shortener");
+      cy.location("pathname").should("equal", "/shortener");
 
       // try to visit the admin members page
       cy.visit("/shortener/admin/members");
 
       // TODO: this redirects to `shortener/urls` instead of `shortener`. Maybe fix to make it consistent?
-      cy.url().should("eq", Cypress.config().baseUrl + "/shortener/urls");
+      cy.location("pathname").should("eq", "/shortener/urls");
     });
   });
 });
