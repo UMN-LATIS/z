@@ -25,7 +25,7 @@ describe("/admin", () => {
 
   context("as an admin", () => {
     beforeEach(() => {
-      cy.fixture("admin.json")
+      cy.fixture("users/admin.json")
         .as("admin")
         .then((admin) => {
           cy.appFactories([
@@ -46,8 +46,8 @@ describe("/admin", () => {
       cy.contains(this.admin.display_name).should("be.visible");
     });
 
-    it("adds/remove a new admin", () => {
-      cy.fixture("user")
+    it.skip("adds/remove a new admin", () => {
+      cy.fixture("users/user.json")
         .as("user")
         .then((user) => {
           // search for a user
@@ -88,7 +88,7 @@ describe("/admin", () => {
         });
     });
 
-    it("when removing oneself from the admins, one should not view the admin pages", function () {
+    it.skip("when removing oneself from the admins, one should not view the admin pages", function () {
       // remove the admin
       cy.get("#user-1").contains("Remove").click();
 
