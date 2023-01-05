@@ -19,7 +19,7 @@ describe("z happy path", () => {
     cy.contains("Sign In").click();
 
     // check that we are at /shortener/urls
-    cy.url().should("include", "/shortener/urls");
+    cy.location("pathname").should("equal", "/shortener/urls");
 
     // create a new short url
     cy.get("#url_url").type("https://cla.umn.edu");
