@@ -6,9 +6,7 @@ describe("copy short url", () => {
 
     // create a test user
     cy.appFactories([["create", "user", { uid: "testuser" }]]).then(
-      (results) => {
-        const user = results[0];
-
+      ([user]) => {
         // create a url for the test user
         cy.appFactories([
           [
