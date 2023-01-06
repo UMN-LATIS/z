@@ -1,42 +1,29 @@
-import path from "path";
-
-const claZlink = {
-  keyword: "cla",
-  url: "https://cla.umn.edu",
-};
-
-const morrisZlink = {
-  keyword: "morris",
-  url: "https://morris.umn.edu",
-};
+// fixtures
+import user from "../fixtures/users/user.json";
+import admin from "../fixtures/users/admin.json";
 
 describe("admin csv of clicks for urls", () => {
-  const downloadsFolder = Cypress.config("downloadsFolder");
-
   beforeEach(() => {
     cy.app("clean")
-      .then(() => {
-        // load the user and admin fixtures
-        cy.fixture("users/user.json").as("user");
-        cy.fixture("users/admin.json").as("admin");
-      })
       .then(function () {
         // create user and admin user
-        // using `this` to get the aliased user and admin
-        // objects from the fixtures
         return cy.appFactories([
-          ["create", "user", { uid: this.user.umndid }],
-          ["create", "user", { uid: this.admin.umndid, admin: true }],
+          ["create", "user", { uid: user.umndid }],
+          ["create", "user", { uid: admin.umndid, admin: true }],
         ]);
       })
-      .then(function ([user, admin]) {
-        //create some user-owned urls
+      .then(([user, admin]) => {
+        // create some user-owned urls
+        // set the group_id to the user's context_group_id
+        // so that user owns the urls
+
         return cy.appFactories([
           [
             "create",
             "url",
             {
-              ...claZlink,
+              keyword: "cla",
+              url: "https://cla.umn.edu",
               group_id: user.context_group_id,
             },
           ],
@@ -44,7 +31,8 @@ describe("admin csv of clicks for urls", () => {
             "create",
             "url",
             {
-              ...morrisZlink,
+              keyword: "morris",
+              url: "https://morris.umn.edu",
               group_id: user.context_group_id,
             },
           ],
@@ -54,10 +42,8 @@ describe("admin csv of clicks for urls", () => {
         // duplicate the urls a few times so that
         // there's more than one click per url
         const urlsToClick = [
-          // repeat the first url 10 times
-          ...Array(3).fill(`/${claZlink.keyword}`),
-          // repeat the second url 5 times
-          ...Array(2).fill(`/${morrisZlink.keyword}`),
+          ...Array(3).fill("/cla"),
+          ...Array(2).fill("/morris"),
         ];
 
         // now generate a request for each url
@@ -67,7 +53,7 @@ describe("admin csv of clicks for urls", () => {
 
   context("as an admin user", () => {
     beforeEach(function () {
-      cy.login({ uid: this.admin.umndid });
+      cy.login({ uid: admin.umndid });
 
       // since our DB is not populated with data that converts
       // ip addresses to locations, the country code for each click
@@ -81,7 +67,7 @@ describe("admin csv of clicks for urls", () => {
     });
 
     it("should download a csv of all clicks", () => {
-      const claZlinkStatsPage = `/shortener/urls/${claZlink.keyword}`;
+      const claZlinkStatsPage = `/shortener/urls/cla`;
 
       // this will hold our downloaded csv content
       let csv;
@@ -117,9 +103,7 @@ describe("admin csv of clicks for urls", () => {
           expect(rows[0], "column labels").to.equal(
             "url,keyword,country_code,url_created_on"
           );
-          const regex = new RegExp(
-            `^${claZlink.url},${claZlink.keyword},"",.*$`
-          );
+          const regex = new RegExp(`^https://cla.umn.edu,cla,"",.*$`);
           expect(rows[1], "first record").to.match(regex);
         });
     });
