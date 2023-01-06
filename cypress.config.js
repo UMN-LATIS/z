@@ -12,6 +12,7 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       cypressBrowserPermissionsPlugin(on, config);
     },
+    experimentalRunAllSpecs: true,
   },
   env: {
     browserPermissions: {
