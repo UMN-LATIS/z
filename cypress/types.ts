@@ -22,6 +22,14 @@ export namespace RailsModel {
     keyword: string;
     url: string;
   }
+
+  export interface Click {
+    id: number;
+    country_code: string;
+    url_id: number;
+    created_at: string; // ISO8601
+    updated_at: string; // ISO8601
+  }
 }
 
 export type RailsAppFactoriesCommand = [

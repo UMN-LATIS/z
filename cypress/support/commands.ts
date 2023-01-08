@@ -11,6 +11,23 @@
 import { RailsModel } from "../types";
 
 /**
+ * creates a rails-friendly stringified version of an object
+ * Use this instead of JSON.stringify when passing objects
+ * to rails, so that they object keys are symbols instead
+ * of strings
+ */
+
+const stringifyObjectForRails = (obj: Record<string, string | Number>) =>
+  "{" +
+  Object.entries(obj)
+    .map(([key, value]) => {
+      const val = Number.isInteger(+value) ? value : `"${value}"`;
+      return `${key}: ${val}`;
+    })
+    .join(", ") +
+  "}";
+
+/**
  * login a user
  * @see https://github.com/shakacode/cypress-on-rails/blob/master/docs/authentication.md
  */
@@ -70,10 +87,35 @@ function createUrl({
     .then(([url]) => url);
 }
 
-function clickUrl(keyword: string, times = 1) {
-  // there may be better ways to do this, but it works
-  const urlsToClick: string[] = Array(times).fill(`/${keyword}`);
-  cy.wrap(urlsToClick).each((url: string) => cy.request(url));
+/**
+ * create Clicks for a given keyword
+ */
+function clickUrl(
+  keyword: string,
+  times = 1,
+  clickOptions: Partial<RailsModel.Click> = {}
+) {
+  // NOTE: this function adds clicks rows directly to the
+  // database for speed. An alternative would be to use
+  // `cy.request` to hit the url, but we would need to do
+  // request click individually and wait for the response
+  // before moving on to the next request
+  const clickOptionsString = stringifyObjectForRails(clickOptions);
+
+  // create an array of stringified click options
+  // that we can pass to clicks.create
+  const clickOptionsArray = Array(times).fill(clickOptionsString);
+
+  const createClicksInRailsCommand = `
+    url = Url.find_by(keyword: "${keyword}")
+    url.clicks.create(
+      [${clickOptionsArray}]
+    )
+    url.total_clicks += ${times}
+    url.save
+  `;
+
+  return cy.appEval(createClicksInRailsCommand);
 }
 
 Cypress.Commands.addAll({

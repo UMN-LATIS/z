@@ -95,24 +95,22 @@ describe("admin url details (stats) page", () => {
       cy.get("@last24row").contains("0 hits").should("be.visible");
 
       // add some clicks
-
-      cy.clickUrl("cla", 3)
-        .then(() => cy.clickUrl("morris", 2))
-        .then(() => cy.reload());
+      cy.clickUrl("cla", 3);
+      cy.reload();
 
       // the total clicks for cla should be 3
       cy.get("@last24row").contains("3 hits").should("be.visible");
     });
 
     it("shows the best day for clicks", () => {
-      // set the clock to fixed date 1
-      cy.clickUrl("cla", 3);
-
-      // set the dates of the clicks to be 2020-01-01
-      cy.appEval("Click.update_all(created_at: '2020-01-01')");
+      1;
+      cy.clickUrl("cla", 10, {
+        country_code: "US",
+        created_at: "2020-01-01",
+      });
 
       // now add a few more clicks
-      cy.clickUrl("cla", 2);
+      cy.clickUrl("cla", 5, { country_code: "CA" });
 
       // reload the page
       cy.reload();
@@ -120,5 +118,9 @@ describe("admin url details (stats) page", () => {
       // check that the best day is 01-01-2020
       cy.contains("Best Day").closest(".panel").contains("January 01 2020");
     });
+
+    it("downloads a QR code");
+
+    it("can change a collection from the collection dropdown");
   });
 });

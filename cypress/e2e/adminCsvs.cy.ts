@@ -14,15 +14,10 @@ describe("admin csv of clicks for urls", () => {
           url: "https://cla.umn.edu",
           user,
         });
-
-        cy.createUrl({
-          keyword: "morris",
-          url: "https://morris.umn.edu",
-          user,
-        });
       })
-      .then(() => cy.clickUrl("cla", 3))
-      .then(() => cy.clickUrl("morris", 1));
+      .then(() => {
+        cy.clickUrl("cla", 3, { country_code: "US", created_at: "2020-01-01" });
+      });
   });
 
   context("as an admin user", () => {
@@ -77,7 +72,7 @@ describe("admin csv of clicks for urls", () => {
           expect(rows[0], "column labels").to.equal(
             "url,keyword,country_code,url_created_on"
           );
-          const regex = new RegExp(`^https://cla.umn.edu,cla,"",.*$`);
+          const regex = new RegExp(`^https://cla.umn.edu,cla,US,01/01/2020$`);
           expect(rows[1], "first record").to.match(regex);
         });
     });

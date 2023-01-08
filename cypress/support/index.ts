@@ -58,7 +58,11 @@ declare global {
         user: RailsModel.User;
       }): Chainable<RailsModel.Url>;
 
-      clickUrl(url: string, times?: number): Chainable<void>;
+      clickUrl(
+        keyword: string,
+        times?: number,
+        clickOptions?: Partial<RailsModel.Click>
+      ): Chainable<RailsModel.Click[]>;
     }
   }
 }
