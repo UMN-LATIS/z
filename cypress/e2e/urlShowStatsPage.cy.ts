@@ -1,3 +1,4 @@
+import path from "path";
 import dayjs from "dayjs";
 
 import admin from "../fixtures/users/admin.json";
@@ -119,7 +120,40 @@ describe("admin url details (stats) page", () => {
       cy.contains("Best Day").closest(".panel").contains("January 01 2020");
     });
 
-    it("downloads a QR code");
+    it("downloads a QR code", () => {
+      const downloadsFolder = Cypress.config("downloadsFolder");
+      const downloadedFilename = path.join(downloadsFolder, "z-cla.png");
+
+      const claStatsPage = "/shortener/urls/cla";
+
+      //intercept the download request
+      cy.intercept("GET", `${claStatsPage}/download_qrcode`, (req) => {
+        req.reply((res) => {
+          // qrDownload = res.body;
+          // redirect the browser back to the url details page
+          res.headers.location = claStatsPage;
+          res.send(302);
+        });
+      }).as("qrDownload");
+
+      // visit the stats page for cla
+      cy.visit(claStatsPage);
+
+      // click on the QR Code button
+      cy.contains("QR Code").click();
+
+      // wait for the download to complete
+      cy.wait("@qrDownload");
+
+      // make sure we're back on the the original page
+      cy.location("pathname").should("be.equal", claStatsPage);
+
+      // make sure the file was downloaded
+      cy.readFile(downloadedFilename, "binary").should((buffer) => {
+        // and that it has content
+        expect(buffer.length).to.be.greaterThan(100);
+      });
+    });
 
     it("can change a collection from the collection dropdown");
   });
