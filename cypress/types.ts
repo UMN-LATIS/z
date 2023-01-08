@@ -23,3 +23,9 @@ export namespace RailsModel {
     url: string;
   }
 }
+
+export type RailsAppFactoriesCommand = [
+  string,
+  string,
+  Record<string, unknown>
+];

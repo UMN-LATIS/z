@@ -46,14 +46,10 @@ Cypress.Commands.add("appFixtures", function (options) {
   cy.app("activerecord_fixtures", options);
 });
 
-// CypressOnRails: end
+// CypressOnRails Required Commands: end
+// Optional commands below. Comment out if you don't need them
 
-// The next is optional
-// beforeEach(() => {
-//  cy.app('clean') // have a look at cypress/app_commands/clean.rb
-// });
-
-// comment this out if you do not want to attempt to log additional info on test fail
+/* log additional info on test fail */
 Cypress.on("fail", (err, runnable) => {
   // allow app to generate additional logging data
   Cypress.$.ajax({

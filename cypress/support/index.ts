@@ -13,23 +13,6 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
-type RailsAppFactoriesCommand = [string, string, Record<string, unknown>];
-
-// cypress/support/index.ts
-declare global {
-  namespace Cypress {
-    interface Chainable {
-      /**
-       * Custom command to select DOM element by data-cy attribute.
-       * @example cy.dataCy('greeting')
-       */
-      // dataCy(value: string): Chainable<JQuery<HTMLElement>>,
-      appFactories<Model>(
-        commands: RailsAppFactoriesCommand[]
-      ): Chainable<Model[]>;
-    }
-  }
-}
 import "cypress-real-events";
 import "./commands";
 import "./on-rails";

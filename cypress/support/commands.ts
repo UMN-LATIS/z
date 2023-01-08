@@ -9,6 +9,39 @@
 // ***********************************************
 
 import { RailsModel } from "../types";
+import { RailsAppFactoriesCommand } from "../types";
+
+// add custom commands to Cypress interface
+// for autocompletion and type checking
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      // dataCy(value: string): Chainable<JQuery<HTMLElement>>,
+
+      appFactories<Model>(
+        commands: RailsAppFactoriesCommand[]
+      ): Chainable<Model[]>;
+
+      login(uid: string, redirect_to?: string): Chainable<void>;
+
+      createUser(
+        uid: string,
+        opts?: Record<string, unknown>
+      ): Chainable<RailsModel.User>;
+
+      createAndLoginUser(
+        uid: string,
+        opts?: Record<string, unknown>
+      ): Chainable<RailsModel.User>;
+
+      createAnnouncement(
+        opts?: Record<string, unknown>
+      ): Chainable<RailsModel.Announcement>;
+
+      createUrl(opts?: Record<string, unknown>): Chainable<RailsModel.Url>;
+    }
+  }
+}
 
 /**
  * login a user
