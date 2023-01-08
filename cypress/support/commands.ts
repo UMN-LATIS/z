@@ -118,6 +118,36 @@ function clickUrl(
   return cy.appEval(createClicksInRailsCommand);
 }
 
+function createGroup(name: string) {
+  return cy
+    .appFactories<RailsModel.Group>([["create", "group", { name }]])
+    .then(([group]) => group);
+}
+
+function addUserToGroup(
+  user: Pick<RailsModel.User, "umndid">,
+  group: Pick<RailsModel.Group, "name">
+) {
+  return cy.appEval(`
+    user = User.find_by(uid: "${user.umndid}")
+    group = Group.find_by(name: "${group.name}")
+    user.groups << group
+  `);
+}
+
+function createGroupAndAddUser(
+  groupName: string,
+  user: Pick<RailsModel.User, "umndid">
+) {
+  let group;
+  return createGroup(groupName)
+    .then((grp) => {
+      group = grp;
+      addUserToGroup(user, grp);
+    })
+    .then(() => group);
+}
+
 Cypress.Commands.addAll({
   login,
   createUser,
@@ -125,4 +155,7 @@ Cypress.Commands.addAll({
   createAnnouncement,
   createUrl,
   clickUrl,
+  createGroup,
+  addUserToGroup,
+  createGroupAndAddUser,
 });

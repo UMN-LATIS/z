@@ -30,6 +30,14 @@ export namespace RailsModel {
     created_at: string; // ISO8601
     updated_at: string; // ISO8601
   }
+
+  export interface Group {
+    id: number;
+    name: string;
+    description: string;
+    created_at: string; // ISO8601
+    updated_at: string; // ISO8601
+  }
 }
 
 export type RailsAppFactoriesCommand = [
