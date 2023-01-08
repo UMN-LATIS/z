@@ -1,9 +1,7 @@
 import path from "path";
 import dayjs from "dayjs";
 
-import admin from "../fixtures/users/admin.json";
 import user1 from "../fixtures/users/user1.json";
-import user2 from "../fixtures/users/user2.json";
 
 describe("admin url details (stats) page", () => {
   beforeEach(() => {
@@ -155,6 +153,43 @@ describe("admin url details (stats) page", () => {
       });
     });
 
-    it("can change a collection from the collection dropdown");
+    it("can change the url's collection", () => {
+      cy.createGroupAndAddUser("testgroup", user1);
+
+      cy.reload();
+
+      // get the Collection Panel
+      cy.get(".panel-heading")
+        .contains("Collection")
+        .closest(".panel")
+        .as("collectionPanel");
+
+      // verify that the url is not in a collection
+      cy.get("@collectionPanel").contains("No Collection");
+
+      // open the dropdown
+      cy.get("@collectionPanel").find(".dropdown > .btn").click();
+
+      // This select picker is not a normal select
+      // dropdown, so we can't use cy.select(). We also
+      // need to narrow the search to the dropdown-menu
+      cy.get("@collectionPanel")
+        .find(".dropdown-menu")
+        .contains("testgroup")
+        .click();
+
+      // reload page and make sure changes were saved
+      cy.reload();
+      cy.get("@collectionPanel").contains("testgroup");
+
+      // also check the My Collections page
+      cy.visit("/shortener/groups");
+      cy.contains("testgroup").should("be.visible").click();
+
+      // when opening the group urls list,
+      // the `cla` url should be in the collection
+      cy.contains("cla").should("be.visible");
+      cy.get(".dropdown > .btn").contains("testgroup").should("be.visible");
+    });
   });
 });
