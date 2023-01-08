@@ -1,5 +1,8 @@
 import dayjs from "dayjs";
 
+// fixtures
+import admin from "../fixtures/users/admin.json";
+
 describe("admin announcements page", () => {
   const now = dayjs();
   const thirtyDaysAgo = now.subtract(30, "days").format("YYYY-MM-DD");
@@ -9,25 +12,19 @@ describe("admin announcements page", () => {
     cy.app("clean");
 
     // create a test announcement
-    cy.appFactories([
-      [
-        "create",
-        "announcement",
-        {
-          title: "Announcement Title",
-          body: "This is a test announcement body",
-          start_delivering_at: thirtyDaysAgo,
-          stop_delivering_at: thirtyDaysFromNow,
-        },
-      ],
-    ]);
+    cy.createAnnouncement({
+      title: "Announcement Title",
+      body: "This is a test announcement body",
+      start_delivering_at: thirtyDaysAgo,
+      stop_delivering_at: thirtyDaysFromNow,
+    });
   });
 
   context("as a non-admin user", () => {
     beforeEach(() => {
       // create a test user without admin privileges
-      cy.appFactories([["create", "user", { uid: "testuser" }]]);
-      cy.login({ uid: "testuser" });
+      cy.createUser("testuser");
+      cy.login("testuser");
     });
 
     it("displays the announcement on urls page", () => {
@@ -50,14 +47,8 @@ describe("admin announcements page", () => {
 
   context("as an admin user", () => {
     beforeEach(() => {
-      cy.fixture("users/admin.json")
-        .as("admin")
-        .then((admin) => {
-          cy.appFactories([
-            ["create", "user", { uid: admin.umndid, admin: true }],
-          ]);
-          cy.login({ uid: admin.umndid });
-        });
+      cy.createUser(admin.umndid, { admin: true });
+      cy.login(admin.umndid);
       cy.visit("/shortener/admin/announcements");
     });
 

@@ -6,7 +6,7 @@ describe("z happy path", () => {
     cy.app("clean");
 
     // create a non-admin test user using factory_bot
-    cy.appFactories([["create", "user", { uid: "testuser" }]]);
+    cy.createUser("testuser");
     cy.visit("/");
   });
 

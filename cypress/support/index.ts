@@ -13,14 +13,23 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
-// Import commands.js using ES2015 syntax:
-// import 'cypress-on-rails/support/index'
+type RailsAppFactoriesCommand = [string, string, Record<string, unknown>];
 
-// real clicks instead of just simulated clicks with `.realClick()`
-// useful for copy-past testing
+// cypress/support/index.ts
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      /**
+       * Custom command to select DOM element by data-cy attribute.
+       * @example cy.dataCy('greeting')
+       */
+      // dataCy(value: string): Chainable<JQuery<HTMLElement>>,
+      appFactories<Model>(
+        commands: RailsAppFactoriesCommand[]
+      ): Chainable<Model[]>;
+    }
+  }
+}
 import "cypress-real-events";
 import "./commands";
 import "./on-rails";
-
-// Alternatively you can use CommonJS syntax:
-// require('./commands')

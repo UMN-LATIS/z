@@ -4,15 +4,10 @@ import admin from "../fixtures/users/admin.json";
 
 describe("admin csv of clicks for urls", () => {
   beforeEach(() => {
-    cy.app("clean")
-      .then(function () {
-        // create user and admin user
-        return cy.appFactories([
-          ["create", "user", { uid: user.umndid }],
-          ["create", "user", { uid: admin.umndid, admin: true }],
-        ]);
-      })
-      .then(([user, admin]) => {
+    cy.app("clean");
+    cy.createUser(admin.umndid, { admin: true });
+    cy.createUser(user.umndid)
+      .then((user) => {
         // create some user-owned urls
         // set the group_id to the user's context_group_id
         // so that user owns the urls
@@ -53,7 +48,7 @@ describe("admin csv of clicks for urls", () => {
 
   context("as an admin user", () => {
     beforeEach(function () {
-      cy.login({ uid: admin.umndid });
+      cy.login(admin.umndid);
 
       // since our DB is not populated with data that converts
       // ip addresses to locations, the country code for each click

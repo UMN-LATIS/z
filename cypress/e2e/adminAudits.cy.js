@@ -1,3 +1,6 @@
+//fixtures
+import admin from "../fixtures/users/admin.json";
+
 describe("admin audits page", () => {
   beforeEach(() => {
     cy.app("clean");
@@ -6,8 +9,7 @@ describe("admin audits page", () => {
   context("as a non-admin user", () => {
     beforeEach(() => {
       // create a test user without admin privileges
-      cy.appFactories([["create", "user", { uid: "testuser" }]]);
-      cy.login({ uid: "testuser" });
+      cy.createAndLoginUser("testuser");
     });
 
     it("should not be able to access admin audits page", () => {
@@ -25,15 +27,7 @@ describe("admin audits page", () => {
 
   context("as an admin", () => {
     beforeEach(() => {
-      cy.fixture("users/admin.json")
-        .as("admin")
-        .then((admin) => {
-          cy.appFactories([
-            ["create", "user", { uid: admin.umndid, admin: true }],
-          ]);
-          cy.login({ uid: admin.umndid });
-        });
-
+      cy.createAndLoginUser(admin.umndid, { admin: true });
       cy.visit("/shortener/admin/audits");
     });
 

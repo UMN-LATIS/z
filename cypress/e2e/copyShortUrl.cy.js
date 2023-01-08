@@ -1,29 +1,17 @@
-/// <reference types="cypress" />
+import admin from "../fixtures/users/admin.json";
 
 describe("copy short url", () => {
   beforeEach(() => {
     cy.app("clean");
+    cy.createUser("testuser").then((user) => {
+      cy.createUrl({
+        group_id: user.context_group_id,
+        keyword: "cla",
+        url: "https://cla.umn.edu",
+      });
+    });
 
-    // create a test user
-    cy.appFactories([["create", "user", { uid: "testuser" }]]).then(
-      ([user]) => {
-        // create a url for the test user
-        cy.appFactories([
-          [
-            "create",
-            "url",
-            {
-              url: "https://cla.umn.edu",
-              group_id: user.context_group_id,
-              keyword: "cla",
-            },
-          ],
-        ]);
-      }
-    );
-
-    // login as testuser
-    cy.login({ uid: "testuser" });
+    cy.login("testuser");
   });
 
   context("on /shortener/urls", () => {
@@ -45,10 +33,7 @@ describe("copy short url", () => {
       // check that the short url was copied to the clipboard
       cy.window()
         .then(({ navigator }) => navigator.clipboard.readText())
-        .then((text) => {
-          console.log(text);
-          expect(text).to.contain("/cla");
-        });
+        .then((text) => expect(text).to.contain("/cla"));
     });
   });
 
@@ -69,50 +54,7 @@ describe("copy short url", () => {
       // check that the short url was copied to the clipboard
       cy.window()
         .then(({ navigator }) => navigator.clipboard.readText())
-        .then((text) => {
-          console.log(text);
-          expect(text).to.contain("/cla");
-        });
+        .then((text) => expect(text).to.contain("/cla"));
     });
   });
 });
-
-// require 'rails_helper'
-
-// describe 'copy url button ' do
-//   before do
-//     @user = FactoryBot.create(:user)
-//     sign_in(@user)
-//   end
-
-//   describe 'on the urls', js: true do
-//     before do
-//       @new_url = FactoryBot.create(:url, group: @user.context_group)
-//     end
-
-//     describe 'index page', js: true do
-//       before do
-//         visit urls_path
-//       end
-
-//       describe 'the copy button' do
-//         it 'is present' do
-//           expect(page).to have_selector('.clipboard-btn')
-//         end
-//       end
-//     end
-
-//     describe 'details page', js: true do
-//       before do
-//         @new_url = FactoryBot.create(:url, group: @user.context_group)
-//         visit url_path(@new_url.keyword)
-//       end
-
-//       describe 'the copy button' do
-//         it 'is present' do
-//           expect(page).to have_selector('.clipboard-btn')
-//         end
-//       end
-//     end
-//   end
-// end
