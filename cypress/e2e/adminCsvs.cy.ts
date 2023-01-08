@@ -9,41 +9,20 @@ describe("admin csv of clicks for urls", () => {
     cy.createUser(user.umndid)
       .then((user) => {
         // create some user-owned urls
-        // set the group_id to the user's context_group_id
-        // so that user owns the urls
+        cy.createUrl({
+          keyword: "cla",
+          url: "https://cla.umn.edu",
+          user,
+        });
 
-        return cy.appFactories([
-          [
-            "create",
-            "url",
-            {
-              keyword: "cla",
-              url: "https://cla.umn.edu",
-              group_id: user.context_group_id,
-            },
-          ],
-          [
-            "create",
-            "url",
-            {
-              keyword: "morris",
-              url: "https://morris.umn.edu",
-              group_id: user.context_group_id,
-            },
-          ],
-        ]);
+        cy.createUrl({
+          keyword: "morris",
+          url: "https://morris.umn.edu",
+          user,
+        });
       })
-      .then(() => {
-        // duplicate the urls a few times so that
-        // there's more than one click per url
-        const urlsToClick: string[] = [
-          ...Array(3).fill("/cla"),
-          ...Array(2).fill("/morris"),
-        ];
-
-        // now generate a request for each url
-        cy.wrap(urlsToClick).each((url: string) => cy.request(url));
-      });
+      .then(() => cy.clickUrl("cla", 3))
+      .then(() => cy.clickUrl("morris", 1));
   });
 
   context("as an admin user", () => {

@@ -54,12 +54,26 @@ function createAnnouncement(opts: Record<string, unknown> = {}) {
     .then(([announcement]) => announcement);
 }
 
-function createUrl({ group_id, keyword, url }) {
+function createUrl({
+  keyword,
+  url,
+  user,
+}: {
+  keyword: string;
+  url: string;
+  user: RailsModel.User;
+}) {
   return cy
     .appFactories<RailsModel.Url>([
-      ["create", "url", { group_id, keyword, url }],
+      ["create", "url", { group_id: user.context_group_id, keyword, url }],
     ])
     .then(([url]) => url);
+}
+
+function clickUrl(keyword: string, times = 1) {
+  // there may be better ways to do this, but it works
+  const urlsToClick: string[] = Array(times).fill(`/${keyword}`);
+  cy.wrap(urlsToClick).each((url: string) => cy.request(url));
 }
 
 Cypress.Commands.addAll({
@@ -68,4 +82,5 @@ Cypress.Commands.addAll({
   createAndLoginUser,
   createAnnouncement,
   createUrl,
+  clickUrl,
 });

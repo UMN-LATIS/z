@@ -32,7 +32,7 @@ describe("admin members index page", () => {
       cy.visit("/shortener/admin/members");
     });
 
-    it.only("displays the admin member internet_id", function () {
+    it("displays the admin member internet_id", function () {
       cy.contains(admin.internet_id).should("be.visible");
     });
 

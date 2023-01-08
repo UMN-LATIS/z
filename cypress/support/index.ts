@@ -49,7 +49,16 @@ declare global {
         opts?: Record<string, unknown>
       ): Chainable<RailsModel.Announcement>;
 
-      createUrl(opts?: Record<string, unknown>): Chainable<RailsModel.Url>;
+      createUrl({
+        keyword,
+        url,
+      }: {
+        keyword: string;
+        url: string;
+        user: RailsModel.User;
+      }): Chainable<RailsModel.Url>;
+
+      clickUrl(url: string, times?: number): Chainable<void>;
     }
   }
 }
