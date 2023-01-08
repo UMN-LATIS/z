@@ -5,7 +5,7 @@ export namespace RailsModel {
     display: string;
     internet_id: string;
     display_name: string;
-    group_id: number;
+    context_group_id: number;
   }
 
   export interface Announcement {

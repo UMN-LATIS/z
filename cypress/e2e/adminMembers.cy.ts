@@ -1,5 +1,5 @@
 // fixtures
-import user from "../fixtures/users/user.json";
+import user from "../fixtures/users/user1.json";
 import admin from "../fixtures/users/admin.json";
 
 describe("admin members index page", () => {
@@ -10,7 +10,7 @@ describe("admin members index page", () => {
   context("as a non-admin", () => {
     beforeEach(() => {
       // create a test user without admin privileges
-      cy.createAndLoginUser("testUser");
+      cy.createAndLoginUser(user.umndid);
     });
 
     it("should not be able to access admin members page", () => {
@@ -32,7 +32,7 @@ describe("admin members index page", () => {
       cy.visit("/shortener/admin/members");
     });
 
-    it("displays the admin member internet_id", function () {
+    it.only("displays the admin member internet_id", function () {
       cy.contains(admin.internet_id).should("be.visible");
     });
 

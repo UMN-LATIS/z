@@ -1,5 +1,3 @@
-import admin from "../fixtures/users/admin.json";
-
 describe("copy short url", () => {
   beforeEach(() => {
     cy.app("clean");

@@ -1,5 +1,5 @@
 // fixtures
-import user from "../fixtures/users/user.json";
+import user from "../fixtures/users/user1.json";
 import admin from "../fixtures/users/admin.json";
 
 describe("admin csv of clicks for urls", () => {
@@ -36,13 +36,13 @@ describe("admin csv of clicks for urls", () => {
       .then(() => {
         // duplicate the urls a few times so that
         // there's more than one click per url
-        const urlsToClick = [
+        const urlsToClick: string[] = [
           ...Array(3).fill("/cla"),
           ...Array(2).fill("/morris"),
         ];
 
         // now generate a request for each url
-        cy.wrap(urlsToClick).each((url) => cy.request(url));
+        cy.wrap(urlsToClick).each((url: string) => cy.request(url));
       });
   });
 
