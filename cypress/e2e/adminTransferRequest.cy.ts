@@ -162,7 +162,10 @@ describe("admin url details (stats) page", () => {
 
     // check that the url is pending approval
     // (and not immediately transferred)
-    // NOTE: I'm not sure why this functionality exists?
+    cy.appEval(`TransferRequest.where("status = 'pending'").count`).should(
+      "eq",
+      1
+    );
 
     // go to the urls page (not the /admin/urls page)
     cy.visit("/shortener/urls");
