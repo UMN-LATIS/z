@@ -122,7 +122,7 @@ describe("urlsPageListZlinks - /shortener/urls", () => {
     });
 
     it("can add a url to an existing collection", () => {
-      cy.createGroupAndAddUser("testcollection", user);
+      cy.createGroupAndAddUser("testcollection", user.umndid);
       cy.reload();
 
       // add the cla url to the test collection
@@ -151,10 +151,12 @@ describe("urlsPageListZlinks - /shortener/urls", () => {
     describe("filter and search the list of z-links", () => {
       beforeEach(() => {
         // create a test collection and add the cla url to it
-        cy.createGroupAndAddUser("testcollection", user).then((group) => {
-          // add the cla url to the test collection
-          cy.addURLToGroup("cla", group);
-        });
+        cy.createGroupAndAddUser("testcollection", user.umndid).then(
+          (group) => {
+            // add the cla url to the test collection
+            cy.addURLToGroup("cla", group);
+          }
+        );
 
         // reload the page
         cy.reload();

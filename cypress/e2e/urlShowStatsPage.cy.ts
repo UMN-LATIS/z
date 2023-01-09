@@ -146,7 +146,7 @@ describe("admin url details (stats) page", () => {
     });
 
     it("can change the url's collection", () => {
-      cy.createGroupAndAddUser("testgroup", user1);
+      cy.createGroupAndAddUser("testgroup", user1.umndid);
 
       cy.reload();
 

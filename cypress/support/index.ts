@@ -60,7 +60,7 @@ declare global {
       createGroup(name: string): Chainable<RailsModel.Group>;
 
       addUserToGroup(
-        userId: Pick<RailsModel.User, "umndid">,
+        uid: string /* user uid or umndid */,
         group: Pick<RailsModel.Group, "name">
       ): Chainable<RailsModel.Group>;
 
@@ -71,7 +71,7 @@ declare global {
 
       createGroupAndAddUser(
         groupName: string,
-        user: Pick<RailsModel.User, "umndid">
+        uid: string /* user uid or umndid */
       ): Chainable<RailsModel.Group>;
     }
   }

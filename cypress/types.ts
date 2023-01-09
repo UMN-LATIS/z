@@ -1,7 +1,14 @@
+export interface LDAPUser {
+  umndid: string;
+  display: string;
+  internet_id: string;
+  display_name: string;
+}
+
 export namespace RailsModel {
   export interface User {
     id: number;
-    umndid: string;
+    uid: string; // umndid
     display: string;
     internet_id: string;
     display_name: string;
