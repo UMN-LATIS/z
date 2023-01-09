@@ -83,7 +83,38 @@ describe("/shortener/urls - list zlinks", () => {
         .should("not.exist");
     });
 
-    it("can add a url to a collection", () => {
+    it.only("can create a new collection from the dropdown and add a url", () => {
+      // click the dropdown
+      cy.get("#urls-table").contains("cla").closest("tr").as("claRow");
+      // open the collection dropdown
+      cy.get("@claRow").find("> :nth-child(3) > .dropdown > .btn").click();
+
+      // choose the Create New Collection option
+      cy.get("@claRow")
+        .find(".dropdown-menu")
+        .contains("Create New Collection")
+        .click();
+
+      // enter a name and description for the new collection
+      cy.get("#group_name").type("testcollection");
+      cy.get("#group_description").type("test description");
+
+      // submit
+      cy.get("#new_group").submit();
+
+      // verify that the url was added to the collection
+      cy.get("@claRow")
+        .find("> :nth-child(3)")
+        .should("contain", "testcollection");
+
+      // double check the DB for the update
+      cy.appEval(`Url.find_by_keyword("cla").group.name`).should(
+        "eq",
+        "testcollection"
+      );
+    });
+
+    it("can add a url to an existing collection", () => {
       cy.createGroupAndAddUser("testcollection", user);
       cy.reload();
 
@@ -97,6 +128,17 @@ describe("/shortener/urls - list zlinks", () => {
         .find(".dropdown-menu")
         .contains("testcollection")
         .click();
+
+      // verify that the url is now in the collection
+      cy.get("@claRow")
+        .find("> :nth-child(3)")
+        .should("contain", "testcollection");
+
+      // double check the DB for the update
+      cy.appEval(`Url.find_by_keyword("cla").group.name`).should(
+        "eq",
+        "testcollection"
+      );
     });
 
     describe("filter and search the list of z-links", () => {
