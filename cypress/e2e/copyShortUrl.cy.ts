@@ -10,6 +10,24 @@ describe("copy short url", () => {
     });
 
     cy.login("testuser");
+
+    // use the Chrome debugger protocol to grant the current browser window
+    // access to the clipboard from the current origin
+    // https://chromedevtools.github.io/devtools-protocol/tot/Browser/#method-grantPermissions
+    // We are using cy.wrap to wait for the promise returned
+    // from the Cypress.automation call, so the test continues
+    // after the clipboard permission has been granted
+    cy.wrap(
+      Cypress.automation("remote:debugger:protocol", {
+        command: "Browser.grantPermissions",
+        params: {
+          permissions: ["clipboardReadWrite", "clipboardSanitizedWrite"],
+          // make the permission tighter by allowing the current origin only
+          // like "http://localhost:56978"
+          origin: window.location.origin,
+        },
+      })
+    );
   });
 
   context("on /shortener/urls", () => {
