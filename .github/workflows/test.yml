@@ -54,8 +54,6 @@ jobs:
 
       - name: Run E2E tests with Cypress
         uses: cypress-io/github-action@v5
-        env:
-          DEBUG: "cypress:*"
         with:
           start: bundle exec rails server -e test -p 5017
           wait-on: "http://localhost:5017"
