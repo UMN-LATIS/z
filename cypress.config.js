@@ -16,7 +16,8 @@ module.exports = defineConfig({
   },
   env: {
     browserPermissions: {
-      clipboard: "allow",
+      "clipboard-read": "allow",
+      "clipboard-write": "allow",
     },
   },
 });
