@@ -168,5 +168,5 @@ Cypress.Commands.addAll({
   createGroup,
   addUserToGroup,
   addURLToGroup,
-  createGroupAndAddUser: createGroupAndAddUser,
+  createGroupAndAddUser,
 });
