@@ -62,12 +62,17 @@ declare global {
       addUserToGroup(
         userId: Pick<RailsModel.User, "umndid">,
         group: Pick<RailsModel.Group, "name">
-      ): Chainable<RailsModel.Group[]>;
+      ): Chainable<RailsModel.Group>;
+
+      addURLToGroup(
+        urlKeyword: string,
+        group: Pick<RailsModel.Group, "name">
+      ): Chainable<RailsModel.Group>;
 
       createGroupAndAddUser(
         groupName: string,
         user: Pick<RailsModel.User, "umndid">
-      ): Chainable<RailsModel.Group[]>;
+      ): Chainable<RailsModel.Group>;
     }
   }
 }

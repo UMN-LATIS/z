@@ -1,3 +1,4 @@
+import { validateQRResponse } from "../support/validateQRResponse";
 import user1 from "../fixtures/users/user1.json";
 
 describe("admin url details (stats) page", () => {
@@ -140,16 +141,7 @@ describe("admin url details (stats) page", () => {
       cy.contains("QR Code").click();
 
       cy.wait("@qrDownload").then(() => {
-        // check that the server response is not null
-        expect(qrResponse.body.byteLength).to.be.greaterThan(100);
-
-        // and that it's a png image
-        expect(qrResponse.headers["content-type"]).to.equal("image/png");
-
-        // and that the filename will be z-cla.png
-        expect(qrResponse.headers["content-disposition"]).to.match(
-          /filename=\"z-cla.png\"/
-        );
+        validateQRResponse(qrResponse, "z-cla.png");
       });
     });
 

@@ -118,11 +118,31 @@ function addUserToGroup(
   user: Pick<RailsModel.User, "umndid">,
   group: Pick<RailsModel.Group, "name">
 ) {
-  return cy.appEval(`
+  return cy
+    .appEval(
+      `
     user = User.find_by(uid: "${user.umndid}")
     group = Group.find_by(name: "${group.name}")
     user.groups << group
-  `);
+  `
+    )
+    .then(() => group);
+}
+
+function addURLToGroup(
+  urlKeyword: string,
+  group: Pick<RailsModel.Group, "name">
+) {
+  return cy
+    .appEval(
+      `
+    url = Url.find_by(keyword: "${urlKeyword}")
+    group = Group.find_by(name: "${group.name}")
+    url.group = group
+    url.save
+  `
+    )
+    .then(() => group);
 }
 
 function createGroupAndAddUser(
@@ -147,5 +167,6 @@ Cypress.Commands.addAll({
   clickUrl,
   createGroup,
   addUserToGroup,
+  addURLToGroup,
   createGroupAndAddUser,
 });
