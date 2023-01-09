@@ -1,7 +1,7 @@
 import user from "../fixtures/users/user1.json";
 import { validateQRResponse } from "../support/validateQRResponse";
 
-describe("/shortener/urls - list zlinks", () => {
+describe("urlsPageListZlinks - /shortener/urls", () => {
   beforeEach(() => {
     cy.app("clean");
     // create a test user without admin privileges
@@ -96,8 +96,15 @@ describe("/shortener/urls - list zlinks", () => {
         .click();
 
       // enter a name and description for the new collection
-      cy.get("#group_name").type("testcollection");
-      cy.get("#group_description").type("test description");
+      cy.get("#group_name")
+        // FIXME: sometimes this doesn't complete typing the full string
+        // before continuing(or there's something preventing it from
+        // entering into the input).Using force: true to work around
+        // this for now.
+        .type("testcollection", { force: true })
+        .then(() => {
+          cy.get("#group_description").type("test description");
+        });
 
       // submit
       cy.get("#new_group").submit();
