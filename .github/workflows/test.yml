@@ -35,11 +35,13 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+
       - name: Install dependencies
         run: |
           gem install bundler
           bundle install
           yarn install --frozen-lockfile
+
       - name: Setup config files for CI
         run: |
           cp config/ldap_ci.yml config/ldap.yml
@@ -52,6 +54,8 @@ jobs:
 
       - name: Run E2E tests with Cypress
         uses: cypress-io/github-action@v5
+        env:
+          DEBUG: "cypress:*"
         with:
           start: bundle exec rails server -e test -p 5017
           wait-on: "http://localhost:5017"
