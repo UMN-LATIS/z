@@ -1,5 +1,6 @@
 describe("Home Page", () => {
   beforeEach(() => {
+    cy.app("clean");
     cy.createUser("testuser");
   });
 
