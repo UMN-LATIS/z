@@ -83,7 +83,7 @@ describe("/shortener/urls - list zlinks", () => {
         .should("not.exist");
     });
 
-    it.only("can create a new collection from the dropdown and add a url", () => {
+    it("can create a new collection from the dropdown and add a url", () => {
       // click the dropdown
       cy.get("#urls-table").contains("cla").closest("tr").as("claRow");
       // open the collection dropdown
