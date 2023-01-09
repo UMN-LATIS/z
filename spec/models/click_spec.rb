@@ -45,22 +45,22 @@ RSpec.describe Click, type: :model do
       it 'counts url clicks over a given duration, returning a hash keyed by a given time format string' do
         expect(url1.clicks.group_by_time_ago(3.days, year_month_day_strf))
           .to eq({
-                   2.days.ago.strftime(year_month_day_strf) => 3,
-                   1.day.ago.strftime(year_month_day_strf) => 2,
-                   Time.zone.now.strftime(year_month_day_strf) => 1
+                   2.days.ago.utc.strftime(year_month_day_strf) => 3,
+                   1.day.ago.utc.strftime(year_month_day_strf) => 2,
+                   Time.zone.now.utc.strftime(year_month_day_strf) => 1
                  })
 
         expect(url2.clicks.group_by_time_ago(3.days, year_month_day_strf))
           .to eq({
-                   Time.zone.now.strftime(year_month_day_strf) => 100
+                   Time.zone.now.utc.strftime(year_month_day_strf) => 100
                  })
 
         # total clicks
         expect(described_class.group_by_time_ago(3.days, year_month_day_strf))
           .to eq({
-                   2.days.ago.strftime(year_month_day_strf) => 3,
-                   1.day.ago.strftime(year_month_day_strf) => 2,
-                   Time.zone.now.strftime(year_month_day_strf) => 101
+                   2.days.ago.utc.strftime(year_month_day_strf) => 3,
+                   1.day.ago.utc.strftime(year_month_day_strf) => 2,
+                   Time.zone.now.utc.strftime(year_month_day_strf) => 101
                  })
       end
 
@@ -70,10 +70,10 @@ RSpec.describe Click, type: :model do
         clicks_by_day_hash = url1.clicks.group_by_time_ago(10.days, year_month_day_strf)
         expect(clicks_by_day_hash.to_a)
           .to eq([
-                   [7.days.ago.strftime(year_month_day_strf), 1],
-                   [2.days.ago.strftime(year_month_day_strf), 3],
-                   [1.day.ago.strftime(year_month_day_strf), 2],
-                   [Time.zone.now.strftime(year_month_day_strf), 1]
+                   [7.days.ago.utc.strftime(year_month_day_strf), 1],
+                   [2.days.ago.utc.strftime(year_month_day_strf), 3],
+                   [1.day.ago.utc.strftime(year_month_day_strf), 2],
+                   [Time.zone.now.utc.strftime(year_month_day_strf), 1]
                  ])
       end
     end
@@ -81,9 +81,9 @@ RSpec.describe Click, type: :model do
     describe('.max_by_day') do
       it 'shows the best day and number of clicks' do
         # all clicks
-        expect(described_class.max_by_day).to eq([Date.current, 101])
+        expect(described_class.max_by_day).to eq([Time.zone.now.utc.to_date, 101])
         # clicks specific to a url
-        expect(url1.clicks.max_by_day).to eq([Date.current - 2.days, 3])
+        expect(url1.clicks.max_by_day).to eq([(Time.zone.now.utc - 2.days).to_date, 3])
       end
     end
   end
