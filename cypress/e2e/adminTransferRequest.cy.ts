@@ -160,6 +160,9 @@ describe("admin url details (stats) page", () => {
     cy.contains("Send URLs").click();
     cy.contains("Confirm").click();
 
+    // is this a race?
+    cy.wait(1000);
+
     // check that the url is pending approval
     // (and not immediately transferred)
     cy.appEval(`TransferRequest.where("status = 'pending'").count`).should(
