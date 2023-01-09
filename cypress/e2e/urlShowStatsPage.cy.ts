@@ -119,16 +119,16 @@ describe("admin url details (stats) page", () => {
     });
 
     it("downloads a QR code", () => {
-      const downloadsFolder = Cypress.config("downloadsFolder");
-      const downloadedFilename = path.join(downloadsFolder, "z-cla.png");
-
       const claStatsPage = "/shortener/urls/cla";
+      let qrResponse = null;
 
       //intercept the download request
       cy.intercept("GET", `${claStatsPage}/download_qrcode`, (req) => {
-        req.reply((res) => {
-          // qrDownload = res.body;
-          // redirect the browser back to the url details page
+        req.continue((res) => {
+          qrResponse = res;
+
+          // set location to the stats page so that
+          // so that the test doesn't timeout
           res.headers.location = claStatsPage;
           res.send(302);
         });
@@ -140,16 +140,17 @@ describe("admin url details (stats) page", () => {
       // click on the QR Code button
       cy.contains("QR Code").click();
 
-      // wait for the download to complete
-      cy.wait("@qrDownload");
+      cy.wait("@qrDownload").then(() => {
+        // check that the server response is not null
+        expect(qrResponse.body.byteLength).to.be.greaterThan(100);
 
-      // make sure we're back on the the original page
-      cy.location("pathname").should("be.equal", claStatsPage);
+        // and that it's a png image
+        expect(qrResponse.headers["content-type"]).to.equal("image/png");
 
-      // make sure the file was downloaded
-      cy.readFile(downloadedFilename, "binary").should((buffer) => {
-        // and that it has content
-        expect(buffer.length).to.be.greaterThan(100);
+        // and that the filename will be z-cla.png
+        expect(qrResponse.headers["content-disposition"]).to.match(
+          /filename=\"z-cla.png\"/
+        );
       });
     });
 
