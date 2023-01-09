@@ -111,7 +111,7 @@ describe("/shortener/urls - list zlinks", () => {
         cy.reload();
       });
 
-      it("can filter results by collection", () => {
+      it("can filter results by collection dropdown", () => {
         // now try filtering by the test collection
         cy.get("#urls-table_filter > .dropdown > .btn").click();
         cy.get("#urls-table_filter .open > .dropdown-menu")
@@ -123,6 +123,29 @@ describe("/shortener/urls - list zlinks", () => {
         cy.get("#urls-table").contains("cla");
 
         // and that morris is not visible since it's not in the collection
+        cy.get("#urls-table").contains("morris").should("not.exist");
+      });
+
+      it("can filter by entering the url keyword or long url", () => {
+        // try filtering by the keyword
+        cy.get("#urls-table_filter input").as("filterInput").type("cla");
+        cy.get("#urls-table > tbody > tr").should("have.length", 1);
+        cy.get("#urls-table").should("contain", "cla");
+
+        // and that morris is not visible
+        cy.get("#urls-table").contains("morris").should("not.exist");
+
+        cy.get("@filterInput").clear();
+
+        // both urls should be visible again
+        cy.get("#urls-table > tbody > tr").should("have.length", 2);
+
+        // try filtering by the long url
+        cy.get("@filterInput").type("cla.umn.edu");
+        cy.get("#urls-table > tbody > tr").should("have.length", 1);
+        cy.get("#urls-table").should("contain", "cla.umn.edu");
+
+        // and that morris is not visible
         cy.get("#urls-table").contains("morris").should("not.exist");
       });
     });
