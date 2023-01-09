@@ -17,13 +17,13 @@ describe("admin url details (stats) page", () => {
         cy.createUrl({
           keyword: "user1",
           url: "https://user1url.com",
-          user,
+          group_id: user.context_group_id,
         });
 
         cy.createUrl({
           keyword: "another-user1-url",
           url: "https://user1.com/b",
-          user,
+          group_id: user.context_group_id,
         });
       }
     );
@@ -36,12 +36,12 @@ describe("admin url details (stats) page", () => {
       cy.createUrl({
         keyword: "admin-url",
         url: "https://admin.com",
-        user: admin,
+        group_id: admin.context_group_id,
       });
       cy.createUrl({
         keyword: "another-admin-url",
         url: "https://admin.com/b",
-        user: admin,
+        group_id: admin.context_group_id,
       });
     });
     cy.login(admin.umndid);

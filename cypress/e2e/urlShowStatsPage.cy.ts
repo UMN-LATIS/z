@@ -1,6 +1,3 @@
-import path from "path";
-import dayjs from "dayjs";
-
 import user1 from "../fixtures/users/user1.json";
 
 describe("admin url details (stats) page", () => {
@@ -23,12 +20,14 @@ describe("admin url details (stats) page", () => {
       cy.createUrl({
         keyword: "cla",
         url: "https://cla.umn.edu",
-        user,
+        group_id: user.context_group_id,
+        created_at: "2020-01-01",
       });
       cy.createUrl({
         keyword: "morris",
         url: "https://morris.umn.edu",
-        user,
+        group_id: user.context_group_id,
+        created_at: "2020-01-01",
       });
     });
   });
@@ -79,7 +78,7 @@ describe("admin url details (stats) page", () => {
       cy.contains("cla").should("be.visible");
 
       // created at
-      cy.contains(dayjs().format("MM/DD/YYYY")).should("be.visible");
+      cy.contains("01/01/2020").should("be.visible");
     });
 
     it("shows the total clicks on this url", () => {
@@ -105,7 +104,7 @@ describe("admin url details (stats) page", () => {
       1;
       cy.clickUrl("cla", 10, {
         country_code: "US",
-        created_at: "2020-01-01",
+        created_at: "01/01/2020",
       });
 
       // now add a few more clicks

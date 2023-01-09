@@ -71,19 +71,9 @@ function createAnnouncement(opts: Record<string, unknown> = {}) {
     .then(([announcement]) => announcement);
 }
 
-function createUrl({
-  keyword,
-  url,
-  user,
-}: {
-  keyword: string;
-  url: string;
-  user: RailsModel.User;
-}) {
+function createUrl(partialUrl: Partial<RailsModel.Url>) {
   return cy
-    .appFactories<RailsModel.Url>([
-      ["create", "url", { group_id: user.context_group_id, keyword, url }],
-    ])
+    .appFactories<RailsModel.Url>([["create", "url", partialUrl]])
     .then(([url]) => url);
 }
 

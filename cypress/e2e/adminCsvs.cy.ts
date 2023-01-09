@@ -12,7 +12,7 @@ describe("admin csv of clicks for urls", () => {
         cy.createUrl({
           keyword: "cla",
           url: "https://cla.umn.edu",
-          user,
+          group_id: user.context_group_id,
         });
       })
       .then(() => {

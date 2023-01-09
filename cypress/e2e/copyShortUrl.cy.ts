@@ -3,9 +3,9 @@ describe("copy short url", () => {
     cy.app("clean");
     cy.createUser("testuser").then((user) => {
       cy.createUrl({
-        user,
         keyword: "cla",
         url: "https://cla.umn.edu",
+        group_id: user.context_group_id,
       });
     });
 

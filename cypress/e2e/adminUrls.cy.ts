@@ -34,17 +34,17 @@ describe("admin urls page", () => {
         cy.createUrl({
           keyword: "x1",
           url: "https://example1.com",
-          user,
+          group_id: user.context_group_id,
         });
         cy.createUrl({
           keyword: "x2",
           url: "https://example2.com",
-          user,
+          group_id: user.context_group_id,
         });
         cy.createUrl({
           keyword: "x3",
           url: "https://example3.com",
-          user,
+          group_id: user.context_group_id,
         });
       });
       cy.visit("/shortener/admin/urls");

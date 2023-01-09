@@ -6,6 +6,8 @@ export namespace RailsModel {
     internet_id: string;
     display_name: string;
     context_group_id: number;
+    created_at: string; // ISO8601
+    updated_at: string; // ISO8601
   }
 
   export interface Announcement {
@@ -14,6 +16,8 @@ export namespace RailsModel {
     body: string;
     start_delivering_at: string; // ISO8601
     stop_delivering_at: string; // ISO8601
+    created_at: string; // ISO8601
+    updated_at: string; // ISO8601
   }
 
   export interface Url {
@@ -21,6 +25,8 @@ export namespace RailsModel {
     group_id: number;
     keyword: string;
     url: string;
+    created_at: string; // ISO8601
+    updated_at: string; // ISO8601
   }
 
   export interface Click {
