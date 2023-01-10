@@ -1,18 +1,30 @@
 {
   "name": "z.umn.edu",
   "version": "0.0.0",
-  "description": "Link shortening for the University of Minnesota",
-  "main": "index.js",
-  "repository": "https://github.com/UMN-LATIS/z.git",
-  "author": "UMN LATIS <latis@umn.edu>",
-  "license": "MIT",
   "private": true,
+  "description": "Link shortening for the University of Minnesota",
+  "repository": "https://github.com/UMN-LATIS/z.git",
+  "license": "MIT",
+  "author": "UMN LATIS <latis@umn.edu>",
+  "main": "index.js",
+  "scripts": {
+    "cypress:rails": "USER_LOOKUP_SKELETON=1 RAILS_ENV=test bin/rails server",
+    "cypress:open": "npx cypress open",
+    "cypress:run": "npx cypress run",
+    "cypress:all": "concurrently \"npm run cypress:rails\" \"npm run cypress:open\""
+  },
   "dependencies": {
     "@rails/webpacker": "5.4.0",
+    "dayjs": "^1.11.7",
     "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12"
   },
   "devDependencies": {
+    "concurrently": "^7.6.0",
+    "cypress": "12.3.0",
+    "cypress-browser-permissions": "^1.1.0",
+    "cypress-real-events": "^1.7.4",
+    "typescript": "^4.9.4",
     "webpack-dev-server": "^3.11.2"
   }
 }

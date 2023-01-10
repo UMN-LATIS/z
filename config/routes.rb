@@ -11,6 +11,13 @@ Rails.application.routes.draw do
     end
   end
 
+  # dev routes for cypress
+  if Rails.env.development? || Rails.env.test?
+    scope path: "/__cypress__", controller: 'cypress' do
+      post "login", action: 'login'
+    end
+  end
+
   # Handle Auth
   post '/auth/:provider/callback', to: 'sessions#create'
   get '/auth/:provider/callback', to: 'sessions#create'

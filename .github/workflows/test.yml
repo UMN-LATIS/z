@@ -29,26 +29,54 @@ jobs:
     steps:
       - name: Verify mysql connection
         run: |
-          mysql --host ${{ ENV.DB_HOST }} --port ${{ ENV.DB_PORT }} -u${{ ENV.DB_USERNAME}} -p${{ ENV.DB_PASSWORD }} -e "SHOW DATABASES"
+          mysql --host ${{ env.DB_HOST }} --port ${{ env.DB_PORT }} -u${{ env.DB_USERNAME}} -p${{ env.DB_PASSWORD }} -e "SHOW DATABASES"
+
       - uses: actions/checkout@v2
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+
       - name: Install dependencies
         run: |
           gem install bundler
           bundle install
           yarn install --frozen-lockfile
+
       - name: Setup config files for CI
         run: |
           cp config/ldap_ci.yml config/ldap.yml
+
       - name: Setup Database
         run: |
           cp config/database_ci.yml config/database.yml
           ./bin/rails db:create
           ./bin/rails db:migrate
+
+      - name: Run E2E tests with Cypress
+        uses: cypress-io/github-action@v5
+        with:
+          start: bundle exec rails server -e test -p 5017
+          wait-on: "http://localhost:5017"
+          browser: chrome
+          config: baseUrl=http://localhost:5017
+
+      - name: Upload test screenshots if any
+        uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+
+      - name: Upload snapshots
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: cypress-snapshots
+          path: cypress/snapshots
+
       - name: Run RSpec
         run: bundle exec rspec
+
       - name: Archive capybara artifacts
         uses: actions/upload-artifact@v2
         if: failure()
