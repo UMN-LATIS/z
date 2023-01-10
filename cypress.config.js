@@ -20,4 +20,6 @@ module.exports = defineConfig({
       "clipboard-write": "allow",
     },
   },
+  // we hardly use video, so we can disable it to speed up the tests
+  video: false,
 });
