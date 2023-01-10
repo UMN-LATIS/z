@@ -13,7 +13,7 @@ gem 'omniauth-shibboleth-passive', "~> 0.1"
 
 # gem 'mimemagic', github: 'mimemagicrb/mimemagic', ref: '01f92d86d15d85cfd0f20dabd025dcbd36a8a60f'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.1'
+gem 'rails', '~> 7.0'
 # Use mysql2 as the database for Active Record
 gem 'mysql2', "~> 0.5"
 # Use sqlite also
@@ -73,8 +73,8 @@ gem 'rqrcode', "~> 1.1"
 gem 'pundit', "~> 2.1"
 
 # announcements to the seething masses
-# Using our own fork of starburst to support Rails 6.1 for now
-gem 'starburst',  github: 'UMN-LATIS/starburst'
+# Using our own fork of starburst to support the current Rails version
+gem 'starburst',  github: 'UMN-LATIS/starburst', branch: 'feature/rails-7'
 
 # notify someone when exceptions occur
 # and notify slack channel
@@ -134,7 +134,7 @@ group :development do
 
   # Use better_errors to have more clear error messages and an interactive shell
   gem 'better_errors', "~> 2.7"
-  gem 'binding_of_caller', "~> 0.8"
+  gem 'binding_of_caller', "~> 1.0"
 
   # rubocop for linting
   gem 'rubocop', '~> 1.18', require: false
