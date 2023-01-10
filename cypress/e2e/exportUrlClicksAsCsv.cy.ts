@@ -2,6 +2,7 @@
 import linkOwner from "../fixtures/users/user1.json";
 import admin from "../fixtures/users/admin.json";
 import nonOwner from "../fixtures/users/user2.json";
+import { validateFlashMessage } from "../support/validateFlashMessage";
 
 const claZlinkStatsPage = `/shortener/urls/cla`;
 
@@ -67,10 +68,7 @@ describe("csv of clicks for urls", () => {
       // it should redirect to the urls page
       cy.location("pathname").should("eq", "/shortener/urls");
 
-      // FIXME: the error message is actually hidden behind the
-      // hero, so this fails (usually). See #120.
-      // it should display an error message
-      // cy.contains("not authorized", { matchCase: false }).should("be.visible");
+      validateFlashMessage("not authorized");
     });
   });
 

@@ -1,4 +1,5 @@
 import { validateQRResponse } from "../support/validateQRResponse";
+import { validateFlashMessage } from "../support/validateFlashMessage";
 import user1 from "../fixtures/users/user1.json";
 
 describe("admin url details (stats) page", () => {
@@ -51,10 +52,7 @@ describe("admin url details (stats) page", () => {
       // it should redirect to the urls page
       cy.location("pathname").should("eq", "/shortener/urls");
 
-      // FIXME: the error message is actually hidden behind the
-      // hero, so this fails (usually). See #120.
-      // it should display an error message
-      // cy.contains("not authorized", { matchCase: false }).should("be.visible");
+      validateFlashMessage("not authorized");
     });
 
     it("shows a not found page when the url does not exist", () => {

@@ -34,7 +34,7 @@ describe("moving urls to a group", () => {
     cy.contains("404").should("exist");
   });
 
-  it.only("bulk moves urls to a given collection", () => {
+  it("bulk moves urls to a given collection", () => {
     cy.visit("/shortener/urls");
     cy.get("#urls-table").contains("morris").closest("tr").as("morrisRow");
     cy.get("#urls-table").contains("duluth").closest("tr").as("duluthRow");

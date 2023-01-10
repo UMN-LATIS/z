@@ -1,3 +1,5 @@
+import { validateFlashMessage } from "../support/validateFlashMessage";
+
 //fixtures
 import admin from "../fixtures/users/admin.json";
 import user1 from "../fixtures/users/user1.json";
@@ -18,10 +20,7 @@ describe("admin urls page", () => {
       // it should redirect to the urls page
       cy.location("pathname").should("eq", "/shortener/urls");
 
-      // FIXME: the error message is actually hidden behind the
-      // hero, so this fails (usually). See #120.
-      // it should display an error message
-      // cy.contains("not authorized", { matchCase: false }).should("be.visible");
+      validateFlashMessage("not authorized");
     });
   });
 

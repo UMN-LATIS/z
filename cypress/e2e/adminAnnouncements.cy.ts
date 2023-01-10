@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import { validateFlashMessage } from "../support/validateFlashMessage";
 
 // fixtures
 import admin from "../fixtures/users/admin.json";
@@ -38,10 +39,7 @@ describe("admin announcements page", () => {
       // it should redirect to the urls page
       cy.location("pathname").should("equal", "/shortener/urls");
 
-      // FIXME: the error message is actually hidden behind the
-      // hero, so this fails (usually). See #120.
-      // it should display an error message
-      // cy.contains("not authorized", { matchCase: false }).should("be.visible");
+      validateFlashMessage("not authorized");
     });
   });
 
