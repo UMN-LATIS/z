@@ -87,7 +87,7 @@ describe("groups: /shortener/groups", () => {
         cy.get("#groups-table tbody").contains("testcollection").click();
 
         // // verify that we are on the group urls page
-        cy.location("pathname").should("eq", `/shortener/urls?`);
+        cy.location("pathname").should("eq", `/shortener/urls`);
         // check the query string for the group id
         cy.location("search").then((queryString) => {
           const params = new URLSearchParams(queryString);
