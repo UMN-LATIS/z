@@ -22,4 +22,8 @@ module.exports = defineConfig({
   },
   // we hardly use video, so we can disable it to speed up the tests
   video: false,
+  retries: {
+    // `cypress run` retries
+    runMode: 2,
+  },
 });
