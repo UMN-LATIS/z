@@ -192,7 +192,7 @@ describe("groups: /shortener/groups", () => {
       });
     });
 
-    it.only("does not allow editing of another's group", () => {
+    it("does not allow editing of another's group", () => {
       // verify that user1 can see their group
       cy.login(user1.umndid);
       cy.visit("/shortener/groups");
