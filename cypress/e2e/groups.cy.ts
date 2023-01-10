@@ -71,6 +71,31 @@ describe("groups: /shortener/groups", () => {
     cy.get("#groups-table tbody tr td:nth-child(2)").should("contain", "4");
   });
 
+  it("shows the collections urls when the group name is clicked", () => {
+    let group: RailsModel.Group | null = null;
+    // create a collection and add the current user to it
+    cy.createGroup("testcollection")
+      .then((grp) => {
+        group = grp;
+        cy.addUserToGroup(user1.umndid, grp);
+      })
+      .then(() => {
+        // visit the groups page
+        cy.visit("/shortener/groups");
+
+        // click the group name
+        cy.get("#groups-table tbody").contains("testcollection").click();
+
+        // // verify that we are on the group urls page
+        cy.location("pathname").should("eq", `/shortener/urls?`);
+        // check the query string for the group id
+        cy.location("search").then((queryString) => {
+          const params = new URLSearchParams(queryString);
+          expect(params.get("collection")).to.eq(group.id.toString());
+        });
+      });
+  });
+
   describe("group actions dropdown", () => {
     let group: RailsModel.Group | null = null;
 
