@@ -50,6 +50,27 @@ describe("groups: /shortener/groups", () => {
       .should("have.length", 1);
   });
 
+  it("shows the correct members in the collection", () => {
+    // create some additional users
+    cy.createUser("test1");
+    cy.createUser("test2");
+    cy.createUser("test3");
+
+    // create a collection and add the current user to it
+    cy.createGroup("testcollection").then((group) => {
+      cy.addUserToGroup(user1.umndid, group);
+      cy.addUserToGroup("test1", group);
+      cy.addUserToGroup("test2", group);
+      cy.addUserToGroup("test3", group);
+    });
+
+    // visit the groups page
+    cy.visit("/shortener/groups");
+
+    // check that the second column shows the correct members
+    cy.get("#groups-table tbody tr td:nth-child(2)").should("contain", "4");
+  });
+
   describe("group actions dropdown", () => {
     let group: RailsModel.Group | null = null;
 
