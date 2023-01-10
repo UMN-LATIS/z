@@ -33,4 +33,47 @@ describe("Members Page", () => {
         cy.get("td").eq(2).should("contain", "Remove");
       });
   });
+
+  it("adds/removes a group member", () => {
+    // search for user 2
+    cy.get("#people_search").type(user2.umndid);
+
+    // select user 2 from the dropdown
+    cy.get("#search-form .tt-menu").contains(user2.display_name).click();
+
+    // click the add member button
+    cy.contains("Add member").click();
+
+    // check that a confirmation message is shown
+    cy.get(".modal-body").should("contain", "Are you sure");
+
+    // click the confirm button
+    cy.contains("Confirm").click();
+
+    // now there should be two users listed
+    cy.get("#members-table tbody tr").should("have.length", 2);
+
+    // and one of them should be user 2
+    cy.contains(user2.display_name);
+
+    // now remove user 2
+    cy.contains(user2.display_name).closest("tr").contains("Remove").click();
+
+    // verify the confirmation message
+    cy.get(".modal-body").should("contain", "Are you sure");
+
+    // click the confirm button
+    cy.contains("Confirm").click();
+
+    // now there should be only one user listed
+    cy.get("#members-table tbody tr").should("have.length", 1);
+
+    // and it should be user 1
+    cy.get("#members-table tbody").should("contain", user1.display_name);
+    cy.get("#members-table tbody").should("not.contain", user2.display_name);
+  });
+
+  it("prevents empty members from being added", () => {
+    cy.contains("Add member").closest("button").should("be.disabled");
+  });
 });
