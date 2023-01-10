@@ -1,21 +1,20 @@
 # Z
 
-[![tests](https://github.com/UMN-LATIS/z/actions/workflows/test.yml/badge.svg)](https://github.com/UMN-LATIS/z/actions/workflows/test.yml)
+[![tests](https://github.com/UMN-LATIS/z/actions/workflows/test.yml/badge.svg)](https://github.com/UMN-LATIS/z/actions/workflows/test.yml) [![GitHub Release](https://img.shields.io/github/release/tterb/PlayMusic.svg?style=flat)]()
 
-Z is a custom URL shortener developed at LATIS@UMN. Instead of using a third party service, we use Z to create and manage University branded short links, for example: <http://z.umn.edu/mycoolsite>. The goal of this project is to provide a modern, open source solution to University branded short links.
+Z is a custom URL shortener for the [University of Minnnesota](https://www.umn.edu) developed by [LATIS](https://cla.umn.edu/latis). We use Z to create and manage University branded short links, for example: <http://z.umn.edu/mycoolsite>.
 
-## Features
+**Features**
 
-- Custom or generated link keywords
+- Custom or generated link short urls at z.umn.edu
 - QR code generation
 - Click statistics
-- Link organization into collections
+- Collections of links
 - Sharing link management between users
 - Integration with University directory
 - Ownership transfer of links
 - Administrative dashboard
 - History of link changes
-- Responsive design
 - Link creation API
 
 ## Getting Started
@@ -48,48 +47,72 @@ Z is a custom URL shortener developed at LATIS@UMN. Instead of using a third par
 
 Connect to [http://localhost:3000].
 
-## Technology and Dependencies
+## Testing
 
-- Rails 6.1
-- MySQL
-- LDAP (for directory lookup)
+In test mode, Rails will use `UserLookupServiceSkeleton`, a stubbed version of the normal LDAP `UserLookupService` which will load test users from Cypress fixtures at `cypress/fixtures` rather than doing a normal LDAP lookup.
 
-### Auth
+### [Rspec](https://github.com/rspec/rspec)
 
-- [OmniAuth](https://github.com/omniauth/omniauth), for authentication
-- [Pundit](https://github.com/elabs/pundit), for authorization
-
-### Deployment
-
-- [Capistrano](https://github.com/capistrano/capistrano), for deployment
-- Apache/[Passenger](https://github.com/phusion/passenger), as our server stack
-- [LATIS Ansible Playbook](https://github.umn.edu/latis-sw/ansible_playbooks), for larger platform changes like a ruby version bump.
-
-```sh
-bundle exec cap <environmentname> deploy
-```
-
-#### Production Deployment
-
-Please see the [Deploying to Production](./deploy_to_production.md) page.
-
-### Data
-
-After deploying, populate the ip2location_db1 table with the content from the [IP2Location LITE IP-Country Database](https://lite.ip2location.com/database/ip-country).
-
-### Testing
-
-- [Rspec](https://github.com/rspec/rspec)/[Capybara](https://github.com/teamcapybara/capybara), for testing
-- [PhantomJS](http://phantomjs.org)/[Apparition](https://github.com/twalpole/apparition), for browser emulation
-
-The application has a a comprehensive testing suite using Rspec and Capybara. Front end tests are configured to run with PhantomJS and Apparition. The test suite can be ran by running:
+To run the unit tests with Rspec:
 
 ```sh
 bundle exec rspec
 ```
 
-### Other tech
+### [Cypress](https://www.cypress.io/)
 
+Cypress is used for End to End testing. To run the tests locally, you will need to have the application running.
+
+You'll want to start the server using `UserLookupServiceSkeleton`, a stubbed version of the normal LDAP, which will load test user data from Cypress fixtures at `cypress/fixtures`.
+
+```sh
+# start the Rails server
+USER_LOOKUP_SKELETON=1 RAILS_ENV=test ./bin/rails server
+```
+
+Once the server is running, you can open Cypress with:
+
+```sh
+# open cypress
+yarn cypress open
+```
+
+## Deployment
+
+For deployment, we use:
+
+- [Capistrano](https://github.com/capistrano/capistrano), for deployment
+- Apache/[Passenger](https://github.com/phusion/passenger), as our server stack
+- [LATIS Ansible Playbook](https://github.umn.edu/latis-sw/ansible_playbooks), for larger platform changes like a ruby version bump.
+
+See `config/deploy.rb` and `config/deploy/` for deployment configuration.
+
+### Remote Dev and Staging
+
+To deploy remote dev and staging environments:
+
+```sh
+bundle exec cap <environmentname> deploy
+```
+
+| Environment Name | Server                                                     |
+| ---------------- | ---------------------------------------------------------- |
+| remotedev        | [cla-z-dev.oit.umn.edu](https://cla-z-dev.oit.umn.edu)     |
+| staging          | [cla-z-stage.oit.umn.edu](https://cla-z-stage.oit.umn.edu) |
+
+### Production
+
+See [Deploying to Production](./deploy_to_production.md).
+
+After deploying, populate the ip2location_db1 table with the content from the [IP2Location LITE IP-Country Database](https://lite.ip2location.com/database/ip-country).
+
+## Tech Stack
+
+- Rails 6.1
+- MySQL
+- LDAP (for directory lookup)
+- [OmniAuth](https://github.com/omniauth/omniauth), for authentication
+- [Pundit](https://github.com/elabs/pundit), for authorization
 - [Paper trail](https://github.com/airblade/paper_trail), for URL version history
 - [Turbolinks](https://github.com/turbolinks/turbolinks), for faster browsing
 - [Typeahead](https://github.com/twitter/typeahead.js/), for user autocomplete
@@ -98,16 +121,11 @@ bundle exec rspec
 - [Rubocop](https://github.com/bbatsov/rubocop), to enforce best practices
 - [Starburst](https://github.com/csm123/starburst), for in-app announcements
 
-## Customization
+### Customization
 
 Z was designed to be forkable and customizable. Most of the language has been extracted into a [single localization file](https://github.umn.edu/latis-sw/z/blob/develop/config/locales/en.bootstrap.yml). This allows you to change any language and make Z applicable to your environment. Z uses [OmniAuth](https://github.com/omniauth/omniauth), which supports a wide variety of [authentication strategies](https://github.com/omniauth/omniauth/wiki/list-of-strategies).
 
-## Contribute
+### Contribute
 
-- Issue Tracker: <https://github.umn.edu/latis-sw/z/issues>
-- Source Code: <https://github.umn.edu/latis-sw/z>
-
-## Support
-
-If you are having issues, please let us know.
-We have a mailing list located at: help@umn.edu
+- Source Code: <https://www.github.com/z>
+- Issue Tracker: <https://www.github.com/umn-latis/z/issues>
