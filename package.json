@@ -10,7 +10,7 @@
   "scripts": {
     "cypress:rails": "USER_LOOKUP_SKELETON=1 bin/rails server",
     "cypress:open": "npx cypress open",
-    "cypress:run": "npx cypress run",
+    "cypress:run": "npx cypress run --browser chrome",
     "cypress:all": "concurrently \"npm run cypress:rails\" \"npm run cypress:open\""
   },
   "dependencies": {
