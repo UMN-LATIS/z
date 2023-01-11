@@ -8,10 +8,6 @@ gem 'omniauth', "~> 1.9"
 gem 'omniauth-shibboleth', "~> 1.1"
 gem 'omniauth-shibboleth-passive', "~> 0.1"
 
-# temporary hack due to mimemagic update
-# rails 5.2.5 seems to break the app??
-
-# gem 'mimemagic', github: 'mimemagicrb/mimemagic', ref: '01f92d86d15d85cfd0f20dabd025dcbd36a8a60f'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 7.0'
 # Use mysql2 as the database for Active Record
@@ -26,8 +22,6 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '~> 4.2'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
-# See https://github.com/rails/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
 
 gem "lograge", "~> 0.11"
 
@@ -36,8 +30,10 @@ gem "i18n-js", "~> 3.7"
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails', "~> 4.4"
+
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5.2'
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.10'
 
@@ -92,6 +88,9 @@ gem "sentry-ruby", "~> 4.4"
 
 # Load ENV variables from .env file
 gem 'dotenv-rails', "~> 2.7"
+
+# Use Sprockets for compiling CSS and JS assets
+gem "sprockets-rails"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a

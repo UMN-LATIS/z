@@ -544,6 +544,7 @@ DEPENDENCIES
   sentry-ruby (~> 4.4)
   shoulda-matchers (~> 5.0)
   slack-notifier (~> 2.3)
+  sprockets-rails
   sqlite3 (~> 1.4)
   starburst!
   turbolinks (~> 5.2)
