@@ -98,17 +98,12 @@ group :development, :test do
   # debugger console
   gem 'byebug', "~> 11.1", platform: :mri
 
-  # Use Rspec, capybara, and apparition for testing
-  gem 'capybara', "~> 3.15"
-  gem 'capybara-screenshot', "~> 1.0"
+  # Use Rspec for testing
   gem 'rspec-rails', "~> 4.0"
 
   # rails helpers for cypress
   gem 'cypress-on-rails', '~> 1.0'
 
-  # Using github for source until change in twalpole/apparition#79
-  # is released. Change back to gem version after.
-  gem 'apparition', github: 'twalpole/apparition', ref: 'ca86be4'
   gem 'database_cleaner', "~> 1.8"
   gem 'factory_bot_rails', "~> 6.2"
   gem 'fuubar', "~> 2.5"
