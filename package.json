@@ -8,7 +8,7 @@
   "author": "UMN LATIS <latis@umn.edu>",
   "main": "index.js",
   "scripts": {
-    "cypress:rails": "USER_LOOKUP_SKELETON=1 RAILS_ENV=test bin/rails server",
+    "cypress:rails": "USER_LOOKUP_SKELETON=1 bin/rails server",
     "cypress:open": "npx cypress open",
     "cypress:run": "npx cypress run",
     "cypress:all": "concurrently \"npm run cypress:rails\" \"npm run cypress:open\""
