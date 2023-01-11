@@ -31,7 +31,8 @@ jobs:
         run: |
           mysql --host ${{ env.DB_HOST }} --port ${{ env.DB_PORT }} -u${{ env.DB_USERNAME}} -p${{ env.DB_PASSWORD }} -e "SHOW DATABASES"
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
