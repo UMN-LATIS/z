@@ -13,7 +13,7 @@ Bundler.require(*Rails.groups)
 module Z
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 6.1
+    config.load_defaults 7.0
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -29,5 +29,8 @@ module Z
     config.middleware.insert_before Rack::Runtime, HandleBadEncodingMiddleware
 
     config.exceptions_app = routes
+
+    # See: https://discuss.rubyonrails.org/t/cve-2022-32224-possible-rce-escalation-bug-with-serialized-columns-in-active-record/81017
+    config.active_record.yaml_column_permitted_classes = [Symbol, Date, Time]
   end
 end

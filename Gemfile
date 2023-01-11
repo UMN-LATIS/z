@@ -8,26 +8,20 @@ gem 'omniauth', "~> 1.9"
 gem 'omniauth-shibboleth', "~> 1.1"
 gem 'omniauth-shibboleth-passive', "~> 0.1"
 
-# temporary hack due to mimemagic update
-# rails 5.2.5 seems to break the app??
-
-# gem 'mimemagic', github: 'mimemagicrb/mimemagic', ref: '01f92d86d15d85cfd0f20dabd025dcbd36a8a60f'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.1'
+gem 'rails', '~> 7.0'
 # Use mysql2 as the database for Active Record
 gem 'mysql2', "~> 0.5"
 # Use sqlite also
 gem 'sqlite3', "~> 1.4"
 # Use Puma as the app server
-gem 'puma', '~> 4.3'
+gem 'puma', '~> 6.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '~> 4.2'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
-# See https://github.com/rails/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
 
 gem "lograge", "~> 0.11"
 
@@ -36,8 +30,10 @@ gem "i18n-js", "~> 3.7"
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails', "~> 4.4"
+
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5.2'
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.10'
 
@@ -62,7 +58,7 @@ gem 'clipboard-rails', "~> 1.7"
 gem 'data-confirm-modal', "~> 1.6"
 
 # use papertrail for auding or versioning
-gem 'paper_trail', "~> 12.0"
+gem 'paper_trail', "~> 14.0"
 
 # Use barby to generate QR codes
 gem 'barby', "~> 0.6"
@@ -73,8 +69,8 @@ gem 'rqrcode', "~> 1.1"
 gem 'pundit', "~> 2.1"
 
 # announcements to the seething masses
-# Using our own fork of starburst to support Rails 6.1 for now
-gem 'starburst',  github: 'UMN-LATIS/starburst'
+# Using our own fork of starburst to support the current Rails version
+gem 'starburst',  github: 'UMN-LATIS/starburst', branch: 'feature/rails-7'
 
 # notify someone when exceptions occur
 # and notify slack channel
@@ -93,13 +89,16 @@ gem "sentry-ruby", "~> 4.4"
 # Load ENV variables from .env file
 gem 'dotenv-rails', "~> 2.7"
 
+# Use Sprockets for compiling CSS and JS assets
+gem "sprockets-rails"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a
   # debugger console
   gem 'byebug', "~> 11.1", platform: :mri
 
   # Use Rspec for testing
-  gem 'rspec-rails', "~> 4.0"
+  gem 'rspec-rails', '~> 6.0.0'
 
   # rails helpers for cypress
   gem 'cypress-on-rails', '~> 1.0'
@@ -134,7 +133,7 @@ group :development do
 
   # Use better_errors to have more clear error messages and an interactive shell
   gem 'better_errors', "~> 2.7"
-  gem 'binding_of_caller', "~> 0.8"
+  gem 'binding_of_caller', "~> 1.0"
 
   # rubocop for linting
   gem 'rubocop', '~> 1.18', require: false
