@@ -10,13 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[6.1].define(version: 2021_07_19_171642) do
-
+ActiveRecord::Schema[7.0].define(version: 2023_01_10_212461) do
   create_table "clicks", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "country_code"
     t.integer "url_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["url_id"], name: "index_clicks_on_url_id"
   end
 
@@ -24,15 +23,15 @@ ActiveRecord::Schema[6.1].define(version: 2021_07_19_171642) do
     t.string "header"
     t.text "question"
     t.text "answer"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "groups", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "groups_users", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -62,19 +61,19 @@ ActiveRecord::Schema[6.1].define(version: 2021_07_19_171642) do
   create_table "starburst_announcement_views", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "user_id"
     t.integer "announcement_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.index ["user_id", "announcement_id"], name: "starburst_announcement_view_index", unique: true
   end
 
   create_table "starburst_announcements", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "title"
     t.text "body"
-    t.datetime "start_delivering_at"
-    t.datetime "stop_delivering_at"
+    t.datetime "start_delivering_at", precision: nil
+    t.datetime "stop_delivering_at", precision: nil
     t.text "limit_to_users"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.text "category"
   end
 
@@ -91,8 +90,8 @@ ActiveRecord::Schema[6.1].define(version: 2021_07_19_171642) do
     t.integer "from_group_requestor_id"
     t.string "key"
     t.string "status", default: "pending"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["from_group_id"], name: "index_transfer_requests_on_from_group_id"
     t.index ["to_group_id"], name: "index_transfer_requests_on_to_group_id"
   end
@@ -103,8 +102,8 @@ ActiveRecord::Schema[6.1].define(version: 2021_07_19_171642) do
     t.integer "total_clicks", default: 0
     t.integer "group_id"
     t.integer "modified_by"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["group_id"], name: "index_urls_on_group_id"
     t.index ["keyword"], name: "index_urls_on_keyword", unique: true
   end
@@ -114,8 +113,8 @@ ActiveRecord::Schema[6.1].define(version: 2021_07_19_171642) do
     t.integer "context_group_id"
     t.integer "default_group_id"
     t.boolean "admin"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "remember_token"
     t.string "secret_key"
     t.index ["context_group_id"], name: "index_users_on_context_group_id"
@@ -128,7 +127,7 @@ ActiveRecord::Schema[6.1].define(version: 2021_07_19_171642) do
     t.string "event", null: false
     t.string "whodunnit"
     t.text "object", size: :long
-    t.datetime "created_at"
+    t.datetime "created_at", precision: nil
     t.string "whodunnit_email"
     t.string "whodunnit_name"
     t.text "version_history"
