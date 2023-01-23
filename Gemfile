@@ -92,6 +92,9 @@ gem 'dotenv-rails', "~> 2.7"
 # Use Sprockets for compiling CSS and JS assets
 gem "sprockets-rails"
 
+# Vite for JS compiling
+gem 'vite_rails'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a
   # debugger console
