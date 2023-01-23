@@ -47,8 +47,7 @@ end
 
 after 'deploy:symlink:release', 'deploy:apache'
 
-# Compile assets on every deployment, even if JS and CSS have not changed
-# See: https://github.com/rails/webpacker/blob/master/docs/deployment.md
+# Compile assets on every deployment
 before "deploy:assets:precompile", "deploy:yarn_install"
 namespace :deploy do
   desc "Run rake yarn install"
