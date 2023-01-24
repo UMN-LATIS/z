@@ -1,36 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>Z</title>
-  <%= csrf_meta_tags %>
-  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  <%= yield :head %>
-  <%= favicon_link_tag '/favicon.ico' %>
-  <%= render 'layouts/shim' %>
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Molengo">
-  <meta name="viewport" content="initial-scale=0.8, maximum-scale=0.8">
-  <meta name="turbolinks-cache-control" content="no-cache">
-  <!--  Change stylesheet link depending on which search option you are using:
+  <head>
+    <title>Z</title>
+    <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= yield :head %>
+    <%= favicon_link_tag '/favicon.ico' %>
+    <%= render 'layouts/shim' %>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Molengo">
+    <meta name="viewport" content="initial-scale=0.8, maximum-scale=0.8">
+    <meta name="turbolinks-cache-control" content="no-cache">
+    <!--  Change stylesheet link depending on which search option you are using:
     Dropdown: umnhf-dd.css (minified version at umnhf-dd.min.css)
     Two-tier: umnhf-tt.css (minified version at umnhf-tt.min.css) -->
-  <script src="https://a.umn.edu/templates/web/responsive/current/js/umnhf.js"></script>
+    <script src="https://a.umn.edu/templates/web/responsive/current/js/umnhf.js"></script>
     <%= vite_client_tag %>
     <%= vite_typescript_tag 'application' %>
-</head>
-
-<body class='<%= params[:controller] %> <%= params[:action] %>'>
-<div id="test"></div>
-<%= render 'layouts/header' %>
-<%= render 'layouts/navigation_top' %>
-<div class="container-wrapper">
-  <div class="container">
-
-    <%= flash_messages %>
-    <%= yield %>
-  </div>
-</div>
-<%= render 'layouts/latis_footer' %>
-<%= render 'layouts/static_footer' %>
-</body>
+  </head>
+  <body class='<%= params[:controller] %> <%= params[:action] %>'>
+    <div id="app">
+      <z-app :current-user="{ name: 'James Johnson'}">
+        <%= render 'layouts/navigation_top' %>
+        <div class="container-wrapper">
+          <div class="container">
+            <%= flash_messages %>
+            <%= yield %>
+          </div>
+        </div>
+        <%= render 'layouts/latis_footer' %>
+        <%= render 'layouts/static_footer' %>
+      </z-app>
+    </div>
+  </body>
 </html>

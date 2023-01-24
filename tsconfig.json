@@ -11,8 +11,16 @@
     "esModuleInterop": true,
     "lib": ["ESNext", "DOM"],
     "skipLibCheck": true,
-    "noEmit": true
+    "noEmit": true,
+    "types": ["vite/client"],
+    "paths": {
+      "@/*": ["./app/javascript/*"]
+    },
+    // allows us to use cla-vue-template which doesn't
+    // have typescript definitions yet
+    "allowJs": true,
+    "noImplicitAny": false
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "include": ["app/javascript"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
