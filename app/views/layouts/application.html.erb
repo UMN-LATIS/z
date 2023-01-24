@@ -19,18 +19,19 @@
     <%= vite_typescript_tag 'application' %>
   </head>
   <body class='<%= params[:controller] %> <%= params[:action] %>'>
-    <div id="app">
-      <z-app :current-user="{ name: 'James Johnson'}">
-        <%= render 'layouts/navigation_top' %>
-        <div class="container-wrapper">
-          <div class="container">
-            <%= flash_messages %>
-            <%= yield %>
-          </div>
-        </div>
-        <%= render 'layouts/latis_footer' %>
-        <%= render 'layouts/static_footer' %>
-      </z-app>
+    <div data-behavior="vue">
+      <app-header :current-user="<%= current_user&.to_json %>" />
     </div>
+    <%= render 'layouts/navigation_top' %>
+    <div class="container-wrapper">
+        <div class="container">
+          <%= flash_messages %>
+          <%= yield %>
+        </div>
+      </div>
+      <div data-behavior="vue">
+        <app-footer/>
+      </div>
+    </z-app>
   </body>
 </html>
