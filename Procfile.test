@@ -1,0 +1,3 @@
+
+vite: bin/vite dev
+web: RAILS_ENV=test USER_LOOKUP_SKELETON=1 bin/rails s

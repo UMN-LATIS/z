@@ -10,7 +10,7 @@
   "scripts": {
     "cypress:all": "concurrently \"npm run cypress:rails\" \"npm run cypress:open\"",
     "cypress:open": "npx cypress open",
-    "cypress:rails": "USER_LOOKUP_SKELETON=1 bin/rails server",
+    "cypress:rails": "bin/foreman start -f Procfile.test",
     "cypress:run": "npx cypress run --browser chrome"
   },
   "dependencies": {

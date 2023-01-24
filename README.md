@@ -33,19 +33,22 @@ Z is a custom URL shortener for the [University of Minnnesota](https://www.umn.e
    bundle install
    ```
 
-5. Seed database. Part of this connects to LDAP, so you will need to be on UMN VPN:
+5. Create, import the schema, and seed the database. Part of this connects to LDAP, so you will need to be on UMN VPN.
 
    ```sh
-   rails db:reseed
+   # create the database, run migrations, and seed the database
+   ./bin/rails db:setup # or ./bin/rails db:reset to drop the exist db first
    ```
 
 6. To launch the application, run:
 
    ```sh
-   ./bin/rails s
+   ./bin/foreman start -f Procfile.dev
    ```
 
-Connect to [http://localhost:3000].
+   This will start both Vite (used for VueJS), and Rails.
+
+Connect to [http://localhost:5100].
 
 ## Testing
 
@@ -63,11 +66,11 @@ bundle exec rspec
 
 Cypress is used for End to End testing. To run the tests locally, you will need to have the application running.
 
-You'll want to start the server using `UserLookupServiceSkeleton`, a stubbed version of the normal LDAP, which will load test user data from Cypress fixtures at `cypress/fixtures`.
+You'll want to start the server using `UserLookupServiceSkeleton`, a stubbed version of the normal LDAP, which will load test user data from Cypress fixtures at `cypress/fixtures`. This is configured in `Procfile.test`.
 
 ```sh
-# start the Rails server
-USER_LOOKUP_SKELETON=1 RAILS_ENV=test ./bin/rails server
+# start the Rails server in test mode wiht user lookup skeleton service stubbed
+./bin/foreman start -f Procfile.test
 ```
 
 Once the server is running, you can open Cypress with:
