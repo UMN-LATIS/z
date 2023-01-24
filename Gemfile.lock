@@ -201,6 +201,7 @@ GEM
     ffi (1.15.5)
     font-awesome-rails (4.7.0.8)
       railties (>= 3.2, < 8.0)
+    foreman (0.87.2)
     formatador (1.1.0)
     fuubar (2.5.1)
       rspec-core (~> 3.0)
@@ -509,6 +510,7 @@ DEPENDENCIES
   exception_notification (~> 4.4)
   factory_bot_rails (~> 6.2)
   font-awesome-rails (~> 4.7)
+  foreman
   fuubar (~> 2.5)
   guard (~> 2.17)
   guard-rspec (~> 4.7)

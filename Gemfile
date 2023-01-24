@@ -118,6 +118,9 @@ group :development, :test do
   gem 'guard', "~> 2.17"
   gem 'guard-rspec', "~> 4.7", require: false
 
+  # Start Rails and Vite using a single command
+  gem 'foreman'
+
   # Add some pry/rails console helpers for development
   gem 'awesome_print', "~> 1.8"
   gem 'pry', '~> 0.13'
