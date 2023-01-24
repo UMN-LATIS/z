@@ -12,14 +12,28 @@ Rails.application.configure do
     #     policy.object_src  :none
     # policy.script_src  :self, :https
 
-    # Allow @vite/client to hot reload javascript changes in development
-    policy.script_src(*policy.script_src, :self, :https, :unsafe_eval, "http://#{ViteRuby.config.host_with_port}") if Rails.env.development?
-
     # You may need to enable this as well depending on your setup.
     # policy.script_src(*policy.script_src, :blob) if Rails.env.test?
 
     # For vite rails dev setup, need to specify specify vite dev server host
-    policy.connect_src :self, :https, "http://#{ViteRuby.config.host_with_port}", "ws://#{ViteRuby.config.host_with_port}" if Rails.env.development?
+    # including both localhost and 127.0.0.1 to accommodate an issue with host:
+    # on vpn it wants to be "127.0.0.1",
+    # while on local it wants to be "localhost"
+    if Rails.env.development?
+      # Allow @vite/client to hot reload javascript changes in development
+      policy.script_src(*policy.script_src,
+                        :self,
+                        :https,
+                        :unsafe_eval,
+                        "http://#{ViteRuby.config.host_with_port}")
+
+      policy.connect_src :self,
+                         :https,
+                         "http://localhost:#{ViteRuby.config.port}",
+                         "http://127.0.0.1:#{ViteRuby.config.port}",
+                         "ws://localhost:#{ViteRuby.config.port}",
+                         "ws://127.0.0.1:#{ViteRuby.config.port}"
+    end
 
     #     policy.style_src   :self, :https
     # Allow @vite/client to hot reload style changes in development
