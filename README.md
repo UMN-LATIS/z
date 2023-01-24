@@ -43,10 +43,10 @@ Z is a custom URL shortener for the [University of Minnnesota](https://www.umn.e
 6. To launch the application, run:
 
    ```sh
-   ./bin/foreman start -f Procfile.dev
+   ./bin/dev
    ```
 
-   This will start both Vite (used for VueJS), and Rails.
+   This will use `foreman` to start both Vite (used for VueJS), and Rails.
 
 Connect to [http://localhost:5100].
 
@@ -111,7 +111,8 @@ After deploying, populate the ip2location_db1 table with the content from the [I
 
 ## Tech Stack
 
-- Rails 6.1
+- Rails
+- Vue
 - MySQL
 - LDAP (for directory lookup)
 - [OmniAuth](https://github.com/omniauth/omniauth), for authentication
@@ -124,11 +125,11 @@ After deploying, populate the ip2location_db1 table with the content from the [I
 - [Rubocop](https://github.com/bbatsov/rubocop), to enforce best practices
 - [Starburst](https://github.com/csm123/starburst), for in-app announcements
 
-### Customization
+## Internationalization
 
-Z was designed to be forkable and customizable. Most of the language has been extracted into a [single localization file](https://github.umn.edu/latis-sw/z/blob/develop/config/locales/en.bootstrap.yml). This allows you to change any language and make Z applicable to your environment. Z uses [OmniAuth](https://github.com/omniauth/omniauth), which supports a wide variety of [authentication strategies](https://github.com/omniauth/omniauth/wiki/list-of-strategies).
+Most of the language has been extracted into a [single localization file](https://github.umn.edu/latis-sw/z/blob/develop/config/locales/en.bootstrap.yml). This allows you to change any language and make Z applicable to your environment.
 
-### Contribute
+## Contribute
 
 - Source Code: <https://www.github.com/z>
 - Issue Tracker: <https://www.github.com/umn-latis/z/issues>
