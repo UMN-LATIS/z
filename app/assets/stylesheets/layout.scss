@@ -253,41 +253,6 @@ though the color below doesn't improve much.
   color: orange;
 }
 
-/* footer */
-
-footer {
-  margin-top: 45px;
-  padding-top: 5px;
-  border-top: 1px solid $grayMediumLight;
-  color: $grayLight;
-  background-color: #FFF;
-  margin-left: auto;
-  margin-right: auto;
-  a {
-    color: $gray;
-    &:hover {
-      color: $grayDarker;
-    }
-    &:visited {
-      color: $grayDarker;
-    }
-  }
-  small {
-    float: left;
-  }
-  ul {
-    float: right;
-    list-style: none;
-    li {
-      float: left;
-    }
-  }
-}
-
-#footer_title {
-  padding-left: 15px;
-}
-
 /* misc */
 .form-horizontal  {
   margin-left: -30px;
@@ -316,50 +281,8 @@ footer {
   width: 100%;
 }
 
-.sign-in-out {
-  float: right;
-  margin-right: 40px; /*set margin this way in your custom styesheet*/
-}
-
 .table-path {
   width: 50%;; /*set margin this way in your custom styesheet*/
-}
-
-.cla-header{color:#FFCD00;background-color:#2C2425;width:100%;}
-.cla-header a h1{color:white;}
-.cla-header h1{font-size:2rem;margin-top:.5rem;margin-bottom:.5rem;}
-.cla-header h1 a{color:white;}
-.cla-header .main-swooshes{display:block;height:57px !important;}
-@media only screen and (max-width:20em){.cla-header h1{display:none;}}
-@media only screen and (min-width:20.063em) and (max-width:40em){.cla-header h1{display:none;}}
-@media only screen and (min-width:40.063em) and (max-width:64em){.cla-header h1{display:none;}}
-.cla-header .swooshes,.cla-header .main-swooshes,.cla-header .unit-swooshes{background:#2C2425;height:35px;}
-.cla-header .swooshes div.left,.cla-header .main-swooshes div.left,.cla-header .unit-swooshes div.left,.cla-header .swooshes .view-news-listing div.field-feature-image,.view-news-listing .cla-header .swooshes div.field-feature-image,.cla-header .main-swooshes .view-news-listing div.field-feature-image,.view-news-listing .cla-header .main-swooshes div.field-feature-image,.cla-header .unit-swooshes .view-news-listing div.field-feature-image,.view-news-listing .cla-header .unit-swooshes div.field-feature-image{margin-left:15px;}
-.cla-header .swooshes div.right,.cla-header .main-swooshes div.right,.cla-header .unit-swooshes div.right{margin-right:8px;}
-.cla-header .swooshes .logo,.cla-header .main-swooshes .logo,.cla-header .unit-swooshes .logo{position:relative;top:15px;width:310px;margin-left:54px;}
-// @media only screen and (min-width:64.063em){.cla-header .swooshes .logo,.cla-header .main-swooshes .logo,.cla-header .unit-swooshes .logo{top:15px;width:300px;}}
-.cla-header .swooshes .unit-cla-lead,.cla-header .main-swooshes .unit-cla-lead,.cla-header .unit-swooshes .unit-cla-lead{position:relative;top:12px;margin-right:15px;font-size:.8rem;display:none;}
-@media only screen and (min-width:64.063em){.cla-header .swooshes .unit-cla-lead,.cla-header .main-swooshes .unit-cla-lead,.cla-header .unit-swooshes .unit-cla-lead{display:inline-block;top:15px;}}
-// @media only screen{.cla-header .main-swooshes{display:none;width: 100%;}}
-@media only screen and (min-width:64.063em){.cla-header .main-swooshes{display:block;height:57px;}}
-@media only screen and (max-width:20em){.cla-header .unit-swooshes .unit-cla-lead{display:none;}}
-@media only screen{.cla-header .unit-swooshes{display:block;}.cla-header .unit-swooshes div.right{float:left !important;margin-left:15px;}}
-@media only screen and (min-width:64.063em){.cla-header .unit-swooshes{height:57px;}.cla-header .unit-swooshes div.right{float:right !important;margin-right:8px;}}
-.element-invisible{position:absolute !important;clip:rect(1px 1px 1px 1px);clip:rect(1px,1px,1px,1px);overflow:hidden;height:1px;}.element-invisible.element-focusable:active,.element-invisible.element-focusable:focus{position:static !important;clip:auto;overflow:visible;height:auto;}
-@media screen and (max-width:991px){
-  .cla-header .swooshes .logo,.cla-header .main-swooshes .logo,.cla-header .unit-swooshes .logo{
-    width:200px !important;
-    top:17px!important;
-  }
-}
-.navbar-header {
-    background-color: #000;
-    width:110%;
-    margin-left: -20px !important;
-}
-
-.icon-bar {
-    background-color: #fff;
 }
 
 .language_title {

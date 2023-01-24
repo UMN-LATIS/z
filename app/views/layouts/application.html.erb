@@ -18,12 +18,11 @@
     <%= vite_client_tag %>
     <%= vite_typescript_tag 'application' %>
   </head>
-  <body class='<%= params[:controller] %> <%= params[:action] %>'>
+  <body class='<%= params[:controller] %> <%= params[:action] %> flex flex-col min-h-screen'>
     <div data-behavior="vue">
       <app-header :current-user="<%= current_user&.to_json %>" />
     </div>
-    <%= render 'layouts/navigation_top' %>
-    <div class="container-wrapper">
+    <div class="container-wrapper flex-1">
         <div class="container">
           <%= flash_messages %>
           <%= yield %>
