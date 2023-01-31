@@ -20,17 +20,17 @@
   </head>
   <body class='<%= params[:controller] %> <%= params[:action] %> flex flex-col min-h-screen'>
     <div data-behavior="vue">
-      <app-header :current-user="<%= current_user&.to_json %>" />
+      <app-header :current-user="<%= current_user&.to_json || 'null' %>">
+      </app-header>
     </div>
-    <div class="container-wrapper flex-1">
-        <div class="container">
-          <%= flash_messages %>
-          <%= yield %>
-        </div>
+    <main class="main-container container-wrapper flex-1">
+      <div class="container">
+        <%= flash_messages %>
+        <%= yield %>
       </div>
-      <div data-behavior="vue">
-        <app-footer/>
-      </div>
-    </z-app>
+    </main>
+    <div data-behavior="vue">
+      <app-footer/>
+    </div>
   </body>
 </html>
