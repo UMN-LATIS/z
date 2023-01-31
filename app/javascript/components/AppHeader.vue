@@ -16,25 +16,19 @@
         </NavbarItem>
         <NavbarDropdown v-if="isAdmin" label="Admin">
           <NavbarItem>
-            <a href="https://z.umn.edu/shortener/admin/urls">All Urls</a>
+            <a href="/shortener/admin/urls">All Urls</a>
           </NavbarItem>
           <NavbarItem>
-            <a href="https://z.umn.edu/shortener/admin/groups">
-              All Collections
-            </a>
+            <a href="/shortener/admin/groups"> All Collections </a>
           </NavbarItem>
           <NavbarItem>
-            <a href="https://z.umn.edu/shortener/admin/members">
-              Manage Admins
-            </a>
+            <a href="/shortener/admin/members"> Manage Admins </a>
           </NavbarItem>
           <NavbarItem>
-            <a href="https://z.umn.edu/shortener/admin/audits"> Audit Logs </a>
+            <a href="/shortener/admin/audits"> Audit Logs </a>
           </NavbarItem>
           <NavbarItem>
-            <a href="https://z.umn.edu/shortener/admin/announcements">
-              Announcements
-            </a>
+            <a href="/shortener/admin/announcements"> Announcements </a>
           </NavbarItem>
         </NavbarDropdown>
       </template>
