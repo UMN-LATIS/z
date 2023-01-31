@@ -14,3 +14,10 @@
   min-height: 100vh;
 }
 
+.debug-blue {
+  border: 1px solid blue;
+}
+
+.debug-red {
+  border: 1px solid red;
+}
