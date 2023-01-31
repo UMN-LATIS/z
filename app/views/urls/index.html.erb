@@ -2,43 +2,45 @@
 <div id="new-url-form" class="z-bg-umn tw-px-4 tw-pt-8 tw-pb-12">
   <%= render 'sleek_form', url: @url %>
 </div>
-<div class="collection_select_spot"></div>
-<div class="urls-table-container">
-  <div id="anouncements">
-    <%= render :partial => "announcements/starburst/announcement_bootstrap" %>
+<div class="tw-max-w-[90rem] tw-mx-auto tw-px-4 tw-py-8">
+  <div class="collection_select_spot"></div>
+  <div class="urls-table-container">
+    <div id="anouncements">
+      <%= render :partial => "announcements/starburst/announcement_bootstrap" %>
+    </div>
+    <div id="pending-transfer-requests-to">
+      <%= render 'transfer_requests_to' %>
+    </div>
+    <div id="pending-transfer-requests-from">
+      <%= render 'transfer_requests_from' %>
+    </div>
+    <div class="urls-table-title">
+      <%= t('views.urls.index.table.title') %>
+    </div>
+    <table id="urls-table" class="table user-table table-striped table-bordered data-table" data-source="<%= datatable_urls_path(format: :json) %>">
+      <thead>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th class="urls-table-header-short-url"><%= t('views.urls.index.table.zlinks') %></th>
+          <th data-toggle="tooltip" data-container="body" title="<%= t('views.urls.index.table.collection_header_tooltip') %>"><%= t('views.urls.index.table.collections') %><i class=" fa fa-info-circle"></i></th>
+          <th data-toggle="tooltip" data-container="body" title="<%= t('views.urls.index.table.clicks_header_tooltip') %>"><%= t('views.urls.index.table.clicks') %><i class=" fa fa-info-circle"></i></th>
+          <th><%= t('views.urls.index.table.created') %></th>
+          <th><%= t('views.urls.index.table.actions') %></th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
   </div>
-  <div id="pending-transfer-requests-to">
-    <%= render 'transfer_requests_to' %>
-  </div>
-  <div id="pending-transfer-requests-from">
-    <%= render 'transfer_requests_from' %>
-  </div>
-  <div class="urls-table-title">
-    <%= t('views.urls.index.table.title') %>
-  </div>
-  <table id="urls-table" class="table user-table table-striped table-bordered data-table" data-source="<%= datatable_urls_path(format: :json) %>">
-    <thead>
-      <tr>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th class="urls-table-header-short-url"><%= t('views.urls.index.table.zlinks') %></th>
-        <th data-toggle="tooltip" data-container="body" title="<%= t('views.urls.index.table.collection_header_tooltip') %>"><%= t('views.urls.index.table.collections') %><i class=" fa fa-info-circle"></i></th>
-        <th data-toggle="tooltip" data-container="body" title="<%= t('views.urls.index.table.clicks_header_tooltip') %>"><%= t('views.urls.index.table.clicks') %><i class=" fa fa-info-circle"></i></th>
-        <th><%= t('views.urls.index.table.created') %></th>
-        <th><%= t('views.urls.index.table.actions') %></th>
-      </tr>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
+  <%= content_tag :div, class: "route-info", data: {new_transfer_request_path: new_transfer_request_path, new_move_to_group_path: new_move_to_group_path, new_group_path: new_group_path, new_batch_delete_path: new_batch_delete_path} do %>
+  <% end %>
+  <%= content_tag :div, class: "collection-selected", data: {collection_selected: params[:collection]} do %>
+  <% end %>
+  <%= content_tag :div, class: "collection-count", data: {collection_count: current_user.groups.length} do %>
+  <% end %>
+  <%= content_tag :div, class: "collection-names", data: {collection_names: current_user.groups.collect{ |group| [group.id, display_name(group)]}.sort_by{ |group| [ group.second == "No Collection" ? 0 : 1, group.second.downcase ] } } do %>
+  <% end %>
 </div>
-<%= content_tag :div, class: "route-info", data: {new_transfer_request_path: new_transfer_request_path, new_move_to_group_path: new_move_to_group_path, new_group_path: new_group_path, new_batch_delete_path: new_batch_delete_path} do %>
-<% end %>
-<%= content_tag :div, class: "collection-selected", data: {collection_selected: params[:collection]} do %>
-<% end %>
-<%= content_tag :div, class: "collection-count", data: {collection_count: current_user.groups.length} do %>
-<% end %>
-<%= content_tag :div, class: "collection-names", data: {collection_names: current_user.groups.collect{ |group| [group.id, display_name(group)]}.sort_by{ |group| [ group.second == "No Collection" ? 0 : 1, group.second.downcase ] } } do %>
-<% end %>
 <%= render 'modal' %>
