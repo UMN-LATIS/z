@@ -9,7 +9,9 @@
     <%= yield :head %>
     <%= favicon_link_tag '/favicon.ico' %>
     <%= render 'layouts/shim' %>
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Molengo">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
     <meta name="viewport" content="initial-scale=0.8, maximum-scale=0.8">
     <meta name="turbolinks-cache-control" content="no-cache">
     <!--  Change stylesheet link depending on which search option you are using:
@@ -19,18 +21,16 @@
     <%= vite_client_tag %>
     <%= vite_typescript_tag 'application' %>
   </head>
-  <body class='<%= params[:controller] %> <%= params[:action] %> flex flex-col min-h-screen'>
+  <body class='<%= params[:controller] %> <%= params[:action] %> tw-flex tw-flex-col tw-min-h-screen'>
     <div data-behavior="vue">
       <app-header :current-user="<%= current_user&.to_json || 'null' %>">
       </app-header>
     </div>
-    <main class="main-container container-wrapper flex-1">
-      <div class="container">
-        <%= flash_messages %>
-        <%= yield %>
-      </div>
+    <main class="main-container tw-flex-1 tw-z-10">
+      <%= flash_messages %>
+      <%= yield %>
     </main>
-    <div data-behavior="vue">
+    <div data-behavior="vue" class="tw-mt-8">
       <app-footer/>
     </div>
   </body>
