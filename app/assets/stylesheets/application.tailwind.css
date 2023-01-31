@@ -16,6 +16,12 @@
   }
 }
 
+@layer utilities {
+  .without-focus-ring {
+    @apply focus:tw-ring-0 focus:tw-ring-offset-0;
+  }
+}
+
 /*
 
 @layer components {
