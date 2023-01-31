@@ -26,11 +26,11 @@
       <app-header :current-user="<%= current_user&.to_json || 'null' %>">
       </app-header>
     </div>
-    <main class="main-container tw-flex-1 tw-z-10">
+    <main class="main-container tw-flex-1 tw-z-10 tw-shadow tw-bg-umn-neutral-50">
       <%= flash_messages %>
       <%= yield %>
     </main>
-    <div data-behavior="vue" class="tw-mt-8">
+    <div data-behavior="vue">
       <app-footer/>
     </div>
   </body>

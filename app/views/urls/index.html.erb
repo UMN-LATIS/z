@@ -1,9 +1,7 @@
 <%- model_class = Url -%>
-
-<div id="new-url-form" class="z-hero z-hero-dimmer">
+<div id="new-url-form" class="z-bg-umn tw-px-4 tw-pt-8 tw-pb-12">
   <%= render 'sleek_form', url: @url %>
 </div>
-
 <div class="collection_select_spot"></div>
 <div class="urls-table-container">
   <div id="anouncements">
@@ -12,11 +10,9 @@
   <div id="pending-transfer-requests-to">
     <%= render 'transfer_requests_to' %>
   </div>
-
   <div id="pending-transfer-requests-from">
     <%= render 'transfer_requests_from' %>
   </div>
-
   <div class="urls-table-title">
     <%= t('views.urls.index.table.title') %>
   </div>
@@ -37,17 +33,12 @@
     </tbody>
   </table>
 </div>
-
 <%= content_tag :div, class: "route-info", data: {new_transfer_request_path: new_transfer_request_path, new_move_to_group_path: new_move_to_group_path, new_group_path: new_group_path, new_batch_delete_path: new_batch_delete_path} do %>
 <% end %>
-
 <%= content_tag :div, class: "collection-selected", data: {collection_selected: params[:collection]} do %>
 <% end %>
-
 <%= content_tag :div, class: "collection-count", data: {collection_count: current_user.groups.length} do %>
 <% end %>
-
 <%= content_tag :div, class: "collection-names", data: {collection_names: current_user.groups.collect{ |group| [group.id, display_name(group)]}.sort_by{ |group| [ group.second == "No Collection" ? 0 : 1, group.second.downcase ] } } do %>
 <% end %>
-
 <%= render 'modal' %>
