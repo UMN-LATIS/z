@@ -4,7 +4,7 @@
 
 @layer components {
   .umn-post-it {
-    @apply tw-relative tw-bg-white tw-my-8 tw-p-8 tw-border before:tw-block before:tw-w-24 before:tw-h-5 before:tw-absolute before:tw-bg-umn-gold before:-tw-top-2 before:tw-left-1/2;
+    @apply tw-max-w-[90rem] tw-mx-auto tw-relative tw-bg-white tw-my-8 tw-p-8 tw-border before:tw-block before:tw-w-24 before:tw-h-5 before:tw-absolute before:tw-bg-umn-gold before:-tw-top-2 before:tw-left-1/2 before:tw--translate-x-1/2;
   }
 
   .umn-btn--maroon {
