@@ -7,7 +7,6 @@ module.exports = {
     browser: true,
     es2021: true,
     node: true,
-    jest: true,
     "vue/setup-compiler-macros": true,
   },
   extends: [
@@ -46,11 +45,6 @@ module.exports = {
     {
       files: ["**/cypress/**/*.[jt]s"],
       extends: ["plugin:cypress/recommended"],
-    },
-    // this keeps jest from linting cypress files
-    {
-      files: ["**/app/javascript/**/*.[jt]s"],
-      extends: ["plugin:jest/recommended", "plugin:jest/style"],
     },
   ],
 };
