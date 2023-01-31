@@ -3,9 +3,6 @@
     <template #app-link>
       <a href="/">Z</a>
     </template>
-    <template #navbar-links>
-      <slot name="navbar-left" />
-    </template>
     <template #navbar-links-right>
       <template v-if="isLoggedIn">
         <NavbarItem>
@@ -17,9 +14,29 @@
         <NavbarItem>
           <a href="/shortener/api_keys">API</a>
         </NavbarItem>
-        <NavbarItem v-if="isAdmin">
-          <a href="/shortener/admin/urls">Admin</a>
-        </NavbarItem>
+        <NavbarDropdown v-if="isAdmin" label="Admin">
+          <NavbarItem>
+            <a href="https://z.umn.edu/shortener/admin/urls">All Urls</a>
+          </NavbarItem>
+          <NavbarItem>
+            <a href="https://z.umn.edu/shortener/admin/groups">
+              All Collections
+            </a>
+          </NavbarItem>
+          <NavbarItem>
+            <a href="https://z.umn.edu/shortener/admin/members">
+              Manage Admins
+            </a>
+          </NavbarItem>
+          <NavbarItem>
+            <a href="https://z.umn.edu/shortener/admin/audits"> Audit Logs </a>
+          </NavbarItem>
+          <NavbarItem>
+            <a href="https://z.umn.edu/shortener/admin/announcements">
+              Announcements
+            </a>
+          </NavbarItem>
+        </NavbarDropdown>
       </template>
       <NavbarItem>
         <a
@@ -28,10 +45,10 @@
         >
       </NavbarItem>
       <NavbarItem v-if="!isLoggedIn">
-        <a href="/login">Sign In</a>
+        <a href="/shortener/signin">Sign In</a>
       </NavbarItem>
       <NavbarItem v-if="isLoggedIn">
-        <a href="/shibboleth-logout">Sign Out</a>
+        <a href="/shortener/signout">Sign Out</a>
       </NavbarItem>
     </template>
   </ClaAppHeader>
@@ -40,6 +57,7 @@
 import {
   AppHeader as ClaAppHeader,
   NavbarItem,
+  NavbarDropdown,
 } from "@umn-latis/cla-vue-template";
 import { computed } from "vue";
 import type { User } from "@/types";
