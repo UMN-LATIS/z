@@ -1,5 +1,15 @@
-.z-hero {
-  border: 0.5rem solid red;
-  background: image-url('/assets/umn-pano.jpg');
+.z-bg-umn {
+  background: image-url("/assets/umn-pano.jpg");
   background-size: cover;
+  position: relative;
+  &:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+  }
 }

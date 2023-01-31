@@ -1,29 +1,29 @@
-<div class="z-hero z-hero-large">
-  <div class="z-hero-content">
-    <h1 class="z-hero-title z-hero-title-large" data-cy="hero-title">
+<div class="z-bg-umn">
+  <div class="tw-relative tw-z-10 tw-max-w-[90em] tw-mx-auto tw-px-8 tw-py-24 tw-text-center">
+    <h1 class="tw-text-6xl tw-text-white" data-cy="hero-title">
       <%= t('views.root.hero_text') %>
     </h1>
     <% unless signed_in? %>
-      <a class="btn btn-primary z-hero-button " href="<%= signin_path %>">
+      <a class="tw-inline-flex tw-py-4 tw-px-8 tw-bg-umn-gold hover:tw-bg-umn-gold-light tw-text-umn-neutral-900 tw-no-underline hover:tw-text-umn-neutral-900 hover:tw-no-underline tw-my-4" href="<%= signin_path %>">
         <%= t('views.root.hero_button') %>
       </a>
     <% end %>
   </div>
 </div>
-<div class="tw-max-w-[90em] tw-mx-auto tw-px-4">
-  <div class="umn-post-it">
+<div class="tw-max-w-[90em] tw-mx-auto tw-px-4
+">
+  <div class="umn-post-it tw-relative tw-bg-white tw-my-8 tw-p-8 tw-border before:tw-block before:tw-w-24 before:tw-h-5 before:tw-absolute before:tw-bg-umn-gold before:-tw-top-2 before:tw-left-1/2">
     <div class="tw-grid md:tw-grid-cols-2 tw-gap-6 tw-grid-cols-1">
       <div>
         <iframe class="tw-w-full tw-border" width="560" height="315" src="https://www.youtube-nocookie.com/embed/1mvUh2wNCA8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
       </div>
       <div>
         <h2 class="tw-text-4xl tw-font-semibold">z.umn.edu</h2>
-        <div>
-          <p class="tw-text-xl tw-text-umn-neutral-700">
+        <div class="tw-space-y-4 tw-text-lg tw-text-umn-neutral-700">
+          <p class="">
             Z is a URL shortening service provided
             by <%= link_to 'LATIS', 'http://latis.umn.edu/', target: '_blank' %> and to everyone with a University of Minnesota Internet ID.</p>
-          <a href="<%= signin_path %>" class="umn-btn--primary">Sign In 
-          </a>
+          <p><a href="<%= signin_path %>">Sign in</a> to get started.</p>
         </div>
       </div>
     </div>

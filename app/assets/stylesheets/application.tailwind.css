@@ -7,8 +7,12 @@
     @apply tw-relative tw-bg-white tw-my-8 tw-p-8 tw-border before:tw-block before:tw-w-24 before:tw-h-5 before:tw-absolute before:tw-bg-umn-gold before:-tw-top-2 before:tw-left-1/2;
   }
 
-  .umn-btn--primary {
+  .umn-btn--maroon {
     @apply tw-inline-flex tw-py-4 tw-px-8 tw-bg-umn-maroon tw-text-white hover:tw-bg-umn-maroon-dark tw-no-underline hover:tw-text-white hover:tw-no-underline tw-my-4;
+  }
+
+  .umn-container {
+    @apply tw-max-w-[90em] tw-mx-auto tw-px-4;
   }
 }
 
