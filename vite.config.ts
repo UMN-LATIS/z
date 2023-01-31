@@ -7,7 +7,12 @@ export default defineConfig({
   plugins: [
     RubyPlugin(),
     vue(),
-    FullReload(["config/routes.rb", "app/views/**/*"]),
+    FullReload([
+      "config/routes.rb",
+      "app/views/**/*",
+      "app/assets/javascripts/**/*",
+      "app/assets/stylesheets/**/*",
+    ]),
   ],
   resolve: {
     alias: {
