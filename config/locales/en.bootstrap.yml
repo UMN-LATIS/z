@@ -162,7 +162,7 @@ en:
           url: "destination URL"
           keyword: "keyword (optional)"
         edit:
-          title: "edit your shortlink"
+          title: "Edit your shortlink"
           submit: "Submit"
           cancel: "Cancel"
         new:
@@ -194,6 +194,7 @@ en:
           name: "Name"
           description: "Description"
         edit:
+          title: "Edit your collection"
           submit: "Edit Collection"
         new:
           submit: "Create Collection"
