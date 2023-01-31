@@ -4,25 +4,27 @@
       <%= t('views.root.hero_text') %>
     </h1>
     <% unless signed_in? %>
-        <a class="btn btn-primary z-hero-button " href="<%= signin_path %>">
-          <%= t('views.root.hero_button') %>
-        </a>
+      <a class="btn btn-primary z-hero-button " href="<%= signin_path %>">
+        <%= t('views.root.hero_button') %>
+      </a>
     <% end %>
   </div>
 </div>
-
-<div class="home-page-content-wrapper">
-  <h2><%= t('views.root.hello') %></h2>
-  <div style="float:right;margin-left:15px" >
-        <iframe width="400" height="250" src="https://www.youtube.com/embed/1mvUh2wNCA8" frameborder="0" allowfullscreen></iframe>
+<div class="tw-max-w-[90em] tw-mx-auto tw-px-4">
+  <div class="umn-post-it">
+    <div class="tw-grid md:tw-grid-cols-2 tw-gap-6 tw-grid-cols-1">
+      <div>
+        <iframe class="tw-w-full tw-border" width="560" height="315" src="https://www.youtube-nocookie.com/embed/1mvUh2wNCA8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+      <div>
+        <h2 class="tw-text-4xl tw-font-semibold">z.umn.edu</h2>
+        <div>
+          <p class="tw-text-xl tw-text-umn-neutral-700">
+            Z is a URL shortening service provided
+            by <%= link_to 'LATIS', 'http://latis.umn.edu/', target: '_blank' %> and to everyone with a University of Minnesota Internet ID.</p>
+          <a href="<%= signin_path %>" class="umn-btn--primary">Sign In 
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
-  <p>Welcome to z.umn.edu, a URL shortening service provided
-    by <%= link_to 'LATIS', 'http://latis.umn.edu/', target: '_blank' %>.</p>
-
-  <p>z.umn.edu is available to everyone with a University of Minnesota Internet ID. To get started,
-    just <%= link_to 'sign in', signin_path %>.</p>
-
-  <p>For questions about z.umn.edu, visit the <%= link_to 'frequently asked questions', faq_path %> or
-    contact <%= mail_to 'help@umn.edu', 'UMN Technology Help' %>.</p>
-
-</div>
