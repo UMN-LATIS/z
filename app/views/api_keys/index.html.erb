@@ -3,26 +3,22 @@
 <% end %>
 <div class="tw-p-4">
   <div class="umn-post-it">
-    <div class="api-key-wrapper">
-      <div class='row'>
-        <div class="col-md-2">
-          <div class="panel panel-default">
-            <div class="panel-heading">Access ID</div>
-            <div class="panel-body">
-              <%= current_user.uid %>
-            </div>
+    <div class="tw-prose tw-prose-lg tw-py-8 tw-mx-auto">
+      <div class="tw-flex tw-flex-col tw-gap-2">
+        <div class="panel panel-default">
+          <div class="panel-heading">Access ID</div>
+          <div class="panel-body">
+            <%= current_user.uid %>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="panel panel-default">
-            <div class="panel-heading">Secret Key</div>
-            <div class="panel-body">
-              <%= current_user.secret_key %>
-              <%= link_to api_keys_path, method: :post, class: 'btn btn-default clipboard-btn' do %>
-                <i class=" fa fa-key"></i>
-                Generate new key
-              <% end %>
-            </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">Secret Key</div>
+          <div class="panel-body">
+            <%= current_user.secret_key %>
+            <%= link_to api_keys_path, method: :post, class: 'btn btn-default clipboard-btn' do %>
+              <i class=" fa fa-key"></i>
+              Generate new key
+            <% end %>
           </div>
         </div>
       </div>
