@@ -14,7 +14,7 @@ describe("groups: /shortener/groups", () => {
     cy.contains("Add New Collection").click();
     cy.get("#group_name").type("Test Group");
     cy.get("#group_description").type("Test Group Description");
-    cy.contains("Create Collection").click();
+    cy.get(".js-group-submit").click(); // Create button
 
     // verify the group was created
     cy.get("#groups-table tbody tr").should("have.length", 1);
@@ -38,7 +38,7 @@ describe("groups: /shortener/groups", () => {
   it("does not create a group with blank name", () => {
     cy.contains("Add New Collection").click();
     cy.get("#group_description").type("Test Group Description");
-    cy.contains("Create Collection").click();
+    cy.get(".js-group-submit").click(); // Create button
 
     // verify that it shows an error
     cy.get(".error-space").should("contain", "Name can't be blank");
@@ -137,7 +137,7 @@ describe("groups: /shortener/groups", () => {
       cy.get("#group_description").clear().type("New Group Description");
 
       // save the changes
-      cy.contains("Edit Collection").click();
+      cy.contains("Save").click();
 
       // verify the group was updated
       cy.get("#groups-table tbody tr").should("have.length", 1);
@@ -159,7 +159,7 @@ describe("groups: /shortener/groups", () => {
       cy.get("#group_description").clear().type("New Group Description");
 
       // save the changes
-      cy.contains("Edit Collection").click();
+      cy.contains("Save").click();
 
       // verify that it shows an error
       cy.get(".error-space").should("contain", "Name can't be blank");
