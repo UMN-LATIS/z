@@ -1,73 +1,73 @@
-<div class="z-hero z-hero-dimmer">
-  <div class="z-hero-content">
-    <div class="page-header">
-      <h1><%= t('views.api_keys.index.title') %></h1>
-    </div>
-  </div>
-</div>
-<div class="api-key-wrapper">
-  <div class='row'>
-    <div class="col-md-2">
-      <div class="panel panel-default">
-        <div class="panel-heading">Access ID</div>
-        <div class="panel-body">
-          <%= current_user.uid %>
+<%= render 'shared/page-header' do %>
+  <%= t('views.api_keys.index.title') %>
+<% end %>
+<div class="tw-p-4">
+  <div class="umn-post-it">
+    <div class="api-key-wrapper">
+      <div class='row'>
+        <div class="col-md-2">
+          <div class="panel panel-default">
+            <div class="panel-heading">Access ID</div>
+            <div class="panel-body">
+              <%= current_user.uid %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="panel panel-default">
+            <div class="panel-heading">Secret Key</div>
+            <div class="panel-body">
+              <%= current_user.secret_key %>
+              <%= link_to api_keys_path, method: :post, class: 'btn btn-default clipboard-btn' do %>
+                <i class=" fa fa-key"></i>
+                Generate new key
+              <% end %>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-4">
-      <div class="panel panel-default">
-        <div class="panel-heading">Secret Key</div>
-        <div class="panel-body">
-          <%= current_user.secret_key %>
-          <%= link_to api_keys_path, method: :post, class: 'btn btn-default clipboard-btn' do %>
-            <i class=" fa fa-key"></i>
-            Generate new key
-          <% end %>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <p>Z features an API to allow Short URL creation directly from your applications.</p>
-  <p>The API is configured to use <strong>JSON Web Tokens</strong> (or <strong>JWT</strong>, <a href="https://jwt.io">https://jwt.io</a>) to ensure secure communications between the client and server. This is a popular method that has libraries for most popular programming languages. See their website for specific language support.</p>
-  <p>Z has one API endpoint, <strong><a href="http://z.umn.edu/api/v1/urls"><%= "#{request.base_url}#{api_v1_urls_path}" %></a></strong>. You can POST to this endpoint with your <strong>Access ID</strong> and the <strong>JWT</strong> (signed by your <strong>secret key</strong>), separated by a colon in an <strong>Authorization</strong> Header, like so:</p>
-  <pre>
+      <p>Z features an API to allow Short URL creation directly from your applications.</p>
+      <p>The API is configured to use <strong>JSON Web Tokens</strong> (or <strong>JWT</strong>, <a href="https://jwt.io">https://jwt.io</a>) to ensure secure communications between the client and server. This is a popular method that has libraries for most popular programming languages. See their website for specific language support.</p>
+      <p>Z has one API endpoint, <strong><a href="http://z.umn.edu/api/v1/urls"><%= "#{request.base_url}#{api_v1_urls_path}" %></a></strong>. You can POST to this endpoint with your <strong>Access ID</strong> and the <strong>JWT</strong> (signed by your <strong>secret key</strong>), separated by a colon in an <strong>Authorization</strong> Header, like so:</p>
+      <pre>
   <code>Header Name: Authorization
   Header Value: access_id:jwt
   </code></pre>
-  <ul>
-  <li><a href="#token-information">Token Information</a>
-  <ul>
-  <li><a href="#header">Header</a></li>
-  <li><a href="#payload">Payload</a>
-  <ul>
-  <li><a href="#supported-keys">Supported keys</a></li>
-  </ul>
-  </li>
-  <li><a href="#signature">Signature</a></li>
-  </ul>
-  </li>
-  <li><a href="#return-values">Return Values</a></li>
-  <li><a href="#complete-example">A Complete Example in Ruby</a></li>
-  </ul>
-  <a name="token-information" id="token-information"></a><h2>Token Information</h2>
-  <hr>
-  <p>The JWT is an encrypted string that has three components - a <strong>header</strong>, <strong>payload</strong>, and <strong>signature</strong>, each separated by a period.</p>
- <a name="header" id="header"></a><h3>Header</h3>
-  <hr>
-  <p>The header is the standard configuration for H256.</p>
-  <pre>
+      <ul>
+        <li><a href="#token-information">Token Information</a>
+          <ul>
+            <li><a href="#header">Header</a></li>
+            <li><a href="#payload">Payload</a>
+              <ul>
+                <li><a href="#supported-keys">Supported keys</a></li>
+              </ul>
+            </li>
+            <li><a href="#signature">Signature</a></li>
+          </ul>
+        </li>
+        <li><a href="#return-values">Return Values</a></li>
+        <li><a href="#complete-example">A Complete Example in Ruby</a></li>
+      </ul>
+      <a name="token-information" id="token-information"></a>
+      <h2>Token Information</h2>
+      <hr>
+      <p>The JWT is an encrypted string that has three components - a <strong>header</strong>, <strong>payload</strong>, and <strong>signature</strong>, each separated by a period.</p>
+      <a name="header" id="header"></a>
+      <h3>Header</h3>
+      <hr>
+      <p>The header is the standard configuration for H256.</p>
+      <pre>
   <code>Header:
   {
     &quot;alg&quot;: &quot;HS256&quot;,
     &quot;typ&quot;: &quot;JWT&quot;
   }
   </code></pre>
-  <a name="payload" id="payload"></a><h3>Payload</h3>
-  <hr>
-  <p>The payload is a single JSON object, containing one key, “urls”. This key contains an array of JSON objects for each URL you would like created. Example:</p>
-  <pre>
+      <a name="payload" id="payload"></a>
+      <h3>Payload</h3>
+      <hr>
+      <p>The payload is a single JSON object, containing one key, “urls”. This key contains an array of JSON objects for each URL you would like created. Example:</p>
+      <pre>
   <code>Payload:
   {
     &quot;urls&quot;: [
@@ -80,30 +80,33 @@
     ]
   }
   </code></pre>
-<a name="supported-keys" id="supported-keys"></a><h4>Supported keys</h4>
-  <p>The supported keys for a URL are as follows:</p>
-  <ul>
-  <li>&quot;<strong>url</strong>&quot; : The URL you would like shortened (required)</li>
-  <li>&quot;<strong>keyword</strong>&quot; : The keyword you would prefer (optional)</li>
-  <li>&quot;<strong>collection</strong>&quot; : The collection name you would like this URL to be placed into. (optional).</li>
-  </ul>
-  <p>If no keyword or collection are specified, Z will auto-generate a short URL for you. If the “keyword” you request is already taken, the URL will not be created. If a “collection” name cannot be found, the URL will not be created.</p>
-  <a name="signature" id="signature"></a><h3>Signature</h3>
-  <hr>
-  <p>The final signature is an encoded string containing the header, the payload, and signed with your secret key.</p>
-  <pre><code>Signature:
+      <a name="supported-keys" id="supported-keys"></a>
+      <h4>Supported keys</h4>
+      <p>The supported keys for a URL are as follows:</p>
+      <ul>
+        <li>&quot;<strong>url</strong>&quot; : The URL you would like shortened (required)</li>
+        <li>&quot;<strong>keyword</strong>&quot; : The keyword you would prefer (optional)</li>
+        <li>&quot;<strong>collection</strong>&quot; : The collection name you would like this URL to be placed into. (optional).</li>
+      </ul>
+      <p>If no keyword or collection are specified, Z will auto-generate a short URL for you. If the “keyword” you request is already taken, the URL will not be created. If a “collection” name cannot be found, the URL will not be created.</p>
+      <a name="signature" id="signature"></a>
+      <h3>Signature</h3>
+      <hr>
+      <p>The final signature is an encoded string containing the header, the payload, and signed with your secret key.</p>
+      <pre><code>Signature:
   HMACSHA256(
     base64UrlEncode(header) + &quot;.&quot; +
     base64UrlEncode(payload),
     &lt;secret_key&gt;
   )
   </code></pre>
-  <a name="return-values" id="return-values"></a><h2>Return values</h2>
-  <hr>
-  <p>Upon sending the request, the you can expect the response to be an array of JSON objects, with each item containing the original URL data from the request, as well as a result object that contains two items.</p>
-  <p>The first result key is “status”, which will either be “success” or “error”.</p>
-  <p>The second result key is “message”, which will either contain a string with the new Short URL for your item, or an array of errors returned by the system.</p>
-  <pre>
+      <a name="return-values" id="return-values"></a>
+      <h2>Return values</h2>
+      <hr>
+      <p>Upon sending the request, the you can expect the response to be an array of JSON objects, with each item containing the original URL data from the request, as well as a result object that contains two items.</p>
+      <p>The first result key is “status”, which will either be “success” or “error”.</p>
+      <p>The second result key is “message”, which will either contain a string with the new Short URL for your item, or an array of errors returned by the system.</p>
+      <pre>
   <code>Result:
   [
     {
@@ -127,13 +130,14 @@
     }
   ]
   </code></pre>
-  <p>Requests that are sent with invalid tokens, incorrect headers, or invalid access IDs, will be returned with a response of <strong>401 Unauthorized</strong>.</p>
-  <a name="complete-example" id="complete-example"></a><h2>Complete Example</h2>
-  <hr>
-  <p>Thankfully, many JWT libraries do most of the hard work for us -- we just provide the payload and secret key and the library will create the token for us.</p>
-  <p>Here’s a full example using Ruby with a JWT library (<a href="https://github.com/jwt/ruby-jwt">https://github.com/jwt/ruby-jwt</a>).</p>
-  <p>Here, we assume that your Access ID is “12345asdf”, your secret key is “SuperSecretKey”, and you want to create a short URL for the website &quot;<a href="http://example.com/fun/site/12345/neat.php">http://example.com/fun/site/12345/neat.php</a>&quot;</p>
-  <pre>
+      <p>Requests that are sent with invalid tokens, incorrect headers, or invalid access IDs, will be returned with a response of <strong>401 Unauthorized</strong>.</p>
+      <a name="complete-example" id="complete-example"></a>
+      <h2>Complete Example</h2>
+      <hr>
+      <p>Thankfully, many JWT libraries do most of the hard work for us -- we just provide the payload and secret key and the library will create the token for us.</p>
+      <p>Here’s a full example using Ruby with a JWT library (<a href="https://github.com/jwt/ruby-jwt">https://github.com/jwt/ruby-jwt</a>).</p>
+      <p>Here, we assume that your Access ID is “12345asdf”, your secret key is “SuperSecretKey”, and you want to create a short URL for the website &quot;<a href="http://example.com/fun/site/12345/neat.php">http://example.com/fun/site/12345/neat.php</a>&quot;</p>
+      <pre>
   <code>require 'jwt'
   require 'net/http'
   require 'uri'
@@ -163,7 +167,6 @@
   end
 
   </code></pre>
-
-
-
+    </div>
+  </div>
 </div>

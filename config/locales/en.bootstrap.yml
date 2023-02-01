@@ -102,7 +102,7 @@ en:
           take_back: "Take back"
           take_back_confirm: "Are you sure you want to take back these URLs?"
         admin:
-          title: "URLs"
+          title: "All URLs"
         table:
           zlinks: "Z-Links"
           title: "My Z-Links"
@@ -194,10 +194,11 @@ en:
           name: "Name"
           description: "Description"
         edit:
-          title: "Edit your collection"
-          submit: "Edit Collection"
+          title: "Edit Collection"
+          submit: "Save"
         new:
-          submit: "Create Collection"
+          title: "New Collection"
+          submit: "Create"
       show:
       edit:
     group_memberships:

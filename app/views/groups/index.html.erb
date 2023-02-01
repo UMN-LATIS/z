@@ -1,39 +1,37 @@
 <%- model_class = Group -%>
 <!-- header -->
-<header class="z-bg-umn">
-  <div class="tw-relative tw-z-10 tw-max-w-[90em] tw-mx-auto tw-px-4 tw-py-16 tw-text-center">
-    <h1 class="tw-text-4xl tw-text-white tw-mb-0 tw-font-semibold" data-cy="hero-title">
-      <%= t('views.groups.index.title') %>
-    </h1>
-  </div>
-</header>
-<div class="umn-post-it">
-  <section class="tw-max-w-screen-lg tw-mx-auto tw-px-4 tw-py-8">
-    <div class="groups-table-wrapper">
-      <div id="announcements">
-        <%= render :partial => "announcements/starburst/announcement_bootstrap" %>
+<%= render 'shared/page-header' do %>
+  <%= t('views.groups.index.title') %>
+<% end %>
+<div class="tw-p-4">
+  <div class="umn-post-it">
+    <section class="tw-max-w-screen-[90em] tw-mx-auto tw-px-4 tw-py-8">
+      <div class="groups-table-wrapper">
+        <div id="announcements">
+          <%= render :partial => "announcements/starburst/announcement_bootstrap" %>
+        </div>
+        <table id="groups-table" class="table user-table table-striped table-bordered data-table tw-table-auto">
+          <thead>
+            <tr>
+              <th class="tw-w-full"><%= t('views.groups.index.table.name') %></th>
+              <th><%= t('views.groups.index.table.num_members') %></th>
+              <th><%= t('views.groups.index.table.num_links') %></th>
+              <th><%= t('views.groups.index.table.created') %></th>
+              <th><%= t('views.groups.index.table.actions') %></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @groups.each do |group| %>
+              <%= render 'in_row_show', group: group %>
+            <% end %>
+          </tbody>
+        </table>
       </div>
-      <table id="groups-table" class="table user-table table-striped table-bordered data-table tw-table-auto">
-        <thead>
-          <tr>
-            <th class="tw-w-full"><%= t('views.groups.index.table.name') %></th>
-            <th><%= t('views.groups.index.table.num_members') %></th>
-            <th><%= t('views.groups.index.table.num_links') %></th>
-            <th><%= t('views.groups.index.table.created') %></th>
-            <th><%= t('views.groups.index.table.actions') %></th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @groups.each do |group| %>
-            <%= render 'in_row_show', group: group %>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-    <%= link_to  new_group_path,
+      <%= link_to  new_group_path,
              class: 'btn btn-primary btn-xs add-new-group', remote: true  do %>
-      <i class="fa fa-plus-circle"></i>
-      <%= t("views.groups.index.new_button") %>
-    <% end %>
-  </section>
+        <i class="fa fa-plus-circle"></i>
+        <%= t("views.groups.index.new_button") %>
+      <% end %>
+    </section>
+  </div>
 </div>
