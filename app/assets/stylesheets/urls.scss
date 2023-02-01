@@ -70,26 +70,6 @@ div.urls-table-container {
   }
 }
 
-/* Fix bootstrap modal padding issue  */
-.modal-open {
-  padding-right: 0 !important;
-}
-/* make confirm-modal dim out anything beneath it*/
-body > .modal {
-  background-color: rgba(0, 0, 0, 0.5);
-  .modal-dialog {
-    width: 500px;
-    margin-top: 90px;
-  }
-}
-@media screen and (max-width: 767px) {
-  body > .modal .modal-dialog {
-    width: 85%;
-    margin-top: 90px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
 #regions-div {
   height: 350px;
 }
