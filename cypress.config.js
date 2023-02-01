@@ -5,7 +5,7 @@ const {
 
 module.exports = defineConfig({
   e2e: {
-    baseUrl: "http://localhost:3000",
+    baseUrl: "http://localhost:5100",
     defaultCommandTimeout: 10000,
     supportFile: "cypress/support/index.ts",
     excludeSpecPattern: "**/examples/**",
