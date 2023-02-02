@@ -14,7 +14,7 @@
     "cypress:run": "npx cypress run --browser chrome"
   },
   "dependencies": {
-    "@umn-latis/cla-vue-template": "^1.0.0-2",
+    "@umn-latis/cla-vue-template": "^1.0.0-3",
     "dayjs": "^1.11.7",
     "vue": "^3.2.45",
     "vue-turbolinks": "^2.2.2"

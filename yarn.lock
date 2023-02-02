@@ -467,10 +467,10 @@
     "@typescript-eslint/types" "5.49.0"
     eslint-visitor-keys "^3.3.0"
 
-"@umn-latis/cla-vue-template@^1.0.0-2":
-  version "1.0.0-2"
-  resolved "https://registry.yarnpkg.com/@umn-latis/cla-vue-template/-/cla-vue-template-1.0.0-2.tgz#d81028c7992bfa0abc9d253286f61d3a5ccefa47"
-  integrity sha512-3G45JSSnEAZSc5EfBzacaiT/SqgF6n3fFkZPCJbpXgtG+er2aWrF+Fz+/4fUsH3lFq/iUeqKxmD6S8Nu87mPjQ==
+"@umn-latis/cla-vue-template@^1.0.0-3":
+  version "1.0.0-3"
+  resolved "https://registry.yarnpkg.com/@umn-latis/cla-vue-template/-/cla-vue-template-1.0.0-3.tgz#6d3e350b0592569110baa6fba9b2f41da7c0e07f"
+  integrity sha512-IRsussa00eP3cBWzhBWl4xj1v+xIso3Mb6xy1yTqioWEQuAydOFI1enhTcRYKTekzHhTyBTGFXCiF7ImXUJC3A==
   dependencies:
     "@vueuse/core" "^9.12.0"
     vue-demi "^0.12.1"
