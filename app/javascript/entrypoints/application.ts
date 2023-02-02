@@ -2,6 +2,7 @@ import { createApp, type App as VueApp } from "vue";
 import AppHeader from "@/components/AppHeader.vue";
 import AppFooter from "@/components/AppFooter.vue";
 import "@umn-latis/cla-vue-template/dist/style.css";
+import "@/application.css";
 
 const components = {
   "app-header": AppHeader,
