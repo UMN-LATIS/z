@@ -450,10 +450,6 @@ GEM
     sshkit (1.21.3)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
-    tailwindcss-rails (2.0.21-arm64-darwin)
-      railties (>= 6.0.0)
-    tailwindcss-rails (2.0.21-x86_64-linux)
-      railties (>= 6.0.0)
     thor (1.2.1)
     tilt (2.0.11)
     timeout (0.3.1)
@@ -555,7 +551,6 @@ DEPENDENCIES
   sprockets-rails
   sqlite3 (~> 1.4)
   starburst!
-  tailwindcss-rails (~> 2.0)
   turbolinks (~> 5.2)
   twitter-bootstrap-rails!
   twitter-typeahead-rails!

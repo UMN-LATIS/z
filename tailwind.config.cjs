@@ -4,7 +4,7 @@ module.exports = {
   content: [
     "./public/*.html",
     "./app/helpers/**/*.rb",
-    "./app/javascript/**/*.js",
+    "./app/javascript/**/*.{js,ts,vue}",
     "./app/views/**/*.{erb,haml,html,slim}",
   ],
   theme: {
@@ -36,6 +36,6 @@ module.exports = {
   // add prefix to avoid conflicts with legacy css
   prefix: "tw-",
   corePlugins: {
-    preflight: false,
+    // preflight: false,
   },
 };

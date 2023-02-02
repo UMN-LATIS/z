@@ -3,8 +3,6 @@
   <head>
     <title>Z</title>
     <%= csrf_meta_tags %>
-    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= yield :head %>
     <%= favicon_link_tag '/favicon.ico' %>
@@ -19,6 +17,7 @@
     Two-tier: umnhf-tt.css (minified version at umnhf-tt.min.css) -->
     <script src="https://a.umn.edu/templates/web/responsive/current/js/umnhf.js"></script>
     <%= vite_client_tag %>
+    <%= vite_stylesheet_tag 'application' %>
     <%= vite_typescript_tag 'application' %>
   </head>
   <body class='<%= params[:controller] %> <%= params[:action] %> tw-flex tw-flex-col tw-min-h-screen'>
