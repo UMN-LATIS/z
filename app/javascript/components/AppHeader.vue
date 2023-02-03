@@ -1,7 +1,7 @@
 <template>
   <AppHeader>
     <template #app-link>
-      <a href="/">Z</a>
+      <a href="/">Z URL Shortener</a>
     </template>
     <template #navbar-links-right>
       <AppNavbar :currentUser="currentUser" />
