@@ -2,11 +2,11 @@
 <div class="z-hero-content tw-relative tw-z-10 tw-text-white tw-max-w-screen-lg tw-mx-auto">
   <div class="tw-max-w-[90rem] tw-mx-auto">
     <h3 class="tw-text-2xl tw-mb-4 <%= is_edit && 'tw-text-neutral-900' %>">
-      <%= is_edit ? t('views.urls.sleek_form.edit.title') : t('views.urls.sleek_form.new.title') %>
+      <%= is_edit ? t('views.urls.sleek_form.edit.title') : t('views.urls../sleek_form.new.title') %>
     </h3>
     <%= form_for_url_admin @admin_view, url do |f| %>
       <div class="super-input tw-grid md:tw-grid-cols-2 tw-grid-cols-1 md:tw-gap-4 tw-bg-white tw-rounded-md tw-text-umn-neutral-700">
-        <div class="focus-within:tw-ring-offset-2 focus-within:tw-ring tw-border-b md:tw-border-none">
+        <div class="focus-within:tw-ring-offset-2 focus-within:tw-ring tw-border-b md:tw-border-b-0 md:tw-border-r">
           <%= f.text_field :url, class: 'js-new-url-url tw-w-full tw-h-full tw-border-none tw-bg-transparent tw-text-umn-neutral-900 tw-p-4', placeholder: t('views.urls.sleek_form.placeholders.url'), 'aria-label': 'source URL' %>
         </div>
         <div class="super-input-right tw-flex tw-flex-col md:!tw-flex-row">
