@@ -1,6 +1,7 @@
 .z-bg-umn {
   background-image: image-url("umn-pano.jpg");
   background-size: cover;
+  background-position: center;
   position: relative;
   &:before {
     content: "";
