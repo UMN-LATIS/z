@@ -29,9 +29,6 @@ describe("FAQ Page", () => {
   it("should render correctly", () => {
     cy.get("h1").should("contain", "Frequently Asked Questions");
 
-    // a single General header
-    cy.get(".faqHeader").should("have.length", 1).should("contain", "General");
-
     // two questions
     cy.get(".panel-heading")
       .should("have.length", 2)

@@ -1,40 +1,38 @@
-<div class="page-header">
+<div class="page-header tw-space-y-4">
+  <p class="tw-uppercase tw-text-center">Admin</p>
   <h1><%= t('views.urls.index.admin.title') %></h1>
 </div>
-
-<table id="urls-table" class="table admin-table table-striped table-bordered data-table" data-source="<%= datatable_admin_urls_path(format: :json) %>">
-  <thead>
-    <tr>
-      <th></th>
-      <th></th>
-      <th><%= t('views.urls.index.table.shorturl') %></th>
-      <th><%= t('views.urls.index.table.longurl') %></th>
-      <th><%= t('views.urls.index.table.owner') %></th>
-      <th><%= t('views.urls.index.table.clicks') %></th>
-      <th><%= t('views.urls.index.table.created') %></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-
-  </tbody>
-  <tfoot>
-  <tr>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
-    </tr>
-  </tfoot>
-</table>
-
-
-<%= content_tag :div, class: "route-info", data: {new_transfer_request_path: new_admin_transfer_request_path} do %>
-<% end %>
-
-
-<%= render 'urls/modal' %>
+<div class="tw-p-4">
+  <div class="umn-post-it">
+    <table id="urls-table" class="table admin-table table-striped table-bordered data-table" data-source="<%= datatable_admin_urls_path(format: :json) %>">
+      <thead>
+        <tr>
+          <th></th>
+          <th></th>
+          <th><%= t('views.urls.index.table.shorturl') %></th>
+          <th><%= t('views.urls.index.table.zlinks') %></th>
+          <th><%= t('views.urls.index.table.owner') %></th>
+          <th><%= t('views.urls.index.table.clicks') %></th>
+          <th><%= t('views.urls.index.table.created') %></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <%= content_tag :div, class: "route-info", data: {new_transfer_request_path: new_admin_transfer_request_path} do %>
+  <% end %>
+  <%= render 'urls/modal' %>

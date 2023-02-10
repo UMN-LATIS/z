@@ -1,1 +1,3 @@
-<div class="error-space"><%= url.errors.full_messages.join('. ') %></div>  
+<div class="error-space <%= !url.errors.empty? && 'tw-p-4' %>">
+  <%= url.errors.full_messages.join('. ') %>
+</div>

@@ -92,6 +92,9 @@ gem 'dotenv-rails', "~> 2.7"
 # Use Sprockets for compiling CSS and JS assets
 gem "sprockets-rails"
 
+# Vite for JS compiling
+gem 'vite_rails'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a
   # debugger console
@@ -114,6 +117,9 @@ group :development, :test do
   # Watch files for changes and re-run tests
   gem 'guard', "~> 2.17"
   gem 'guard-rspec', "~> 4.7", require: false
+
+  # Start Rails and Vite using a single command
+  gem 'foreman'
 
   # Add some pry/rails console helpers for development
   gem 'awesome_print', "~> 1.8"
@@ -159,6 +165,6 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'browser', "~> 4.2"
 
-gem "webpacker", "~> 5.4"
-
 gem "rack-utf8_sanitizer", "~> 1.7"
+
+# gem "tailwindcss-rails", "~> 2.0"

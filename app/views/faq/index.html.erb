@@ -1,31 +1,25 @@
-<div class="container">
-  <h1>Z Frequently Asked Questions</h1>
-  <div class="panel-group" id="accordion">
-    <%
-       count = 0
-       current_header = ''
-    %>
-    <% @faqs.each do |faq| %>
-        <% count += 1 %>
-        <% header = faq.header %>
-        <% if !current_header.eql? header %>
-            <div class="faqHeader"><%= header.humanize %> </div>
-            <% current_header = header %>
-        <% end %>
+<header class="page-header">
+  <h1>Frequently Asked Questions</h1>
+</header>
+<div class="tw-p-4">
+  <div class="umn-post-it">
+    <div class="panel-group" id="accordion">
+      <% @faqs.each_with_index do |faq, index| %>
         <div class="panel panel-default">
-          <div class="panel-heading">
+          <div class="panel-heading tw-p-4">
             <h4 class="panel-title">
-              <a id="q<%= count %>" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= count %>">
+              <a id="q<%= index %>" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= index %>">
                 <%= faq.question.html_safe %>
               </a>
             </h4>
           </div>
-          <div id="collapse<%= count %>" class="panel-collapse collapse">
+          <div id="collapse<%= index %>" class="panel-collapse collapse">
             <div class="panel-body">
               <%= faq.answer.html_safe %>
             </div>
           </div>
         </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
 </div>

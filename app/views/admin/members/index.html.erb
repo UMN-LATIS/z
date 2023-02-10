@@ -1,62 +1,67 @@
 <script type="text/javascript">
+  $(function () {
+      var peopleSearch = new Bloodhound({
+          datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+          queryTokenizer: Bloodhound.tokenizers.whitespace,
+          remote: {
+              url: "<%= request.base_url %>/shortener/admin/members/new/%QUERY",
+              wildcard: '%QUERY'
+          }
+      });
 
-    $(function () {
-        var peopleSearch = new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: {
-                url: "<%= request.base_url %>/shortener/admin/members/new/%QUERY",
-                wildcard: '%QUERY'
+      $('#people_search').typeahead({minLength: 2}, {
+          name: 'people_search',
+          limit: 10,
+          display: 'display',
+          source: peopleSearch,
+          templates: {
+            empty: [
+              '<div class="tt-suggestion empty-message">',
+                '<p>' + I18n.t('views.transfer_requests.new.no_users_found') + '</p>',
+              '</div>'
+            ].join('\n'),
+            suggestion: function(data){
+              return [
+                '<div>',
+                '<p class="autocompleter-name"><strong>' + data.display_name + '</strong></p><p>'+ data.internet_id +'</p>',
+                '</div>'].join('\n')
             }
-        });
+          }
+      })
+      .on('typeahead:asyncrequest', function() {
+        $('.glyphicon-refresh').removeClass("hidden");
+      })
+      .on('typeahead:asynccancel typeahead:asyncreceive', function() {
+        $('.glyphicon-refresh').addClass("hidden");
+      });
 
-        $('#people_search').typeahead({minLength: 2}, {
-            name: 'people_search',
-            limit: 10,
-            display: 'display',
-            source: peopleSearch,
-            templates: {
-              empty: [
-                '<div class="tt-suggestion empty-message">',
-                  '<p>' + I18n.t('views.transfer_requests.new.no_users_found') + '</p>',
-                '</div>'
-              ].join('\n'),
-              suggestion: function(data){
-                return [
-                  '<div>',
-                  '<p class="autocompleter-name"><strong>' + data.display_name + '</strong></p><p>'+ data.internet_id +'</p>',
-                  '</div>'].join('\n')
-              }
-            }
-        })
-        .on('typeahead:asyncrequest', function() {
-          $('.glyphicon-refresh').removeClass("hidden");
-        })
-        .on('typeahead:asynccancel typeahead:asyncreceive', function() {
-          $('.glyphicon-refresh').addClass("hidden");
-        });
-
-        $('#people_search').bind('typeahead:selected', function (obj, datum, name) {
-            $("#uid").val(datum.umndid);
-        });
-    });
+      $('#people_search').bind('typeahead:selected', function (obj, datum, name) {
+          $("#uid").val(datum.umndid);
+      });
+  });
 </script>
-
-<div id="new-admin-form">
-  <%= render 'form' %>
+<div class="page-header tw-space-y-4">
+  <p class="tw-uppercase tw-text-center">Admin</p>
+  <h1>Manage Admins</h1>
 </div>
-
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th><%= t('views.admin.members.index.table.name')%></th>
-    <th><%= t('views.admin.members.index.table.internet_id') %></th>
-    <th><%= t '.actions', :default => t('helpers.actions') %></th>
-  </tr>
-  </thead>
-  <tbody>
-  <% @admins.each do |member| %>
-      <%= render 'in_row_show', member: member %>
-  <% end %>
-  </tbody>
-</table>
+<div class="tw-p-4">
+  <div class="umn-post-it">
+    <div id="new-admin-form">
+      <%= render 'form' %>
+    </div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th><%= t('views.admin.members.index.table.name')%></th>
+          <th><%= t('views.admin.members.index.table.internet_id') %></th>
+          <th><%= t '.actions', :default => t('helpers.actions') %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @admins.each do |member| %>
+          <%= render 'in_row_show', member: member %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

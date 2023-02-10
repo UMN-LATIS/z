@@ -12,6 +12,7 @@
 #   )
 #   Character.create(name: 'Luke', movie: movies.first)
 if Rails.env.development?
+  puts 'Seeding development database'
 
   User.create(
     [{ uid: 'zx8gky5wf' },

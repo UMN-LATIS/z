@@ -52,7 +52,7 @@ describe("admin urls page", () => {
     it("shows the url info", () => {
       // check the column headers
       cy.get("#urls-table > thead")
-        .should("contain", "Long URL")
+        .should("contain", "Z-Links")
         .should("contain", "Owner")
         .should("contain", "Clicks")
         .should("contain", "Created");
