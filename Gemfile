@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'passenger', "~> 6.0"
 
-gem 'ajax-datatables-rails', "~> 1.0.0"
+gem 'ajax-datatables-rails', "~> 1.4"
 
 # Use OmniAuth to support any type of auth
 gem 'omniauth', "~> 1.9"
