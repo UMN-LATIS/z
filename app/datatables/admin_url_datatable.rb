@@ -4,12 +4,14 @@ class AdminUrlDatatable < ApplicationDatatable
 
   def view_columns
     @view_columns ||= {
+      '0': { searchable: false, orderable: false },
       group_id: { source: 'Url.group_id' },
       group_name: { source: 'Group.name' },
       url: { source: 'Url.url' },
       keyword: { source: 'Url.keyword' },
       total_clicks: { source: 'Url.total_clicks' },
-      created_at: { source: 'Url.created_at' }
+      created_at: { source: 'Url.created_at' },
+      actions: {searchable: false, orderable: false }
     }
   end
 
