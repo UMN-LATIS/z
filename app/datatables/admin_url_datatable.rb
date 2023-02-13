@@ -1,4 +1,4 @@
-class AdminUrlDatatable < AjaxDatatablesRails::Base
+class AdminUrlDatatable < ApplicationDatatable
   def_delegators :@view, :link_to, :full_url, :display_long_url, :display_keyword_url, :select_tag,
                  :options_from_collection_for_select, :url_path, :render
 

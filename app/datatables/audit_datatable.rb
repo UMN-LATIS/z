@@ -1,4 +1,4 @@
-class AuditDatatable < AjaxDatatablesRails::Base
+class AuditDatatable < ApplicationDatatable
   def_delegators :@view, :display_whodunnit_internet_id
 
   def view_columns
