@@ -1,15 +1,22 @@
-class UrlDatatable < AjaxDatatablesRails::Base
+class UrlDatatable < ApplicationDatatable
   def_delegators :@view, :link_to, :full_url, :display_long_url, :display_keyword_url, :select_tag,
                  :options_for_select, :url_path, :render, :display_name, :group_names_and_ids_for_select
 
   def view_columns
     @view_columns ||= {
+      # added to resolve `InvalidSearchColumn error`
+      # Likely caused by ajax data tables looking for data
+      # for the first checkbox select column
+      # see: js method `initializeUrlDataTable()`
+      '0': { searchable: false, orderable: false },
       group_id: { source: 'Url.group_id' },
       group_name: { source: 'Group.name' },
       url: { source: 'Url.url' },
       keyword: { source: 'Url.keyword' },
-      total_clicks: { source: 'Url.total_clicks' },
-      created_at: { source: 'Url.created_at' }
+      total_clicks: { source: 'Url.total_clicks', searchable: false },
+      created_at: { source: 'Url.created_at' },
+      # needed for actions like edit, delete, etc.
+      actions: { searchable: false, orderable: false }
     }
   end
 
