@@ -3,11 +3,10 @@
     <%= link_to group.name, urls_path(collection: group.id), class: 'group-name' %>
     <div class="group-description"><%= group.description %></div>
   </td>
-  <td><%= link_to group.users.count, group_members_path(group) %></td>
-  <td><%= link_to group.urls.count, urls_path(collection: group.id) %></td>
+  <td><%= link_to group.users.size, group_members_path(group) %></td>
+  <td><%= link_to group.urls.size, urls_path(collection: group.id) %></td>
   <td><%= group.created_at.to_s(:created_on_formatted)  %></td>
   <td>
-  <%= render 'groups/in_row_actions', group: group  %>
-
+    <%= render 'groups/in_row_actions', group: group  %>
   </td>
 </tr>
