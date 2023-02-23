@@ -8,7 +8,7 @@ class GroupsController < ApplicationController
     # as you don't need to see it and it's permanent.
     # This group will always be your first group.
     @groups =
-      current_user.groups - [current_user.default_group]
+      current_user.groups.includes(:users, :urls) - [current_user.default_group]
     @group = Group.new
   end
 
@@ -24,6 +24,13 @@ class GroupsController < ApplicationController
     @group_identifier = Time.zone.now.to_ms
 
     @url = Url.find_by(keyword: params[:keyword]) if params[:keyword]
+    respond_to do |format|
+      format.js { render layout: false }
+    end
+  end
+
+  def edit
+    @group_identifier = @group.id
     respond_to do |format|
       format.js { render layout: false }
     end
@@ -47,13 +54,6 @@ class GroupsController < ApplicationController
       else
         format.js { render :edit }
       end
-    end
-  end
-
-  def edit
-    @group_identifier = @group.id
-    respond_to do |format|
-      format.js { render layout: false }
     end
   end
 
