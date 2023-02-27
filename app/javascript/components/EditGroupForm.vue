@@ -6,12 +6,19 @@
     </h1>
     <div>
       <Label required>Name</Label>
-      <Input :value="name" required type="text" @change="handleUpdateName" />
+      <Input
+        data-cy="group-name"
+        :value="name"
+        required
+        type="text"
+        @change="handleUpdateName"
+      />
     </div>
 
     <div>
       <Label>Description</Label>
       <Input
+        data-cy="group-description"
         :value="description"
         type="text"
         @change="handleUpdateDescription"

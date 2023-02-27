@@ -15,6 +15,7 @@
 
         <DataTable
           ref="table"
+          data-cy="groups-table"
           class="table table-striped table-bordered !tw-w-full"
           :options="options"
           :columns="columns"
@@ -29,13 +30,19 @@
   <Modal :isOpen="isEditing" @close="isEditing = false">
     <EditGroupForm
       v-if="collectionToChange"
+      data-cy="update-group"
       :group="collectionToChange"
       @save="handleSave"
     />
   </Modal>
 
-  <Modal :isOpen="isCreating" @close="isCreating = false">
+  <Modal
+    id="create-group-modal"
+    :isOpen="isCreating"
+    @close="isCreating = false"
+  >
     <EditGroupForm
+      data-cy="create-group"
       :group="{
         name: '',
         description: '',
@@ -67,6 +74,7 @@ import type {
   DataTableOptions,
   DataTableColumnOptions,
 } from "@/types";
+import { pluralize } from "@/utils";
 
 const isEditing = ref(false);
 const isDeleting = ref(false);
@@ -170,16 +178,12 @@ function renderNameColumn(data: string, type: string, row: Collection) {
   `;
 }
 
-function pluralize(count: number, singular: string, plural: string) {
-  return count === 1 ? singular : plural;
-}
-
 function renderUrlsColumn(data: number, type: string, row: Collection) {
   const href = `/shortener/urls?collection=${row.id}`;
   const conditionalClasses = data > 0 ? "tw-bg-sky-100" : "tw-bg-neutral-100";
   return `
     <a href="${href}" class="${conditionalClasses} tw-py-1 tw-px-2 tw-rounded-full tw-text-sky-700 hover:tw-no-underline hover:tw-bg-sky-600 hover:tw-text-sky-100">
-      ${data} ${pluralize(data, "url", "urls")}
+      ${data} url${data != 1 ? "s" : ""}
     </a>
   `;
 }
