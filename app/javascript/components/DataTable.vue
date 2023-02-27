@@ -47,6 +47,7 @@ const props = withDefaults(
 );
 
 const emit = defineEmits<{
+  (event: "mounted", dt: DataTableApi<any>): void;
   (event: "click", e: MouseEvent, dt: DataTableApi<any>): void;
   (event: "select", rows: any[], dt: DataTableApi<any>): void;
 }>();
@@ -117,6 +118,8 @@ onMounted(() => {
 
   dt.value.on("select", emitSelectedRows);
   dt.value.on("deselect", emitSelectedRows);
+
+  emit("mounted", dt.value);
 });
 
 // passes both the event and the datatable instance's

@@ -1,3 +1,13 @@
+import {
+  type Config as DTOptions,
+  type Api as DTApi,
+  type ConfigColumns as DTColumnOptions,
+} from "datatables.net";
+
+export type DataTableApi<T = object> = DTApi<T>;
+export type DataTableOptions = DTOptions;
+export type DataTableColumnOptions = DTColumnOptions;
+
 type DateTimeString = string;
 
 export interface User {

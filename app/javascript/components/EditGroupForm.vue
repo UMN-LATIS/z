@@ -6,12 +6,16 @@
     </h1>
     <div>
       <Label required>Name</Label>
-      <Input v-model="name" required type="text" />
+      <Input :value="name" required type="text" @change="handleUpdateName" />
     </div>
 
     <div>
       <Label>Description</Label>
-      <Input v-model="description" type="text" />
+      <Input
+        :value="description"
+        type="text"
+        @change="handleUpdateDescription"
+      />
     </div>
 
     <div class="tw-flex tw-justify-end">
@@ -48,6 +52,14 @@ watch(
     description.value = newGroup?.description ?? "";
   }
 );
+
+function handleUpdateName(event: Event) {
+  name.value = (event.target as HTMLInputElement).value;
+}
+
+function handleUpdateDescription(event: Event) {
+  description.value = (event.target as HTMLInputElement).value;
+}
 
 async function handleSubmit() {
   const updatedGroup = {

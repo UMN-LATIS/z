@@ -19,6 +19,7 @@
           :options="options"
           :columns="columns"
           :headers="['ID', 'Name', 'Urls', 'Members', 'Actions']"
+          @mounted="handleDataTableMounted"
           @click="handleDataTableClick"
         />
       </div>
@@ -57,15 +58,15 @@ import ConfirmDangerModal from "@/components/ConfirmDangerModal.vue";
 import DataTable from "@/components/DataTable.vue";
 import EditGroupForm from "@/components/EditGroupForm.vue";
 import Button from "@/components/Button.vue";
-import type { Collection } from "@/types";
 import * as api from "@/api";
 import PageLayout from "@/layouts/PageLayout.vue";
 import { PostIt } from "@umn-latis/cla-vue-template";
-import {
-  type Config as DataTableOptions,
-  type Api as DataTableApi,
-  type ConfigColumns as DataTableColumnOptions,
-} from "datatables.net";
+import type {
+  Collection,
+  DataTableApi,
+  DataTableOptions,
+  DataTableColumnOptions,
+} from "@/types";
 
 const isEditing = ref(false);
 const isDeleting = ref(false);
@@ -75,13 +76,17 @@ const tableRow = ref<string | null>(null);
 
 const collectionToChange = ref<Collection | null>(null);
 
-let dt = ref<DataTableApi<Collection> | null>(null);
+let datatable = ref<DataTableApi<Collection> | null>(null);
+
+function handleDataTableMounted(dt: DataTableApi<Collection>) {
+  datatable.value = dt;
+}
 
 function handleDataTableClick(
   event: MouseEvent,
   dtApi: DataTableApi<Collection>
 ) {
-  dt.value = dtApi;
+  datatable.value = dtApi;
 
   const clickedElement = event.target as HTMLElement;
   const { row, action } = clickedElement.dataset;
@@ -103,12 +108,12 @@ function handleDataTableClick(
 }
 
 async function handleSave(updatedGroup: Partial<Collection>) {
-  if (!dt.value) throw new Error("No datatable api found");
+  if (!datatable.value) throw new Error("No datatable api found");
   if (!tableRow.value) throw new Error("No edited row found");
   if (!collectionToChange.value) throw new Error("No edited item found");
 
   await api.updateCollection(updatedGroup);
-  dt.value.row(tableRow.value).data(updatedGroup).draw(false);
+  datatable.value.row(tableRow.value).data(updatedGroup).draw(false);
 
   // reset the edited row and item
   tableRow.value = null;
@@ -117,23 +122,23 @@ async function handleSave(updatedGroup: Partial<Collection>) {
 }
 
 async function handleCreate(newGroup: Partial<Collection>) {
-  if (!dt.value) throw new Error("No datatable api found");
+  if (!datatable.value) throw new Error("No datatable api found");
 
   await api.createCollection(newGroup);
-  dt.value.draw(false);
+  datatable.value.draw(false);
 
   isCreating.value = false;
 }
 
 async function handleDelete() {
-  if (!dt.value) throw new Error("No datatable api found");
+  if (!datatable.value) throw new Error("No datatable api found");
   if (!tableRow.value) throw new Error("No edited row found");
   if (!collectionToChange.value) throw new Error("No edited item found");
 
   const collectionId = Number.parseInt(collectionToChange.value.id, 10);
 
   await api.deleteCollection(collectionId);
-  dt.value.row(tableRow.value).remove().draw(false);
+  datatable.value.row(tableRow.value).remove().draw(false);
 
   // reset the edited row and item
   tableRow.value = null;
