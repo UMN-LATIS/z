@@ -36,11 +36,7 @@
     />
   </Modal>
 
-  <Modal
-    id="create-group-modal"
-    :isOpen="isCreating"
-    @close="isCreating = false"
-  >
+  <Modal :isOpen="isCreating" @close="isCreating = false">
     <EditGroupForm
       data-cy="create-group"
       :group="{

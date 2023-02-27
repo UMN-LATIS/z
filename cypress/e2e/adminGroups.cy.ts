@@ -127,7 +127,7 @@ describe("admin groups index page", () => {
         });
     });
 
-    it.only("removes a collection", () => {
+    it("removes a collection", () => {
       cy.get("[data-cy='groups-table'] tbody > tr")
         .eq(0)
         .within(() => {
@@ -142,7 +142,39 @@ describe("admin groups index page", () => {
         .should("not.contain", collections[0].name);
     });
 
-    it("allows collections to be sorted by name");
+    it.only("allows collections to be sorted by name", () => {
+      // check that it's in acending order by default
+      cy.get("[data-cy='groups-table'] tbody > tr").each(($el, index) => {
+        cy.wrap($el).within(() => {
+          const collection = collections[index];
+
+          // collection name
+          cy.get("td")
+            .eq(1)
+            .should("contain", collection.name)
+            .should("contain", collection.description);
+        });
+      });
+
+      //   // click the name header to sort by name
+      cy.get("[data-cy='groups-table'] thead > tr")
+        .contains("Name")
+        .click() // hack: need to click twice to sort in test for some reason?
+        .click();
+
+      // check that it's in descending order
+      cy.get("[data-cy='groups-table'] tbody > tr").each(($el, index) => {
+        cy.wrap($el).within(() => {
+          const collection = collections[collections.length - 1 - index];
+
+          // collection name
+          cy.get("td")
+            .eq(1)
+            .should("contain", collection.name)
+            .should("contain", collection.description);
+        });
+      });
+    });
 
     it("allows collections to be searched by name");
 
