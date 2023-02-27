@@ -1,27 +1,3 @@
-<%- model_class = Group -%>
-<div class="page-header tw-space-y-4">
-  <p class="tw-uppercase tw-text-center">Admin</p>
-  <h1>All Collections</h1>
-</div>
-<div class="tw-p-4">
-  <div class="umn-post-it">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th><%= t('helpers.table_headers.name') %></th>
-          <th><%= t('helpers.table_headers.description') %></th>
-          <th><%= t('helpers.table_headers.created_on') %></th>
-          <th><%=t '.actions', :default => t('helpers.actions') %></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @groups.each do |group| %>
-          <%= render 'in_row_show', group: group %>
-        <% end %>
-      </tbody>
-    </table>
-    <%= link_to t('.new', :default => t("helpers.links.new")),
-            new_group_path,
-            :class => 'btn btn-primary btn-xs add-new-group', remote: true %>
-  </div>
+<div data-behavior="vue">
+  <admin-collections-index-page />
 </div>

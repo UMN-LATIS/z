@@ -1,0 +1,235 @@
+<template>
+  <PageLayout>
+    <template #header>
+      <p class="tw-uppercase tw-text-center">Admin</p>
+      <h1>All Collections</h1>
+    </template>
+    <PostIt>
+      <div class="tw-relative">
+        <Button
+          class="tw-w-full tw-mb-4 sm:tw-w-auto sm:tw-absolute sm:tw-top-0 sm:tw-left-0"
+          @click="isCreating = true"
+        >
+          New Collection
+        </Button>
+
+        <DataTable
+          ref="table"
+          class="table table-striped table-bordered !tw-w-full"
+          :options="options"
+          :columns="columns"
+          :headers="['ID', 'Name', 'Urls', 'Members', 'Actions']"
+          @click="handleDataTableClick"
+        />
+      </div>
+    </PostIt>
+  </PageLayout>
+
+  <Modal :isOpen="isEditing" @close="isEditing = false">
+    <EditGroupForm
+      v-if="collectionToChange"
+      :group="collectionToChange"
+      @save="handleSave"
+    />
+  </Modal>
+
+  <Modal :isOpen="isCreating" @close="isCreating = false">
+    <EditGroupForm
+      :group="{
+        name: '',
+        description: '',
+      }"
+      @save="handleCreate"
+    />
+  </Modal>
+
+  <ConfirmDangerModal
+    :isOpen="isDeleting"
+    :title="`Delete collection: '${collectionToChange?.name}'`"
+    @close="isDeleting = false"
+    @confirm="handleDelete"
+  />
+</template>
+<script setup lang="ts">
+import { ref } from "vue";
+import Modal from "@/components/Modal.vue";
+import ConfirmDangerModal from "@/components/ConfirmDangerModal.vue";
+import DataTable from "@/components/DataTable.vue";
+import EditGroupForm from "@/components/EditGroupForm.vue";
+import Button from "@/components/Button.vue";
+import type { Collection } from "@/types";
+import * as api from "@/api";
+import PageLayout from "@/layouts/PageLayout.vue";
+import { PostIt } from "@umn-latis/cla-vue-template";
+import {
+  type Config as DataTableOptions,
+  type Api as DataTableApi,
+  type ConfigColumns as DataTableColumnOptions,
+} from "datatables.net";
+
+const isEditing = ref(false);
+const isDeleting = ref(false);
+const isCreating = ref(false);
+
+const tableRow = ref<string | null>(null);
+
+const collectionToChange = ref<Collection | null>(null);
+
+let dt = ref<DataTableApi<Collection> | null>(null);
+
+function handleDataTableClick(
+  event: MouseEvent,
+  dtApi: DataTableApi<Collection>
+) {
+  dt.value = dtApi;
+
+  const clickedElement = event.target as HTMLElement;
+  const { row, action } = clickedElement.dataset;
+
+  // if we have no row data, then there's nothing we can do
+  if (!row) return;
+
+  if (action === "edit") {
+    tableRow.value = row;
+    collectionToChange.value = dtApi.row(row).data();
+    isEditing.value = true;
+  }
+
+  if (action === "delete") {
+    tableRow.value = row;
+    collectionToChange.value = dtApi.row(row).data();
+    isDeleting.value = true;
+  }
+}
+
+async function handleSave(updatedGroup: Partial<Collection>) {
+  if (!dt.value) throw new Error("No datatable api found");
+  if (!tableRow.value) throw new Error("No edited row found");
+  if (!collectionToChange.value) throw new Error("No edited item found");
+
+  await api.updateCollection(updatedGroup);
+  dt.value.row(tableRow.value).data(updatedGroup).draw(false);
+
+  // reset the edited row and item
+  tableRow.value = null;
+  collectionToChange.value = null;
+  isEditing.value = false;
+}
+
+async function handleCreate(newGroup: Partial<Collection>) {
+  if (!dt.value) throw new Error("No datatable api found");
+
+  await api.createCollection(newGroup);
+  dt.value.draw(false);
+
+  isCreating.value = false;
+}
+
+async function handleDelete() {
+  if (!dt.value) throw new Error("No datatable api found");
+  if (!tableRow.value) throw new Error("No edited row found");
+  if (!collectionToChange.value) throw new Error("No edited item found");
+
+  const collectionId = Number.parseInt(collectionToChange.value.id, 10);
+
+  await api.deleteCollection(collectionId);
+  dt.value.row(tableRow.value).remove().draw(false);
+
+  // reset the edited row and item
+  tableRow.value = null;
+  collectionToChange.value = null;
+  isDeleting.value = false;
+}
+
+const options: DataTableOptions = {
+  ajax: "/shortener/admin/groups.json",
+  serverSide: true, // enable server-side processing
+  paging: false, // disable pagination, use infinite scroll instead
+  scrollY: "50vh", // scroll body height
+  scrollCollapse: true, // reduce table height when smaller than scrollY
+  language: {
+    emptyTable: "None",
+    searchPlaceholder: "Search...",
+    search: '<span class="tw-sr-only">Search</span>',
+  },
+};
+
+function renderNameColumn(data: string, type: string, row: Collection) {
+  return `
+    <a href="/shortener/groups/${row.id}" class="tw-text-sky-700 hover:tw-underline hover:tw-text-sky-600">
+      ${data}
+    </a>
+    <div class="tw-text-xs tw-text-gray-500 tw-mt-1">
+      ${row.description}
+    </div>
+  `;
+}
+
+function pluralize(count: number, singular: string, plural: string) {
+  return count === 1 ? singular : plural;
+}
+
+function renderUrlsColumn(data: number, type: string, row: Collection) {
+  const href = `/shortener/urls?collection=${row.id}`;
+  const conditionalClasses = data > 0 ? "tw-bg-sky-100" : "tw-bg-neutral-100";
+  return `
+    <a href="${href}" class="${conditionalClasses} tw-py-1 tw-px-2 tw-rounded-full tw-text-sky-700 hover:tw-no-underline hover:tw-bg-sky-600 hover:tw-text-sky-100">
+      ${data} ${pluralize(data, "url", "urls")}
+    </a>
+  `;
+}
+
+function renderUsersColumn(data: number, type: string, row: Collection) {
+  return `
+    <a href="/shortener/groups/${row.id}/members" class="${
+    data > 0 ? "tw-bg-sky-100" : "tw-bg-neutral-100"
+  } tw-py-1 tw-px-2 tw-rounded-full tw-text-sky-700 hover:tw-no-underline hover:tw-bg-sky-600 hover:tw-text-sky-100">
+      ${data} member${data != 1 ? "s" : ""}
+    </a>
+  `;
+}
+
+function renderActionsColumn(id, type, row, meta) {
+  return `
+    <div class="tw-flex tw-flex-wrap">
+      <button
+        class="tw-uppercase tw-text-xs tw-font-medium tw-p-2 hover:tw-bg-sky-50 tw-text-sky-700  tw-rounded tw-transition-colors tw-"
+        data-action="edit"
+        data-id="${id}"
+        data-row="${meta.row}"
+      >Edit</button>
+      <button
+        id="delete-button"
+        class="tw-uppercase tw-text-xs tw-font-medium tw-p-2 tw-text-red-700 tw-rounded hover:tw-bg-red-50"
+        data-action="delete"
+        data-id="${id}"
+        data-row="${meta.row}"
+      >Delete</button>
+    </div>
+  `;
+}
+
+const columns: DataTableColumnOptions[] = [
+  { data: "id" },
+  {
+    data: "name",
+    render: renderNameColumn,
+  },
+  {
+    data: "urls",
+    render: renderUrlsColumn,
+  },
+  {
+    data: "users",
+    render: renderUsersColumn,
+  },
+
+  {
+    data: "actions",
+    render: renderActionsColumn,
+    orderable: false,
+    searchable: false,
+  },
+];
+</script>
+<style scoped></style>
