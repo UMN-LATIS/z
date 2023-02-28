@@ -99,31 +99,39 @@ describe("admin groups index page", () => {
         });
     });
 
-    it("can edit a collection name or description", () => {
-      cy.get("[data-cy='groups-table'] tbody > tr")
-        .eq(0)
-        .within(() => {
-          cy.get("td").eq(1).should("contain", collections[0].name);
-          cy.contains("Edit").click();
-        });
+    it("edits a collection name and description", () => {
+      cy.get("[data-cy='groups-table']")
+        .contains(collections[0].id)
+        .closest("tr")
+        .as("row0");
 
+      // edit the first collection
+      cy.get("@row0").contains("Edit").click();
+
+      // change the name and description
       cy.get('[data-cy="update-group"] [data-cy="group-name"]')
         .clear()
-        .type("new name");
+        .type("updated name");
 
       cy.get('[data-cy="update-group"] [data-cy="group-description"]')
         .clear()
-        .type("new description");
+        .type("updated description");
 
-      cy.contains("Save").click();
+      // save the changes
+      cy.get('[data-cy="update-group"]').contains("Save").click();
 
+      // check that the changes were saved
       cy.get("[data-cy='groups-table'] tbody > tr")
-        .eq(0)
+        .should("have.length", 3)
+        .contains("updated name")
+        .closest("tr")
         .within(() => {
-          cy.get("td")
-            .eq(1)
-            .should("contain", "new name")
-            .should("contain", "new description");
+          // verify that the id is still the same
+          cy.get("td").eq(0).should("contain", collections[0].id);
+
+          // and that the name and description were updated
+          cy.get("td").eq(1).should("contain", "updated name");
+          cy.get("td").eq(1).should("contain", "updated description");
         });
     });
 
@@ -208,18 +216,28 @@ describe("admin groups index page", () => {
           .should("contain", "collection2");
       });
     });
+
+    it("creates a new collection", () => {
+      cy.contains("New Collection").click();
+
+      cy.get('[data-cy="create-group"] [data-cy="group-name"]').type(
+        "new collection"
+      );
+      cy.get('[data-cy="create-group"] [data-cy="group-description"]').type(
+        "new description"
+      );
+
+      // save the changes
+      cy.get('[data-cy="create-group"]').contains("Save").click();
+
+      // check that the changes were saved
+      cy.get("[data-cy='groups-table'] tbody > tr")
+        .should("have.length", 4)
+        .contains("new collection")
+        .closest("tr")
+        .within(() => {
+          cy.get("td").eq(1).should("contain", "new description");
+        });
     });
-
-    it("allows collections to be searched by name");
-
-    it("can edit a collection name or description");
-
-    it("can create a new collection");
-
-    it("can delete a collection");
-
-    it(
-      "shows an error and does not update if a collection name is already taken"
-    );
   });
 });
