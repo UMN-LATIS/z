@@ -70,7 +70,6 @@ import type {
   DataTableOptions,
   DataTableColumnOptions,
 } from "@/types";
-import { pluralize } from "@/utils";
 
 const isEditing = ref(false);
 const isDeleting = ref(false);
