@@ -176,12 +176,38 @@ describe("admin groups index page", () => {
       });
     });
 
-    it("Clicking collection name brings user to list of urls", () => {
-      cy.get("[data-cy='groups-table'] tbody > tr")
-        .contains(collections[0].name)
-        .click();
-      cy.location("pathname").should("eq", `/shortener/urls`);
-      cy.location("search").should("eq", `?collection=${collections[0].id}`);
+    it("links a group name, url, and members", () => {
+      const collection = collections[0];
+      cy.get("[data-cy='groups-table'] tbody > tr:first-child").within(() => {
+        cy.contains(collection.name).should(
+          "have.attr",
+          "href",
+          `/shortener/urls?collection=${collection.id}`
+        );
+
+        cy.contains("0 urls").should(
+          "have.attr",
+          "href",
+          `/shortener/urls?collection=${collection.id}`
+        );
+
+        cy.contains("0 members").should(
+          "have.attr",
+          "href",
+          `/shortener/groups/${collection.id}/members`
+        );
+      });
+    });
+
+    it("searches collections by name", () => {
+      cy.get("[data-cy='groups-table']").within(() => {
+        cy.contains("Search").type("collection2");
+
+        cy.get("tbody > tr")
+          .should("have.length", 1)
+          .should("contain", "collection2");
+      });
+    });
     });
 
     it("allows collections to be searched by name");
