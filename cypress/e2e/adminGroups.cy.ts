@@ -142,7 +142,7 @@ describe("admin groups index page", () => {
         .should("not.contain", collections[0].name);
     });
 
-    it.only("allows collections to be sorted by name", () => {
+    it("allows collections to be sorted by name", () => {
       // check that it's in acending order by default
       cy.get("[data-cy='groups-table'] tbody > tr").each(($el, index) => {
         cy.wrap($el).within(() => {
@@ -174,6 +174,14 @@ describe("admin groups index page", () => {
             .should("contain", collection.description);
         });
       });
+    });
+
+    it("Clicking collection name brings user to list of urls", () => {
+      cy.get("[data-cy='groups-table'] tbody > tr")
+        .contains(collections[0].name)
+        .click();
+      cy.location("pathname").should("eq", `/shortener/urls`);
+      cy.location("search").should("eq", `?collection=${collections[0].id}`);
     });
 
     it("allows collections to be searched by name");

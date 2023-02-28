@@ -164,8 +164,9 @@ const options: DataTableOptions = {
 };
 
 function renderNameColumn(data: string, type: string, row: Collection) {
+  const href = `/shortener/urls?collection=${row.id}`;
   return `
-    <a href="/shortener/groups/${row.id}" class="tw-text-sky-700 hover:tw-underline hover:tw-text-sky-600">
+    <a href="${href}" class="tw-text-sky-700 hover:tw-underline hover:tw-text-sky-600">
       ${data}
     </a>
     <div class="tw-text-xs tw-text-gray-500 tw-mt-1">
