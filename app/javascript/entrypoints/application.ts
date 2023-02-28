@@ -39,3 +39,11 @@ document.addEventListener("turbolinks:load", () => {
 document.addEventListener("turbolinks:before-render", () => {
   vueApps.forEach((app) => app.unmount());
 });
+
+// hide the main-content element until the app is mounted
+// this prevents the page showing up without headers
+// and jumping around
+document.addEventListener("turbolinks:load", () => {
+  const mainContent = document.querySelector("#main-content");
+  mainContent?.classList.remove("hidden");
+});
