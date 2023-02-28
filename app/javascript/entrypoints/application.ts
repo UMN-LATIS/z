@@ -2,6 +2,7 @@ import { createApp, type App as VueApp } from "vue";
 import AppHeader from "@/components/AppHeader.vue";
 import AppFooter from "@/components/AppFooter.vue";
 import AdminCollectionsIndexPage from "@/pages/AdminCollectionsIndexPage.vue";
+import AdminAuditLogPage from "@/pages/AdminAuditLogPage.vue";
 import "@umn-latis/cla-vue-template/dist/style.css";
 import "@/application.css";
 
@@ -9,6 +10,7 @@ const components = {
   "app-header": AppHeader,
   "app-footer": AppFooter,
   "admin-collections-index-page": AdminCollectionsIndexPage,
+  "admin-audit-log-page": AdminAuditLogPage,
 };
 
 const createMyApp = () => {

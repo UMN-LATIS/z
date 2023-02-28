@@ -25,25 +25,19 @@ describe("admin urls page", () => {
   });
 
   context("as an admin user", () => {
+    let urls = [];
     beforeEach(() => {
+      urls = [];
       cy.createAndLoginUser(admin.umndid, { admin: true });
       cy.createUser(user1.umndid, {
         internet_id_loaded: user1.internet_id,
       }).then((user) => {
-        cy.createUrl({
-          keyword: "x1",
-          url: "https://example1.com",
-          group_id: user.context_group_id,
-        });
-        cy.createUrl({
-          keyword: "x2",
-          url: "https://example2.com",
-          group_id: user.context_group_id,
-        });
-        cy.createUrl({
-          keyword: "x3",
-          url: "https://example3.com",
-          group_id: user.context_group_id,
+        [1, 2, 3].forEach((i) => {
+          cy.createUrl({
+            keyword: `x${i}`,
+            url: `https://example${i}.com`,
+            group_id: user.context_group_id,
+          }).then((url) => urls.push(url));
         });
       });
       cy.visit("/shortener/admin/urls");
