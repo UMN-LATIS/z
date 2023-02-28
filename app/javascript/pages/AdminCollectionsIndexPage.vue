@@ -152,9 +152,6 @@ async function handleDelete() {
 const options: DataTableOptions = {
   ajax: "/shortener/admin/groups.json",
   serverSide: true, // enable server-side processing
-  paging: false, // disable pagination, use infinite scroll instead
-  scrollY: "50vh", // scroll body height
-  scrollCollapse: true, // reduce table height when smaller than scrollY
   language: {
     emptyTable: "None",
     searchPlaceholder: "Search...",
@@ -223,10 +220,14 @@ const columns: DataTableColumnOptions[] = [
   {
     data: "urls",
     render: renderUrlsColumn,
+    orderable: false,
+    searchable: false,
   },
   {
     data: "users",
     render: renderUsersColumn,
+    searchable: false,
+    orderable: false,
   },
 
   {

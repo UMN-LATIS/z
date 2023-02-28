@@ -33,6 +33,7 @@ import DataTablesLib, {
 } from "datatables.net";
 import "datatables.net-select";
 import "datatables.net-buttons";
+import "datatables.net-bs4";
 
 DataTable.use(DataTablesLib);
 
@@ -137,8 +138,7 @@ const defaultOptions: DataTableOptions = {
       }
     : false,
   buttons: props.selectable && ["selectAll", "selectNone"],
-  paging: false,
-  scrollY: "50vh",
+  pageLength: 25,
   scrollCollapse: true,
   language: {
     emptyTable: "None",
