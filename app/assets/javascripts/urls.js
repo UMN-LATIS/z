@@ -25,7 +25,7 @@ $(document).on("click", ".cancel-edit", function(e) {
 });
 
 $(document).on("change", "#urls-table select, body.urls.show select", function(e) {
-    select = e.target;
+    const select = e.target;
     var newVal = $(select).val();
     var urlId = $(select).data('url-id');
     if (!confirm(I18n.t("views.urls.move_confirm", {
