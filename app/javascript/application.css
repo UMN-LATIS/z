@@ -34,12 +34,45 @@
   }
 }
 
-/*
-
-@layer components {
-  .btn-primary {
-    @apply py-2 px-4 bg-blue-200;
-  }
+/* Data Tables */
+.datatable input[type="search"],
+.dataTables_wrapper input[type="search"],
+.data-table tfoot input {
+  font-size: 16px;
+  border: 0;
+  background: #f3f3f3;
+  border-radius: 0.25rem;
+  font-weight: 400;
+  height: auto;
+  padding: 0.5rem;
 }
 
-*/
+.datatable,
+.dataTables_wrapper,
+.data-table.table-bordered th {
+  border-left: 0;
+  border-right: 0;
+}
+
+/* right align search on vue pages */
+[data-behavior="vue"] div.dataTables_wrapper div.dataTables_filter {
+  text-align: right;
+}
+
+/* make the parent element of the datatable overflow-x: auto */
+[data-behavior="vue"] div:has(> table) {
+  overflow-x: auto;
+}
+
+/* center datatable search on mobile */
+@media (max-width: 640px) {
+  [data-behavior="vue"] div.dataTables_wrapper div.dataTables_filter label {
+    display: block;
+    width: 100%;
+  }
+
+  [data-behavior="vue"] div.dataTables_wrapper div.dataTables_filter input {
+    margin: 0;
+    width: 100%;
+  }
+}

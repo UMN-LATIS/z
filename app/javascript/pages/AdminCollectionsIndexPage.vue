@@ -175,7 +175,7 @@ function renderUrlsColumn(data: number, type: string, row: Collection) {
   const href = `/shortener/urls?collection=${row.id}`;
   const conditionalClasses = data > 0 ? "tw-bg-sky-100" : "tw-bg-neutral-100";
   return `
-    <a href="${href}" class="${conditionalClasses} tw-py-1 tw-px-2 tw-rounded-full tw-text-sky-700 hover:tw-no-underline hover:tw-bg-sky-600 hover:tw-text-sky-100">
+    <a href="${href}" class="${conditionalClasses} tw-py-1 tw-px-2 tw-rounded-full tw-text-sky-700 hover:tw-no-underline hover:tw-bg-sky-600 hover:tw-text-sky-100 tw-whitespace-nowrap">
       ${data} url${data != 1 ? "s" : ""}
     </a>
   `;
@@ -185,7 +185,7 @@ function renderUsersColumn(data: number, type: string, row: Collection) {
   return `
     <a href="/shortener/groups/${row.id}/members" class="${
     data > 0 ? "tw-bg-sky-100" : "tw-bg-neutral-100"
-  } tw-py-1 tw-px-2 tw-rounded-full tw-text-sky-700 hover:tw-no-underline hover:tw-bg-sky-600 hover:tw-text-sky-100">
+  } tw-py-1 tw-px-2 tw-rounded-full tw-text-sky-700 hover:tw-no-underline hover:tw-bg-sky-600 hover:tw-text-sky-100 tw-whitespace-nowrap">
       ${data} member${data != 1 ? "s" : ""}
     </a>
   `;
