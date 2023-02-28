@@ -8,6 +8,7 @@ module.exports = {
     es2021: true,
     node: true,
     jquery: true,
+    i18n: true,
     "vue/setup-compiler-macros": true,
   },
   extends: [
