@@ -275,6 +275,11 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
+"@headlessui/vue@^1.7.11":
+  version "1.7.11"
+  resolved "https://registry.yarnpkg.com/@headlessui/vue/-/vue-1.7.11.tgz#e8d9d09be8c30bb9808ebd75038ce9bcb4bfd00e"
+  integrity sha512-VsNqx9Lc1ftOyIazBF9EX5BS4WYwwaFX+1jBWXQakeH1o4xnoZKlBSlvEgmAnFLO9GDVmn7kKVOWfFgQn2aRZA==
+
 "@humanwhocodes/config-array@^0.11.8":
   version "0.11.8"
   resolved "https://registry.npmjs.org/@humanwhocodes/config-array/-/config-array-0.11.8.tgz"
@@ -2277,6 +2282,11 @@ ospath@^1.2.2:
   version "1.2.2"
   resolved "https://registry.npmjs.org/ospath/-/ospath-1.2.2.tgz"
   integrity sha512-o6E5qJV5zkAbIDNhGSIlyOhScKXgQrSRMilfph0clDfM0nEnBOlKlH4sWDmG95BW/CvwNz0vmm7dJVtU2KlMiA==
+
+p-debounce@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/p-debounce/-/p-debounce-4.0.0.tgz#348e3f44489baa9435cc7d807f17b3bb2fb16b24"
+  integrity sha512-4Ispi9I9qYGO4lueiLDhe4q4iK5ERK8reLsuzH6BPaXn53EGaua8H66PXIFGrW897hwjXp+pVLrm/DLxN0RF0A==
 
 p-limit@^3.0.2:
   version "3.1.0"
