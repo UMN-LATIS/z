@@ -3,6 +3,7 @@ import { validateFlashMessage } from "../support/validateFlashMessage";
 //fixtures
 import admin from "../fixtures/users/admin.json";
 import user1 from "../fixtures/users/user1.json";
+import user2 from "../fixtures/users/user2.json";
 
 describe("admin urls page", () => {
   beforeEach(() => {
@@ -134,7 +135,7 @@ describe("admin urls page", () => {
       cy.get("@row1").should("contain", "x1");
     });
 
-    it.only("deletes a url", () => {
+    it("deletes a url", () => {
       cy.get("[data-cy='admin-urls-table']")
         .contains("x1")
         .closest("tr")
@@ -158,6 +159,41 @@ describe("admin urls page", () => {
       cy.appEval('Url.where(keyword: "x1").count').then((count) => {
         expect(count).to.eq(0);
       });
+    });
+
+    it.only("bulk transfers urls to another user", () => {
+      cy.get("[data-cy='admin-urls-table']")
+        .contains("x2")
+        .closest("tr")
+        .as("row2");
+      cy.get("[data-cy='admin-urls-table']")
+        .contains("x3")
+        .closest("tr")
+        .as("row3");
+
+      cy.get("@row2").find('input[type="checkbox"]').check();
+      cy.get("@row3").find('input[type="checkbox"]').check();
+
+      cy.contains("Bulk Actions").click();
+
+      cy.contains("Transfer").click();
+
+      // choose user 2
+      cy.get("#person-search").type("user2");
+      cy.get('[data-cy="person-search-list"]').contains("user2").click();
+
+      cy.contains("Transfer").click();
+
+      // verify that the rows were updated
+      cy.get("[data-cy='admin-urls-table']")
+        .contains("x2")
+        .closest("tr")
+        .contains(user2.internet_id);
+
+      cy.get("[data-cy='admin-urls-table']")
+        .contains("x3")
+        .closest("tr")
+        .contains(user2.internet_id);
     });
   });
 });

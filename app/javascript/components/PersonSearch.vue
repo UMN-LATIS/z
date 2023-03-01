@@ -18,7 +18,7 @@
         />
       </button>
     </div>
-    <ul class="tw-max-h-[50vh] tw-overflow-y-scroll">
+    <ul class="tw-max-h-[50vh] tw-overflow-y-scroll" data-cy="person-search-list">
       <li v-for="user in users" :key="user.umndid" class="tw-my-2">
         <button
           class="tw-text-left tw-p-2 tw-w-full tw-bg-sky-100 hover:tw-shadow-sm hover:tw-shadow-sky-100 hover:tw-bg-sky-50 tw-transition-all tw-rounded"

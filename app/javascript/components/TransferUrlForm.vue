@@ -106,7 +106,7 @@ async function handleSubmit() {
     return;
   }
 
-  console.error(res);
+  console.error('Transfer error', { res });
   alert("Something went wrong with the transfer");
 }
 </script>
