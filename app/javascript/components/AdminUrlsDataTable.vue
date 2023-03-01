@@ -203,7 +203,7 @@ const columns: DataTableColumnOptions[] = [
     render(data: number, type: string, row: Zlink) {
       const href = `/shortener/urls/${row.keyword}`;
       const conditionalClasses =
-        data > 0 ? "tw-bg-sky-100" : "tw-bg-neutral-100";
+        data > 0 ? "tw-bg-sky-100" : "tw-bg-[rgba(0,0,0,0.05)]";
       return `
     <a href="${href}" class="${conditionalClasses} tw-py-1 tw-px-2 tw-rounded-full tw-text-sky-700 hover:tw-no-underline hover:tw-bg-sky-600 hover:tw-text-sky-100 tw-whitespace-nowrap">
       ${data} click${data != 1 ? "s" : ""}
