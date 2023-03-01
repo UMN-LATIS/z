@@ -38,6 +38,13 @@
     @close="handleEditUrlClose"
     @success="handleEditSuccess"
   />
+
+  <ConfirmDangerModal
+    :isOpen="isDeleteModalOpen"
+    :title="`Delete Z-Link: ${urlToChange?.keyword}`"
+    @close="isDeleteModalOpen = false"
+    @confirm="handleDeleteUrl"
+  />
 </template>
 <script setup lang="ts">
 import { ref, computed } from "vue";
@@ -53,11 +60,14 @@ import Modal from "./Modal.vue";
 import { Zlink } from "@/types";
 import TransferUrlForm from "./TransferUrlForm.vue";
 import EditUrlModal from "./EditUrlModal.vue";
+import ConfirmDangerModal from "./ConfirmDangerModal.vue";
+import * as api from "@/api";
 
 const selectedRows = ref<Zlink[]>([]);
 const datatable = ref<DataTableApi<Zlink> | null>(null);
 const isBulkTransferModalOpen = ref(false);
 const isEditModalOpen = ref(false);
+const isDeleteModalOpen = ref(false);
 const urlToChange = ref<Partial<Zlink> | null>(null);
 const rowToChange = ref<string | null>(null);
 
@@ -98,6 +108,22 @@ function handleEditSuccess(updatedUrl: Zlink) {
   resetEditModal();
 }
 
+async function handleDeleteUrl() {
+  if (!datatable.value) throw new Error("No datatable api found");
+  if (!rowToChange.value) throw new Error("No edited row found");
+  if (!urlToChange.value?.id) throw new Error("No edited item found");
+
+  const urlId = urlToChange.value.id;
+
+  await api.deleteUrl(urlId);
+  datatable.value.row(rowToChange.value).remove().draw(false);
+
+  // reset the edited row and item
+  rowToChange.value = null;
+  urlToChange.value = null;
+  isDeleteModalOpen.value = false;
+}
+
 function handleDataTableClick(event, dt) {
   datatable.value = dt;
   const target = event.target as HTMLElement;
@@ -118,7 +144,9 @@ function handleDataTableClick(event, dt) {
   }
 
   if (action === "delete") {
-    console.log("Delete");
+    urlToChange.value = dt.row(row).data();
+    isDeleteModalOpen.value = true;
+    rowToChange.value = row;
   }
 }
 

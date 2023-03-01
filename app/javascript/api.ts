@@ -76,6 +76,16 @@ export function updateUrl(
     });
 }
 
+export function deleteUrl(id): Promise<ApiResponse<Zlink, string[]>> {
+  return axios
+    .delete(`/shortener/urls/${id}`)
+    .then((res) => ({
+      success: true,
+      data: res.data,
+    }))
+    .catch(handleAxiosError);
+}
+
 export function updateCollection(
   collection: Partial<Collection>
 ): Promise<ApiResponse<Collection, string[]>> {

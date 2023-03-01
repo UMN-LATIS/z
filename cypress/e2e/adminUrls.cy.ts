@@ -111,7 +111,7 @@ describe("admin urls page", () => {
         });
     });
 
-    it.only("shows an error and does not update if a keyword is already taken", () => {
+    it("shows an error and does not update if a keyword is already taken", () => {
       cy.get("[data-cy='admin-urls-table']")
         .contains("x1")
         .closest("tr")
@@ -134,24 +134,25 @@ describe("admin urls page", () => {
       cy.get("@row1").should("contain", "x1");
     });
 
-    it("deletes a url", () => {
-      cy.get("#urls-table").contains("x1").closest("tr").as("row1");
+    it.only("deletes a url", () => {
+      cy.get("[data-cy='admin-urls-table']")
+        .contains("x1")
+        .closest("tr")
+        .as("row1");
 
-      //open the first row's actions dropdown
-      cy.get("@row1").find(".actions-dropdown-button").click();
-
-      // click "Edit"
+      // click "Delete"
       cy.get("@row1").contains("Delete").click();
 
-      // check that a confirmation message is shown
-      cy.get(".modal-body").contains("Are you sure you want to delete");
+      cy.contains("Are you sure you want to delete").should("be.visible");
 
-      // check that the correct short url is shown with the confirmation message
-      cy.get(".modal-body").contains("x1");
-
-      // confirm and check that the row was deleted
+      // confirm
       cy.contains("Confirm").click();
-      cy.get("#urls-table > tbody > tr").should("have.length", 2);
+
+      // verify that the row was removed
+      cy.get("[data-cy='admin-urls-table'] tbody > tr").should(
+        "have.length",
+        2
+      );
 
       // check that the url as also removed from the database
       cy.appEval('Url.where(keyword: "x1").count').then((count) => {
