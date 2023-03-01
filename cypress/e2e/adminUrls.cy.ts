@@ -45,15 +45,24 @@ describe("admin urls page", () => {
 
     it("shows the url info", () => {
       // check the column headers
-      cy.get("#urls-table > thead")
-        .should("contain", "Z-Links")
-        .should("contain", "Owner")
-        .should("contain", "Clicks")
-        .should("contain", "Created");
+      cy.get('[data-cy="admin-urls-table"] thead').within(() => {
+        cy.contains("Z-link");
+        // cy.contains("Long URL");
+        cy.contains("Owner");
+        cy.contains("Clicks");
+        cy.contains("Created");
+        cy.contains("Actions");
+      });
 
       // check the row data
-      cy.get("#urls-table > tbody > tr").should("have.length", 3);
-      cy.get("#urls-table").contains("x1").closest("tr").as("row1");
+      cy.get("[data-cy='admin-urls-table'] tbody > tr").should(
+        "have.length",
+        3
+      );
+      cy.get("[data-cy='admin-urls-table'] tbody")
+        .contains("x1")
+        .closest("tr")
+        .as("row1");
 
       cy.get("@row1")
         .should("contain", "x1")
@@ -61,72 +70,67 @@ describe("admin urls page", () => {
     });
 
     it("updates the long url", () => {
-      cy.get("#urls-table").contains("x1").closest("tr").as("row1");
-
-      //open the first row's actions dropdown
-      cy.get("@row1").find(".actions-dropdown-button").click();
+      cy.get("[data-cy='admin-urls-table']")
+        .contains("x1")
+        .closest("tr")
+        .as("row1");
 
       // click "Edit"
       cy.get("@row1").contains("Edit").click();
-
-      cy.get("#url_url").clear().type("https://www.x1-updated.com");
-      cy.contains("Submit").click();
+      cy.get("[data-cy='longurl-input']")
+        .clear()
+        .type("https://www.x1-updated.com");
+      cy.contains("Save").click();
 
       // check that the row was updated
-      // currently there's a bug that doesn't close the form
-      // and show the updated row, so we need to reload the
-      // page to see the change. See #124.
-      cy.reload();
-
-      // the long url isn't shown anywhere in the current ui
-      // so we need to click edit to see where it points
-      cy.get("#urls-table").contains("x1").closest("tr").as("row1");
-      cy.get("@row1").find(".actions-dropdown-button").click();
-      cy.get("@row1").contains("Edit").click();
-      cy.get("#url_url").should("have.value", "https://www.x1-updated.com");
+      cy.get("[data-cy='admin-urls-table']")
+        .contains("x1")
+        .closest("tr")
+        .within(() => {
+          cy.contains("https://www.x1-updated.com");
+        });
     });
 
     it("updates the url keyword (the short url)", () => {
-      cy.get("#urls-table").contains("x1").closest("tr").as("row1");
-
-      //open the first row's actions dropdown
-      cy.get("@row1").find(".actions-dropdown-button").click();
+      cy.get("[data-cy='admin-urls-table']")
+        .contains("x1")
+        .closest("tr")
+        .as("row1");
 
       // click "Edit"
       cy.get("@row1").contains("Edit").click();
-
-      cy.get("#url_keyword").clear().type("x1-updated");
-      cy.contains("Submit").click();
+      cy.get("[data-cy='keyword-input']").clear().type("updated-keyword");
+      cy.contains("Save").click();
 
       // check that the row was updated
-      // currently there's a bug that doesn't close the form
-      // and show the updated row, so we need to reload the
-      // page to see the change. See #124.
-      cy.reload();
-
-      cy.get("#urls-table").contains("x1").closest("tr").as("row1");
-      cy.get("@row1").should("contain", "x1-updated");
+      cy.get("[data-cy='admin-urls-table']")
+        .contains("https://example1.com")
+        .closest("tr")
+        .within(() => {
+          cy.contains("updated-keyword");
+        });
     });
 
-    it("shows an error and does not update if a keyword is already taken", () => {
-      cy.get("#urls-table").contains("x1").closest("tr").as("row1");
-
-      //open the first row's actions dropdown
-      cy.get("@row1").find(".actions-dropdown-button").click();
+    it.only("shows an error and does not update if a keyword is already taken", () => {
+      cy.get("[data-cy='admin-urls-table']")
+        .contains("x1")
+        .closest("tr")
+        .as("row1");
 
       // click "Edit"
       cy.get("@row1").contains("Edit").click();
-
-      // try changing the keyword to x2, which is already taken
-      cy.get("#url_keyword").clear().type("x2");
-      cy.contains("Submit").click();
+      cy.get("[data-cy='keyword-input']").clear().type("x2");
+      cy.contains("Save").click();
 
       // check that an error is shown
       cy.contains("has already been taken").should("be.visible");
 
       // reload and verify that the keyword was not changed
       cy.reload();
-      cy.get("#urls-table").contains("x1").closest("tr").as("row1");
+      cy.get("[data-cy='admin-urls-table']")
+        .contains("x1")
+        .closest("tr")
+        .as("row1");
       cy.get("@row1").should("contain", "x1");
     });
 

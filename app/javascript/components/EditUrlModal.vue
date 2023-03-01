@@ -10,7 +10,9 @@
           <div
             class="tw-flex tw-items-baseline tw-bg-neutral-100 tw-rounded-md tw-shadow"
           >
-            <span class="tw-py-2 tw-pl-4 tw-whitespace-nowrap">
+            <span
+              class="tw-py-2 tw-pl-4 tw-whitespace-nowrap tw-text-neutral-500"
+            >
               {{ origin }}/
             </span>
 
@@ -18,12 +20,17 @@
               :value="keyword"
               required
               type="text"
-              placeholder="your shortened url"
+              placeholder="your z-link"
               data-cy="keyword-input"
-              class="tw-shadow-none tw-bg-transparent tw-pl-2"
+              class="tw-shadow-none tw-bg-transparent tw-px-1"
               @input="handleKeywordChange($event.target.value)"
             />
           </div>
+          <p v-if="errors.keyword" class="tw-mt-2">
+            <span class="tw-text-red-500 tw-text-sm tw-ml-2">
+              Z-Link {{ errors.keyword }}
+            </span>
+          </p>
         </div>
 
         <div>
@@ -46,7 +53,7 @@
   </Modal>
 </template>
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref, watch, reactive } from "vue";
 import type { Zlink } from "@/types";
 import Button from "./Button.vue";
 import Input from "./Input.vue";
@@ -67,6 +74,10 @@ const emit = defineEmits<{
 const origin = window.location.origin;
 const keyword = ref(props.url?.keyword ?? "");
 const longUrl = ref(props.url?.url ?? "");
+const errors = reactive<Record<string, string>>({
+  keyword: "",
+  url: "",
+});
 
 function handleKeywordChange(value: string) {
   keyword.value = value;
@@ -86,15 +97,29 @@ watch(
 
 async function handleSubmit() {
   if (!props.url?.id) throw new Error("Cannot update url without id");
+
+  errors.keyword = "";
+  errors.url = "";
+
   const res = await api.updateUrl(props.url.id, {
     url: longUrl.value,
     keyword: keyword.value,
   });
 
   if (res.success) {
-    emit("success", res.data as Zlink);
+    emit("success", {
+      id: props.url.id,
+      url: longUrl.value,
+      keyword: keyword.value,
+    } as Zlink);
     keyword.value = "";
     longUrl.value = "";
+    return;
+  }
+
+  if (res.errors) {
+    errors.keyword = res.errors.keyword?.join(". ") ?? "";
+    errors.url = res.errors.url?.join(". ") ?? "";
   }
 }
 

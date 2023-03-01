@@ -19,7 +19,7 @@ axios.defaults.headers.common["Accept"] = "application/json";
 interface ApiResponse<DataType = object, ErrorType = string> {
   success: boolean;
   data?: DataType;
-  errors?: ErrorType[];
+  errors?: ErrorType;
   message?: string;
 }
 
@@ -44,10 +44,16 @@ function handleAxiosError(error: AxiosError) {
   return { success: false, errors: [error.message] };
 }
 
+interface UpdateUrlErrors {
+  keyword?: string[];
+  url?: string[];
+  messages?: string[];
+}
+
 export function updateUrl(
   id,
   updatedZlink: Pick<Zlink, "url" | "keyword">
-): Promise<ApiResponse<Zlink>> {
+): Promise<ApiResponse<Zlink, UpdateUrlErrors>> {
   return axios
     .patch<Zlink>(`/shortener/urls/${id}`, {
       url: updatedZlink,
@@ -56,12 +62,23 @@ export function updateUrl(
       success: true,
       data: res.data,
     }))
-    .catch(handleAxiosError);
+    .catch((err) => {
+      if (err.response) {
+        return {
+          success: false,
+          errors: err.response.data as UpdateUrlErrors,
+        };
+      }
+      return {
+        success: false,
+        errors: { messages: [err.message] as string[] },
+      };
+    });
 }
 
 export function updateCollection(
   collection: Partial<Collection>
-): Promise<ApiResponse<Collection>> {
+): Promise<ApiResponse<Collection, string[]>> {
   return axios
     .patch<Collection>(`/shortener/groups/${collection.id}`, collection)
     .then((res) => ({
@@ -71,7 +88,9 @@ export function updateCollection(
     .catch(handleAxiosError);
 }
 
-export function deleteCollection(id: number): Promise<ApiResponse<Collection>> {
+export function deleteCollection(
+  id: number
+): Promise<ApiResponse<Collection, string[]>> {
   return axios
     .delete(`/shortener/groups/${id}`)
     .then((res) => ({
@@ -83,7 +102,7 @@ export function deleteCollection(id: number): Promise<ApiResponse<Collection>> {
 
 export function createCollection(
   collection: Partial<Collection>
-): Promise<ApiResponse<Collection>> {
+): Promise<ApiResponse<Collection, string[]>> {
   return axios
     .post<Collection>("/shortener/groups", collection)
     .then((res) => ({
@@ -93,7 +112,9 @@ export function createCollection(
     .catch(handleAxiosError);
 }
 
-export function getCollection(id: number): Promise<ApiResponse<Collection>> {
+export function getCollection(
+  id: number
+): Promise<ApiResponse<Collection, string[]>> {
   return axios
     .get<Collection>(`/shortener/groups/${id}`)
     .then((res) => ({
@@ -105,7 +126,7 @@ export function getCollection(id: number): Promise<ApiResponse<Collection>> {
 
 export function getMembersOfCollection(
   id: number
-): Promise<ApiResponse<User[]>> {
+): Promise<ApiResponse<User[], string[]>> {
   return axios
     .get<User[]>(`/shortener/groups/${id}/members`)
     .then((res) => ({
@@ -117,7 +138,7 @@ export function getMembersOfCollection(
 
 export function lookupUsers(
   query: string
-): Promise<ApiResponse<LookupUserResponse[]>> {
+): Promise<ApiResponse<LookupUserResponse[], string[]>> {
   return axios
     .get<LookupUserResponse[]>(`/shortener/lookup_users?search_terms=${query}`)
     .then((res) => ({
@@ -130,7 +151,7 @@ export function lookupUsers(
 export function bulkTransferUrlsToUser(
   keywords: string[],
   user: Pick<LookupUserResponse, "umndid">
-): Promise<ApiResponse<TransferRequest>> {
+): Promise<ApiResponse<TransferRequest, string[]>> {
   return axios
     .post<TransferRequest>("/shortener/admin/transfer_requests", {
       transfer_request: {

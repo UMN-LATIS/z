@@ -94,7 +94,7 @@ function handleEditSuccess(updatedUrl: Zlink) {
     throw new Error("Row to change not found");
   }
 
-  datatable.value.row(rowToChange.value).data(updatedUrl).draw(false);
+  rerenderTable();
   resetEditModal();
 }
 
