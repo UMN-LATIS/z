@@ -9,6 +9,11 @@ class Admin::UrlsController < ApplicationController
     authorize @urls unless @urls.nil?
     # If owner filter present, filter further
     @urls = @urls.created_by_name('params[:url_filter_owner]') if params[:url_filter_owner].present?
+
+    respond_to do |format|
+      format.html
+      format.json { render json: AdminUrlDatatable.new(params, view_context:) }
+    end
   end
 
   # GET /urls/1
@@ -34,10 +39,8 @@ class Admin::UrlsController < ApplicationController
   def update
     respond_to do |format|
       if @url.update(url_params)
-        format.json { render :show, status: :ok, location: @url }
         format.js   { render :update }
       else
-        format.json { render json: @url.errors, status: :unprocessable_entity }
         format.js   { render :edit }
       end
     end

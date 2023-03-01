@@ -102,8 +102,10 @@ class UrlsController < ApplicationController
     respond_to do |format|
       if @url.update(url_params)
         format.js   { render :update }
+        format.json { render json: @url }
       else
         format.js   { render :edit }
+        format.json { render json: @url.errors, status: :unprocessable_entity }
       end
     end
   end
