@@ -33,7 +33,7 @@ class AdminUrlDatatable < ApplicationDatatable
   end
 
   def get_raw_records
-    Url.includes(:group)
+    Url.includes(:group).references(:group)
   end
 
   # ==== Insert 'presenter'-like methods below if necessary
