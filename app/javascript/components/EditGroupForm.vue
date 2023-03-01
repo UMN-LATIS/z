@@ -4,29 +4,33 @@
       <span v-if="group?.id">Edit Collection {{ group.id }}</span>
       <span v-else>New Collection</span>
     </h1>
-    <div>
-      <Label required>Name</Label>
-      <Input
-        data-cy="group-name"
-        :value="name"
-        required
-        type="text"
-        @change="handleUpdateName"
-      />
-    </div>
 
-    <div>
-      <Label>Description</Label>
-      <Input
-        data-cy="group-description"
-        :value="description"
-        type="text"
-        @change="handleUpdateDescription"
-      />
-    </div>
+    <div class="tw-flex tw-flex-col tw-gap-4">
+      <div>
+        <Label required>Name</Label>
+        <Input
+          data-cy="group-name"
+          :value="name"
+          required
+          placeholder="Collection Name"
+          type="text"
+          @change="handleUpdateName"
+        />
+      </div>
 
-    <div class="tw-flex tw-justify-end">
-      <Button type="submit" :disabled="!name"> Save </Button>
+      <div>
+        <Label>Description</Label>
+        <Input
+          data-cy="group-description"
+          :value="description"
+          type="text"
+          @change="handleUpdateDescription"
+        />
+      </div>
+
+      <div class="tw-flex tw-justify-end">
+        <Button type="submit" :disabled="!name"> Save </Button>
+      </div>
     </div>
   </form>
 </template>
