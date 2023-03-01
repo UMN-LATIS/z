@@ -161,7 +161,7 @@ describe("admin urls page", () => {
       });
     });
 
-    it.only("bulk transfers urls to another user", () => {
+    it("bulk transfers urls to another user", () => {
       cy.get("[data-cy='admin-urls-table']")
         .contains("x2")
         .closest("tr")
@@ -194,6 +194,89 @@ describe("admin urls page", () => {
         .contains("x3")
         .closest("tr")
         .contains(user2.internet_id);
+    });
+
+    it("shows a group icon if the url is within a (non-default) group", () => {
+      // icon should not be shown for the default group
+      cy.get("[data-cy='admin-urls-table']")
+        .contains("x2")
+        .closest("tr")
+        .within(() => {
+          cy.get('[data-cy="group-icon"]').should("not.exist");
+        });
+
+      // create a collection
+      cy.createGroup("testcollection")
+        .then((group) => {
+          // add user 1 to the collection
+          cy.addUserToGroup(user1.umndid, group);
+
+          // create a url within the collection
+          cy.createUrl({
+            keyword: "test-group-url",
+            url: "https://example4.com",
+            group_id: group.id,
+          });
+        })
+        .then(() => {
+          // reload the page
+          cy.reload();
+
+          // check that the group icon is shown
+          cy.get("[data-cy='admin-urls-table']")
+            .contains("test-group-url")
+            .closest("tr")
+            .within(() => {
+              cy.contains("testcollection");
+              cy.get('[data-cy="group-icon"]').should("be.visible");
+            });
+        });
+    });
+
+    it("should link non-default group names (collections) to the collection members page", () => {
+      let testCollectionGroup = null;
+      // create a collection
+      cy.createGroup("testcollection")
+        .then((group) => {
+          testCollectionGroup = group;
+          // add user 1 to the collection
+          cy.addUserToGroup(user1.umndid, group);
+
+          // create a url within the collection
+          cy.createUrl({
+            keyword: "test-group-url",
+            url: "https://example4.com",
+            group_id: group.id,
+          });
+        })
+        .then(() => {
+          // reload the page
+          cy.reload();
+
+          // check that the group icon is shown
+          cy.get("[data-cy='admin-urls-table']")
+            .contains("test-group-url")
+            .closest("tr")
+            .within(() => {
+              cy.contains("testcollection").click();
+            });
+
+          cy.url().should(
+            "include",
+            `/groups/${testCollectionGroup.id}/members`
+          );
+        });
+    });
+
+    it("should link default groups (users) to umn people search", () => {
+      cy.get("[data-cy='admin-urls-table']")
+        .contains("user1")
+        .closest("a")
+        .should(
+          "have.attr",
+          "href",
+          `https://myaccount.umn.edu/lookup?type=Internet+ID&CN=user1&campus=a&role=any`
+        );
     });
   });
 });

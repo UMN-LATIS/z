@@ -176,16 +176,18 @@ const columns: DataTableColumnOptions[] = [
     data: "group_name",
     render: (group_name: string, _, row) => {
       const groupMembersHref = `/shortener/groups/${row.group_id}/members`;
+      const peopleSearchHref = `https://myaccount.umn.edu/lookup?type=Internet+ID&CN=${group_name}&campus=a&role=any`;
 
       // casting as boolean because the server returns a string
       const isDefaultGroup = row.is_default_group === "true";
 
       // default groups have only one member and should be named for the owner's internet id
       return isDefaultGroup
-        ? `<a href="${groupMembersHref}">${group_name}</a>`
+        ? `<a href="${peopleSearchHref}">${group_name}</a>`
         : `<a href="${groupMembersHref}" class="tw-flex tw-gap-1">
                <!-- user group icon -->
               <svg 
+                data-cy="group-icon"
                 xmlns="http://www.w3.org/2000/svg" 
                 class="tw-h-4 tw-w-4"
                 fill="currentColor"
