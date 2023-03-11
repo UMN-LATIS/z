@@ -26,7 +26,7 @@
                 spellcheck="false"
                 class="tw-border-none tw-max-w-full focus:tw-shadow-none focus:tw-outline-none focus:tw-border-none tw-bg-transparent tw-px-0 focus:tw-ring-0 tw-text-xs tw-flex-1"
                 @input="
-                  handleFilterInput(
+                  debouncedFilterInput(
                     $event,
                     // if this table has a checkbox column, we need to offset the index by 1
                     selectable ? index + 1 : index
@@ -62,6 +62,7 @@ import DataTablesLib, {
 import "datatables.net-select";
 import "datatables.net-buttons";
 import "datatables.net-bs4";
+import debounce from "lodash/debounce";
 
 DataTable.use(DataTablesLib);
 
@@ -140,10 +141,11 @@ function emitSelectedRows(e: Event, dt: DataTableApi<any>) {
 function handleFilterInput(e: Event, colIndex: number) {
   if (!dt.value) throw new Error("No datatable api found");
   const input = e.target as HTMLInputElement;
-  console.log(input.value);
-
+  console.log("filteringInput", input.value);
   dt.value.column(colIndex).search(input.value).draw();
 }
+
+const debouncedFilterInput = debounce(handleFilterInput, 250);
 
 onMounted(() => {
   if (!table.value) throw new Error("No dataTableRef found");
