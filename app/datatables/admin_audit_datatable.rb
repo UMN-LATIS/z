@@ -1,5 +1,5 @@
 class AdminAuditDatatable < ApplicationDatatable
-  def_delegators :@view, :display_whodunnit_internet_id
+  def_delegators :@view
 
   def view_columns
     @view_columns ||= {
@@ -24,10 +24,12 @@ class AdminAuditDatatable < ApplicationDatatable
     end
     records = posi
     records.map do |record|
+      user_internet_id = record.user.present? ? record.user.internet_id : "Unknown"
+
       {
         item_type: record.item_type,
         event: record.event,
-        whodunnit: display_whodunnit_internet_id(record),
+        whodunnit: user_internet_id,
         audit_history: record.version_history,
         created_at: record.created_at.to_s(:created_on_formatted),
         'DT_RowId' => "audit-#{record.id}"
@@ -36,6 +38,6 @@ class AdminAuditDatatable < ApplicationDatatable
   end
 
   def get_raw_records
-    Audit.all
+    Audit.includes(:user)
   end
 end
