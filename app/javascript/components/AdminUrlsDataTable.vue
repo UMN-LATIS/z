@@ -14,7 +14,7 @@
     class="table table-striped table-bordered admin-urls-data-table"
     :options="options"
     :columns="columns"
-    :headers="['Z-link', 'Owner', 'Clicks', 'Created', 'Actions']"
+    :headers="['Z-link', 'Long Url', 'Owner', 'Clicks', 'Created', 'Actions']"
     :selectable="true"
     @select="handleSelect"
     @click="handleDataTableClick"
@@ -167,8 +167,15 @@ const columns: DataTableColumnOptions[] = [
           <a href="/shortener/urls/${keyword}">
             <span>${window.location.host}/</span>${keyword}
           </a>
-          <a class="tw-block tw-text-neutral-500 hover:tw-underline tw-text-xs" href="/${keyword}">${row.url}</a>
         </div>
+      `;
+    },
+  },
+  {
+    data: "url",
+    render: (url: string) => {
+      return `
+        <a class="tw-block tw-text-neutral-500 hover:tw-underline tw-text-xs admin-urls-datatable__long-url-col" href="${url}" title="${url}">${url}</a>
       `;
     },
   },
@@ -265,5 +272,10 @@ const columns: DataTableColumnOptions[] = [
   /* need min-width and min-height to prevent icon from shrinking */
   min-width: 1rem;
   min-height: 1rem;
+}
+
+.admin-urls-datatable__long-url-col {
+  display: block;
+  max-width: 16rem;
 }
 </style>
