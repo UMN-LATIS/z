@@ -46,4 +46,34 @@ const options: DataTableOptions = {
   order: [[4, "desc"]], // default order by created_at desc
 };
 </script>
-<style scoped></style>
+<style lang="scss">
+/* format change history */
+.admin-audit-log-datatable td:nth-child(4) {
+  font-size: 0.8rem;
+  color: #111;
+
+  // bolding is a bit much
+  b {
+    font-weight: normal;
+  }
+
+  h3 {
+    font-size: 1em;
+    line-height: 1.4;
+    margin-top: 1em;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 0.25em;
+    text-transform: uppercase;
+  }
+
+  // use border-bottom instead of hr
+  hr {
+    display: none;
+  }
+
+  // 3 line breaks seems excessive
+  br + br + br {
+    display: none;
+  }
+}
+</style>
