@@ -6,13 +6,6 @@
     </template>
     <PostIt>
       <div class="tw-relative">
-        <Button
-          class="tw-w-full tw-mb-4 sm:tw-w-auto sm:tw-absolute sm:tw-top-0 sm:tw-left-0"
-          @click="isCreating = true"
-        >
-          New Collection
-        </Button>
-
         <DataTable
           ref="table"
           data-cy="groups-table"
