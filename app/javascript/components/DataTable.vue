@@ -1,13 +1,41 @@
 <template>
   <DataTable
     ref="table"
-    class="table table-striped table-bordered"
+    class="table table-striped table-bordered tw-w-full"
     :options="mergedOpts"
     :columns="mergedCols"
     @click="handleDataTableClick"
   >
     <slot name="thead">
       <thead>
+        <tr>
+          <!-- hack: use td on the filter cells within the head to prevent datatables from doing weird resizing -->
+          <td v-if="selectable" class="!tw-border-none"></td>
+          <td
+            v-for="(col, index) in columns"
+            :key="index"
+            class="!tw-p-1 !tw-pl-0 !tw-border-none"
+          >
+            <div
+              v-if="col?.searchable ?? true"
+              class="tw-flex tw-items-center tw-px-2 tw-gap-2 focus-within:tw-border-blue-700 tw-border tw-border-transparent tw-bg-neutral-100 tw-rounded"
+            >
+              <input
+                type="text"
+                placeholder="Filter..."
+                spellcheck="false"
+                class="tw-border-none tw-max-w-full focus:tw-shadow-none focus:tw-outline-none focus:tw-border-none tw-bg-transparent tw-px-0 focus:tw-ring-0 tw-text-xs tw-text-neutral-400 tw-flex-1"
+                @input="
+                  handleFilterInput(
+                    $event,
+                    // if this table has a checkbox column, we need to offset the index by 1
+                    selectable ? index + 1 : index
+                  )
+                "
+              />
+            </div>
+          </td>
+        </tr>
         <tr>
           <th v-if="props.selectable" class="select-checkbox">
             <input id="select-all" ref="selectAllCheckbox" type="checkbox" />
@@ -34,13 +62,14 @@ import DataTablesLib, {
 import "datatables.net-select";
 import "datatables.net-buttons";
 import "datatables.net-bs4";
+import type { NamedDataTableColumnOptions } from "@/types";
 
 DataTable.use(DataTablesLib);
 
 const props = withDefaults(
   defineProps<{
     options: DataTableOptions;
-    columns: DataTableColumnOptions[];
+    columns: NamedDataTableColumnOptions[];
     headers: string[];
     selectable?: boolean;
   }>(),
@@ -107,6 +136,14 @@ function emitSelectedRows(e: Event, dt: DataTableApi<any>) {
     .data()
     .toArray();
   emit("select", selectedRows, dt);
+}
+
+function handleFilterInput(e: Event, colIndex: number) {
+  if (!dt.value) throw new Error("No datatable api found");
+  const input = e.target as HTMLInputElement;
+  console.log(input.value);
+
+  dt.value.column(colIndex).search(input.value).draw();
 }
 
 onMounted(() => {
