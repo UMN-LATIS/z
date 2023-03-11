@@ -1,7 +1,7 @@
 <template>
   <DataTable
     ref="table"
-    class="table table-striped table-bordered tw-w-full"
+    class="vue-datatable table table-striped table-bordered tw-w-full"
     :options="mergedOpts"
     :columns="mergedCols"
     @click="handleDataTableClick"
@@ -24,7 +24,7 @@
                 type="text"
                 placeholder="Filter..."
                 spellcheck="false"
-                class="tw-border-none tw-max-w-full focus:tw-shadow-none focus:tw-outline-none focus:tw-border-none tw-bg-transparent tw-px-0 focus:tw-ring-0 tw-text-xs tw-text-neutral-400 tw-flex-1"
+                class="tw-border-none tw-max-w-full focus:tw-shadow-none focus:tw-outline-none focus:tw-border-none tw-bg-transparent tw-px-0 focus:tw-ring-0 tw-text-xs tw-flex-1"
                 @input="
                   handleFilterInput(
                     $event,
@@ -62,14 +62,13 @@ import DataTablesLib, {
 import "datatables.net-select";
 import "datatables.net-buttons";
 import "datatables.net-bs4";
-import type { NamedDataTableColumnOptions } from "@/types";
 
 DataTable.use(DataTablesLib);
 
 const props = withDefaults(
   defineProps<{
     options: DataTableOptions;
-    columns: NamedDataTableColumnOptions[];
+    columns: DataTableColumnOptions[];
     headers: string[];
     selectable?: boolean;
   }>(),
@@ -181,7 +180,9 @@ const defaultOptions: DataTableOptions = {
     emptyTable: "None",
     searchPlaceholder: "Search...",
     search: '<span class="tw-sr-only">Search</span>',
+    processing: `<div class="tw-inline-flex tw-p-4 tw-shadow-lg tw-border tw-bg-neutral-100 tw-max-w-sm tw-mx-auto">Loading...</div>`,
   },
+  processing: true,
 };
 
 const checkboxCol: DataTableColumnOptions = {
@@ -197,4 +198,17 @@ const mergedCols = props.selectable
   ? [checkboxCol, ...props.columns]
   : props.columns;
 </script>
-<style scoped></style>
+<style>
+div.dataTables_wrapper div.dataTables_processing {
+  position: absolute;
+  margin: 0;
+  width: 100%;
+  top: 3rem;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>
