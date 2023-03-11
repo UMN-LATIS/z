@@ -50,7 +50,7 @@ class Group < ApplicationRecord
   end
 
   def default?
-    User.pluck(:default_group_id).include?(id)
+    User.find_by(default_group_id: id).present?
   end
 
   # Groups for admins will only be one person long and the only user
