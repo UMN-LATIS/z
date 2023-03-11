@@ -1,6 +1,6 @@
 class Admin::AuditsController < ApplicationController
   before_action :ensure_signed_in
-  before_action :set_admin_view
+  before_action :ensure_is_admin
 
   def index
     # grab the first audit so we can authorize current_user against it.
@@ -8,5 +8,10 @@ class Admin::AuditsController < ApplicationController
     # used for aithorizating current user
     @audits = Audit.first
     authorize @audits unless @audits.nil?
+
+    respond_to do |format|
+      format.html
+      format.json { render json: AdminAuditDatatable.new(params, view_context:) }
+    end
   end
 end

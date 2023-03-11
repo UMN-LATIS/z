@@ -1,4 +1,4 @@
-class AuditDatatable < ApplicationDatatable
+class AdminAuditDatatable < ApplicationDatatable
   def_delegators :@view, :display_whodunnit_internet_id
 
   def view_columns
@@ -25,8 +25,6 @@ class AuditDatatable < ApplicationDatatable
     records = posi
     records.map do |record|
       {
-        # comma separated list of the values for each cell of a table row
-        # example: record.attribute,
         item_type: record.item_type,
         event: record.event,
         whodunnit: display_whodunnit_internet_id(record),
@@ -38,8 +36,6 @@ class AuditDatatable < ApplicationDatatable
   end
 
   def get_raw_records
-    Audit.order(created_at: :desc)
+    Audit.all
   end
-  # max(created_at)
-  # ==== Insert 'presenter'-like methods below if necessary
 end

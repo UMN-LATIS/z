@@ -129,7 +129,6 @@ Rails.application.routes.draw do
       # admin/urls/delete	admin::urls	destroy	delete
       # admin/urls/create	admin::urls	create	put
       resources :urls, only: %i[index edit show update destroy create] do
-        get 'datatable', to: 'urls_datatable#index', on: :collection
         get 'csv/:duration/:time_unit',
             on: :collection,
             to: 'url_csvs#show',
@@ -138,9 +137,7 @@ Rails.application.routes.draw do
 
       # admin/audits/:search	admin::urls	index	get
       # admin/audits/:id	admin::urls	show	get
-      resources :audits, only: %i[index show] do
-        get 'datatable', to: 'audits_datatable#index', on: :collection
-      end
+      resources :audits, only: [:index]
 
       resources :groups, only: [:index]
 
