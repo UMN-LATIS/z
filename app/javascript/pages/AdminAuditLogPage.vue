@@ -4,16 +4,16 @@
       <p class="tw-uppercase tw-text-center">Admin</p>
       <h1 data-cy="page-name">Audit Logs</h1>
     </template>
+    <PostIt>
+      <DataTable
+        :columns="columns"
+        :headers="['Item', 'Event', 'Whodunnit', 'Change History', 'As Of']"
+        ref="table"
+        class="admin-audit-log-datatable table table-striped table-bordered !tw-w-full"
+        :options="options"
+      />
+    </PostIt>
   </PageLayout>
-  <PostIt>
-    <DataTable
-      :columns="columns"
-      :headers="['Item', 'Event', 'Whodunnit', 'Change History', 'As Of']"
-      ref="table"
-      class="table table-striped table-bordered !tw-w-full"
-      :options="options"
-    />
-  </PostIt>
 </template>
 <script setup lang="ts">
 import PageLayout from "@/layouts/PageLayout.vue";
