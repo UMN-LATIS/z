@@ -2,11 +2,11 @@
   <Menu as="div" class="tw-relative tw-inline-block tw-text-left">
     <div>
       <MenuButton
-        class="tw-inline-flex tw-w-full tw-justify-center tw-rounded-md tw-border tw-border-gray-300 tw-bg-white tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-gray-700 tw-shadow-sm hover:tw-bg-gray-50 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-indigo-500 focus:tw-ring-offset-2 focus:tw-ring-offset-gray-100"
+        class="tw-inline-flex tw-w-full tw-justify-center tw-items-center tw-rounded-md tw-border tw-border-gray-300 tw-bg-white tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-gray-700 tw-shadow-sm hover:tw-bg-gray-50 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-indigo-500 focus:tw-ring-offset-2 focus:tw-ring-offset-gray-100"
       >
         {{ label }}
         <ChevronDownIcon
-          class="tw--mr-1 tw-ml-2 tw-h-5 tw-w-5"
+          class="tw--mr-1 tw-ml-2 tw-h-4 tw-w-4"
           aria-hidden="true"
         />
       </MenuButton>
