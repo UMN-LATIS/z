@@ -174,7 +174,12 @@ const columns: DataTableColumnOptions[] = [
     data: "url",
     render: (url: string) => {
       return `
-        <a class="tw-block tw-text-neutral-500 hover:tw-underline tw-text-xs admin-urls-datatable__long-url-col" href="${url}" title="${url}">${url}</a>
+        <a class="tw-text-neutral-500 hover:tw-underline tw-text-xs admin-urls-datatable__long-url-col" href="${url}" title="${url}" target="_blank" rel="noopener noreferrer nofollow">
+          ${url}
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="tw-w-3 tw-h-3 tw-min-w-3 tw-min-h-3 tw-inline tw-aline-baseline">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+          </svg>
+        </a>
       `;
     },
   },
@@ -189,7 +194,12 @@ const columns: DataTableColumnOptions[] = [
 
       // default groups have only one member and should be named for the owner's internet id
       return isDefaultGroup
-        ? `<a class="admin-urls-datatable__group-col" title="${group_name}" href="${peopleSearchHref}">${group_name}</a>`
+        ? `<a title="${group_name}" href="${peopleSearchHref}" target="_blank" rel="noopener noreferrer nofollow">
+          ${group_name}
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="tw-w-3 tw-h-3 tw-min-w-3 tw-min-h-3 tw-inline tw-aline-baseline">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+          </svg>
+        </a>`
         : `<a href="${groupMembersHref}"  
               class="admin-urls-datatable__group-col"
               title="${group_name}"
