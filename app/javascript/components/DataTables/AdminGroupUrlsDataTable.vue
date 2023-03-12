@@ -12,8 +12,8 @@
   <DataTable
     ref="table"
     class="table table-striped table-bordered admin-urls-data-table"
-    :options="options"
-    :columns="columns"
+    :options="urlsTableOptions"
+    :columns="urlsTableColumns"
     :headers="['Z-link', 'Long Url', 'Owner', 'Clicks', 'Created', 'Actions']"
     :selectable="true"
     @select="handleSelect"
@@ -55,10 +55,10 @@
 </template>
 <script setup lang="ts">
 import { ref, computed } from "vue";
-import DataTable from "@/components/DataTable.vue";
-import DropDownMenu from "./DropDownMenu.vue";
-import DropDownMenuItem from "./DropDownMenuItem.vue";
-import Modal from "./Modal.vue";
+import DataTable from "@/components/DataTables/DataTable.vue";
+import DropDownMenu from "../DropDownMenu.vue";
+import DropDownMenuItem from "../DropDownMenuItem.vue";
+import Modal from "../Modal.vue";
 import {
   Zlink,
   DataTableApi,
@@ -66,9 +66,9 @@ import {
   DataTableOptions,
   Collection,
 } from "@/types";
-import TransferUrlForm from "./TransferUrlForm.vue";
-import EditUrlModal from "./EditUrlModal.vue";
-import ConfirmDangerModal from "./ConfirmDangerModal.vue";
+import TransferUrlForm from "../TransferUrlForm.vue";
+import EditUrlModal from "../EditUrlModal.vue";
+import ConfirmDangerModal from "../ConfirmDangerModal.vue";
 import * as api from "@/api";
 
 const selectedRows = ref<Zlink[]>([]);
@@ -81,7 +81,6 @@ const rowToChange = ref<string | null>(null);
 
 const props = defineProps<{
   group: Collection;
-  options: DataTableOptions;
 }>();
 
 function handleSelect(rows: Zlink[], dt: DataTableApi<Zlink>) {
@@ -165,7 +164,13 @@ function handleDataTableClick(event, dt) {
 
 const hasNoSelectedRows = computed(() => selectedRows.value.length === 0);
 
-const columns: DataTableColumnOptions[] = [
+const urlsTableOptions: DataTableOptions = {
+  ajax: `/shortener/admin/groups/${props.group.id}/urls.json`,
+  serverSide: true,
+  order: [[1, "asc"]],
+};
+
+const urlsTableColumns: DataTableColumnOptions[] = [
   {
     data: "keyword",
     render: (keyword: string, _, row) => {

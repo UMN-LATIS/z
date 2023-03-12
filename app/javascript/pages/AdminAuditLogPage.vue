@@ -18,7 +18,7 @@
 <script setup lang="ts">
 import PageLayout from "@/layouts/PageLayout.vue";
 import { PostIt } from "@umn-latis/cla-vue-template";
-import DataTable from "@/components/DataTable.vue";
+import DataTable from "@/components/DataTables/DataTable.vue";
 import type { DataTableOptions, DataTableColumnOptions } from "@/types";
 
 function decodeHTML(html: string) {

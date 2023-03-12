@@ -48,19 +48,19 @@
 </template>
 <script setup lang="ts">
 import { ref, computed } from "vue";
-import DataTable from "@/components/DataTable.vue";
+import DataTable from "@/components/DataTables/DataTable.vue";
 import {
   type Config as DataTableOptions,
   type ConfigColumns as DataTableColumnOptions,
   type Api as DataTableApi,
 } from "datatables.net";
-import DropDownMenu from "./DropDownMenu.vue";
-import DropDownMenuItem from "./DropDownMenuItem.vue";
-import Modal from "./Modal.vue";
+import DropDownMenu from "../DropDownMenu.vue";
+import DropDownMenuItem from "../DropDownMenuItem.vue";
+import Modal from "../Modal.vue";
 import { Zlink } from "@/types";
-import TransferUrlForm from "./TransferUrlForm.vue";
-import EditUrlModal from "./EditUrlModal.vue";
-import ConfirmDangerModal from "./ConfirmDangerModal.vue";
+import TransferUrlForm from "../TransferUrlForm.vue";
+import EditUrlModal from "../EditUrlModal.vue";
+import ConfirmDangerModal from "../ConfirmDangerModal.vue";
 import * as api from "@/api";
 
 const selectedRows = ref<Zlink[]>([]);

@@ -14,6 +14,6 @@
 <script setup lang="ts">
 import PageLayout from "@/layouts/PageLayout.vue";
 import { PostIt } from "@umn-latis/cla-vue-template";
-import AdminUrlsDataTable from "@/components/AdminUrlsDataTable.vue";
+import AdminUrlsDataTable from "@/components/DataTables/AdminUrlsDataTable.vue";
 </script>
 <style scoped></style>
