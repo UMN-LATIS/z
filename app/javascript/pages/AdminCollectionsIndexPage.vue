@@ -53,7 +53,6 @@ import Modal from "@/components/Modal.vue";
 import ConfirmDangerModal from "@/components/ConfirmDangerModal.vue";
 import DataTable from "@/components/DataTable.vue";
 import EditGroupForm from "@/components/EditGroupForm.vue";
-import Button from "@/components/Button.vue";
 import * as api from "@/api";
 import PageLayout from "@/layouts/PageLayout.vue";
 import { PostIt } from "@umn-latis/cla-vue-template";
@@ -153,7 +152,7 @@ const options: DataTableOptions = {
 };
 
 function renderNameColumn(data: string, type: string, row: Collection) {
-  const href = `/shortener/urls?collection=${row.id}`;
+  const href = `/shortener/admin/groups/${row.id}`;
   return `
     <a href="${href}" class="tw-text-sky-700 hover:tw-underline hover:tw-text-sky-600">
       ${data}

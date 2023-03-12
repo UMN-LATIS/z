@@ -139,7 +139,7 @@ Rails.application.routes.draw do
       # admin/audits/:id	admin::urls	show	get
       resources :audits, only: [:index]
 
-      resources :groups, only: [:index]
+      resources :groups, only: [:index, :show]
 
       # admin/members/:search	admin::members	index	get
       # admin/members/:id	admin::members	show	get
