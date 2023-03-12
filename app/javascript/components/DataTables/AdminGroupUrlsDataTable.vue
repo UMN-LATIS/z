@@ -195,6 +195,7 @@ const urlsTableColumns: DataTableColumnOptions[] = [
   },
   {
     data: "total_clicks",
+    searchable: false,
     render(data: number, type: string, row: Zlink) {
       const href = `/shortener/urls/${row.keyword}`;
       const conditionalClasses =
@@ -208,6 +209,7 @@ const urlsTableColumns: DataTableColumnOptions[] = [
   },
   {
     data: "created_at",
+    searchable: false,
   },
   {
     data: "id",
