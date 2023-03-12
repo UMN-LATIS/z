@@ -40,11 +40,18 @@
   />
 
   <ConfirmDangerModal
-    :isOpen="isDeleteModalOpen"
-    :title="`Delete Z-Link: ${urlToChange?.keyword}`"
-    @close="isDeleteModalOpen = false"
-    @confirm="handleDeleteUrl"
-  />
+    :isOpen="isRemoveModalOpen"
+    :title="`Remove ${urlToChange?.keyword} from Collection?`"
+    @close="isRemoveModalOpen = false"
+    @confirm="handleRemoveUrlFromGroup"
+  >
+    <p>
+      Are you sure you want to remove
+      <strong>{{ urlToChange?.keyword }}</strong> from
+      <strong>{{ props.group.name }}</strong> Collection? This action cannot be
+      undone.
+    </p>
+  </ConfirmDangerModal>
 </template>
 <script setup lang="ts">
 import { ref, computed } from "vue";
@@ -57,6 +64,7 @@ import {
   DataTableApi,
   DataTableColumnOptions,
   DataTableOptions,
+  Collection,
 } from "@/types";
 import TransferUrlForm from "./TransferUrlForm.vue";
 import EditUrlModal from "./EditUrlModal.vue";
@@ -67,11 +75,12 @@ const selectedRows = ref<Zlink[]>([]);
 const datatable = ref<DataTableApi<Zlink> | null>(null);
 const isBulkTransferModalOpen = ref(false);
 const isEditModalOpen = ref(false);
-const isDeleteModalOpen = ref(false);
+const isRemoveModalOpen = ref(false);
 const urlToChange = ref<Partial<Zlink> | null>(null);
 const rowToChange = ref<string | null>(null);
 
 const props = defineProps<{
+  group: Collection;
   options: DataTableOptions;
 }>();
 
@@ -112,20 +121,20 @@ function handleEditSuccess(updatedUrl: Zlink) {
   resetEditModal();
 }
 
-async function handleDeleteUrl() {
+async function handleRemoveUrlFromGroup() {
   if (!datatable.value) throw new Error("No datatable api found");
   if (!rowToChange.value) throw new Error("No edited row found");
   if (!urlToChange.value?.id) throw new Error("No edited item found");
 
   const urlId = urlToChange.value.id;
 
-  await api.deleteUrl(urlId);
+  await api.removeUrlFromCollection(urlId, props.group.id);
   datatable.value.row(rowToChange.value).remove().draw(false);
 
   // reset the edited row and item
   rowToChange.value = null;
   urlToChange.value = null;
-  isDeleteModalOpen.value = false;
+  isRemoveModalOpen.value = false;
 }
 
 function handleDataTableClick(event, dt) {
@@ -147,20 +156,14 @@ function handleDataTableClick(event, dt) {
     rowToChange.value = row;
   }
 
-  if (action === "delete") {
+  if (action === "remove-from-group") {
     urlToChange.value = dt.row(row).data();
-    isDeleteModalOpen.value = true;
+    isRemoveModalOpen.value = true;
     rowToChange.value = row;
   }
 }
 
 const hasNoSelectedRows = computed(() => selectedRows.value.length === 0);
-
-// const options: DataTableOptions = {
-//   ajax: `/shortener/admin/groups/${props.groupId}/urls.json`,
-//   serverSide: true,
-//   order: [[1, "asc"]],
-// };
 
 const columns: DataTableColumnOptions[] = [
   {
@@ -238,18 +241,20 @@ const columns: DataTableColumnOptions[] = [
       return `
           <div class="tw-flex tw-flex-wrap">
             <button
-              class="tw-uppercase tw-text-xs tw-font-medium tw-p-2 hover:tw-bg-sky-50 tw-text-sky-700  tw-rounded tw-transition-colors tw-"
+              class="tw-uppercase tw-text-xs tw-font-medium tw-p-2 hover:tw-bg-sky-50 tw-text-sky-700  tw-rounded tw-transition-colors tw-whitespace-nowrap"
               data-action="edit"
               data-id="${id}"
               data-row="${meta.row}"
             >Edit</button>
             <button
               id="delete-button"
-              class="tw-uppercase tw-text-xs tw-font-medium tw-p-2 tw-text-red-700 tw-rounded hover:tw-bg-red-50"
-              data-action="delete"
+              class="tw-uppercase tw-text-xs tw-font-medium tw-p-2 tw-text-red-700 tw-rounded hover:tw-bg-red-50 tw-whitespace-nowrap"
+              data-action="remove-from-group"
               data-id="${id}"
               data-row="${meta.row}"
-            >Delete</button>
+            >
+              Remove
+            </button>
           </div>
         `;
     },

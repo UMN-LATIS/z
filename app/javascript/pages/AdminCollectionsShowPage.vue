@@ -9,7 +9,7 @@
         <section class="tw-mb-8">
           <h2 class="tw-text-2xl tw-mb-4">Urls</h2>
 
-          <AdminGroupUrlsDataTable :options="urlsTableOptions" />
+          <AdminGroupUrlsDataTable :group="group" :options="urlsTableOptions" />
         </section>
 
         <section class="tw-mb-8">

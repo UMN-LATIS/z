@@ -175,3 +175,63 @@ export function bulkTransferUrlsToUser(
     }))
     .catch(handleAxiosError);
 }
+
+export function removeUserFromCollection(
+  userId: number,
+  collectionId: number | string
+) {
+  alert("removeUserFromCollection not implemented");
+  // return axios
+  //   .delete(`/shortener/groups/${collectionId}/members/${userId}`)
+  //   .then((res) => ({
+  //     success: true,
+  //     data: res.data,
+  //   }))
+  //   .catch(handleAxiosError);
+}
+
+export function addUserToCollection(
+  userId: number,
+  collectionId: number | string
+) {
+  alert("addUserToCollection not implemented");
+  // return axios
+  //   .post(`/shortener/groups/${collectionId}/members`, {
+  //     user_id: userId,
+  //   })
+  //   .then((res) => ({
+  //     success: true,
+  //     data: res.data,
+  //   }))
+  //   .catch(handleAxiosError);
+}
+
+export function removeUrlFromCollection(
+  urlId: number,
+  collectionId: number | string
+) {
+  alert("removeUrlFromCollection not implemented");
+  // return axios
+  //   .delete(`/shortener/groups/${collectionId}/urls/${urlId}`)
+  //   .then((res) => ({
+  //     success: true,
+  //     data: res.data,
+  //   }))
+  //   .catch(handleAxiosError);
+}
+
+export function addUrlToCollection(
+  urlId: number,
+  collectionId: number | string
+) {
+  alert("addUrlToCollection not implemented");
+  // return axios
+  //   .post(`/shortener/groups/${collectionId}/urls`, {
+  //     url_id: urlId,
+  //   })
+  //   .then((res) => ({
+  //     success: true,
+  //     data: res.data,
+  //   }))
+  //   .catch(handleAxiosError);
+}
