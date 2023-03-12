@@ -29,7 +29,6 @@ const membersTableOptions: DataTableOptions = {
   data: props.members,
   paging: false,
   info: false,
-  searching: false,
 };
 
 const membersTableColumns: DataTableColumnOptions[] = [
@@ -47,7 +46,7 @@ const membersTableColumns: DataTableColumnOptions[] = [
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="tw-w-6 tw-h-6 tw-stroke-sky-700 tw-fill-sky-100"
+          class="tw-w-4 tw-h-4 tw-stroke-sky-700 tw-fill-sky-100"
           >
           <path
             stroke-linecap="round"
@@ -64,6 +63,7 @@ const membersTableColumns: DataTableColumnOptions[] = [
   },
   {
     data: "created_at",
+    searchable: false,
     render(data) {
       return new Date(data).toLocaleString();
     },
