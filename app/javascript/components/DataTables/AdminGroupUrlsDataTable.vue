@@ -37,20 +37,6 @@
     @close="handleEditUrlClose"
     @success="handleEditSuccess"
   />
-
-  <ConfirmDangerModal
-    :isOpen="isRemoveModalOpen"
-    :title="`Remove ${urlToChange?.keyword} from Collection?`"
-    @close="isRemoveModalOpen = false"
-    @confirm="handleRemoveUrlFromGroup"
-  >
-    <p>
-      Are you sure you want to remove
-      <strong>{{ urlToChange?.keyword }}</strong> from
-      <strong>{{ props.group.name }}</strong> Collection? This action cannot be
-      undone.
-    </p>
-  </ConfirmDangerModal>
 </template>
 <script setup lang="ts">
 import { ref, computed } from "vue";
@@ -117,22 +103,6 @@ function handleEditSuccess(updatedUrl: Zlink) {
 
   rerenderTable();
   resetEditModal();
-}
-
-async function handleRemoveUrlFromGroup() {
-  if (!datatable.value) throw new Error("No datatable api found");
-  if (!rowToChange.value) throw new Error("No edited row found");
-  if (!urlToChange.value?.id) throw new Error("No edited item found");
-
-  const urlId = urlToChange.value.id;
-
-  await api.removeUrlFromCollection(urlId, props.group.id);
-  datatable.value.row(rowToChange.value).remove().draw(false);
-
-  // reset the edited row and item
-  rowToChange.value = null;
-  urlToChange.value = null;
-  isRemoveModalOpen.value = false;
 }
 
 function handleDataTableClick(event, dt) {
@@ -250,15 +220,6 @@ const urlsTableColumns: DataTableColumnOptions[] = [
               data-id="${id}"
               data-row="${meta.row}"
             >Edit</button>
-            <button
-              id="delete-button"
-              class="tw-uppercase tw-text-xs tw-font-medium tw-p-2 tw-text-red-700 tw-rounded hover:tw-bg-red-50 tw-whitespace-nowrap"
-              data-action="remove-from-group"
-              data-id="${id}"
-              data-row="${meta.row}"
-            >
-              Remove
-            </button>
           </div>
         `;
     },
