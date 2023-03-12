@@ -28,9 +28,9 @@ function decodeHTML(html: string) {
 }
 
 const columns: DataTableColumnOptions[] = [
-  { data: "item_type" },
-  { data: "event" },
-  { data: "whodunnit" },
+  { data: "item_type", orderable: false, searchable: false },
+  { data: "event", orderable: false, searchable: false },
+  { data: "whodunnit", orderable: false, searchable: false },
   {
     data: "audit_history",
     render: (data: string) => {
@@ -75,5 +75,14 @@ const options: DataTableOptions = {
   br + br + br {
     display: none;
   }
+}
+
+.admin-audit-log-datatable td:not(:nth-child(4)) {
+  white-space: nowrap;
+}
+
+// hide filter row
+.admin-audit-log-datatable thead tr:first-child {
+  display: none;
 }
 </style>
