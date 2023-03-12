@@ -9,11 +9,7 @@
         <section class="tw-mb-8">
           <h2 class="tw-text-2xl tw-mb-4">Urls</h2>
 
-          <DataTable
-            :options="urlsTableOptions"
-            :columns="urlsTableColumns"
-            :headers="['Zlink', 'Url', 'Clicks', 'Created', 'Actions']"
-          />
+          <AdminGroupUrlsDataTable :options="urlsTableOptions" />
         </section>
 
         <section class="tw-mb-8">
@@ -29,21 +25,16 @@
   </PageLayout>
 </template>
 <script setup lang="ts">
-import { ref } from "vue";
-import Modal from "@/components/Modal.vue";
-import ConfirmDangerModal from "@/components/ConfirmDangerModal.vue";
 import DataTable from "@/components/DataTable.vue";
-import EditGroupForm from "@/components/EditGroupForm.vue";
-import * as api from "@/api";
 import PageLayout from "@/layouts/PageLayout.vue";
 import { PostIt } from "@umn-latis/cla-vue-template";
 import type {
   Collection,
   User,
-  Zlink,
   DataTableOptions,
   DataTableColumnOptions,
 } from "@/types";
+import AdminGroupUrlsDataTable from "@/components/AdminGroupUrlsDataTable.vue";
 
 const props = defineProps<{
   group: Collection;
@@ -51,63 +42,10 @@ const props = defineProps<{
 }>();
 
 const urlsTableOptions: DataTableOptions = {
-  serverSide: false,
-  data: props.group.urls,
-  paging: false,
-  info: false,
-  searching: false,
+  ajax: `/shortener/admin/groups/${props.group.id}/urls.json`,
+  serverSide: true,
+  order: [[1, "asc"]],
 };
-
-const urlsTableColumns: DataTableColumnOptions[] = [
-  {
-    data: "keyword",
-    render: (keyword: string, _, row) => {
-      return `
-        <div class="tw-flex tw-flex-col keyword-col">
-          <a href="/shortener/urls/${keyword}">
-            <span>${window.location.host}/</span>${keyword}
-          </a>
-        </div>
-      `;
-    },
-  },
-  {
-    data: "url",
-    title: "Url",
-    render: (data) => {
-      return `<a href="${data}" target="_blank" rel="noopener noreferrer">${data}</a>`;
-    },
-  },
-  {
-    data: "total_clicks",
-    render(data: number, type: string, row: Zlink) {
-      const href = `/shortener/urls/${row.keyword}`;
-      const conditionalClasses =
-        data > 0 ? "tw-bg-sky-100" : "tw-bg-[rgba(0,0,0,0.05)]";
-      return `
-    <a href="${href}" class="${conditionalClasses} tw-py-1 tw-px-2 tw-rounded-full tw-text-sky-700 hover:tw-no-underline hover:tw-bg-sky-600 hover:tw-text-sky-100 tw-whitespace-nowrap">
-      ${data} click${data != 1 ? "s" : ""}
-    </a>
-  `;
-    },
-    searchable: false,
-  },
-  {
-    data: "created_at",
-    render(data) {
-      return new Date(data).toLocaleString();
-    },
-    searchable: false,
-  },
-  {
-    data: "id",
-    orderable: false,
-    searchable: false,
-    render: (data: any, type: any, row: Zlink) => {
-      return ``;
-    },
-  },
-];
 
 const membersTableOptions: DataTableOptions = {
   serverSide: false,
