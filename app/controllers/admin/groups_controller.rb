@@ -25,7 +25,8 @@ class Admin::GroupsController < ApplicationController
         internet_id: user.internet_id,
         display_name: user.display_name,
         email: user.email,
-        admin: user.admin?
+        admin: user.admin?,
+        created_at: user.created_at
       }
     end
 

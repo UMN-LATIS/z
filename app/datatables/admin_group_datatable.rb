@@ -5,12 +5,12 @@ class AdminGroupDatatable < ApplicationDatatable
     # Declare strings in this format: ModelName.column_name
     # or in aliased_join_table.column_name format
     @view_columns ||= {
-      id: { source: "Group.id", cond: :eq },
-      name: { source: "Group.name", cond: :like },
-      description: { source: "Group.description" },
-      users: { source: "Group.users", searchable: false, orderable: false },
-      urls: { source: "Group.urls", searchable: false, orderable: false },
-      actions: { searchable: false, orderable: false }
+      id: {source: "Group.id", cond: :eq},
+      name: {source: "Group.name", cond: :like},
+      description: {source: "Group.description"},
+      users: {source: "Group.users", searchable: false, orderable: false},
+      urls: {source: "Group.urls", searchable: false, orderable: false},
+      actions: {searchable: false, orderable: false}
     }
   end
 
@@ -23,7 +23,7 @@ class AdminGroupDatatable < ApplicationDatatable
         users: record.users.size,
         urls: record.urls.size,
         actions: nil, # rendered client side
-        'DT_RowId' => "group-#{record.id}"
+        DT_RowId: "group-#{record.id}"
       }
     end
   end

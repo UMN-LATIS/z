@@ -1,7 +1,7 @@
 <template>
   <DataTable
     ref="table"
-    class="vue-datatable table table-striped table-bordered tw-w-full"
+    class="vue-datatable table table-striped table-bordered !tw-w-full"
     :options="mergedOpts"
     :columns="mergedCols"
     @click="handleDataTableClick"
@@ -14,7 +14,7 @@
           <td
             v-for="(col, index) in columns"
             :key="index"
-            class="!tw-p-1 !tw-pl-0 !tw-border-none"
+            class="!tw-p-1 !tw-pl-0 first:!tw-pl-1 !tw-border-none"
           >
             <div
               v-if="col?.searchable ?? true"
