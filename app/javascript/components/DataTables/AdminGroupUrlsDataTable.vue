@@ -6,7 +6,6 @@
     >
       Transfer to a different user
     </DropDownMenuItem>
-    <DropDownMenuItem :disabled="hasNoSelectedRows">Delete</DropDownMenuItem>
   </DropDownMenu>
 
   <DataTable
