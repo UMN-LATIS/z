@@ -180,14 +180,13 @@ export function removeUserFromCollection(
   userId: number,
   collectionId: number | string
 ) {
-  alert("removeUserFromCollection not implemented");
-  // return axios
-  //   .delete(`/shortener/groups/${collectionId}/members/${userId}`)
-  //   .then((res) => ({
-  //     success: true,
-  //     data: res.data,
-  //   }))
-  //   .catch(handleAxiosError);
+  return axios
+    .delete(`/shortener/groups/${collectionId}/members/${userId}`)
+    .then((res) => ({
+      success: true,
+      data: res.data,
+    }))
+    .catch(handleAxiosError);
 }
 
 export function addUserToCollection(

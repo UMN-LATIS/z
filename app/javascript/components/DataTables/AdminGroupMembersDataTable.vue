@@ -4,14 +4,27 @@
       :options="membersTableOptions"
       :columns="membersTableColumns"
       :headers="['Name', 'Email', 'Created', 'Actions']"
+      @click="handleDataTableClick"
     />
+    <ConfirmDangerModal
+    :isOpen="isRemoveUserModalOpen"
+    :title="`Remove User: ${userToChange?.display_name ?? 'Unknown'}`"
+    @close="isRemoveUserModalOpen = false"
+    @confirm="handleRemoveUserFromGroup"
+    >
+      Are you sure you want to remove <b>{{ userToChange?.display_name }}</b> from <b>{{ group.name }}</b>?
+    </ConfirmDangerModal>
   </div>
 </template>
 <script setup lang="ts">
+import { ref } from "vue";
 import DataTable from "@/components/DataTables/DataTable.vue";
+import ConfirmDangerModal from "@/components/ConfirmDangerModal.vue";
+import * as api from "@/api";
 import type {
   DataTableOptions,
   DataTableColumnOptions,
+  DataTableApi,
   User,
   Collection,
 } from "@/types";
@@ -20,6 +33,52 @@ const props = defineProps<{
   members: User[];
   group: Collection;
 }>();
+
+const isRemoveUserModalOpen = ref(false);
+const userToChange = ref<Partial<User> | null>(null);
+const rowToChange = ref<string | null>(null);
+const datatable = ref<DataTableApi<User> | null>(null);
+const actions = {
+  REMOVE_GROUP_MEMBER: "remove-group-member",
+}
+
+function handleDataTableClick(event: MouseEvent, dt: DataTableApi<User>) {
+  datatable.value = dt;
+
+  const target = event.target as HTMLElement;
+  const { action, row } = target.dataset;
+
+  if (!action) return;
+
+  if (!row) {
+    throw new Error(
+      `Row not found for action ${action}. Be sure to set the data-row attribute on the element.`
+    );
+  }
+
+  if (action === actions.REMOVE_GROUP_MEMBER) {
+    userToChange.value = dt.row(row).data();
+    isRemoveUserModalOpen.value = true;
+    rowToChange.value = row;
+  }
+}
+
+async function handleRemoveUserFromGroup() {
+  if (!datatable.value) throw new Error("No datatable api found");
+  if (!rowToChange.value) throw new Error("No edited row found");
+  if (!userToChange.value?.id) throw new Error("No edited item found");
+
+  const userId = userToChange.value.id;
+
+  await api.removeUserFromCollection(userId, props.group.id);
+  datatable.value.row(rowToChange.value).remove().draw(false);
+
+  // reset the edited row and item
+  rowToChange.value = null;
+  userToChange.value = null;
+  isRemoveUserModalOpen.value = false;
+}
+
 
 const membersTableOptions: DataTableOptions = {
   /**
@@ -69,12 +128,21 @@ const membersTableColumns: DataTableColumnOptions[] = [
     },
   },
   {
-    data: "actions",
+    data: "id",
     orderable: false,
     searchable: false,
-    title: "Actions",
-    render: (data: any, type: any, row: User) => {
-      return ``;
+    render(id, type, row, meta) {
+      return `
+          <div class="tw-flex tw-flex-wrap">
+            <button
+              id="delete-button"
+              class="tw-uppercase tw-text-xs tw-font-medium tw-p-2 tw-text-red-700 tw-rounded hover:tw-bg-red-50"
+              data-action="${actions.REMOVE_GROUP_MEMBER}"
+              data-id="${id}"
+              data-row="${meta.row}"
+            >Remove</button>
+          </div>
+        `;
     },
   },
 ];
