@@ -228,7 +228,7 @@ const columns: DataTableColumnOptions[] = [
       const conditionalClasses =
         data > 0 ? "tw-bg-sky-100" : "tw-bg-[rgba(0,0,0,0.05)]";
       return `
-    <a href="${href}" class="${conditionalClasses} tw-py-1 tw-px-2 tw-rounded-full tw-text-sky-700 hover:tw-no-underline hover:tw-bg-sky-600 hover:tw-text-sky-100 tw-whitespace-nowrap">
+    <a href="${href}" class="${conditionalClasses} admin-urls-datatable__total-clicks tw-py-1 tw-px-2 tw-rounded-full tw-text-sky-700 hover:tw-no-underline hover:tw-bg-sky-600 hover:tw-text-sky-100 tw-whitespace-nowrap">
       ${data} click${data != 1 ? "s" : ""}
     </a>
   `;
@@ -286,5 +286,9 @@ const columns: DataTableColumnOptions[] = [
 .admin-urls-datatable__long-url-col {
   display: block;
   max-width: 16rem;
+}
+
+.selected .admin-urls-datatable__total-clicks {
+  background-color: transparent;
 }
 </style>
