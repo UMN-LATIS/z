@@ -2,6 +2,7 @@
   <DataTable
     ref="table"
     class="vue-datatable table table-striped table-bordered !tw-w-full"
+    :data="data"
     :options="mergedOpts"
     :columns="mergedCols"
     @click="handleDataTableClick"
@@ -68,6 +69,7 @@ DataTable.use(DataTablesLib);
 
 const props = withDefaults(
   defineProps<{
+    data?: any[];
     options: DataTableOptions;
     columns: DataTableColumnOptions[];
     headers: string[];

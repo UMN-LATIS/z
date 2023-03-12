@@ -1,24 +1,45 @@
 <template>
-  <div>
+  <div class="tw-relative">
+    <Button
+      class="tw-w-full tw-mb-4 sm:tw-w-auto sm:tw-absolute sm:tw-top-0 sm:tw-left-0 tw-z-10"
+      @click="isCreating = true"
+    >
+      Add Member
+    </Button>
     <DataTable
       :options="membersTableOptions"
       :columns="membersTableColumns"
+      :data="members"
       :headers="['Name', 'Email', 'Created', 'Actions']"
+      @mounted="handleDataTableMounted"
       @click="handleDataTableClick"
     />
+
+    <Modal :isOpen="isCreating" @close="isCreating = false">
+      <AddGroupMemberForm
+        :group="group"
+        @close="isCreating = false"
+        @success="handleAddMemberSuccess"
+      />
+    </Modal>
+
     <ConfirmDangerModal
-    :isOpen="isRemoveUserModalOpen"
-    :title="`Remove User: ${userToChange?.display_name ?? 'Unknown'}`"
-    @close="isRemoveUserModalOpen = false"
-    @confirm="handleRemoveUserFromGroup"
+      :isOpen="isRemoveUserModalOpen"
+      :title="`Remove User: ${userToChange?.display_name ?? 'Unknown'}`"
+      @close="isRemoveUserModalOpen = false"
+      @confirm="handleRemoveUserFromGroup"
     >
-      Are you sure you want to remove <b>{{ userToChange?.display_name }}</b> from <b>{{ group.name }}</b>?
+      Are you sure you want to remove
+      <b>{{ userToChange?.display_name }}</b> from <b>{{ group.name }}</b
+      >?
     </ConfirmDangerModal>
   </div>
 </template>
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, reactive, watch } from "vue";
 import DataTable from "@/components/DataTables/DataTable.vue";
+import Button from "@/components/Button.vue";
+import Modal from "../Modal.vue";
 import ConfirmDangerModal from "@/components/ConfirmDangerModal.vue";
 import * as api from "@/api";
 import type {
@@ -28,22 +49,47 @@ import type {
   User,
   Collection,
 } from "@/types";
+import AddGroupMemberForm from "../AddGroupMemberForm.vue";
 
 const props = defineProps<{
   members: User[];
   group: Collection;
 }>();
 
+const emit = defineEmits<{
+  (event: "addMember", user: User): void;
+  (event: "removeMember", userId: number): void;
+}>();
+
+watch(
+  () => props.members,
+  (members) => {
+    console.log("members changed", members);
+
+    if (!datatable.value) throw new Error("No datatable api found");
+
+    // redraw the table with the new data
+    datatable.value.clear().rows.add(members).draw();
+  }
+);
+
 const isRemoveUserModalOpen = ref(false);
 const userToChange = ref<Partial<User> | null>(null);
 const rowToChange = ref<string | null>(null);
 const datatable = ref<DataTableApi<User> | null>(null);
+const isCreating = ref(false);
+
 const actions = {
+  CREATE_GROUP_MEMBER: "create-group-member",
   REMOVE_GROUP_MEMBER: "remove-group-member",
+};
+
+function handleDataTableMounted(dt: DataTableApi<User>) {
+  datatable.value = dt;
 }
 
-function handleDataTableClick(event: MouseEvent, dt: DataTableApi<User>) {
-  datatable.value = dt;
+function handleDataTableClick(event: MouseEvent) {
+  if (!datatable.value) throw new Error("No datatable api found");
 
   const target = event.target as HTMLElement;
   const { action, row } = target.dataset;
@@ -57,10 +103,18 @@ function handleDataTableClick(event: MouseEvent, dt: DataTableApi<User>) {
   }
 
   if (action === actions.REMOVE_GROUP_MEMBER) {
-    userToChange.value = dt.row(row).data();
+    userToChange.value = datatable.value.row(row).data();
     isRemoveUserModalOpen.value = true;
     rowToChange.value = row;
   }
+}
+
+function handleAddMemberSuccess(user: User) {
+  if (!datatable.value) throw new Error("No datatable api found");
+
+  emit("addMember", user);
+  // datatable.value.row.add(user).draw();
+  isCreating.value = false;
 }
 
 async function handleRemoveUserFromGroup() {
@@ -70,8 +124,13 @@ async function handleRemoveUserFromGroup() {
 
   const userId = userToChange.value.id;
 
-  await api.removeUserFromCollection(userId, props.group.id);
-  datatable.value.row(rowToChange.value).remove().draw(false);
+  const res = await api.removeUserFromCollection(userId, props.group.id);
+
+  if (!res.success) {
+    throw new Error(`Failed to remove user from group. ${res.message}`);
+  }
+
+  emit("removeMember", userToChange.value.id);
 
   // reset the edited row and item
   rowToChange.value = null;
@@ -79,16 +138,14 @@ async function handleRemoveUserFromGroup() {
   isRemoveUserModalOpen.value = false;
 }
 
-
-const membersTableOptions: DataTableOptions = {
+const membersTableOptions: DataTableOptions = reactive({
   /**
    we're not doing using ajax with this datatable since some member attributes(like internet_id and display_name) are not columns in the db, but rather methods that do an ldap lookup so it gets complicated. We could do it with ajax, but then the column wouldn't be searchable or sortable. Instead, we opt to pass the members in as props.
   */
   serverSide: false,
-  data: props.members,
   paging: false,
   info: false,
-};
+});
 
 const membersTableColumns: DataTableColumnOptions[] = [
   {

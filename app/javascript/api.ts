@@ -179,30 +179,33 @@ export function bulkTransferUrlsToUser(
 export function removeUserFromCollection(
   userId: number,
   collectionId: number | string
-) {
+): Promise<ApiResponse<null, string[]>> {
   return axios
     .delete(`/shortener/groups/${collectionId}/members/${userId}`)
+    .then((res) => ({
+      success: true,
+      data: null,
+    }))
+    .catch(handleAxiosError);
+}
+
+export function addUserToCollection({
+  umndid,
+  collectionId,
+}: {
+  umndid: string;
+  collectionId: number | string;
+}): Promise<ApiResponse<User, string[]>> {
+  return axios
+    .post<User>(`/shortener/groups/${collectionId}/members`, {
+      uid: umndid,
+    })
+    .then((res) => {
+      return res;
+    })
     .then((res) => ({
       success: true,
       data: res.data,
     }))
     .catch(handleAxiosError);
 }
-
-export function addUserToCollection(
-  userId: number,
-  collectionId: number | string
-) {
-  alert("addUserToCollection not implemented");
-  // return axios
-  //   .post(`/shortener/groups/${collectionId}/members`, {
-  //     user_id: userId,
-  //   })
-  //   .then((res) => ({
-  //     success: true,
-  //     data: res.data,
-  //   }))
-  //   .catch(handleAxiosError);
-}
-
-
