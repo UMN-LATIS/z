@@ -146,7 +146,7 @@ const urlsTableColumns: DataTableColumnOptions[] = [
       return `
         <div class="tw-flex tw-flex-col keyword-col">
           <a href="/shortener/urls/${keyword}">
-            <span>${window.location.host}/</span>${keyword}
+            ${keyword}
           </a>
         </div>
       `;
