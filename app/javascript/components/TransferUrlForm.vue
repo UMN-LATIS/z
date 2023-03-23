@@ -59,7 +59,12 @@
       >
         Cancel
       </button>
-      <Button type="submit" :disabled="!userToTransferTo">Transfer</Button>
+      <Button
+        data-cy="submit-transfer"
+        type="submit"
+        :disabled="!userToTransferTo"
+        >Transfer</Button
+      >
     </div>
   </form>
 </template>
@@ -106,7 +111,7 @@ async function handleSubmit() {
     return;
   }
 
-  console.error('Transfer error', { res });
+  console.error("Transfer error", { res });
   alert("Something went wrong with the transfer");
 }
 </script>
