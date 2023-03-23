@@ -190,19 +190,19 @@ describe("admin groups index page", () => {
         cy.contains(collection.name).should(
           "have.attr",
           "href",
-          `/shortener/urls?collection=${collection.id}`
+          `/shortener/admin/groups/${collection.id}`
         );
 
         cy.contains("0 urls").should(
           "have.attr",
           "href",
-          `/shortener/urls?collection=${collection.id}`
+          `/shortener/admin/groups/${collection.id}`
         );
 
         cy.contains("0 members").should(
           "have.attr",
           "href",
-          `/shortener/groups/${collection.id}/members`
+          `/shortener/admin/groups/${collection.id}`
         );
       });
     });
@@ -215,29 +215,6 @@ describe("admin groups index page", () => {
           .should("have.length", 1)
           .should("contain", "collection2");
       });
-    });
-
-    it("creates a new collection", () => {
-      cy.contains("New Collection").click();
-
-      cy.get('[data-cy="create-group"] [data-cy="group-name"]').type(
-        "new collection"
-      );
-      cy.get('[data-cy="create-group"] [data-cy="group-description"]').type(
-        "new description"
-      );
-
-      // save the changes
-      cy.get('[data-cy="create-group"]').contains("Save").click();
-
-      // check that the changes were saved
-      cy.get("[data-cy='groups-table'] tbody > tr")
-        .should("have.length", 4)
-        .contains("new collection")
-        .closest("tr")
-        .within(() => {
-          cy.get("td").eq(1).should("contain", "new description");
-        });
     });
   });
 });

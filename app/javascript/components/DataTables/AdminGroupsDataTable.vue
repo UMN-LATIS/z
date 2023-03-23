@@ -157,7 +157,7 @@ const columns: DataTableColumnOptions[] = [
   {
     data: "urls",
     render(data: number, type: string, row: Collection) {
-      const href = `/shortener/urls?collection=${row.id}`;
+      const href = `/shortener/admin/groups/${row.id}`;
       const conditionalClasses =
         data > 0 ? "tw-bg-sky-100" : "tw-bg-neutral-100";
       return `
@@ -172,8 +172,9 @@ const columns: DataTableColumnOptions[] = [
   {
     data: "users",
     render(data: number, type: string, row: Collection) {
+      const href = `/shortener/admin/groups/${row.id}`;
       return `
-        <a href="/shortener/groups/${row.id}/members" class="${
+        <a href="${href}" class="${
         data > 0 ? "tw-bg-sky-100" : "tw-bg-neutral-100"
       } tw-py-1 tw-px-2 tw-rounded-full tw-text-sky-700 hover:tw-no-underline hover:tw-bg-sky-600 hover:tw-text-sky-100 tw-whitespace-nowrap">
           ${data} member${data != 1 ? "s" : ""}
