@@ -1,8 +1,8 @@
 <template>
-  <DropDownMenu label="Bulk Actions" align="left">
+  <DropDownMenu label="Bulk Actions" align="left" id="bulk-actions">
     <DropDownMenuItem
       :disabled="hasNoSelectedRows"
-      @click="isBulkTransferModalOpen = true"
+      @click="handleBulkTransferClick"
     >
       Transfer to a different user
     </DropDownMenuItem>
@@ -105,6 +105,11 @@ function handleEditSuccess(updatedUrl: Zlink) {
 
   rerenderTable();
   resetEditModal();
+}
+
+function handleBulkTransferClick() {
+  if (hasNoSelectedRows.value) return;
+  isBulkTransferModalOpen.value = true;
 }
 
 async function handleDeleteUrl() {

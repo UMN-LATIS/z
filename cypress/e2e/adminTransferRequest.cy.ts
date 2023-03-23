@@ -48,11 +48,10 @@ describe("admin url details (stats) page", () => {
     cy.visit("/shortener/admin/urls");
   });
 
-  it("has bulk actions disabled if nothing is checked", () => {
-    cy.get(".dt-buttons .btn")
-      .first()
-      .should("contain", "Bulk Actions")
-      .should("have.class", "disabled");
+  it("choices within bulk actions are disabled if nothing is checked", () => {
+    cy.get("#bulk-actions").each(($el) => {
+      cy.wrap($el).get("button,a").should("be.disabled");
+    });
   });
 
   it("can transfer a url from user1 to user2 using bulk actions", () => {

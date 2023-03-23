@@ -3,6 +3,7 @@
     <Component
       :is="href ? 'a' : 'button'"
       :href="href"
+      :disabled="disabled"
       :class="[
         'tw-block tw-px-4 tw-py-2 tw-text-sm tw-w-full tw-text-left',
         active && !disabled
