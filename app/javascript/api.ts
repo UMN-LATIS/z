@@ -10,7 +10,7 @@ import {
 // set the CSRF token for all axios requests
 const csrfToken = (
   document.querySelector("[name=csrf-token]") as HTMLMetaElement
-).content;
+)?.content;
 
 axios.defaults.headers.common["X-CSRF-Token"] = csrfToken;
 axios.defaults.headers.common["Content-Type"] = "application/json";
