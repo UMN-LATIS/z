@@ -176,13 +176,13 @@ describe("admin urls page", () => {
 
       cy.contains("Bulk Actions").click();
 
-      cy.contains("Transfer").click();
+      cy.contains("Transfer to a").click();
 
       // choose user 2
       cy.get("#person-search").type("user2");
       cy.get('[data-cy="person-search-list"]').contains("user2").click();
 
-      cy.contains("Transfer").click();
+      cy.get('[data-cy="submit-transfer"]').click();
 
       // verify that the rows were updated
       cy.get("[data-cy='admin-urls-table']")
