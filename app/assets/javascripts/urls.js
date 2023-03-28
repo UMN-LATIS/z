@@ -25,7 +25,7 @@ $(document).on("click", ".cancel-edit", function(e) {
 });
 
 $(document).on("change", "#urls-table select, body.urls.show select", function(e) {
-    select = e.target;
+    const select = e.target;
     var newVal = $(select).val();
     var urlId = $(select).data('url-id');
     if (!confirm(I18n.t("views.urls.move_confirm", {
@@ -73,36 +73,6 @@ $(document).bind('turbolinks:load', function() {
         return;
     }
     initializeUrlDataTable(6, "desc", 7, 4, $('.collection-count').data('collection-count') > 1, true);
-});
-
-// Load Javascript for the admin-index page
-$(document).bind('turbolinks:load', function() {
-    if ($("body.admin\\/urls.index").length == 0) {
-        return;
-    }
-    $('.admin-table.data-table tfoot tr th').each(function () {
-        var title = $(this).text();
-        $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-    });
-    var table = initializeUrlDataTable(2, "desc", 6, 3, false, false);
-    table.columns().every(function () {
-        var that = this;
-
-        $('input', this.footer()).on('keyup change', function () {
-            if (that.search() !== this.value) {
-                that
-                    .search("^" + this.value + "$", true, false, true)
-                    .draw();
-            }
-
-            if(this.value == "") {
-                that
-                    .search("")
-                    .draw();
-            }
-        });
-    });
-
 });
 
 // Turn the group select into the fancy select picker

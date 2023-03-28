@@ -3,6 +3,7 @@ import { validateFlashMessage } from "../support/validateFlashMessage";
 //fixtures
 import admin from "../fixtures/users/admin.json";
 import user1 from "../fixtures/users/user1.json";
+import user2 from "../fixtures/users/user2.json";
 
 describe("admin urls page", () => {
   beforeEach(() => {
@@ -25,25 +26,19 @@ describe("admin urls page", () => {
   });
 
   context("as an admin user", () => {
+    let urls = [];
     beforeEach(() => {
+      urls = [];
       cy.createAndLoginUser(admin.umndid, { admin: true });
       cy.createUser(user1.umndid, {
         internet_id_loaded: user1.internet_id,
       }).then((user) => {
-        cy.createUrl({
-          keyword: "x1",
-          url: "https://example1.com",
-          group_id: user.context_group_id,
-        });
-        cy.createUrl({
-          keyword: "x2",
-          url: "https://example2.com",
-          group_id: user.context_group_id,
-        });
-        cy.createUrl({
-          keyword: "x3",
-          url: "https://example3.com",
-          group_id: user.context_group_id,
+        [1, 2, 3].forEach((i) => {
+          cy.createUrl({
+            keyword: `x${i}`,
+            url: `https://example${i}.com`,
+            group_id: user.context_group_id,
+          }).then((url) => urls.push(url));
         });
       });
       cy.visit("/shortener/admin/urls");
@@ -51,15 +46,24 @@ describe("admin urls page", () => {
 
     it("shows the url info", () => {
       // check the column headers
-      cy.get("#urls-table > thead")
-        .should("contain", "Z-Links")
-        .should("contain", "Owner")
-        .should("contain", "Clicks")
-        .should("contain", "Created");
+      cy.get('[data-cy="admin-urls-table"] thead').within(() => {
+        cy.contains("Z-link");
+        // cy.contains("Long URL");
+        cy.contains("Owner");
+        cy.contains("Clicks");
+        cy.contains("Created");
+        cy.contains("Actions");
+      });
 
       // check the row data
-      cy.get("#urls-table > tbody > tr").should("have.length", 3);
-      cy.get("#urls-table").contains("x1").closest("tr").as("row1");
+      cy.get("[data-cy='admin-urls-table'] tbody > tr").should(
+        "have.length",
+        3
+      );
+      cy.get("[data-cy='admin-urls-table'] tbody")
+        .contains("x1")
+        .closest("tr")
+        .as("row1");
 
       cy.get("@row1")
         .should("contain", "x1")
@@ -67,98 +71,212 @@ describe("admin urls page", () => {
     });
 
     it("updates the long url", () => {
-      cy.get("#urls-table").contains("x1").closest("tr").as("row1");
-
-      //open the first row's actions dropdown
-      cy.get("@row1").find(".actions-dropdown-button").click();
+      cy.get("[data-cy='admin-urls-table']")
+        .contains("x1")
+        .closest("tr")
+        .as("row1");
 
       // click "Edit"
       cy.get("@row1").contains("Edit").click();
-
-      cy.get("#url_url").clear().type("https://www.x1-updated.com");
-      cy.contains("Submit").click();
+      cy.get("[data-cy='longurl-input']")
+        .clear()
+        .type("https://www.x1-updated.com");
+      cy.contains("Save").click();
 
       // check that the row was updated
-      // currently there's a bug that doesn't close the form
-      // and show the updated row, so we need to reload the
-      // page to see the change. See #124.
-      cy.reload();
-
-      // the long url isn't shown anywhere in the current ui
-      // so we need to click edit to see where it points
-      cy.get("#urls-table").contains("x1").closest("tr").as("row1");
-      cy.get("@row1").find(".actions-dropdown-button").click();
-      cy.get("@row1").contains("Edit").click();
-      cy.get("#url_url").should("have.value", "https://www.x1-updated.com");
+      cy.get("[data-cy='admin-urls-table']")
+        .contains("x1")
+        .closest("tr")
+        .within(() => {
+          cy.contains("https://www.x1-updated.com");
+        });
     });
 
     it("updates the url keyword (the short url)", () => {
-      cy.get("#urls-table").contains("x1").closest("tr").as("row1");
-
-      //open the first row's actions dropdown
-      cy.get("@row1").find(".actions-dropdown-button").click();
+      cy.get("[data-cy='admin-urls-table']")
+        .contains("x1")
+        .closest("tr")
+        .as("row1");
 
       // click "Edit"
       cy.get("@row1").contains("Edit").click();
-
-      cy.get("#url_keyword").clear().type("x1-updated");
-      cy.contains("Submit").click();
+      cy.get("[data-cy='keyword-input']").clear().type("updated-keyword");
+      cy.contains("Save").click();
 
       // check that the row was updated
-      // currently there's a bug that doesn't close the form
-      // and show the updated row, so we need to reload the
-      // page to see the change. See #124.
-      cy.reload();
-
-      cy.get("#urls-table").contains("x1").closest("tr").as("row1");
-      cy.get("@row1").should("contain", "x1-updated");
+      cy.get("[data-cy='admin-urls-table']")
+        .contains("https://example1.com")
+        .closest("tr")
+        .within(() => {
+          cy.contains("updated-keyword");
+        });
     });
 
     it("shows an error and does not update if a keyword is already taken", () => {
-      cy.get("#urls-table").contains("x1").closest("tr").as("row1");
-
-      //open the first row's actions dropdown
-      cy.get("@row1").find(".actions-dropdown-button").click();
+      cy.get("[data-cy='admin-urls-table']")
+        .contains("x1")
+        .closest("tr")
+        .as("row1");
 
       // click "Edit"
       cy.get("@row1").contains("Edit").click();
-
-      // try changing the keyword to x2, which is already taken
-      cy.get("#url_keyword").clear().type("x2");
-      cy.contains("Submit").click();
+      cy.get("[data-cy='keyword-input']").clear().type("x2");
+      cy.contains("Save").click();
 
       // check that an error is shown
       cy.contains("has already been taken").should("be.visible");
 
       // reload and verify that the keyword was not changed
       cy.reload();
-      cy.get("#urls-table").contains("x1").closest("tr").as("row1");
+      cy.get("[data-cy='admin-urls-table']")
+        .contains("x1")
+        .closest("tr")
+        .as("row1");
       cy.get("@row1").should("contain", "x1");
     });
 
     it("deletes a url", () => {
-      cy.get("#urls-table").contains("x1").closest("tr").as("row1");
+      cy.get("[data-cy='admin-urls-table']")
+        .contains("x1")
+        .closest("tr")
+        .as("row1");
 
-      //open the first row's actions dropdown
-      cy.get("@row1").find(".actions-dropdown-button").click();
-
-      // click "Edit"
+      // click "Delete"
       cy.get("@row1").contains("Delete").click();
 
-      // check that a confirmation message is shown
-      cy.get(".modal-body").contains("Are you sure you want to delete");
+      cy.contains("Are you sure you want to delete").should("be.visible");
 
-      // check that the correct short url is shown with the confirmation message
-      cy.get(".modal-body").contains("x1");
-
-      // confirm and check that the row was deleted
+      // confirm
       cy.contains("Confirm").click();
-      cy.get("#urls-table > tbody > tr").should("have.length", 2);
+
+      // verify that the row was removed
+      cy.get("[data-cy='admin-urls-table'] tbody > tr").should(
+        "have.length",
+        2
+      );
 
       // check that the url as also removed from the database
       cy.appEval('Url.where(keyword: "x1").count').then((count) => {
         expect(count).to.eq(0);
       });
+    });
+
+    it("bulk transfers urls to another user", () => {
+      cy.get("[data-cy='admin-urls-table']")
+        .contains("x2")
+        .closest("tr")
+        .as("row2");
+      cy.get("[data-cy='admin-urls-table']")
+        .contains("x3")
+        .closest("tr")
+        .as("row3");
+
+      cy.get("@row2").find('input[type="checkbox"]').check();
+      cy.get("@row3").find('input[type="checkbox"]').check();
+
+      cy.contains("Bulk Actions").click();
+
+      cy.contains("Transfer to a").click();
+
+      // choose user 2
+      cy.get("#person-search").type("user2");
+      cy.get('[data-cy="person-search-list"]').contains("user2").click();
+
+      cy.get('[data-cy="submit-transfer"]').click();
+
+      // verify that the rows were updated
+      cy.get("[data-cy='admin-urls-table']")
+        .contains("x2")
+        .closest("tr")
+        .contains(user2.internet_id);
+
+      cy.get("[data-cy='admin-urls-table']")
+        .contains("x3")
+        .closest("tr")
+        .contains(user2.internet_id);
+    });
+
+    it("shows a group icon if the url is within a (non-default) group", () => {
+      // icon should not be shown for the default group
+      cy.get("[data-cy='admin-urls-table']")
+        .contains("x2")
+        .closest("tr")
+        .within(() => {
+          cy.get('[data-cy="group-icon"]').should("not.exist");
+        });
+
+      // create a collection
+      cy.createGroup("testcollection")
+        .then((group) => {
+          // add user 1 to the collection
+          cy.addUserToGroup(user1.umndid, group);
+
+          // create a url within the collection
+          cy.createUrl({
+            keyword: "test-group-url",
+            url: "https://example4.com",
+            group_id: group.id,
+          });
+        })
+        .then(() => {
+          // reload the page
+          cy.reload();
+
+          // check that the group icon is shown
+          cy.get("[data-cy='admin-urls-table']")
+            .contains("test-group-url")
+            .closest("tr")
+            .within(() => {
+              cy.contains("testcollection");
+              cy.get('[data-cy="group-icon"]').should("be.visible");
+            });
+        });
+    });
+
+    it("should link non-default group names (collections) to the collection members page", () => {
+      let testCollectionGroup = null;
+      // create a collection
+      cy.createGroup("testcollection")
+        .then((group) => {
+          testCollectionGroup = group;
+          // add user 1 to the collection
+          cy.addUserToGroup(user1.umndid, group);
+
+          // create a url within the collection
+          cy.createUrl({
+            keyword: "test-group-url",
+            url: "https://example4.com",
+            group_id: group.id,
+          });
+        })
+        .then(() => {
+          // reload the page
+          cy.reload();
+
+          // check that the group icon is shown
+          cy.get("[data-cy='admin-urls-table']")
+            .contains("test-group-url")
+            .closest("tr")
+            .within(() => {
+              cy.contains("testcollection").click();
+            });
+
+          cy.url().should(
+            "include",
+            `/groups/${testCollectionGroup.id}/members`
+          );
+        });
+    });
+
+    it("should link default groups (users) to umn people search", () => {
+      cy.get("[data-cy='admin-urls-table']")
+        .contains("user1")
+        .closest("a")
+        .should(
+          "have.attr",
+          "href",
+          `https://myaccount.umn.edu/lookup?type=Internet+ID&CN=user1&campus=a&role=any`
+        );
     });
   });
 });

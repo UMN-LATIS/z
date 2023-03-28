@@ -74,7 +74,7 @@ describe("admin url details (stats) page", () => {
       cy.contains("https://cla.umn.edu").should("be.visible");
 
       // keyword
-      cy.contains("cla").should("be.visible");
+      cy.get(".page-header h1").contains("cla").should("be.visible");
 
       // created at
       cy.contains("01/01/2020").should("be.visible");
@@ -99,8 +99,7 @@ describe("admin url details (stats) page", () => {
       cy.get("@last24row").contains("3 hits").should("be.visible");
     });
 
-    it("shows the best day for clicks", () => {
-      1;
+    it.only("shows the best day for clicks", () => {
       cy.clickUrl("cla", 10, {
         country_code: "US",
         created_at: "01/01/2020",

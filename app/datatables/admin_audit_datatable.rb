@@ -1,5 +1,5 @@
-class AuditDatatable < ApplicationDatatable
-  def_delegators :@view, :display_whodunnit_internet_id
+class AdminAuditDatatable < ApplicationDatatable
+  def_delegators :@view
 
   def view_columns
     @view_columns ||= {
@@ -24,12 +24,12 @@ class AuditDatatable < ApplicationDatatable
     end
     records = posi
     records.map do |record|
+      user_internet_id = record.user.present? ? record.user.internet_id : "Unknown"
+
       {
-        # comma separated list of the values for each cell of a table row
-        # example: record.attribute,
         item_type: record.item_type,
         event: record.event,
-        whodunnit: display_whodunnit_internet_id(record),
+        whodunnit: user_internet_id,
         audit_history: record.version_history,
         created_at: record.created_at.to_s(:created_on_formatted),
         'DT_RowId' => "audit-#{record.id}"
@@ -38,8 +38,6 @@ class AuditDatatable < ApplicationDatatable
   end
 
   def get_raw_records
-    Audit.order(created_at: :desc)
+    Audit.includes(:user)
   end
-  # max(created_at)
-  # ==== Insert 'presenter'-like methods below if necessary
 end

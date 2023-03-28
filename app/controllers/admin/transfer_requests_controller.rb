@@ -31,11 +31,11 @@ class Admin::TransferRequestsController < ApplicationController
 
     respond_to do |format|
       if @transfer_request.save
-        format.js do
-          redirect_to admin_urls_path
-        end
+        format.js { redirect_to admin_urls_path }
+        format.json { render json: @transfer_request, status: :created }
       else
         format.js { render 'transfer_requests/new', layout: false }
+        format.json { render json: @transfer_request.errors, status: :unprocessable_entity }
       end
     end
   end

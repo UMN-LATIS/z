@@ -17,11 +17,18 @@
     <%= vite_typescript_tag 'application' %>
   </head>
   <body class='<%= params[:controller] %> <%= params[:action] %> tw-flex tw-flex-col tw-min-h-screen'>
+    <noscript>
+      <div class="tw-flex tw-flex-col tw-items-center tw-justify-center tw-h-screen tw-text-2xl tw-font-bold tw-text-umn-neutral-900">
+        <p class="tw-mb-4">This site requires JavaScript to function properly.</p>
+        <p class="tw-mb-4">Please enable JavaScript in your browser and reload the page.</p>
+        <p class="tw-mb-4">If you are using a browser plugin that blocks JavaScript, please add this site to your allowlist.</p>
+      </div>
+    </noscript>
     <div data-behavior="vue">
       <app-header :current-user="<%= current_user&.to_json || 'null' %>">
       </app-header>
     </div>
-    <main class="main-container tw-flex-1 tw-bg-umn-neutral-50">
+    <main class="main-container tw-flex-1 tw-bg-umn-neutral-50 hidden" id="main-content">
       <%= flash_messages %>
       <%= yield %>
     </main>

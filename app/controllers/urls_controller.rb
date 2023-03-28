@@ -102,8 +102,10 @@ class UrlsController < ApplicationController
     respond_to do |format|
       if @url.update(url_params)
         format.js   { render :update }
+        format.json { render json: @url }
       else
         format.js   { render :edit }
+        format.json { render json: @url.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -111,12 +113,18 @@ class UrlsController < ApplicationController
   # DELETE /urls/1
   # DELETE /urls/1.json
   def destroy
-    @url.destroy
+    if @url.destroy
     respond_to do |format|
-      format.html do
-        redirect_to urls_url, notice: 'URL was successfully destroyed.'
+        format.html { redirect_to urls_url, notice: 'URL was successfully destroyed.' }
+        format.js { render layout: false }
+        format.json { render json: { success: true, message: "Group deleted." } }
       end
-      format.js { render layout: false }
+    else
+      respond_to do |format|
+        format.html { redirect_to urls_url, notice: 'URL could not be deleted.' }
+        format.js   { render layout: false }
+        format.json { render json: { success: false, errors: @group.errors.full_messages }, status: :unprocessable_entity }
+      end
     end
   end
 

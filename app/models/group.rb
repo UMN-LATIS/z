@@ -19,7 +19,7 @@ class Group < ApplicationRecord
   has_many :users, through: :groups_users
   has_many :urls, dependent: :destroy
 
-  has_many :user_contexts, foreign_key: :context_group_id, class_name: 'User'
+  has_many :user_contexts, foreign_key: :context_group_id, class_name: "User"
 
   validates :name, presence: true
 
@@ -31,7 +31,7 @@ class Group < ApplicationRecord
 
   # all groups that arent the default group for a user
   scope :not_default, lambda {
-    where('id not in ( select default_group_id from users )')
+    where("id not in ( select default_group_id from users )")
   }
 
   def user?(user)
@@ -50,7 +50,7 @@ class Group < ApplicationRecord
   end
 
   def default?
-    User.pluck(:default_group_id).include?(id)
+    User.find_by(default_group_id: id).present?
   end
 
   # Groups for admins will only be one person long and the only user
@@ -67,9 +67,9 @@ class Group < ApplicationRecord
       g = v.reify unless v.event.equal? "create"
       h.concat "<b>What Happened: </b> #{v.event} <br/>"
       h.concat "<b>Who Made It: </b>  #{self.class.version_user(v)}<br/>"
-      h.concat "<b>Previous Name: </b>  #{g ? g.name : 'N/A'}<br/>"
-      h.concat "<b>Previous Description: </b>  #{g ? g.description : 'N/A'}<br/>"
-      h.concat "<b>Date of Change: </b>  #{g ? g.updated_at : 'N/A'}<br/>"
+      h.concat "<b>Previous Name: </b>  #{g ? g.name : "N/A"}<br/>"
+      h.concat "<b>Previous Description: </b>  #{g ? g.description : "N/A"}<br/>"
+      h.concat "<b>Date of Change: </b>  #{g ? g.updated_at : "N/A"}<br/>"
       h.concat "<br/><br/>"
     end
     versions.each do |v|

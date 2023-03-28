@@ -4,14 +4,14 @@ class AdminUrlDatatable < ApplicationDatatable
 
   def view_columns
     @view_columns ||= {
-      '0': { searchable: false, orderable: false },
+      id: { source: 'Url.id' },
       group_id: { source: 'Url.group_id' },
       group_name: { source: 'Group.name' },
+      is_default_group: { source: 'Group.default?' },
       url: { source: 'Url.url' },
       keyword: { source: 'Url.keyword' },
       total_clicks: { source: 'Url.total_clicks' },
-      created_at: { source: 'Url.created_at' },
-      actions: {searchable: false, orderable: false }
+      created_at: { source: 'Url.created_at' }
     }
   end
 
@@ -20,28 +20,20 @@ class AdminUrlDatatable < ApplicationDatatable
   def data
     records.map do |record|
       {
-        # comma separated list of the values for each cell of a table row
-        # example: record.attribute,
+        id: record.id,
         group_id: record.group_id,
         group_name: record.group.name,
-        url: link_to(display_long_url(record.url), record.url, target: '_blank', rel: 'noopener'),
-        keyword: link_to(display_keyword_url(record.keyword), full_url(record), target: '_blank', rel: 'noopener'),
+        is_default_group: record.group.default?,
+        url: record.url,
+        keyword: record.keyword,
         total_clicks: record.total_clicks,
-        created_at: record.created_at.to_s(:created_on_formatted),
-        actions: render(
-          formats: [:html],
-          partial: 'urls/in_row_actions',
-          locals: { url: record, admin_view: true }
-        ),
-        'DT_RowData_keyword' => record.keyword,
-        'DT_RowData_url' => record.url,
-        'DT_RowId' => "url-#{record.id}"
+        created_at: record.created_at.to_s(:created_on_formatted)
       }
     end
   end
 
   def get_raw_records
-    Url.joins(:group)
+    Url.includes(:group).references(:group)
   end
 
   # ==== Insert 'presenter'-like methods below if necessary

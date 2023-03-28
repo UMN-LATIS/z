@@ -49,20 +49,26 @@ class GroupsController < ApplicationController
         # new sign in will be necessary
         sign_in current_user
         format.js { render :create }
+        format.json { render json: @group }
       elsif params[:modal]
         format.js { render "groups/new", layout: false }
       else
         format.js { render :edit }
+        format.json { render json: { success: false, errors: @group.errors.full_messages }, status: :unprocessable_entity }
       end
     end
   end
 
   def update
-    respond_to do |format|
-      if @group.update(group_params)
+    if @group.update(group_params)
+      respond_to do |format|
         format.js { render :update }
-      else
+        format.json { render json: @group }
+      end
+    else
+      respond_to do |format|
         format.js { render :edit }
+        format.json { render json: { success: false, errors: @group.errors.full_messages }, status: :unprocessable_entity }
       end
     end
   end
@@ -70,17 +76,24 @@ class GroupsController < ApplicationController
   def destroy
     return if @group.urls.present?
 
-    @group.destroy
+    if @group.destroy
 
-    # It's possible that the current_user in the DB has changed by
-    # removing a group but the user remains unchanged in memory.
-    # It will be signified by the context_group_id
-    # being the same as the one that was just destroyed (which is
-    # not valid), so we need to re-signin the current user
-    sign_in current_user if current_user.context_group_id == @group.id
+      # It's possible that the current_user in the DB has changed by
+      # removing a group but the user remains unchanged in memory.
+      # It will be signified by the context_group_id
+      # being the same as the one that was just destroyed (which is
+      # not valid), so we need to re-signin the current user
+      sign_in current_user if current_user.context_group_id == @group.id
 
-    respond_to do |format|
-      format.js   { render layout: false }
+      respond_to do |format|
+        format.js   { render layout: false }
+        format.json { render json: { success: true, message: "Group deleted." } }
+      end
+    else
+      respond_to do |format|
+        format.js   { render layout: false }
+        format.json { render json: { success: false, errors: @group.errors.full_messages }, status: :unprocessable_entity }
+      end
     end
   end
 

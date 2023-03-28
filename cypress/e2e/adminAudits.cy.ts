@@ -30,14 +30,22 @@ describe("admin audits page", () => {
     });
 
     it("shows the audit page title and col headers", () => {
-      cy.get(".page-header > h1").should("contain", "Audit Log");
+      cy.get("[data-cy='page-name']").should("contain", "Audit Logs");
 
       // check the column headers
-      ["Item", "Last Action", "Whodunnit", "Change History", "As Of"].forEach(
-        (text) => {
-          cy.get("#audits-table").should("contain", text);
+      ["Item", "Event", "Whodunnit", "Change History", "As Of"].forEach(
+        (text, i) => {
+          cy.get(`.datatable thead th:nth-child(${i + 1})`).should(
+            "contain",
+            text
+          );
         }
       );
+    });
+
+    it("renders the change history correctly", () => {
+      // test that no tags are rendered in the change history
+      cy.get("#audit-1 > :nth-child(4)").should("not.contain", "<br/>");
     });
   });
 });

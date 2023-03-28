@@ -1,0 +1,6 @@
+<div data-behavior="vue">
+  <admin-collections-show-page 
+    :group="<%= @group.to_json(include: :urls) %>" 
+    :members="<%= @users.to_json %>"
+  ></admin-collections-show-page>
+</div>

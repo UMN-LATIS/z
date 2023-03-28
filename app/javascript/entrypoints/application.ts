@@ -1,12 +1,20 @@
 import { createApp, type App as VueApp } from "vue";
 import AppHeader from "@/components/AppHeader.vue";
 import AppFooter from "@/components/AppFooter.vue";
+import AdminCollectionsIndexPage from "@/pages/AdminCollectionsIndexPage.vue";
+import AdminAuditLogPage from "@/pages/AdminAuditLogPage.vue";
+import AdminUrlsIndexPage from "@/pages/AdminUrlsIndexPage.vue";
 import "@umn-latis/cla-vue-template/dist/style.css";
 import "@/application.css";
+import AdminCollectionsShowPage from "@/pages/AdminCollectionsShowPage.vue";
 
 const components = {
   "app-header": AppHeader,
   "app-footer": AppFooter,
+  "admin-collections-index-page": AdminCollectionsIndexPage,
+  'admin-collections-show-page': AdminCollectionsShowPage,
+  "admin-audit-log-page": AdminAuditLogPage,
+  "admin-urls-index-page": AdminUrlsIndexPage,
 };
 
 const createMyApp = () => {
@@ -36,4 +44,12 @@ document.addEventListener("turbolinks:load", () => {
 // before replacing the `document.body`
 document.addEventListener("turbolinks:before-render", () => {
   vueApps.forEach((app) => app.unmount());
+});
+
+// hide the main-content element until the app is mounted
+// this prevents the page showing up without headers
+// and jumping around
+document.addEventListener("turbolinks:load", () => {
+  const mainContent = document.querySelector("#main-content");
+  mainContent?.classList.remove("hidden");
 });

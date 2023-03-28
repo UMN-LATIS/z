@@ -25,6 +25,7 @@ Rails.application.configure do
                         :self,
                         :https,
                         :unsafe_eval,
+                        :unsafe_inline,
                         "http://#{ViteRuby.config.host_with_port}")
 
       policy.connect_src :self,

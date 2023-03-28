@@ -13,35 +13,35 @@ Rails.application.routes.draw do
 
   # dev routes for cypress
   if Rails.env.development? || Rails.env.test?
-    scope path: "/__cypress__", controller: 'cypress' do
-      post "login", action: 'login'
+    scope path: "/__cypress__", controller: "cypress" do
+      post "login", action: "login"
     end
   end
 
   # Handle Auth
-  post '/auth/:provider/callback', to: 'sessions#create'
-  get '/auth/:provider/callback', to: 'sessions#create'
+  post "/auth/:provider/callback", to: "sessions#create"
+  get "/auth/:provider/callback", to: "sessions#create"
 
-  root 'home#index'
-  get 'shortener', to: 'urls#index'
+  root "home#index"
+  get "shortener", to: "urls#index"
 
-  get "/pages/:page" => "pages#show", as: :pages
+  get "/pages/:page" => "pages#show", :as => :pages
 
   # This will allow us to run the meat of the app at z.umn.edu/shortener and
   # assume that all other z.umn.edu/:keywords are requests for short urls.
-  scope '/shortener' do
+  scope "/shortener" do
     # /	home	index	get
-    get '/home', to: 'home#index'
+    get "/home", to: "home#index"
 
     # / user_lookup/:search_terms
-    get '/user_lookup/:search_terms', to: 'user_lookup#index'
+    get "/user_lookup/:search_terms", to: "user_lookup#index"
 
     # faq	faq	index	get
-    get '/faq', to: 'faq#index', as: 'faq'
+    get "/faq", to: "faq#index", as: "faq"
 
     # sessions sessions destroy get
-    get '/signin', to: 'sessions#new'
-    get '/signout', to: 'sessions#destroy'
+    get "/signin", to: "sessions#new"
+    get "/signout", to: "sessions#destroy"
 
     # urls	urls	index	get
     # urls/:id	urls	show	get
@@ -51,18 +51,18 @@ Rails.application.routes.draw do
     # urls/create	urls	create	put
     # urls/destroy	urls	destroy	delete
     resources :urls do
-      get 'datatable', to: 'urls_datatable#index', on: :collection
-      get 'keyword_filter/(:destination)/(:keyword)',
-          on: :collection,
-          to: 'urls#keyword_filter',
-          as: 'keyword_filter'
-      get 'download_qrcode', to: 'url_barcodes#show'
-      get 'csv/click_data', to: 'url_csvs#show'
-      get 'csv/:duration/:time_unit', to: 'url_csvs#show_aggregated'
-      get 'csv/:duration/:time_unit',
-          on: :collection,
-          to: 'url_csvs#show_aggregated',
-          as: 'csv'
+      get "datatable", to: "urls_datatable#index", on: :collection
+      get "keyword_filter/(:destination)/(:keyword)",
+        on: :collection,
+        to: "urls#keyword_filter",
+        as: "keyword_filter"
+      get "download_qrcode", to: "url_barcodes#show"
+      get "csv/click_data", to: "url_csvs#show"
+      get "csv/:duration/:time_unit", to: "url_csvs#show_aggregated"
+      get "csv/:duration/:time_unit",
+        on: :collection,
+        to: "url_csvs#show_aggregated",
+        as: "csv"
     end
 
     # transfer_requests	transfer_requests	index	get
@@ -74,7 +74,7 @@ Rails.application.routes.draw do
     # transfer_requests/:id/edit	transfer_requests	edit	get
     # transfer_requests/:id/withdraw	transfer_requests	destroy	delete
     resources :transfer_requests do
-      post 'confirm', on: :member
+      post "confirm", on: :member
     end
 
     resources :move_to_group, only: %i[new create]
@@ -92,8 +92,8 @@ Rails.application.routes.draw do
       # groups/:id/members/new	group_memberships	new	get
       # groups/:id/members/create	group_memberships	create	put
       # groups/:id/members/destroy	group_memberships	destroy	delete
-      resources :members, only: %i[index new create destroy], controller: 'group_memberships' do
-        get 'new/:search_terms', to: 'group_memberships#new', on: :collection
+      resources :members, only: %i[index new create destroy], controller: "group_memberships" do
+        get "new/:search_terms", to: "group_memberships#new", on: :collection
       end
     end
 
@@ -107,7 +107,7 @@ Rails.application.routes.draw do
     # api_keys/create	api_keys	create	put
     # api_keys/destroy	api_keys	destroy	delete
     resources :api_keys, only: %i[index create] do
-      delete 'delete', on: :collection
+      delete "delete", on: :collection
     end
 
     # group_context/update	group_context	show	get
@@ -120,7 +120,7 @@ Rails.application.routes.draw do
       # admin/transfer_requests/create	admin::transfer_requests	create	put
       # admin/transfer_requests/:id/show	admin::transfer_requests	show	get
       resources :transfer_requests, only: %i[index new create show] do
-        post 'confirm', on: :member
+        post "confirm", on: :member
       end
 
       # admin/urls/:search	admin::urls	index	get
@@ -129,27 +129,31 @@ Rails.application.routes.draw do
       # admin/urls/delete	admin::urls	destroy	delete
       # admin/urls/create	admin::urls	create	put
       resources :urls, only: %i[index edit show update destroy create] do
-        get 'datatable', to: 'urls_datatable#index', on: :collection
-        get 'csv/:duration/:time_unit',
-            on: :collection,
-            to: 'url_csvs#show',
-            as: 'csv'
+        get "csv/:duration/:time_unit",
+          on: :collection,
+          to: "url_csvs#show",
+          as: "csv"
       end
 
       # admin/audits/:search	admin::urls	index	get
       # admin/audits/:id	admin::urls	show	get
-      resources :audits, only: %i[index show] do
-        get 'datatable', to: 'audits_datatable#index', on: :collection
-      end
+      resources :audits, only: [:index]
 
-      resources :groups, only: [:index]
+      # admin/groups
+      # admin/groups/:id
+      # admin/groups/:id/urls
+      # admin/groups/:id/members
+      resources :groups, only: [:index, :show] do
+        resources :urls, only: [:index], controller: "group_urls"
+        resources :members, only: [:index], controller: "group_members"
+      end
 
       # admin/members/:search	admin::members	index	get
       # admin/members/:id	admin::members	show	get
       # admin/members/delete	admin::members	destroy	delete
       # admin/members/create	admin::members	create	put
-      resources :members, only: %i[index new create destroy], controller: 'members' do
-        get 'new/:search_terms', to: 'members#new', on: :collection
+      resources :members, only: %i[index new create destroy], controller: "members" do
+        get "new/:search_terms", to: "members#new", on: :collection
       end
 
       # admin/admins	admin::admins	index	get
@@ -165,5 +169,5 @@ Rails.application.routes.draw do
   match "/500", to: "errors#internal_server_error", via: :all
 
   # /:keyword	redirect index	get
-  get '/*keyword', to: 'redirect#index'
+  get "/*keyword", to: "redirect#index"
 end
