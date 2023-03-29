@@ -79,29 +79,26 @@ describe("admin groups index page", () => {
           cy.wrap($el).within(() => {
             const collection = collections[index];
 
-            // id
-            cy.get("td").eq(0).should("contain", collection.id);
-
             // collection name
             cy.get("td")
-              .eq(1)
+              .eq(0)
               .should("contain", collection.name)
               .should("contain", collection.description);
 
             // number of urls
             // group 0 has no urls, group 1 has 1 url, ...
-            cy.get("td").eq(2).should("contain", `${index} url`);
+            cy.get("td").eq(1).should("contain", `${index} url`);
 
             // number of members
             // group 0 has no members, group 1 has 1 member, ...
-            cy.get("td").eq(3).should("contain", `${index} member`);
+            cy.get("td").eq(2).should("contain", `${index} member`);
           });
         });
     });
 
     it("edits a collection name and description", () => {
       cy.get("[data-cy='groups-table']")
-        .contains(collections[0].id)
+        .contains('collection0')
         .closest("tr")
         .as("row0");
 
@@ -120,18 +117,16 @@ describe("admin groups index page", () => {
       // save the changes
       cy.get('[data-cy="update-group"]').contains("Save").click();
 
-      // check that the changes were saved
+      // The Table should be updated
       cy.get("[data-cy='groups-table'] tbody > tr")
         .should("have.length", 3)
         .contains("updated name")
         .closest("tr")
         .within(() => {
-          // verify that the id is still the same
-          cy.get("td").eq(0).should("contain", collections[0].id);
 
-          // and that the name and description were updated
-          cy.get("td").eq(1).should("contain", "updated name");
-          cy.get("td").eq(1).should("contain", "updated description");
+          // check that the name and description were updated
+          cy.get("td").eq(0).should("contain", "updated name");
+          cy.get("td").eq(0).should("contain", "updated description");
         });
     });
 
@@ -139,7 +134,7 @@ describe("admin groups index page", () => {
       cy.get("[data-cy='groups-table'] tbody > tr")
         .eq(0)
         .within(() => {
-          cy.get("td").eq(1).should("contain", collections[0].name);
+          cy.get("td").eq(0).should("contain", collections[0].name);
           cy.contains("Delete").click();
         });
 
@@ -151,36 +146,25 @@ describe("admin groups index page", () => {
     });
 
     it("allows collections to be sorted by name", () => {
-      // check that it's in acending order by default
-      cy.get("[data-cy='groups-table'] tbody > tr").each(($el, index) => {
-        cy.wrap($el).within(() => {
-          const collection = collections[index];
 
-          // collection name
-          cy.get("td")
-            .eq(1)
-            .should("contain", collection.name)
-            .should("contain", collection.description);
-        });
+      const collectionNamesAsc = collections.map((c) => c.name).sort();
+      const collectionNamesDesc = [...collectionNamesAsc].reverse();
+
+      // check that it begins in acending order
+      cy.get("[data-cy='groups-table'] tbody > tr td:first-child").each(($el, index) => {
+        const expectedCollectionName = collectionNamesAsc[index];
+        cy.wrap($el).should("contain", expectedCollectionName);
       });
 
-      //   // click the name header to sort by name
+      // click the name header to reverse the sort by name
       cy.get("[data-cy='groups-table'] thead > tr")
         .contains("Name")
-        .click() // hack: need to click twice to sort in test for some reason?
         .click();
 
       // check that it's in descending order
-      cy.get("[data-cy='groups-table'] tbody > tr").each(($el, index) => {
-        cy.wrap($el).within(() => {
-          const collection = collections[collections.length - 1 - index];
-
-          // collection name
-          cy.get("td")
-            .eq(1)
-            .should("contain", collection.name)
-            .should("contain", collection.description);
-        });
+      cy.get("[data-cy='groups-table'] tbody > tr td:first-child").each(($el, index) => {
+        const expectedCollectionName = collectionNamesDesc[index];
+        cy.wrap($el).should("contain", expectedCollectionName);
       });
     });
 
