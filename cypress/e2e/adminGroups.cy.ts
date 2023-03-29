@@ -2,7 +2,6 @@ import { validateFlashMessage } from "../support/validateFlashMessage";
 
 //fixtures
 import admin from "../fixtures/users/admin.json";
-import user1 from "../fixtures/users/user1.json";
 
 describe("admin groups index page", () => {
   beforeEach(() => {
