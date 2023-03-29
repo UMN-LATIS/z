@@ -27,10 +27,11 @@ Z is a custom URL shortener for the [University of Minnnesota](https://www.umn.e
    rbenv install
    ```
 
-4. Install dependencies with bundler
+4. Install dependencies with bundler and yarn
 
    ```sh
-   bundle install
+   bundle install # ruby dependencies
+   yarn install   # javascript dependencies
    ```
 
 5. Create, import the schema, and seed the database. Part of this connects to LDAP, so you will need to be on UMN VPN.
