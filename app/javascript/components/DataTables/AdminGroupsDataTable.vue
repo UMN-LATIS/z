@@ -6,7 +6,7 @@
       class="table table-striped table-bordered !tw-w-full"
       :options="options"
       :columns="columns"
-      :headers="['ID', 'Name', 'Urls', 'Members', 'Actions']"
+      :headers="['Name', 'Urls', 'Members', 'Actions']"
       @mounted="handleDataTableMounted"
       @click="handleDataTableClick"
     />
@@ -139,7 +139,6 @@ const options: DataTableOptions = {
 };
 
 const columns: DataTableColumnOptions[] = [
-  { data: "id" },
   {
     data: "name",
     render(data: string, type: string, row: Collection) {
