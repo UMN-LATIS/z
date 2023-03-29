@@ -98,7 +98,7 @@ describe("admin groups index page", () => {
 
     it("edits a collection name and description", () => {
       cy.get("[data-cy='groups-table']")
-        .contains('collection0')
+        .contains("collection0")
         .closest("tr")
         .as("row0");
 
@@ -123,7 +123,6 @@ describe("admin groups index page", () => {
         .contains("updated name")
         .closest("tr")
         .within(() => {
-
           // check that the name and description were updated
           cy.get("td").eq(0).should("contain", "updated name");
           cy.get("td").eq(0).should("contain", "updated description");
@@ -146,26 +145,27 @@ describe("admin groups index page", () => {
     });
 
     it("allows collections to be sorted by name", () => {
-
       const collectionNamesAsc = collections.map((c) => c.name).sort();
       const collectionNamesDesc = [...collectionNamesAsc].reverse();
 
       // check that it begins in acending order
-      cy.get("[data-cy='groups-table'] tbody > tr td:first-child").each(($el, index) => {
-        const expectedCollectionName = collectionNamesAsc[index];
-        cy.wrap($el).should("contain", expectedCollectionName);
-      });
+      cy.get("[data-cy='groups-table'] tbody > tr td:first-child").each(
+        ($el, index) => {
+          const expectedCollectionName = collectionNamesAsc[index];
+          cy.wrap($el).should("contain", expectedCollectionName);
+        }
+      );
 
       // click the name header to reverse the sort by name
-      cy.get("[data-cy='groups-table'] thead > tr")
-        .contains("Name")
-        .click();
+      cy.get("[data-cy='groups-table'] thead > tr").contains("Name").click();
 
       // check that it's in descending order
-      cy.get("[data-cy='groups-table'] tbody > tr td:first-child").each(($el, index) => {
-        const expectedCollectionName = collectionNamesDesc[index];
-        cy.wrap($el).should("contain", expectedCollectionName);
-      });
+      cy.get("[data-cy='groups-table'] tbody > tr td:first-child").each(
+        ($el, index) => {
+          const expectedCollectionName = collectionNamesDesc[index];
+          cy.wrap($el).should("contain", expectedCollectionName);
+        }
+      );
     });
 
     it("links a group name, url, and members", () => {
