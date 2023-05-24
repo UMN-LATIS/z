@@ -10,8 +10,8 @@ class UrlBarcodesController < ApplicationController
     end
 
     authorize url_record
-
-    qrcode = RQRCode::QRCode.new(url_record.url)
+    url = "#{request.base_url}/#{url_record.keyword}"
+    qrcode = RQRCode::QRCode.new(url)
 
     # Convert the QR Code to PNG
     png = qrcode.as_png(size: 400)
