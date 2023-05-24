@@ -10,17 +10,17 @@ class UrlBarcodesController < ApplicationController
     end
 
     authorize url_record
-    url = "#{request.base_url}/#{url_record.keyword}"
-    qrcode = RQRCode::QRCode.new(url)
+
+    qrcode = RQRCode::QRCode.new("#{request.base_url}/#{url_record.keyword}")
 
     # Convert the QR Code to PNG
-    png = qrcode.as_png(size: 400)
+    png = qrcode.as_png(size: 400, color: "#7a0019", fill: "white")
 
     # Convert the PNG data to an image object
     image = MiniMagick::Image.read(png.to_s)
 
     # Load the logo and scale it to a suitable size
-    logo_path = Rails.root.join("app/assets/images/M_blk.png")
+    logo_path = Rails.root.join("app/assets/images/block_m_circle.png")
     logo = MiniMagick::Image.open(logo_path)
     logo.resize "100x100"
 
