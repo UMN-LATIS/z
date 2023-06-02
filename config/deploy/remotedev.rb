@@ -19,9 +19,9 @@ ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 # property set. Specify the username and a domain or IP for the server.
 # Don't use `:all`, it's a meta role.
 
-role :app, %w[swadm@cla-z-dev.oit.umn.edu]
-role :web, %w[swadm@cla-z-dev.oit.umn.edu]
-role :db,  %w[swadm@cla-z-dev.oit.umn.edu]
+role :app, %w[swadm@cla-z-dev-02.oit.umn.edu]
+role :web, %w[swadm@cla-z-dev-02.oit.umn.edu]
+role :db,  %w[swadm@cla-z-dev-02.oit.umn.edu]
 
 # Configuration
 # =============

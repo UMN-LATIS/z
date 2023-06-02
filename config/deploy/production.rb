@@ -15,9 +15,12 @@
 # property set. Specify the username and a domain or IP for the server.
 # Don't use `:all`, it's a meta role.
 
-role :app, %w[swadm@cla-z-prd.oit.umn.edu]
-role :web, %w[swadm@cla-z-prd.oit.umn.edu]
-role :db,  %w[swadm@cla-z-prd.oit.umn.edu]
+role :app, %w[swadm@cla-z-prd-web-03.oit.umn.edu]
+role :web, %w[swadm@cla-z-prd-web-03.oit.umn.edu]
+role :db,  %w[swadm@cla-z-prd-web-03.oit.umn.edu]
+role :app, %w[swadm@cla-z-prd-web-04.oit.umn.edu]
+role :web, %w[swadm@cla-z-prd-web-04.oit.umn.edu]
+role :db,  %w[swadm@cla-z-prd-web-04.oit.umn.edu]
 # role :app, %w(swadm@cla-z-prd-2.oit.umn.edu)
 # role :web, %w(swadm@cla-z-prd-2.oit.umn.edu)
 # role :db,  %w(swadm@cla-z-prd-2.oit.umn.edu)
