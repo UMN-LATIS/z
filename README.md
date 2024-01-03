@@ -99,10 +99,10 @@ To deploy remote dev and staging environments:
 bundle exec cap <environmentname> deploy
 ```
 
-| Environment Name | Server                                                     |
-| ---------------- | ---------------------------------------------------------- |
-| remotedev        | [cla-z-dev.oit.umn.edu](https://cla-z-dev.oit.umn.edu)     |
-| staging          | [cla-z-stage.oit.umn.edu](https://cla-z-stage.oit.umn.edu) |
+| Environment Name | Server                                                       |
+| ---------------- | ------------------------------------------------------------ |
+| remotedev        | [cla-z-dev-02.oit.umn.edu](https://cla-z-dev-02.oit.umn.edu) |
+| staging          | [cla-z-tst-02.oit.umn.edu](https://cla-z-tst-02.oit.umn.edu) |
 
 ### Production
 
