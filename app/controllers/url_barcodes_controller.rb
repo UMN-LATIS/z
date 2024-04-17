@@ -1,3 +1,5 @@
+require 'barby'
+require 'barby/barcode/qr_code'
 require 'barby/outputter/png_outputter'
 require 'barby/outputter/svg_outputter'
 
