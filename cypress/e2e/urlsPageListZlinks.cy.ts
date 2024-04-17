@@ -264,11 +264,11 @@ describe("urlsPageListZlinks - /shortener/urls", () => {
 
         // hover over the share item to open the share submenu
         cy.get("@claDropdown")
-          .contains("Share")
+          .contains("QR Code")
           .realHover()
           .then(() => {
             // click on the QR Code item
-            cy.get("@claDropdown").contains("QR Code").click();
+            cy.get("@claDropdown").contains("PNG").click();
           });
 
         // wait for the download to complete and then validate
