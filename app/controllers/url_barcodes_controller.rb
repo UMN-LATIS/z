@@ -1,9 +1,3 @@
-# controllers/url_barcodes_controller.rb
-require 'barby'
-require 'barby/barcode/qr_code'
-require 'barby/outputter/png_outputter'
-require 'barby/outputter/svg_outputter'
-
 class UrlBarcodesController < ApplicationController
   def show
     @url = Url.find_by(keyword: params[:url_id])
