@@ -14,7 +14,25 @@
           <%= render('urls/share_buttons', url: url, list: true) %>
         </ul>
       </li>
-
+      <li class="dropdown-submenu pull-left">
+        <a href="#" class="btn action-button">
+          <i class="fa fa-qrcode !tw-text-black"></i>
+          <%= t('views.urls.index.table.in_row_actions.qr_code') %>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-left">
+          <li>
+            <button class="url-share-button url-share-button-qr js-qrcode-download tw-text-left" data-path="<%= url_download_qrcode_path(url.keyword) %>">
+              PNG
+              <span class="tw-text-neutral-400 tw-text-xs">(default)</span>
+            </button>
+          </li>
+          <li>
+            <button class="url-share-button url-share-button-qr js-qrcode-download tw-text-left" data-path="<%= url_download_qrcode_path(url.keyword, format: :svg) %>">
+              SVG
+            </button>
+          </li>
+        </ul>
+      </li>
       <li>
         <%= link_to t('views.urls.index.table.in_row_actions.stats'),
                     url_path(url.keyword),

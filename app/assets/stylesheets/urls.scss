@@ -649,20 +649,10 @@ table.dataTable tr.selected .fa-ellipsis-h {
       &.url-share-button-qr {
         color: black;
         font-size: 13px;
-        i.fa::before {
-          font-size: 13px;
-          color: black;
-        }
       }
     }
   }
   i.fa {
-    &::before {
-      font-size: 12px;
-      color: white;
-      padding-right: 10px;
-      vertical-align: middle;
-    }
     &.fa-ellipsis-h {
       &::before {
         color: #888;
