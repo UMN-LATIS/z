@@ -245,7 +245,7 @@ describe("urlsPageListZlinks - /shortener/urls", () => {
         cy.location("pathname").should("eq", "/shortener/urls/cla");
       });
 
-      it("downloads a QR code when clicking on the share > QR Code item", () => {
+      it("downloads a PNG QR code when clicking on the QR Code > PNG item", () => {
         // set up an intercept for the QR download
         const claStatsPage = "/shortener/urls/cla";
         let qrResponse;
@@ -273,8 +273,58 @@ describe("urlsPageListZlinks - /shortener/urls", () => {
 
         // wait for the download to complete and then validate
         // the response
+        cy.wait("@qrDownload").then((interception) => {
+          const { body, headers } = qrResponse;
+
+          // check that the server response is not null
+          expect(body.byteLength).to.be.greaterThan(100);
+
+          // and that it's a png image
+          expect(headers["content-type"]).to.equal("image/png");
+
+          // and that the filename will be z-cla.png
+          expect(headers["content-disposition"]).to.match(
+            new RegExp(`filename=\"z-cla.png\"`)
+          );
+        });
+      });
+
+      it("downloads an SVG QR code when clicking on the QR Code > SVG item", () => {
+        // set up an intercept for the QR download
+        const claStatsPage = "/shortener/urls/cla";
+        let qrResponse;
+
+        //intercept the download request
+        cy.intercept("GET", `${claStatsPage}/download_qrcode.svg`, (req) => {
+          req.continue((res) => {
+            qrResponse = res;
+
+            // set location to the stats page so that
+            // so that the test doesn't timeout
+            res.headers.location = claStatsPage;
+            res.send(302);
+          });
+        }).as("qrDownload");
+
+        // hover over the share item to open the share submenu
+        cy.get("@claDropdown")
+          .contains("QR Code")
+          .realHover()
+          .then(() => {
+            // click on the QR Code item
+            cy.get("@claDropdown").contains("SVG").click();
+          });
+
+        // wait for the download to complete and then validate
+        // the response
         cy.wait("@qrDownload").then(() => {
-          validateQRResponse(qrResponse, "z-cla.png");
+          const { body, headers } = qrResponse;
+
+          expect(body).to.include("<svg");
+          expect(headers["content-type"]).to.equal("image/svg+xml");
+          expect(headers["content-disposition"]).to.match(
+            new RegExp(`filename=\"z-cla.svg"`)
+          );
         });
       });
     });
