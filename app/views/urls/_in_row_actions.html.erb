@@ -11,7 +11,10 @@
                   class: 'btn action-button share-url fa fa-share-square-o',
                   'data-content': render('urls/share_buttons', url: url) %>
         <ul class="dropdown-menu dropdown-menu-left">
-          <%= render('urls/share_buttons', url: url, list: true) %>
+          <button class="url-share-button url-share-button-twitter" data-short-url="<%= full_url(url) %>">
+            <i class="fa fa-twitter"></i>
+            <%= t("views.urls.index.table.in_row_actions.twitter") %>
+          </button>
         </ul>
       </li>
       <li class="dropdown-submenu pull-left">
