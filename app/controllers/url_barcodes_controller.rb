@@ -1,3 +1,6 @@
+require 'barby/outputter/png_outputter'
+require 'barby/outputter/svg_outputter'
+
 class UrlBarcodesController < ApplicationController
   def show
     @url = Url.find_by(keyword: params[:url_id])
