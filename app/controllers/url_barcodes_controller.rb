@@ -1,8 +1,3 @@
-require 'barby'
-require 'barby/barcode/qr_code'
-require 'barby/outputter/png_outputter'
-require 'barby/outputter/svg_outputter'
-
 class UrlBarcodesController < ApplicationController
   def show
     @url = Url.find_by(keyword: params[:url_id])
@@ -22,18 +17,13 @@ class UrlBarcodesController < ApplicationController
   private
 
   def generate_qrcode(url, format)
-    qrcode = Barby::QrCode.new(view_context.full_url(url))
+    qrcode = RQRCode::QRCode.new(view_context.full_url(url))
 
     case format
     when 'svg'
-      outputter = Barby::SvgOutputter.new(qrcode)
-      outputter.xdim = 10
-      outputter.background = "none"
-      outputter.to_svg
+      qrcode.as_svg(viewbox: true)
     else
-      outputter = Barby::PngOutputter.new(qrcode)
-      outputter.xdim = 10
-      outputter.to_png
+      qrcode.as_png(size: 300, border_modules: 1)
     end
   end
 
