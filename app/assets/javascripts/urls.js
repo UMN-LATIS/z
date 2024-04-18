@@ -386,7 +386,7 @@ $(document).ready(function() {
     $(document).on("click", ".url-blurb-close-button", function(e) {
         e.preventDefault();
         $(this).closest(".url-blurb")
-            .addClass("off")
+            .addClass("off tw-overflow-hidden")
             .on("transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd", function() {
                 $(this).remove();
             });
