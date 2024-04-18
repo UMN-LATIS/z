@@ -24,14 +24,6 @@ class UrlsController < ApplicationController
   # GET /urls/1
   # GET /urls/1.json
   def show
-    require 'barby'
-    require 'barby/barcode/qr_code'
-    require 'barby/outputter/svg_outputter'
-
-    @barcode = Barby::QrCode.new(view_context.full_url(@url))
-    @barcode_svg = Barby::SvgOutputter.new(@barcode)
-    @barcode_svg.xdim = 5
-
     @url_identifier = @url.id
 
     @clicks = {
@@ -58,20 +50,20 @@ class UrlsController < ApplicationController
     end
   end
 
-  def edit
-    @url_identifier = @url.id
-
-    respond_to do |format|
-      format.html
-      format.js { render layout: false }
-    end
-  end
-
   # GET /urls/new
   def new
     @url = Url.new
     @url_identifier = Time.zone.now.to_ms
     respond_to do |format|
+      format.js { render layout: false }
+    end
+  end
+
+  def edit
+    @url_identifier = @url.id
+
+    respond_to do |format|
+      format.html
       format.js { render layout: false }
     end
   end
@@ -114,7 +106,7 @@ class UrlsController < ApplicationController
   # DELETE /urls/1.json
   def destroy
     if @url.destroy
-    respond_to do |format|
+      respond_to do |format|
         format.html { redirect_to urls_url, notice: 'URL was successfully destroyed.' }
         format.js { render layout: false }
         format.json { render json: { success: true, message: "Group deleted." } }
