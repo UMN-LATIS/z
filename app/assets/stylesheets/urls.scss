@@ -326,188 +326,11 @@ table.dataTable tr.selected .fa-ellipsis-h {
   }
 }
 
-// $superInputHeight: 50px;
-// .super-input {
-//   display: table;
-//   width: 100%;
-//   overflow: hidden;
-//   height: 50px;
-//   position: relative;
-//   margin: 0;
-//   background-color: white;
-//   color: black;
-//   > * {
-//     display: inline-block;
-//     vertical-align: middle;
-//   }
-
-//   input {
-//     background: white;
-//     border: none;
-//     font-size: 14px;
-//     height: $superInputHeight;
-//     padding: 0 30px;
-//     margin: 0;
-//   }
-//   input:focus {
-//     outline: none;
-//   }
-//   span {
-//     display: block;
-//     overflow: hidden;
-//   }
-//   .super-input-right {
-//     width: 1px;
-//     white-space: nowrap;
-//     display: table-cell;
-//   }
-
-//   .super-input-right > * {
-//     display: inline-block;
-//   }
-//   .divider {
-//     height: 40%;
-//     width: 1px;
-//     background-color: #ddd;
-//     margin: 0 15px;
-//   }
-
-//   button {
-//     height: $superInputHeight;
-//     margin: 0;
-//     border: 0;
-//     padding: 0 30px;
-//     color: white;
-//     font-weight: 600;
-//     background-color: $primaryColor;
-//     font-size: 13px;
-//     font-weight: 500;
-//   }
-// }
-
-// .super-input {
-//   .js-new-url-url,
-//   .js-new-group-name {
-//     width: 100%;
-//     display: table-cell;
-//   }
-//   .keyword-wrapper,
-//   .description-wrapper {
-//     height: $superInputHeight;
-//     > * {
-//       display: inline-block;
-//     }
-
-//     .keyword-static-text,
-//     .description-static-text {
-//       font-weight: 500;
-//       color: #555;
-//     }
-//     .field_with_errors {
-//       height: 100%;
-//     }
-//     input {
-//       padding-left: 0;
-//       width: 175px;
-//       height: 100%;
-//       margin-top: -0.5px;
-//     }
-//   }
-// }
-// @media screen and (min-width: 1100px) {
-//   .super-input {
-//     .keyword-wrapper,
-//     .description-wrapper {
-//       input.js-new-url-keyword,
-//       input.js-new-group-description {
-//         width: 300px;
-//       }
-//     }
-//   }
-// }
-// @media screen and (max-width: 992px) {
-//   .super-input {
-//     .js-new-url-url,
-//     .js-new-group-name {
-//       width: 200px;
-//     }
-//   }
-// }
-// @media screen and (max-width: 640px) {
-//   .url-banner-title {
-//     text-align: center;
-//   }
-//   #url-blurb-container {
-//     display: none;
-//   }
-//   .cancel-edit {
-//     display: block !important;
-//     margin-top: 10px !important;
-//   }
-//   #new-url-form {
-//     height: 240px;
-
-//     .z-hero-title {
-//       text-align: center;
-//     }
-//     form {
-//       width: 100%;
-//     }
-//   }
-//   .z-hero-content {
-//     width: 90%;
-//   }
-//   .z-hero {
-//     .z-hero-content {
-//       .z-hero-title-large {
-//         font-size: 40px;
-//       }
-//     }
-//   }
-
-//   .super-input {
-//     height: auto;
-//     width: 100%;
-//     display: block;
-//     overflow: auto;
-//     .super-input-right {
-//       display: block;
-//       width: auto;
-//       white-space: initial;
-//       .divider {
-//         display: none;
-//       }
-//     }
-//     > * {
-//       display: block;
-//     }
-//     .js-new-url-url,
-//     .js-new-group-name {
-//       width: 100%;
-//       border-bottom: 1px solid #eee;
-//     }
-//     .keyword-wrapper {
-//       width: 100%;
-//       padding: 0 30px;
-//       white-space: nowrap;
-//       text-align: left;
-//       input {
-//         width: auto !important;
-//         height: $superInputHeight;
-//         padding: 0;
-//       }
-//     }
-//     button {
-//       width: 100%;
-//     }
-//   }
-// }
-
 .url-blurb {
   transition: height 0.3s, padding 0.3s;
   border-top: 1px solid #cfcfcf;
+  border-radius: 5px;
   width: 100%;
-  height: 55px;
   background-color: white;
   padding: 10px 20px;
   box-sizing: border-box;
@@ -532,11 +355,8 @@ table.dataTable tr.selected .fa-ellipsis-h {
   .url-blurb-close-button {
     background: none;
     border: none;
-    float: right;
     border-radius: 100%;
     font-size: 12px;
-    margin-top: 7px;
-    margin-left: 20px;
     opacity: 0.6;
     &:hover {
       opacity: 1;
@@ -544,7 +364,6 @@ table.dataTable tr.selected .fa-ellipsis-h {
   }
 
   .url-blurb-actions {
-    float: right;
     .url-blurb-actions-header {
       font-size: 9px;
       text-transform: uppercase;

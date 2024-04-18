@@ -1,21 +1,24 @@
-<% is_large = (defined?(large) && large == true) ? 'url-share-button-large' : '' %>
-<% is_list = (defined?(list) && list == true) ? true : false %>
-
-<% if is_list %>
-  <li>
-<% end %>
-  <button class="url-share-button url-share-button-twitter <%= is_large %>" data-short-url="<%= full_url(url) %>">
-    <i class="fa fa-twitter"></i>
-    <%= t('views.urls.index.table.in_row_actions.tweet') %>
-  </button>
-<% if is_list %>
-  </li>
-  <li>
-<% end %>
-  <button class="url-share-button url-share-button-qr <%= is_large %> js-qrcode-download" data-path="<%= url_download_qrcode_path(url.keyword) %>">
+<% 
+  is_large = (defined?(large) && large == true) ? 'btn-lg' : 'btn-sm' 
+  qrcode_url_png = url_download_qrcode_path(url.keyword)
+  qrcode_url_svg = url_download_qrcode_path(url.keyword) + '.svg'
+%>
+<button class="btn btn-default tw-border-twitter-blue tw-text-twitter-blue js-share-button-twitter hover:tw-bg-twitter-blue hover:tw-text-white hover:tw-border-twitter-blue <%= is_large %>" data-short-url="<%= full_url(url) %>">
+  <i class="fa fa-twitter"></i>
+  <%= t('views.urls.index.table.in_row_actions.tweet') %>
+</button>
+<!-- QR Code split download button -->
+<div class="btn-group">
+  <a href="<%= qrcode_url_png %>" class="btn btn-default <%= is_large %> " download>
     <i class="fa fa-qrcode"></i>
     <%= t('views.urls.index.table.in_row_actions.qr_code') %>
+  </a>
+  <button type="button" class="btn btn-default dropdown-toggle  <%= is_large %>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <span class="caret"></span>
+    <span class="sr-only">Toggle Dropdown</span>
   </button>
-<% if is_list %>
-  </li>
-<% end %>
+  <ul class="dropdown-menu">
+    <li><a href="<%= qrcode_url_png %>" download>PNG</a></li>
+    <li><a href="<%= qrcode_url_svg %>" download>SVG</a></li>
+  </ul>
+</div>
