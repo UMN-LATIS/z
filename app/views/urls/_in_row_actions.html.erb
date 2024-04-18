@@ -24,16 +24,16 @@
         </a>
         <ul class="dropdown-menu dropdown-menu-left">
           <li>
-            <button class="url-share-button url-share-button-qr js-qrcode-download tw-text-left" data-path="<%= url_download_qrcode_path(url.keyword) %>">
+            <a class="tw-text-left !tw-flex tw-justify-between tw-items-baseline" href="<%= url_download_qrcode_path(url.keyword) %>" download>
               PNG
-              <span class="tw-text-neutral-400 tw-text-xs">(default)</span>
-            </button>
+              <span class="tw-uppercase tw-text-[0.75em] tw-text-neutral-400">Standard</span>
+            </a>
           </li>
           <li>
-            <button class="url-share-button url-share-button-qr js-qrcode-download tw-text-left" data-path="<%= url_download_qrcode_path(url.keyword, format: :svg) %>">
+            <a class="tw-text-left !tw-flex tw-justify-between tw-items-baseline" href="<%= url_download_qrcode_path(url.keyword, format: :svg) %>" download>
               SVG
-              <span class="tw-text-neutral-400 tw-text-xs">(advanced)</span>
-            </button>
+              <span class="tw-uppercase tw-text-[0.75em] tw-text-neutral-400">Advanced</span>
+            </a>
           </li>
         </ul>
       </li>
