@@ -28,7 +28,7 @@ class UrlBarcodesController < ApplicationController
     when 'svg'
       outputter = Barby::SvgOutputter.new(qrcode)
       outputter.xdim = 10
-      outputter.background = 'transparent'
+      outputter.background = "none"
       outputter.to_svg
     else
       outputter = Barby::PngOutputter.new(qrcode)
