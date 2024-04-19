@@ -34,5 +34,14 @@ module Z
     config.middleware.use Rack::Deflater
 
     config.exceptions_app = routes
+
+    ##
+    # The Papertrail gem serializes YAML in the DB, so we explicitly allow
+    # classes it needs. Without it, we get errors like:
+    # > Tried to load unspecified class: Time (Psych::DisallowedClass)
+    #
+    # See Also: https://discuss.rubyonrails.org/t/cve-2022-32224-possible-rce-escalation-bug-with-serialized-columns-in-active-record/81017
+    ##
+    config.active_record.yaml_column_permitted_classes = [Symbol, Date, Time]
   end
 end
