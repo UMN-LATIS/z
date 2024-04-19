@@ -105,7 +105,7 @@ group :development, :test do
   # rails helpers for cypress
   gem 'cypress-on-rails', '~> 1.0'
 
-  gem 'database_cleaner', "~> 1.8"
+  gem 'database_cleaner-active_record', '~> 2.1'
   gem 'factory_bot_rails', "~> 6.2"
   gem 'fuubar', "~> 2.5"
   gem 'launchy', "~> 2.4"
