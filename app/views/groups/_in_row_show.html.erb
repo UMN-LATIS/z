@@ -5,7 +5,7 @@
   </td>
   <td><%= link_to group.users.size, group_members_path(group) %></td>
   <td><%= link_to group.urls.size, urls_path(collection: group.id) %></td>
-  <td><%= group.created_at.to_s(:created_on_formatted)  %></td>
+  <td><%= group.created_at.to_fs(:created_on_formatted)  %></td>
   <td>
     <%= render 'groups/in_row_actions', group: group  %>
   </td>

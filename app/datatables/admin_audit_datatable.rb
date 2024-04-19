@@ -31,7 +31,7 @@ class AdminAuditDatatable < ApplicationDatatable
         event: record.event,
         whodunnit: user_internet_id,
         audit_history: record.version_history,
-        created_at: record.created_at.to_s(:created_on_formatted),
+        created_at: record.created_at.to_fs(:created_on_formatted),
         'DT_RowId' => "audit-#{record.id}"
       }
     end
