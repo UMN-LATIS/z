@@ -10,7 +10,7 @@ gem 'omniauth-shibboleth', "~> 1.1"
 gem 'omniauth-shibboleth-passive', "~> 0.1"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.0'
+gem 'rails', '~> 7.1'
 # Use mysql2 as the database for Active Record
 gem 'mysql2', "~> 0.5"
 # Use sqlite also
