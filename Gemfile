@@ -100,7 +100,7 @@ group :development, :test do
   gem 'byebug', "~> 11.1", platform: :mri
 
   # Use Rspec for testing
-  gem 'rspec-rails', '~> 6.0.0'
+  gem 'rspec-rails', '~> 6.1', '>= 6.1.2'
 
   # rails helpers for cypress
   gem 'cypress-on-rails', '~> 1.0'
