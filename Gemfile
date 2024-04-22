@@ -103,7 +103,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 6.1', '>= 6.1.2'
 
   # rails helpers for cypress
-  gem 'cypress-on-rails', '~> 1.0'
+  gem 'cypress-on-rails', '~> 1.17'
 
   gem 'database_cleaner-active_record', '~> 2.1'
   gem 'factory_bot_rails', "~> 6.2"
