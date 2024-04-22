@@ -14,7 +14,28 @@ Bundler.require(*Rails.groups)
 module Z
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.0
+    config.load_defaults 7.1
+
+    ###
+    # Active Record Encryption now uses SHA-256 as its hash digest algorithm.
+    #
+    # There are 3 scenarios to consider.
+    #
+    # 1. If you have data encrypted with previous Rails versions, and you have
+    # +config.active_support.key_generator_hash_digest_class+ configured as SHA1 (the default
+    # before Rails 7.0), you need to configure SHA-1 for Active Record Encryption too:
+    #++
+    # config.active_record.encryption.hash_digest_class = OpenSSL::Digest::SHA1
+    #
+    # 2. If you have +config.active_support.key_generator_hash_digest_class+ configured as SHA256 (the new default
+    # in 7.0), then you need to configure SHA-256 for Active Record Encryption:
+    #++
+    config.active_record.encryption.hash_digest_class = OpenSSL::Digest::SHA256
+    #
+    # 3. If you don't currently have data encrypted with Active Record encryption, you can disable this setting to
+    # configure the default behavior starting 7.1+:
+    #++
+    # config.active_record.encryption.support_sha1_for_non_deterministic_encryption = false
 
     ###
     # No longer add autoloaded paths into `$LOAD_PATH`. This means that you won't be able
@@ -59,6 +80,13 @@ module Z
     config.middleware.insert_before Rack::Runtime, HandleBadEncodingMiddleware
 
     config.exceptions_app = routes
+
+    ##
+    # in Rails 7.1, the new default column serializer is `nil`
+    # this sets it back to `YAML` to keep the same behavior as before.
+    # without it, starburst gem (used by admin announcements) will
+    # break with an error about `no default coder configured`
+    config.active_record.default_column_serializer = YAML
 
     ##
     # The Papertrail gem serializes YAML in the DB, so we explicitly allow
