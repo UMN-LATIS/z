@@ -61,10 +61,8 @@ gem 'data-confirm-modal', "~> 1.6"
 # use papertrail for auding or versioning
 gem 'paper_trail', "~> 14.0"
 
-# Use barby to generate QR codes
-gem 'barby', "~> 0.6"
-gem 'chunky_png', "~> 1.3"
-gem 'rqrcode', "~> 1.1"
+# QR code generation
+gem 'rqrcode', "~> 2.2"
 
 # authorization lugin
 gem 'pundit', "~> 2.1"

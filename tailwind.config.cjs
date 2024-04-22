@@ -24,6 +24,7 @@ module.exports = {
         "umn-neutral-700": `#5a5a5a`, // text color
         "umn-neutral-800": `#262626`, // active text color
         "umn-neutral-900": `#1a1a1a`,
+        "twitter-blue": "#51adec",
       },
     },
   },

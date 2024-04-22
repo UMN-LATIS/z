@@ -11,16 +11,40 @@
                   class: 'btn action-button share-url fa fa-share-square-o',
                   'data-content': render('urls/share_buttons', url: url) %>
         <ul class="dropdown-menu dropdown-menu-left">
-          <%= render('urls/share_buttons', url: url, list: true) %>
+          <li>
+            <button class="url-share-button js-share-button-twitter tw-text-twitter-blue !tw-text-sm" data-short-url="<%= full_url(url) %>">
+              <i class="fa fa-twitter"></i>
+              <%= t("views.urls.index.table.in_row_actions.twitter") %>
+            </button>
+          </li>
         </ul>
       </li>
-
+      <li class="dropdown-submenu pull-left">
+        <a href="#" class="btn action-button">
+          <i class="fa fa-qrcode !tw-text-black"></i>
+          <%= t('views.urls.index.table.in_row_actions.qr_code') %>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-left">
+          <li>
+            <a class="tw-text-left !tw-flex tw-justify-between tw-items-baseline" href="<%= url_download_qrcode_path(url.keyword) %>" download>
+              PNG
+              <span class="tw-uppercase tw-text-[0.75em] tw-text-neutral-400">Standard</span>
+            </a>
+          </li>
+          <li>
+            <a class="tw-text-left !tw-flex tw-justify-between tw-items-baseline" href="<%= url_download_qrcode_path(url.keyword, format: :svg) %>" download>
+              SVG
+              <span class="tw-uppercase tw-text-[0.75em] tw-text-neutral-400">Advanced</span>
+            </a>
+          </li>
+        </ul>
+      </li>
       <li>
         <%= link_to t('views.urls.index.table.in_row_actions.stats'),
                     url_path(url.keyword),
                     class: 'btn action-button show-url fa fa-bar-chart' %>
       </li>
-        <% if admin_view %>
+      <% if admin_view %>
         <li>
           <%= link_to t('views.urls.index.table.in_row_actions.edit'),
                       edit_admin_url_path(url),
@@ -33,7 +57,7 @@
                       data: { confirm: t('views.urls.index.table.in_row_actions.delete_confirm', keyword: url.keyword) },
                       class: 'btn action-button delete-url fa fa-trash-o', remote: true %>
         </li>
-        <% else %>
+      <% else %>
         <li>
           <%= link_to t('views.urls.index.table.in_row_actions.edit'),
                       edit_url_path(url),
@@ -46,8 +70,7 @@
                       data: { confirm: t('views.urls.index.table.in_row_actions.delete_confirm', keyword: url.keyword) },
                       class: 'btn delete-url fa fa-trash-o', remote: true %>
         </li>
-        <% end %>
+      <% end %>
     </ul>
   </div>
-
 </div>

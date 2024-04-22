@@ -110,22 +110,6 @@ See [Deploying to Production](./deploy_to_production.md).
 
 After deploying, populate the ip2location_db1 table with the content from the [IP2Location LITE IP-Country Database](https://lite.ip2location.com/database/ip-country).
 
-## Tech Stack
-
-- Rails
-- Vue
-- MySQL
-- LDAP (for directory lookup)
-- [OmniAuth](https://github.com/omniauth/omniauth), for authentication
-- [Pundit](https://github.com/elabs/pundit), for authorization
-- [Paper trail](https://github.com/airblade/paper_trail), for URL version history
-- [Turbolinks](https://github.com/turbolinks/turbolinks), for faster browsing
-- [Typeahead](https://github.com/twitter/typeahead.js/), for user autocomplete
-- [Google Charts](https://developers.google.com/chart/), for click visualization
-- [Barby](https://github.com/toretore/barby), for QR code generation
-- [Rubocop](https://github.com/bbatsov/rubocop), to enforce best practices
-- [Starburst](https://github.com/csm123/starburst), for in-app announcements
-
 ## Internationalization
 
 Most of the language has been extracted into a [single localization file](https://github.umn.edu/latis-sw/z/blob/develop/config/locales/en.bootstrap.yml). This allows you to change any language and make Z applicable to your environment.
