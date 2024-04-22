@@ -67,10 +67,6 @@ gem 'rqrcode', "~> 2.2"
 # authorization lugin
 gem 'pundit', "~> 2.1"
 
-# announcements to the seething masses
-# Using our own fork of starburst to support the current Rails version
-gem 'starburst',  github: 'UMN-LATIS/starburst', branch: 'feature/rails-7'
-
 # notify someone when exceptions occur
 # and notify slack channel
 gem 'exception_notification', "~> 4.4"

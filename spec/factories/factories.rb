@@ -28,13 +28,6 @@ FactoryBot.define do
     group { FactoryBot.create(:user).context_group }
   end
 
-  factory :announcement, class: 'Admin::Announcement' do
-    title	{ 'Whoa Nelly!' }
-    body { 'The Court is in Session, here comes the judge!' }
-    start_delivering_at	{ (DateTime.now - 30.days).strftime("%Y-%m-%d") }
-    stop_delivering_at { (DateTime.now + 30.days).strftime("%Y-%m-%d") }
-  end
-
   factory :group do
     sequence(:name) { |n| "group_name#{n}" }
     sequence(:description) { |n| "group_descr#{n}" }

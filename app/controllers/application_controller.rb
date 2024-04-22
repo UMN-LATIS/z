@@ -8,8 +8,6 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
   rescue_from ActionController::BadRequest, with: :render_not_found
 
-  helper Starburst::AnnouncementsHelper
-
   before_action :set_paper_trail_whodunnit
   before_action :expire_cache_headers
 

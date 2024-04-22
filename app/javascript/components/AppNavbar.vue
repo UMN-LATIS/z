@@ -22,9 +22,6 @@
       <NavbarItem>
         <a href="/shortener/admin/audits"> Audit Logs </a>
       </NavbarItem>
-      <NavbarItem>
-        <a href="/shortener/admin/announcements"> Announcements </a>
-      </NavbarItem>
     </NavbarDropdown>
   </template>
   <NavbarDropdown label="Help">

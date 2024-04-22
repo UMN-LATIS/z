@@ -45,10 +45,6 @@ declare global {
         opts?: Record<string, unknown>
       ): Chainable<RailsModel.User>;
 
-      createAnnouncement(
-        opts?: Record<string, unknown>
-      ): Chainable<RailsModel.Announcement>;
-
       createUrl(partialUrl: Partial<RailsModel.Url>): Chainable<RailsModel.Url>;
 
       clickUrl(

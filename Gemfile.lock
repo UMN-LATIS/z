@@ -1,12 +1,4 @@
 GIT
-  remote: https://github.com/UMN-LATIS/starburst.git
-  revision: 58ceb55afea186909606077a96d46315eb6cd980
-  branch: feature/rails-7
-  specs:
-    starburst (2.0.0.rc0)
-      rails (>= 4.2.0)
-
-GIT
   remote: https://github.com/pgate/twitter-typeahead-rails.git
   revision: 105a036048eb4c19a1d5c0bb7aec55346c8b506d
   specs:
@@ -543,7 +535,6 @@ DEPENDENCIES
   slack-notifier (~> 2.3)
   sprockets-rails
   sqlite3 (~> 1.4)
-  starburst!
   turbolinks (~> 5.2)
   twitter-bootstrap-rails!
   twitter-typeahead-rails!

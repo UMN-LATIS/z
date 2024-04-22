@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see
   # http://guides.rubyonrails.org/routing.html
 
-  mount Starburst::Engine => "/starburst"
+  # mount Starburst::Engine => "/starburst"
 
   # Handle API
   namespace :api do
@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   end
 
   # dev routes for cypress
-  if Rails.env.development? || Rails.env.test?
+  if Rails.env.local?
     scope path: "/__cypress__", controller: "cypress" do
       post "login", action: "login"
     end
@@ -53,16 +53,16 @@ Rails.application.routes.draw do
     resources :urls do
       get "datatable", to: "urls_datatable#index", on: :collection
       get "keyword_filter/(:destination)/(:keyword)",
-        on: :collection,
-        to: "urls#keyword_filter",
-        as: "keyword_filter"
+          on: :collection,
+          to: "urls#keyword_filter",
+          as: "keyword_filter"
       get "download_qrcode", to: "url_barcodes#show"
       get "csv/click_data", to: "url_csvs#show"
       get "csv/:duration/:time_unit", to: "url_csvs#show_aggregated"
       get "csv/:duration/:time_unit",
-        on: :collection,
-        to: "url_csvs#show_aggregated",
-        as: "csv"
+          on: :collection,
+          to: "url_csvs#show_aggregated",
+          as: "csv"
     end
 
     # transfer_requests	transfer_requests	index	get
@@ -130,9 +130,9 @@ Rails.application.routes.draw do
       # admin/urls/create	admin::urls	create	put
       resources :urls, only: %i[index edit show update destroy create] do
         get "csv/:duration/:time_unit",
-          on: :collection,
-          to: "url_csvs#show",
-          as: "csv"
+            on: :collection,
+            to: "url_csvs#show",
+            as: "csv"
       end
 
       # admin/audits/:search	admin::urls	index	get
@@ -143,7 +143,7 @@ Rails.application.routes.draw do
       # admin/groups/:id
       # admin/groups/:id/urls
       # admin/groups/:id/members
-      resources :groups, only: [:index, :show] do
+      resources :groups, only: %i[index show] do
         resources :urls, only: [:index], controller: "group_urls"
         resources :members, only: [:index], controller: "group_members"
       end
@@ -160,8 +160,6 @@ Rails.application.routes.draw do
       # admin/admins/delete	admin::admins	destroy	delete
       # admin/admins/create	admin::admins	create	put
       resources :admins, only: %i[index destroy create]
-
-      resources :announcements, only: %i[index new edit show update destroy create]
     end
   end
 

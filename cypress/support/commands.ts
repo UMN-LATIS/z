@@ -62,14 +62,6 @@ function createAndLoginUser(uid: string, opts: Record<string, unknown> = {}) {
     .then(() => user);
 }
 
-/**
- * create an Announcement via FactoryBot
- */
-function createAnnouncement(opts: Record<string, unknown> = {}) {
-  return cy
-    .appFactories<RailsModel.Announcement>([["create", "announcement", opts]])
-    .then(([announcement]) => announcement);
-}
 
 function createUrl(partialUrl: Partial<RailsModel.Url>) {
   return cy
@@ -162,7 +154,6 @@ Cypress.Commands.addAll({
   login,
   createUser,
   createAndLoginUser,
-  createAnnouncement,
   createUrl,
   clickUrl,
   createGroup,

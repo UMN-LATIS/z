@@ -93,7 +93,6 @@ RSpec/ExampleLength:
 RSpec/FilePath:
   Exclude:
     - "spec/features/copy_short_url.rb"
-    - "spec/models/announcement_spec.rb"
 
 # Offense count: 364
 # Configuration parameters: AssignmentOnly.
@@ -103,7 +102,6 @@ RSpec/InstanceVariable:
 # Offense count: 4
 RSpec/MultipleDescribes:
   Exclude:
-    - "spec/features/admin/announcements_spec.rb"
     - "spec/features/admin/audits_spec.rb"
     - "spec/features/admin/urls_spec.rb"
     - "spec/features/admin_members_spec.rb"
@@ -247,7 +245,6 @@ Style/CaseLikeIf:
 Style/ClassAndModuleChildren:
   Exclude:
     - "app/controllers/admin/admins_controller.rb"
-    - "app/controllers/admin/announcements_controller.rb"
     - "app/controllers/admin/audits_controller.rb"
     - "app/controllers/admin/audits_datatable_controller.rb"
     - "app/controllers/admin/groups_controller.rb"
@@ -258,9 +255,6 @@ Style/ClassAndModuleChildren:
     - "app/controllers/admin/urls_datatable_controller.rb"
     - "app/controllers/api/v1/base_controller.rb"
     - "app/controllers/api/v1/urls_controller.rb"
-    - "app/helpers/admin/announcements_helper.rb"
-    - "app/models/admin/announcement.rb"
-    - "app/policies/admin/announcement_policy.rb"
 
 # Offense count: 3
 Style/CombinableLoops:
