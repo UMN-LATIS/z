@@ -95,19 +95,16 @@ describe("urlsPageListZlinks - /shortener/urls", () => {
         .contains("Create New Collection")
         .click();
 
-      // enter a name and description for the new collection
-      cy.get("#group_name")
-        // FIXME: sometimes this doesn't complete typing the full string
-        // before continuing(or there's something preventing it from
-        // entering into the input).Using force: true to work around
-        // this for now.
-        .type("testcollection", { force: true })
-        .then(() => {
-          cy.get("#group_description").type("test description");
-        });
+      // Sometimes cypress doesn't complete typing the full string
+      // into the input field. Using `force: true` and manually triggering
+      // `input` event to work around this issue.
+      cy.get("#group_name").type("testcollection", { force: true }).trigger('input');
+
+      cy.get("#group_description").type("test description", { force: true }).trigger('input');
 
       // submit
-      cy.get("#new_group").submit();
+      cy.contains('Submit').click();
+      cy.contains('Confirm').click();
 
       // verify that the url was added to the collection
       cy.get("@claRow")

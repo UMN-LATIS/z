@@ -50,7 +50,7 @@ class UrlDatatable < ApplicationDatatable
           locals: { url: record }
         ),
         total_clicks: link_to(record.total_clicks, url_path(record.keyword), target: '_blank', rel: 'noopener'),
-        created_at: record.created_at.to_s(:created_on_formatted),
+        created_at: record.created_at.to_fs(:created_on_formatted),
         actions: render(
           formats: [:html],
           partial: 'urls/in_row_actions',

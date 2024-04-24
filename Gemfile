@@ -10,7 +10,7 @@ gem 'omniauth-shibboleth', "~> 1.1"
 gem 'omniauth-shibboleth-passive', "~> 0.1"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.0'
+gem 'rails', '~> 7.1'
 # Use mysql2 as the database for Active Record
 gem 'mysql2', "~> 0.5"
 # Use sqlite also
@@ -59,7 +59,7 @@ gem 'clipboard-rails', "~> 1.7"
 gem 'data-confirm-modal', "~> 1.6"
 
 # use papertrail for auding or versioning
-gem 'paper_trail', "~> 14.0"
+gem 'paper_trail', '~> 15.1'
 
 # QR code generation
 gem 'rqrcode', "~> 2.2"
@@ -100,12 +100,12 @@ group :development, :test do
   gem 'byebug', "~> 11.1", platform: :mri
 
   # Use Rspec for testing
-  gem 'rspec-rails', '~> 6.0.0'
+  gem 'rspec-rails', '~> 6.1', '>= 6.1.2'
 
   # rails helpers for cypress
-  gem 'cypress-on-rails', '~> 1.0'
+  gem 'cypress-on-rails', '~> 1.17'
 
-  gem 'database_cleaner', "~> 1.8"
+  gem 'database_cleaner-active_record', '~> 2.1'
   gem 'factory_bot_rails', "~> 6.2"
   gem 'fuubar', "~> 2.5"
   gem 'launchy', "~> 2.4"
@@ -167,3 +167,5 @@ gem 'browser', "~> 4.2"
 gem "rack-utf8_sanitizer", "~> 1.7"
 
 # gem "tailwindcss-rails", "~> 2.0"
+
+gem "terser", "~> 1.2"

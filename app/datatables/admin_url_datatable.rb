@@ -27,7 +27,7 @@ class AdminUrlDatatable < ApplicationDatatable
         url: record.url,
         keyword: record.keyword,
         total_clicks: record.total_clicks,
-        created_at: record.created_at.to_s(:created_on_formatted)
+        created_at: record.created_at.to_fs(:created_on_formatted)
       }
     end
   end

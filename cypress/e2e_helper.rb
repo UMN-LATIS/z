@@ -29,12 +29,12 @@ factory = FactoryBot if defined?(FactoryBot)
 factory = FactoryGirl if defined?(FactoryGirl)
 
 CypressOnRails::SmartFactoryWrapper.configure(
-    always_reload: false,
-    factory: factory,
-    files: [
-      Rails.root.join('spec', 'factories.rb'),
-      Rails.root.join('spec', 'factories', '**', '*.rb')
-    ]
+  always_reload: false,
+  factory:,
+  files: [
+    Rails.root.join("spec/factories.rb"),
+    Rails.root.join("spec/factories/**/*.rb")
+  ]
 )
 
 # require 'vcr'

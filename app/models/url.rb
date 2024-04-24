@@ -100,7 +100,7 @@ class Url < ApplicationRecord
     # ex: http://localhost:3000/shortener/urls/3/csv/raw.csv
     data = CSV.generate(headers: true) do |csv|
       clicks.select(:country_code, :created_at).each do |click|
-        csv << [url, keyword, click.country_code, click.created_at.to_s(:created_on_formatted)]
+        csv << [url, keyword, click.country_code, click.created_at.to_fs(:created_on_formatted)]
       end
     end
     %w[url keyword country_code url_created_on].to_csv + data

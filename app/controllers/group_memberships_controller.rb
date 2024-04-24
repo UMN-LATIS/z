@@ -1,9 +1,8 @@
 class GroupMembershipsController < ApplicationController
-  before_action :set_params, only: %i[show index update create destroy]
+  before_action :set_params, only: %i[index create destroy]
   before_action :ensure_signed_in
 
-  def index
-  end
+  def index; end
 
   def new
     render json: UserLookup.new(
@@ -21,7 +20,7 @@ class GroupMembershipsController < ApplicationController
         format.js { render inline: "location.reload();" }
         format.json do
           render json: group_member_as_json(member), status: :created,
-            location: group_members_url(@group)
+                 location: group_members_url(@group)
         end
         # rubocop: enable Rails/RenderInline
       else
