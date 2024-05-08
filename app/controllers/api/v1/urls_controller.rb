@@ -21,6 +21,7 @@ class Api::V1::UrlsController < Api::V1::BaseController
 
     render json: { status: :success, message: url }
   end
+
   def create
     urls = @payload['urls']
 
@@ -36,7 +37,7 @@ class Api::V1::UrlsController < Api::V1::BaseController
         group_id = @current_user.default_group_id
       end
 
-      new_url = Url.new(url: url['url'], keyword: url['keyword'], group_id: group_id)
+      new_url = Url.new(url: url['url'], keyword: url['keyword'], group_id:)
 
       url['result'] =
         if new_url.save
@@ -47,5 +48,36 @@ class Api::V1::UrlsController < Api::V1::BaseController
     end
 
     render json: urls
+  end
+
+  def update
+    current_keyword = params[:id]
+
+    url = Url.find_by(keyword: current_keyword)
+
+    # if there's no url, return 404
+    if url.blank?
+      render json: { status: :error, message: 'URL not found' }, status: :not_found
+      return
+    end
+
+    # if the url's group doesn't have the current user as a member
+    # then return 403
+    if url.group.users.exclude?(@current_user)
+      render json: { status: :error, message: 'Unauthorized access' }, status: :forbidden
+      return
+    end
+
+    # don't permit keyword changes
+    if @payload['keyword'] && @payload['keyword'] != current_keyword
+      render json: { status: :error, message: 'Cannot change keyword' }, status: :bad_request
+      return
+    end
+
+    # update url with payload
+    url.url = @payload['url']
+    url.save
+
+    render json: { status: :success, message: url }
   end
 end

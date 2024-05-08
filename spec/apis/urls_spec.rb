@@ -177,4 +177,61 @@ describe '[API: URLs]', type: :api do
     end
   end
 
+  describe 'PUT /api/v1/urls/:keyword' do
+    let(:user) { create(:user) }
+    let(:existing_url) { create(:url, group_id: user.default_group_id, keyword: 'unique-keyword', url: 'http://example.com') }
+
+    it 'updates a URL' do
+      new_url = 'http://example.org'
+
+      payload = { url: new_url, keyword: existing_url.keyword }
+      token = JWT.encode payload, user.secret_key, 'HS256'
+
+      header 'Authorization', "#{user.uid}:#{token}"
+
+      put "/api/v1/urls/#{existing_url.keyword}"
+      expect(last_response.status).to eq(200)
+      result = JSON.parse(last_response.body)
+
+      expect(result['status']).to eq('success')
+      expect(result['message']['url']).to eq(payload[:url])
+      expect(result['message']['keyword']).to eq(payload[:keyword])
+    end
+
+    it 'returns a 404 when the URL does not exist' do
+      new_url = 'http://example.org'
+
+      payload = { url: new_url, keyword: 'nonexistent-keyword' }
+      token = JWT.encode payload, user.secret_key, 'HS256'
+
+      header 'Authorization', "#{user.uid}:#{token}"
+
+      put "/api/v1/urls/#{payload[:keyword]}"
+      expect(last_response.status).to eq(404)
+      result = JSON.parse(last_response.body)
+      expect(result['status']).to eq('error')
+      expect(result['message']).to eq('URL not found')
+    end
+
+    it 'does not permit keyword updates' do
+      new_keyword = 'new-keyword'
+
+      payload = { url: existing_url.url, keyword: new_keyword }
+      token = JWT.encode payload, user.secret_key, 'HS256'
+
+      header 'Authorization', "#{user.uid}:#{token}"
+
+      put "/api/v1/urls/#{existing_url.keyword}"
+      expect(last_response.status).to eq(400)
+      result = JSON.parse(last_response.body)
+
+      expect(result['status']).to eq('error')
+      expect(result['message']).to eq('Cannot change keyword')
+
+      # verify that the keyword is not updated
+      url = Url.find(existing_url.id)
+      expect(url.keyword).to eq(existing_url.keyword)
+      expect(url.url).to eq(existing_url.url)
+    end
+  end
 end
