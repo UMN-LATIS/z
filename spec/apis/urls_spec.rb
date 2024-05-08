@@ -116,5 +116,23 @@ describe '[API: URLs]', type: :api do
 
       expect(last_response.status).to be(401)
     end
+
+    it 'does not permit users to create urls for other users' do
+      mallory = create(:user, { uid: 'mallory' })
+      alice = create(:user, { uid: 'alice' })
+
+      # mallory creates a URL for alice
+      payload = { urls: [{ url: url1_url }] }
+
+      # and then signs it with her own (mallory's) secret key
+      token = JWT.encode payload, mallory.secret_key, 'HS256'
+
+      # but then tries to use alice's uid to create
+      # urls on her behalf
+      header 'Authorization', "#{alice.uid}:#{token}"
+      post '/api/v1/urls'
+
+      expect(last_response.status).to be(401)
+    end
   end
 end
