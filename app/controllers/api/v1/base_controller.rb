@@ -8,7 +8,7 @@ class Api::V1::BaseController < ActionController::Base
     # head(:unauthorized) && return unless request.headers['Authorization']
 
     # Parse Auth Header
-    user_uid, token = request.headers['Authorization'].split(':')
+    user_uid, token = request.headers['Authorization']&.split(':')
     head(:unauthorized) && return unless user_uid && token
 
     # Load User
