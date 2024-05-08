@@ -1,4 +1,26 @@
 class Api::V1::UrlsController < Api::V1::BaseController
+  def show
+    # the `id` param actually the keyword
+    keyword = params[:id]
+
+    # get the url with the keyword
+    url = Url.find_by(keyword:)
+
+    # if there's no url, return 404
+    if url.blank?
+      render json: { status: :error, message: 'URL not found' }, status: :not_found
+      return
+    end
+
+    # if the url's group doesn't have the current user as a member
+    # then return 403
+    if url.group.users.exclude?(@current_user)
+      render json: { status: :error, message: 'Unauthorized access' }, status: :forbidden
+      return
+    end
+
+    render json: { status: :success, message: url }
+  end
   def create
     urls = @payload['urls']
 

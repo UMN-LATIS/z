@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   # Handle API
   namespace :api do
     namespace :v1 do
-      resources :urls, only: [:create]
+      resources :urls, only: %i[create show update]
     end
   end
 

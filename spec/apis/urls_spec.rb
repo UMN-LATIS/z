@@ -135,4 +135,46 @@ describe '[API: URLs]', type: :api do
       expect(last_response.status).to be(401)
     end
   end
+
+  describe 'GET /api/v1/urls/:keyword' do
+    let(:user) { create(:user) }
+    let(:existing_url) { create(:url, group_id: user.default_group_id, keyword: 'unique-keyword', url: 'http://example.com') }
+    let(:token) { JWT.encode({ access_id: user.uid }, user.secret_key, 'HS256') }
+
+    before do
+      header 'Authorization', "#{user.uid}:#{token}"
+    end
+
+    it 'successfully retrieves a URL by keyword' do
+      get "/api/v1/urls/#{existing_url.keyword}"
+
+      expect(last_response.status).to eq(200)
+      result = JSON.parse(last_response.body)
+      expect(result['status']).to eq('success')
+      expect(result['message']['url']).to eq(existing_url.url)
+      expect(result['message']['keyword']).to eq(existing_url.keyword)
+    end
+
+    it 'returns a 404 when the URL does not exist' do
+      get "/api/v1/urls/nonexistent-keyword"
+      expect(last_response.status).to eq(404)
+      result = JSON.parse(last_response.body)
+      expect(result['status']).to eq('error')
+      expect(result['message']).to eq('URL not found')
+    end
+
+    it 'returns an error with unauthorized access' do
+      header 'Authorization', 'invalid-token'
+      get "/api/v1/urls/#{existing_url.keyword}"
+      expect(last_response.status).to eq(401)
+    end
+
+    it 'forbids access to urls that dont belong to a users group' do
+      new_user = create(:user)
+      new_url = create(:url, { group_id: new_user.default_group_id, keyword: 'new-keyword' })
+      get "/api/v1/urls/#{new_url.keyword}"
+      expect(last_response.status).to eq(403)
+    end
+  end
+
 end
