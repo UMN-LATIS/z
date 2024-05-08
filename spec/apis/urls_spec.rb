@@ -213,6 +213,38 @@ describe '[API: URLs]', type: :api do
       expect(result['message']).to eq('URL not found')
     end
 
+    it 'forbids updated to urls that dont belong to a users group' do
+      mallory = create(:user)
+
+      payload = { url: "http://malloryisthebest.com", keyword: existing_url.keyword }
+
+      token = JWT.encode payload, mallory.secret_key, 'HS256'
+
+      header 'Authorization', "#{mallory.uid}:#{token}"
+
+      put "/api/v1/urls/#{existing_url.keyword}"
+
+      expect(last_response.status).to eq(403)
+
+      # verify that the keyword is not updated
+      url = Url.find(existing_url.id)
+      expect(url.keyword).to eq(existing_url.keyword)
+      expect(url.url).to eq(existing_url.url)
+    end
+
+    it 'requires a valid token' do
+      payload = { url: "http://malloryisthebest.com", keyword: existing_url.keyword }
+
+      put "/api/v1/urls/#{existing_url.keyword}", params: payload
+
+      expect(last_response.status).to eq(401)
+
+      # verify that the keyword is not updated
+      url = Url.find(existing_url.id)
+      expect(url.keyword).to eq(existing_url.keyword)
+      expect(url.url).to eq(existing_url.url)
+    end
+
     it 'does not permit keyword updates' do
       new_keyword = 'new-keyword'
 
