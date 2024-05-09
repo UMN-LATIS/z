@@ -28,7 +28,7 @@
 
 .error-page__message {
   font-size: 1.25rem;
-  max-width: 30rem;
+  max-width: 60ch;
   margin: auto;
 }
 
@@ -45,4 +45,8 @@
   .error-page {
     padding: 3rem 1rem;
   }
+}
+
+.error-page p {
+  margin: 1em;
 }
