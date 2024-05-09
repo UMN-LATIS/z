@@ -1,10 +1,12 @@
 <main class="error-page">
   <h1 class="error-page__heading">404</h1>
   <h2 class="error-page__subheading">Not Found</h2>
-
   <div class="error-page__message">
     <p>
-      We can’t seem to find what you’re looking for. This could be caused by a bad link or a mistyped URL. You could try the <a href="https://usearch.umn.edu/">University of Minnesota Search</a>.
+      The address 
+      <% if @requested_path %>
+        <code><%= t('views.not_found.hostname') %><%= @requested_path %></code>
+      <% end %>
+      does not exist. Please double check the address, or contact the person who provided you with this link.
     </p>
-  </div>
-</main>
+  </main>

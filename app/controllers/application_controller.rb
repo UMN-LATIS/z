@@ -41,6 +41,7 @@ class ApplicationController < ActionController::Base
   end
 
   def render_not_found
+    @requested_path = request.path
     render template: 'errors/not_found', layout: 'layouts/application', status: :not_found, formats: [:html]
   end
 
