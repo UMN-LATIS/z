@@ -3,6 +3,7 @@
   --maroon: #7a0019;
   color: var(--black);
   line-height: 1.4;
+  padding: 6rem 1rem;
 }
 
 .error-page a {
@@ -14,17 +15,9 @@
   line-height: inherit;
 }
 
-.error-page__image {
-  display: block;
-  margin: 1rem auto 3rem;
-  width: 50%;
-  min-width: 12rem;
-  max-width: 30rem;
-}
 
 .error-page__heading {
   font-size: 6rem;
-  margin-top: 4rem;
   margin-bottom: 1rem;
 }
 
@@ -48,5 +41,8 @@
   }
   .error-page__message {
     font-size: 1rem;
+  }
+  .error-page {
+    padding: 3rem 1rem;
   }
 }
