@@ -2,7 +2,11 @@
   <h1 class="error-page__heading">404</h1>
   <h2 class="error-page__subheading">Not Found</h2>
   <div class="error-page__message">
-    <p>The shortened Z-link <code><%= @requested_path %></code> does not exist.</p>
-    <p>If you are trying to access a specific resource, please double-check the URL or contact the person who provided you with the original link.</p>
-  </div>
-</main>
+    <p>
+      The address 
+      <% if @requested_path %>
+        <code><%= t('views.not_found.hostname') %><%= @requested_path %></code>
+      <% end %>
+      does not exist. Please double check the address, or contact the person who provided you with this link.
+    </p>
+  </main>
