@@ -42,11 +42,14 @@
         </div>
         <p>Z features an API for creating and updating directly from your applications.</p>
         <p>
-          Each API request must have an http <code>Authorization</code> header with your <code>access_id</code> (above) and a signed payload in the form of a <a href="https://jwt.io">JSON Web Token</a> or <code>jwt</code>.
+          Each API request must have an http <code>Authorization</code> header with your <b>Access ID</b> (above) and a payload signed with your <b>Secret Key</b> (above) in the form of a <a href="https://jwt.io">JSON Web Token</a> (or JWT). The access id and signed payload are separated by a colon <code>:</code>.
         </p>
-        <pre><code>Authorization: {your_access_id}:{your_jwt}</code></pre>
+        <pre><code>Authorization: {your_access_id}:{your_signed_payload}</code></pre>
         <p>
-          We recommend <a href="https://jwt.io/libraries">using a JWT library</a> to sign your payload and create the jwt. The examples below use JavaScript and the <a href="https://github.com/auth0/node-jsonwebtoken">jsonwebtoken</a> library.
+          To create your signed payload, use <a href="https://jwt.io/libraries">a JWT library</a> for your programming language.  
+        </p>
+        <p>
+          The examples below use JavaScript and the <a href="https://github.com/auth0/node-jsonwebtoken">jsonwebtoken</a> library. You can also <a href="https://github.com/UMN-LATIS/z-api-example">find an example implementation</a> on Github.
         </p>
       </section>
       <section id="create-zlink">
@@ -88,8 +91,8 @@ const payload = {
   ],
 };
 
-// create the jwt by signing your payload with `SECRET_KEY`
-const token = jsonwebtoken.sign(payload, SECRET_KEY)
+// signing your payload with `SECRET_KEY`
+const signedPayload = jsonwebtoken.sign(payload, SECRET_KEY)
 
 // send the POST request to the server
 const response = await fetch(
@@ -97,7 +100,7 @@ const response = await fetch(
   {
     method: "POST",
     headers: {
-      Authorization: `${ACCESS_ID}:${token}`,
+      Authorization: `${ACCESS_ID}:${signedPayload}`,
     },
   }
 );
@@ -148,8 +151,8 @@ const payload = {
   url: "https://example.org/updated-url"
 };
 
-// create the jwt by signing your payload with `SECRET_KEY`
-const token = jsonwebtoken.sign(payload, SECRET_KEY)
+// sign your payload with `SECRET_KEY`
+const signedPayload = jsonwebtoken.sign(payload, SECRET_KEY)
 
 // send the POST request to the server
 const response = await fetch(
@@ -157,7 +160,7 @@ const response = await fetch(
   {
     method: "PUT",
     headers: {
-      Authorization: `${ACCESS_ID}:${token}`,
+      Authorization: `${ACCESS_ID}:${signedPayload}`,
     },
   }
 );
