@@ -2,11 +2,14 @@ import user from "../fixtures/users/user1.json";
 import { validateQRResponse } from "../support/validateQRResponse";
 
 describe("urlsPageListZlinks - /shortener/urls", () => {
+  let testUser;
   beforeEach(() => {
     cy.app("clean");
     // create a test user without admin privileges
     cy.createUser(user.umndid)
       .then((u) => {
+        testUser = u;
+
         // create 2 urls owned by the user
         cy.createUrl({
           keyword: "cla",
@@ -323,6 +326,46 @@ describe("urlsPageListZlinks - /shortener/urls", () => {
             new RegExp(`filename=\"z-cla.svg"`)
           );
         });
+      });
+    });
+
+    describe("pagination", () => {
+      it("keeps a user on the same page after saving an edited link", () => {
+        // create new urls
+        const urls = [];
+        for (let i = 1; i <= 40; i++) {
+          urls.push([
+            "create",
+            "url",
+            {
+              url: `https://example.com/${i}`,
+              group_id: testUser.context_group_id,
+            },
+          ]);
+        }
+        cy.appFactories(urls);
+
+        // reload the page to see the new urls
+        cy.reload();
+
+        // go to the next page
+        cy.get(".pagination").contains("Next").click();
+
+        // edit keyword
+        cy.get("#urls-table tbody tr:first-child").as("row");
+        cy.get("@row").find(".dropdown").as("rowDropdown");
+        cy.get("@rowDropdown").find(".actions-dropdown-button").click();
+        cy.get("@row").contains("Edit").click();
+
+        // enter
+        cy.get('#urls-table [data-cy="inline-edit-form"] #url_keyword')
+          .clear()
+          .type("updatedkeyword");
+        cy.contains("Submit").click();
+
+        // keyword should still be on the page
+        // and we haven't navigated back to the first page
+        cy.get("#urls-table").contains("updatedkeyword");
       });
     });
   });

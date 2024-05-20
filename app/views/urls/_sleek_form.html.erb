@@ -1,5 +1,5 @@
 <% is_edit = (defined?(edit) && edit == true) ? true : false %>
-<div class="z-hero-content tw-relative tw-z-10 tw-text-white tw-max-w-screen-lg tw-mx-auto">
+<div class="z-hero-content tw-relative tw-z-10 tw-text-white tw-max-w-screen-lg tw-mx-auto" data-cy="inline-edit-form">
   <div class="tw-max-w-[90rem] tw-mx-auto">
     <h3 class="tw-text-2xl tw-mb-4 <%= is_edit && 'tw-text-neutral-900' %>">
       <%= is_edit ? t('views.urls.sleek_form.edit.title') : t('views.urls.sleek_form.new.title') %>
