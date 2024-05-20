@@ -352,7 +352,7 @@ describe("urlsPageListZlinks - /shortener/urls", () => {
         cy.get(".pagination").contains("Next").click();
 
         // edit keyword
-        cy.get("#urls-table").contains("keyword29").closest("tr").as("row");
+        cy.get("#urls-table tbody tr:first-child").as("row");
         cy.get("@row").find(".dropdown").as("rowDropdown");
         cy.get("@rowDropdown").find(".actions-dropdown-button").click();
         cy.get("@row").contains("Edit").click();
@@ -360,12 +360,12 @@ describe("urlsPageListZlinks - /shortener/urls", () => {
         // enter
         cy.get('#urls-table [data-cy="inline-edit-form"] #url_keyword')
           .clear()
-          .type("newkeyword29");
+          .type("updatedkeyword");
         cy.contains("Submit").click();
 
         // keyword should still be on the page
         // and we haven't navigated back to the first page
-        cy.get("#urls-table").contains("newkeyword29");
+        cy.get("#urls-table").contains("updatedkeyword");
       });
     });
   });
