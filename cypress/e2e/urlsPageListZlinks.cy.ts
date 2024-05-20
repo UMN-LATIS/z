@@ -331,14 +331,21 @@ describe("urlsPageListZlinks - /shortener/urls", () => {
 
     describe("pagination", () => {
       it("keeps a user on the same page after saving an edited link", () => {
-        // create multiple pages of zlinks
+        // create new urls
+        const urls = [];
         for (let i = 1; i <= 40; i++) {
-          cy.createUrl({
-            url: `https://example.com/${i}`,
-            group_id: testUser.context_group_id,
-          });
+          urls.push([
+            "create",
+            "url",
+            {
+              url: `https://example.com/${i}`,
+              group_id: testUser.context_group_id,
+            },
+          ]);
         }
+        cy.appFactories(urls);
 
+        // reload the page to see the new urls
         cy.reload();
 
         // go to the next page
