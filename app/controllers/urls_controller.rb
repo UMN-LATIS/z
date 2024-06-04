@@ -7,18 +7,26 @@ class UrlsController < ApplicationController
   # GET /urls
   # GET /urls.json
   def index
-    @group = Group.find(current_user.context_group_id)
+    # use collection query string if present,
+    # otherwise use current_user's context_group_id
+    group_id = params[:collection].presence || current_user.context_group_id
+    @group = Group.find(group_id)
+
+    raise ActiveRecord::RecordNotFound if @group.nil?
+
+    # TODO: check that the user is a member of the group?
+    # or maybe the policy takes care of this
 
     @urls =
-      Url.created_by_id(current_user.context_group_id)
+      Url.created_by_id(@group.id)
          .not_in_pending_transfer_request
     @pending_transfer_requests_to =
-      TransferRequest.pending.where(to_group_id: current_user.context_group_id)
+      TransferRequest.pending.where(to_group_id: @group.id)
 
     @pending_transfer_requests_from =
       TransferRequest.pending
-                     .where(from_group_id: current_user.context_group_id)
-    @url = Url.new
+                     .where(from_group_id: @group.id)
+    @url = Url.new(group_id: @group.id)
   end
 
   # GET /urls/1
@@ -71,10 +79,19 @@ class UrlsController < ApplicationController
   # POST /urls
   # POST /urls.json
   def create
+    group_id = params[:url][:group_id].presence || current_user.context_group_id
+    @group = Group.find(group_id)
+
+    raise ActiveRecord::RecordNotFound if @group.nil?
+
+    authorize @group
+
     @url_identifier = params[:new_identifier]
     @url = Url.new(url_params)
-    @url.group = current_user.context_group
-    @empty_url = Url.new
+    @url.group = @group
+
+    # reset the form using the same group
+    @empty_url = Url.new(group: @group)
 
     respond_to do |format|
       if @url.save
