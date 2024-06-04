@@ -3,9 +3,7 @@ class UrlsController < ApplicationController
   before_action :ensure_signed_in
   before_action :set_url, only: %i[edit update destroy]
   before_action :set_url_friendly, only: [:show]
-  before_action :set_group,
-                :check_if_user_can_access_group,
-                only: %i[index new create]
+  before_action :set_group, only: %i[index create]
 
   # GET /urls
   # GET /urls.json
@@ -172,9 +170,7 @@ class UrlsController < ApplicationController
     # otherwise use current_user's context_group_id
     group_id = params[:collection].presence || params.dig(:url, :group_id) || current_user.context_group_id
     @group = Group.find(group_id)
-  end
 
-  def check_if_user_can_access_group
     authorize @group, :update?
   rescue Pundit::NotAuthorizedError
     redirect_to urls_path, alert: "You do not have permission to access this collection. Redirected to your Z-Links."
