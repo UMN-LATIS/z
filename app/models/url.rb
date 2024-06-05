@@ -40,7 +40,7 @@ class Url < ApplicationRecord
     multiline: true,
     message: 'special characters are not permitted. Only letters, and numbers, dashes ("-") and underscores ("_")'
   }
-  validates :notes, length: { maximum: 1000 }, allow_blank: true
+  validates :note, length: { maximum: 1000 }, allow_blank: true
   validate :check_for_valid_url
 
   before_validation do

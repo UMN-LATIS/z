@@ -23,7 +23,7 @@ class UrlPolicy < ApplicationPolicy
     user_has_access?
   end
 
-  def update_notes?
+  def update_note?
     user_has_access?
   end
 

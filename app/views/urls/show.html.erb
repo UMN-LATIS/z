@@ -89,11 +89,11 @@
         <div class="row">
           <div class="col-md-12">
             <div class="panel panel-default">
-              <div class="panel-heading">Notes</div>
+              <div class="panel-heading">Note</div>
               <div class="panel-body text-center">
-                <%= form_with model: @url, url: notes_url_path(@url.keyword), method: :patch, data: { cy: 'notes-form' } do |form|%>
-                  <%= form.label :notes, "Notes", class: 'sr-only' %>
-                  <%= form.text_area :notes, class: 'form-control', placeholder: 'Add a note', data: { cy: 'notes-input' } %>
+                <%= form_with model: @url, url: note_url_path(@url.keyword), method: :patch, data: { cy: 'note-form' } do |form|%>
+                  <%= form.label :note, "Note", class: 'sr-only' %>
+                  <%= form.text_area :note, class: 'form-control', placeholder: 'Add a note', data: { cy: 'note-input' } %>
                   <div class="tw-mt-2 tw-flex tw-justify-end tw-gap-2 tw-items-center">
                     <%= button_tag 'Reset', type: 'reset', class: "tw-uppercase tw-text-xs tw-bg-neutral-100 tw-px-4 tw-py-2 tw-rounded hover:tw-bg-neutral-200 tw-transition" %>
                     <%= form.button "Save", class: "btn btn-primary" %>

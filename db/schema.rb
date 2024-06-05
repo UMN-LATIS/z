@@ -104,7 +104,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_05_133839) do
     t.integer "modified_by"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.text "notes"
+    t.text "note"
     t.index ["group_id"], name: "index_urls_on_group_id"
     t.index ["keyword"], name: "index_urls_on_keyword", unique: true
   end

@@ -64,7 +64,7 @@ Rails.application.routes.draw do
         to: "url_csvs#show_aggregated",
         as: "csv"
       member do
-        patch :notes, to: 'urls#update_notes'
+        patch :note, to: 'urls#update_note'
       end
     end
 
