@@ -21,9 +21,11 @@ describe("create zlink in collection", () => {
       cy.contains("Save").click();
     });
 
-    // // reload the page
-    // cy.visit("/shortener/urls/cla");
-    // // check that the note is there
-    // cy.get("[data-cy='notes-input']").should("contain", "This is a note");
+    cy.contains("Note saved").should("be.visible");
+
+    // reload the page
+    cy.visit("/shortener/urls/cla");
+    // check that the note is there
+    cy.get("[data-cy='notes-input']").should("contain", "This is a note");
   });
 });
