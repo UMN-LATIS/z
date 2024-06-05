@@ -1,6 +1,6 @@
 class UrlDatatable < ApplicationDatatable
   def_delegators :@view, :link_to, :full_url, :display_long_url, :display_keyword_url, :select_tag,
-                 :options_for_select, :url_path, :render, :display_name, :group_names_and_ids_for_select, :truncate
+                 :options_for_select, :url_path, :render, :display_name, :group_names_and_ids_for_select
 
   def view_columns
     @view_columns ||= {
