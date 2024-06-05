@@ -19,8 +19,6 @@ class GroupPolicy < ApplicationPolicy
     user_has_access?
   end
 
-  private
-
   def user_has_access?
     return true if user.admin?
     return true if record.is_a?(Group) && record.users.exists?(user.id)

@@ -101,13 +101,17 @@ describe("urlsPageListZlinks - /shortener/urls", () => {
       // Sometimes cypress doesn't complete typing the full string
       // into the input field. Using `force: true` and manually triggering
       // `input` event to work around this issue.
-      cy.get("#group_name").type("testcollection", { force: true }).trigger('input');
+      cy.get("#group_name")
+        .type("testcollection", { force: true })
+        .trigger("input");
 
-      cy.get("#group_description").type("test description", { force: true }).trigger('input');
+      cy.get("#group_description")
+        .type("test description", { force: true })
+        .trigger("input");
 
       // submit
-      cy.contains('Submit').click();
-      cy.contains('Confirm').click();
+      cy.contains("Submit").click();
+      cy.contains("Confirm").click();
 
       // verify that the url was added to the collection
       cy.get("@claRow")
@@ -146,6 +150,22 @@ describe("urlsPageListZlinks - /shortener/urls", () => {
         "eq",
         "testcollection"
       );
+    });
+
+    it("redirects to the user's main urls page if params include a collection that the user does not own", () => {
+      cy.createGroup("testcollection").then((group) => {
+        cy.visit(`/shortener/urls?collection=${group.id}`, {
+          failOnStatusCode: false,
+        });
+
+        // should be redirected to the main urls page without
+        // the collection param
+        cy.location("pathname").should("eq", "/shortener/urls");
+        cy.location("search").should("eq", "");
+
+        // expect a flash message
+        cy.contains("You do not have permission to access this collection");
+      });
     });
 
     describe("filter and search the list of z-links", () => {

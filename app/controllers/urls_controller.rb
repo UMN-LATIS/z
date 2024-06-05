@@ -1,24 +1,31 @@
 # controllers/url_controller.rb
 class UrlsController < ApplicationController
+  before_action :ensure_signed_in
   before_action :set_url, only: %i[edit update destroy]
   before_action :set_url_friendly, only: [:show]
-  before_action :ensure_signed_in
+  before_action :set_group, only: %i[index create]
 
   # GET /urls
   # GET /urls.json
   def index
-    @group = Group.find(current_user.context_group_id)
+    group_ids_to_get = if @group == current_user.context_group
+                         current_user.groups.pluck(:id)
+                       else
+                         [@group.id]
+                       end
 
-    @urls =
-      Url.created_by_id(current_user.context_group_id)
-         .not_in_pending_transfer_request
+    # NOTE: the table is actually populated by datatables,
+    # so this doesn't really have any visible effect
+    @urls = Url.created_by_ids(group_ids_to_get)
+               .not_in_pending_transfer_request
+
     @pending_transfer_requests_to =
-      TransferRequest.pending.where(to_group_id: current_user.context_group_id)
+      TransferRequest.pending.where(to_group_id: @group.id)
 
     @pending_transfer_requests_from =
       TransferRequest.pending
-                     .where(from_group_id: current_user.context_group_id)
-    @url = Url.new
+                     .where(from_group_id: @group.id)
+    @url = Url.new(group_id: @group.id)
   end
 
   # GET /urls/1
@@ -73,8 +80,10 @@ class UrlsController < ApplicationController
   def create
     @url_identifier = params[:new_identifier]
     @url = Url.new(url_params)
-    @url.group = current_user.context_group
-    @empty_url = Url.new
+    @url.group = @group
+
+    # reset the form using the same group
+    @empty_url = Url.new(group: @group)
 
     respond_to do |format|
       if @url.save
@@ -153,5 +162,17 @@ class UrlsController < ApplicationController
   # only permit the allowlist through.
   def url_params
     params.require(:url).permit(:url, :keyword, :group_id, :modified_by)
+  end
+
+  def set_group
+    # use collection query string if present,
+    # or the url's group_id if present.
+    # otherwise use current_user's context_group_id
+    group_id = params[:collection].presence || params.dig(:url, :group_id) || current_user.context_group_id
+    @group = Group.find(group_id)
+
+    authorize @group, :update?
+  rescue Pundit::NotAuthorizedError
+    redirect_to urls_path, alert: "You do not have permission to access this collection. Redirected to your Z-Links."
   end
 end
