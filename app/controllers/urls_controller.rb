@@ -2,7 +2,7 @@
 class UrlsController < ApplicationController
   before_action :ensure_signed_in
   before_action :set_url, only: %i[edit update destroy]
-  before_action :set_url_friendly, only: [:show]
+  before_action :set_url_friendly, only: %i[show update_notes]
   before_action :set_group, only: %i[index create]
 
   # GET /urls
@@ -111,6 +111,18 @@ class UrlsController < ApplicationController
     end
   end
 
+  # PUT/PATCH /urls/1/notes
+  def update_notes
+    respond_to do |format|
+      if @url.update(url_params)
+        format.html { redirect_to url_path(@url.keyword), notice: 'Note saved.' }
+      else
+        flash[:error] = @url.errors.full_messages.join(', ')
+        format.html { redirect_to url_path(@url.keyword) }
+      end
+    end
+  end
+
   # DELETE /urls/1
   # DELETE /urls/1.json
   def destroy
@@ -161,7 +173,7 @@ class UrlsController < ApplicationController
   # Never trust parameters from the scary internet,
   # only permit the allowlist through.
   def url_params
-    params.require(:url).permit(:url, :keyword, :group_id, :modified_by)
+    params.require(:url).permit(:url, :keyword, :group_id, :modified_by, :notes)
   end
 
   def set_group

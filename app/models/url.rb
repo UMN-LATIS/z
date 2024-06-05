@@ -41,6 +41,7 @@ class Url < ApplicationRecord
     message: 'special characters are not permitted. Only letters, and numbers, dashes ("-") and underscores ("_")'
   }
   validate :check_for_valid_url
+  validates :notes, length: { maximum: 1000 }
 
   before_validation do
     # remove leading and trailing whitespaces for validation

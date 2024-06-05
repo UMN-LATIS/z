@@ -63,6 +63,9 @@ Rails.application.routes.draw do
         on: :collection,
         to: "url_csvs#show_aggregated",
         as: "csv"
+      member do
+        patch :notes, to: 'urls#update_notes'
+      end
     end
 
     # transfer_requests	transfer_requests	index	get

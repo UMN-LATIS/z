@@ -91,7 +91,7 @@
             <div class="panel panel-default">
               <div class="panel-heading">Notes</div>
               <div class="panel-body text-center">
-                <%= form_with model: @url, data: { cy: 'notes-form' } do |form|%>
+                <%= form_with model: @url, url: notes_url_path(@url.keyword), method: :patch, data: { cy: 'notes-form' } do |form|%>
                   <%= form.label :notes, "Notes", class: 'sr-only' %>
                   <%= form.text_area :notes, class: 'form-control', placeholder: 'Add a note', data: { cy: 'notes-input' } %>
                   <div class="tw-mt-2 tw-flex tw-justify-end tw-gap-2 tw-items-center">

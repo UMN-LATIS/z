@@ -18,8 +18,12 @@ describe("create zlink in collection", () => {
 
     cy.get("[data-cy='notes-form']").within(() => {
       cy.get("[data-cy='notes-input']").type("This is a note");
-      // cy.contains("Save").click();
-      // cy.contains("This is a note").should("exist");
+      cy.contains("Save").click();
     });
+
+    // // reload the page
+    // cy.visit("/shortener/urls/cla");
+    // // check that the note is there
+    // cy.get("[data-cy='notes-input']").should("contain", "This is a note");
   });
 });
