@@ -28,9 +28,9 @@
         </div>
       </div>
       <% if is_edit %>
-        <div class="tw-mt-2">
-          <%= f.label :note, "Note", class: 'tw-text-xs tw-font-bold' %>
-          <%= f.text_area :note, class: "tw-w-full tw-border-none tw-text-sm tw-rounded-lg !tw-text-black", placeholder: 'add a note (optional)', data: { cy: 'note-input' } %>
+        <div class="tw-mt-2 tw-relative">
+          <%= f.label :note, "Note", class: 'tw-text-xs tw-font-bold tw-absolute', style: "top: 0.5rem; left: 1rem;" %>
+          <%= f.text_area :note, class: "tw-w-full tw-border-none tw-text-sm tw-rounded-lg !tw-text-black", style: "padding-top: 1.5rem; padding-left: 1rem; border-radius: 0.25rem;", data: { cy: 'note-input' }  %>
         </div>
         <div class="tw-flex tw-items-center tw-justify-end tw-mt-2">
           <button class='cancel-edit tw-py-2 tw-px-4 tw-rounded !tw-text-black tw-uppercase tw-text-xs' type="button"><%= t('views.urls.sleek_form.edit.cancel')%></button>
