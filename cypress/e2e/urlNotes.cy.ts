@@ -47,7 +47,7 @@ describe("create zlink in collection", () => {
       cy.visit("/shortener/urls");
     });
 
-    it("edits a note", () => {
+    it("edits a note and shows it in the table", () => {
       cy.get("#urls-table").contains("cla").closest("tr").as("claRow");
       cy.get("@claRow").find(".dropdown").as("claDropdown");
       cy.get("@claDropdown").find(".actions-dropdown-button").click();
@@ -57,15 +57,8 @@ describe("create zlink in collection", () => {
 
       cy.contains("Submit").click();
 
-      // reload the page
-      cy.visit("/shortener/urls");
-
-      // check that the note is there
-      cy.get("#urls-table").contains("cla").closest("tr").as("claRow");
-      cy.get("@claRow").find(".dropdown").as("claDropdown");
-      cy.get("@claDropdown").find(".actions-dropdown-button").click();
-      cy.get("@claDropdown").contains("Edit").click();
-      cy.get("[data-cy='note-input']").should("contain", "edited note");
+      // check that the note is in the table row
+      cy.get("@claRow").contains("edited note").should("be.visible");
     });
   });
 });

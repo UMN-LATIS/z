@@ -1,6 +1,6 @@
 class UrlDatatable < ApplicationDatatable
   def_delegators :@view, :link_to, :full_url, :display_long_url, :display_keyword_url, :select_tag,
-                 :options_for_select, :url_path, :render, :display_name, :group_names_and_ids_for_select
+                 :options_for_select, :url_path, :render, :display_name, :group_names_and_ids_for_select, :truncate
 
   def view_columns
     @view_columns ||= {
@@ -13,6 +13,7 @@ class UrlDatatable < ApplicationDatatable
       group_name: { source: 'Group.name' },
       url: { source: 'Url.url' },
       keyword: { source: 'Url.keyword' },
+      note: { source: 'Url.note' },
       total_clicks: { source: 'Url.total_clicks', searchable: false },
       created_at: { source: 'Url.created_at' },
       # needed for actions like edit, delete, etc.

@@ -37,10 +37,11 @@
           <button type="submit" class="js-url-submit tw-block !tw-bg-umn-gold tw-py-2 tw-px-4 tw-rounded hover:!tw-bg-umn-gold-light !tw-text-black focus:tw-ring focus:tw-ring-offset-2 tw-transition-colors">
             <%= t('views.urls.sleek_form.edit.submit') %>
           </button>
-        <% end %>
-        <div id="url-blurb-container">
         </div>
       <% end %>
-      <%= render 'urls/in_row_errors', url: url %>
-    </div>
+      <div id="url-blurb-container">
+      </div>
+    <% end %>
+    <%= render 'urls/in_row_errors', url: url %>
   </div>
+</div>
