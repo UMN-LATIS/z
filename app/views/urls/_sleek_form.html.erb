@@ -20,13 +20,24 @@
             </div>
           </div>
           <%= f.hidden_field :group_id, value: @group.id if @group %>
-          <button type="submit" class="js-url-submit tw-block !tw-bg-umn-gold tw-py-4 tw-px-8 tw-rounded-b-md md:tw-rounded-r-md md:tw-rounded-bl-none hover:!tw-bg-umn-gold-light active:!tw-bg-umn-neutral-900 active:!tw-text-white focus:tw-ring focus:tw-ring-offset-2 tw-transition-colors">
-            <%= is_edit ? t('views.urls.sleek_form.edit.submit') : t('views.urls.sleek_form.new.submit')  %>
-          </button>
+          <% if !is_edit %>
+            <button type="submit" class="js-url-submit tw-block !tw-bg-umn-gold tw-py-4 tw-px-8 tw-rounded-b-md md:tw-rounded-r-md md:tw-rounded-bl-none hover:!tw-bg-umn-gold-light active:!tw-bg-umn-neutral-900 active:!tw-text-white focus:tw-ring focus:tw-ring-offset-2 tw-transition-colors">
+              <%= t('views.urls.sleek_form.new.submit')  %>
+            </button>
+          <% end %>
         </div>
       </div>
       <% if is_edit %>
-        <a href="#" class='btn btn-default cancel-edit'><%= t('views.urls.sleek_form.edit.cancel')%></a>
+        <div class="tw-mt-2 tw-relative">
+          <%= f.label :note, "Note", class: 'tw-text-xs tw-font-bold tw-absolute', style: "top: 0.5rem; left: 1rem;" %>
+          <%= f.text_area :note, class: "tw-w-full tw-border-none tw-text-sm tw-rounded-lg !tw-text-black", style: "padding-top: 1.5rem; padding-left: 1rem; border-radius: 0.25rem;", data: { cy: 'note-input' }  %>
+        </div>
+        <div class="tw-flex tw-items-center tw-justify-end tw-mt-2">
+          <button class='cancel-edit tw-py-2 tw-px-4 tw-rounded !tw-text-black tw-uppercase tw-text-xs' type="button"><%= t('views.urls.sleek_form.edit.cancel')%></button>
+          <button type="submit" class="js-url-submit tw-block !tw-bg-umn-gold tw-py-2 tw-px-4 tw-rounded hover:!tw-bg-umn-gold-light !tw-text-black focus:tw-ring focus:tw-ring-offset-2 tw-transition-colors">
+            <%= t('views.urls.sleek_form.edit.submit') %>
+          </button>
+        </div>
       <% end %>
       <div id="url-blurb-container">
       </div>

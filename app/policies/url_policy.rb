@@ -23,6 +23,10 @@ class UrlPolicy < ApplicationPolicy
     user_has_access?
   end
 
+  def update_note?
+    user_has_access?
+  end
+
   def destroy?
     user_has_access?
   end

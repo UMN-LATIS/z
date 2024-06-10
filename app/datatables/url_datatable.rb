@@ -13,6 +13,7 @@ class UrlDatatable < ApplicationDatatable
       group_name: { source: 'Group.name' },
       url: { source: 'Url.url' },
       keyword: { source: 'Url.keyword' },
+      note: { source: 'Url.note' },
       total_clicks: { source: 'Url.total_clicks', searchable: false },
       created_at: { source: 'Url.created_at' },
       # needed for actions like edit, delete, etc.

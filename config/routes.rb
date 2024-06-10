@@ -63,6 +63,10 @@ Rails.application.routes.draw do
         on: :collection,
         to: "url_csvs#show_aggregated",
         as: "csv"
+      member do
+        patch :note, to: 'urls#update_note'
+      end
+      patch :note, on: :member, to: 'urls#update_note'
     end
 
     # transfer_requests	transfer_requests	index	get
@@ -130,9 +134,9 @@ Rails.application.routes.draw do
       # admin/urls/create	admin::urls	create	put
       resources :urls, only: %i[index edit show update destroy create] do
         get "csv/:duration/:time_unit",
-          on: :collection,
-          to: "url_csvs#show",
-          as: "csv"
+            on: :collection,
+            to: "url_csvs#show",
+            as: "csv"
       end
 
       # admin/audits/:search	admin::urls	index	get
@@ -143,7 +147,7 @@ Rails.application.routes.draw do
       # admin/groups/:id
       # admin/groups/:id/urls
       # admin/groups/:id/members
-      resources :groups, only: [:index, :show] do
+      resources :groups, only: %i[index show] do
         resources :urls, only: [:index], controller: "group_urls"
         resources :members, only: [:index], controller: "group_members"
       end

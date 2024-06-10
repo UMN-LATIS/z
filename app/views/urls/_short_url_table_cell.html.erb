@@ -1,4 +1,3 @@
-
 <div class="short-url" data-cy="short-url-table-cell">
   <%= link_to(display_keyword_url(url.keyword), full_url(url), target: '_blank') %>
   <button class='btn btn-default clipboard-btn' data-clipboard-text="<%= full_url(url) %>">
@@ -9,3 +8,6 @@
 <div class="long-url" data-cy="long-url-table-cell">
   <%= link_to(url.url, url.url, target: '_blank') %>
 </div>
+<% if url.note.present? %>
+  <div class="tw-text-xs"><%= url.note %></div>
+<% end %>
