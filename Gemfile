@@ -5,7 +5,7 @@ gem 'passenger', "~> 6.0"
 gem 'ajax-datatables-rails', "~> 1.4"
 
 # Use OmniAuth to support any type of auth
-gem 'omniauth', "~> 1.9"
+gem 'omniauth', "~> 2.0"
 gem 'omniauth-shibboleth', "~> 1.1"
 gem 'omniauth-shibboleth-passive', "~> 0.1"
 
