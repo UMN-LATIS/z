@@ -2,6 +2,7 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/ruby
 {
   "name": "z",
+  "initializeCommand": "if [ ! -f .env ]; then cp .env.example .env; fi && [ ! -L .devcontainer/.env ] && ln -s ../.env .devcontainer/.env",
   "dockerComposeFile": "docker-compose.yml",
   "service": "rails-app",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
