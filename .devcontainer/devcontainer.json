@@ -2,7 +2,7 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/ruby
 {
   "name": "z",
-  "initializeCommand": "if [ ! -f .env ]; then cp .env.example .env; fi && [ ! -L .devcontainer/.env ] && ln -s ../.env .devcontainer/.env",
+  "initializeCommand": "if [ ! -f .env ]; then cp .env.example .env; fi && if [ ! -L .devcontainer/.env ]; then ln -s ../.env .devcontainer/.env; fi",
   "dockerComposeFile": "docker-compose.yml",
   "service": "rails-app",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
@@ -47,7 +47,8 @@
         "YoavBls.pretty-ts-errors",
         "Vue.volar",
         "MaxvanderSchee.web-accessibility",
-        "KoichiSasada.vscode-rdbg"
+        "KoichiSasada.vscode-rdbg",
+        "github.vscode-github-actions"
       ]
     }
   },
