@@ -2,7 +2,12 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/ruby
 {
   "name": "z",
-  "initializeCommand": "if [ ! -f .env ]; then cp .env.example .env; fi && if [ ! -L .devcontainer/.env ]; then ln -s ../.env .devcontainer/.env; fi",
+  "initializeCommand": {
+    "create .env": "if [ ! -f .env ]; then cp .env.example .env; fi",
+    "devcontainer symlink to .env": "if [ ! -L .devcontainer/.env ]; then ln -s ../.env .devcontainer/.env; fi",
+    "create database.yml": "if [ ! -f config/database.yml ]; then cp config/database_ci.yml config/database.yml; fi",
+    "crate ldap.yml": "if [ ! -f config/ldap.yml ]; then cp config/ldap_ci.yml config/ldap.yml; fi"
+  },
   "dockerComposeFile": "docker-compose.yml",
   "service": "rails-app",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
