@@ -1,0 +1,69 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/ruby
+{
+  "name": "z",
+  "initializeCommand": {
+    "create .env": "if [ ! -f .env ]; then cp .env.example .env; fi",
+    "devcontainer symlink to .env": "if [ ! -L .devcontainer/.env ]; then ln -s ../.env .devcontainer/.env; fi",
+    "create database.yml": "if [ ! -f config/database.yml ]; then cp config/database_ci.yml config/database.yml; fi",
+    "crate ldap.yml": "if [ ! -f config/ldap.yml ]; then cp config/ldap_ci.yml config/ldap.yml; fi"
+  },
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "rails-app",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+
+  // Features to add to the dev container. More info: https://containers.dev/features.
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/rails/devcontainer/features/activestorage": {},
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
+    "ghcr.io/rails/devcontainer/features/mysql-client": {},
+    // add nodejs and yarn
+    "ghcr.io/devcontainers/features/node:1": {
+      "nodeGypDependencies": true,
+      "installYarnUsingApt": true,
+      "version": "lts",
+      "pnpmVersion": "latest",
+      "nvmVersion": "latest"
+    }
+  },
+
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  "forwardPorts": [3000, 3606],
+
+  // Configure tool-specific properties.
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "aliariff.vscode-erb-beautify",
+        "bradlc.vscode-tailwindcss",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "IgorSbitnev.error-gutters",
+        "ms-azuretools.vscode-docker",
+        "pavlitsky.yard",
+        "redhat.vscode-yaml",
+        "Shopify.ruby-extensions-pack",
+        "testdouble.vscode-standard-ruby",
+        "vortizhe.simple-ruby-erb",
+        "tombonnike.vscode-status-bar-format-toggle",
+        "eamodio.gitlens",
+        "christian-kohler.path-intellisense",
+        "YoavBls.pretty-ts-errors",
+        "Vue.volar",
+        "MaxvanderSchee.web-accessibility",
+        "KoichiSasada.vscode-rdbg",
+        "github.vscode-github-actions"
+      ]
+    }
+  },
+
+  // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+  // "remoteUser": "root"
+
+  // Use 'postCreateCommand' to run commands after the container is created.
+  "postCreateCommand": {
+    "Setup Rails": "bin/setup --skip-server",
+    "Setup Yarn": "yarn install --check-files"
+  }
+}
