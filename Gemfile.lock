@@ -101,7 +101,7 @@ GEM
       tzinfo (~> 2.0, >= 2.0.5)
     addressable (2.8.6)
       public_suffix (>= 2.0.2, < 6.0)
-    airbrussh (1.5.2)
+    airbrussh (1.5.3)
       sshkit (>= 1.6.1, != 1.7.0)
     ajax-datatables-rails (1.5.0)
       rails (>= 6.0)
@@ -126,7 +126,7 @@ GEM
     browser (4.2.0)
     builder (3.3.0)
     byebug (11.1.3)
-    capistrano (3.18.1)
+    capistrano (3.19.2)
       airbrussh (>= 1.0.0)
       i18n
       rake (>= 10.0.0)
@@ -281,7 +281,6 @@ GEM
     mini_mime (1.1.5)
     minitest (5.25.4)
     multipart-post (2.4.0)
-    mutex_m (0.3.0)
     mysql2 (0.5.6)
     nenv (0.3.0)
     net-imap (0.5.2)
@@ -298,7 +297,7 @@ GEM
       net-ssh (>= 5.0.0, < 8.0.0)
     net-smtp (0.5.0)
       net-protocol
-    net-ssh (7.2.3)
+    net-ssh (7.3.0)
     nio4r (2.7.4)
     nokogiri (1.17.2-aarch64-linux)
       racc (~> 1.4)
@@ -316,6 +315,7 @@ GEM
       omniauth (>= 1.0.0)
     omniauth-shibboleth-passive (0.1.0)
       omniauth-shibboleth (~> 1.1.0)
+    ostruct (0.6.1)
     paper_trail (15.1.0)
       activerecord (>= 6.1)
       request_store (~> 1.4)
@@ -499,12 +499,12 @@ GEM
     sqlite3 (1.7.3-aarch64-linux)
     sqlite3 (1.7.3-arm64-darwin)
     sqlite3 (1.7.3-x86_64-linux)
-    sshkit (1.22.1)
+    sshkit (1.23.2)
       base64
-      mutex_m
       net-scp (>= 1.1.2)
       net-sftp (>= 2.1.2)
       net-ssh (>= 2.8.0)
+      ostruct
     stringio (3.1.2)
     strscan (3.1.0)
     terser (1.2.2)
@@ -543,6 +543,7 @@ PLATFORMS
   aarch64-linux
   arm64-darwin-22
   arm64-darwin-23
+  arm64-darwin-24
   x86_64-linux
 
 DEPENDENCIES
@@ -556,7 +557,7 @@ DEPENDENCIES
   bootstrap-select-rails (~> 1.13)
   browser (~> 4.2)
   byebug (~> 11.1)
-  capistrano (~> 3.14)
+  capistrano (~> 3.19)
   capistrano-bundler (~> 1.6)
   capistrano-passenger (~> 0.2)
   capistrano-rails (~> 1.5)
