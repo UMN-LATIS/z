@@ -1,5 +1,5 @@
 Sentry.init do |config|
-  config.dsn = ENV.fetch("SENTRY_DSN", "")
+  config.dsn = Rails.application.config_for(:secrets)[:sentry_dsn]
   config.breadcrumbs_logger = [:active_support_logger]
 
   # Set tracesSampleRate to 1.0 to capture 100%

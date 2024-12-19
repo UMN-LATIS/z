@@ -16,6 +16,9 @@ module Z
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.2
 
+    # continue to use `config/secrets.yml` for secrets (removed in 7.2 in lieu of `credentials.yml.enc`)
+    config.secret_key_base = config_for(:secrets).fetch(:secret_key_base)
+
     ###
     # Active Record Encryption now uses SHA-256 as its hash digest algorithm.
     #
