@@ -55,3 +55,4 @@ node_modules
 !/app/assets/builds/.keep
 
 .bash_history
+/config/master.key
