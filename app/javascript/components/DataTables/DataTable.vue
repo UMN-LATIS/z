@@ -85,8 +85,8 @@ const emit = defineEmits<{
 }>();
 
 const table = ref<typeof DataTable | null>(null);
-const dt = ref<DataTableApi<object> | null>(null);
 const selectAllCheckbox = ref<HTMLInputElement | null>(null);
+let dt: DataTableApi<object> | null = null;
 
 function setAllCheckboxes(checked: boolean) {
   const checkboxes = document.querySelectorAll(".select-checkbox");
@@ -96,37 +96,33 @@ function setAllCheckboxes(checked: boolean) {
 }
 
 function selectAllRows() {
-  if (!dt.value) throw new Error("No datatable api found");
-  dt.value
-    .rows({
-      page: "current",
-    })
-    .select();
+  if (!dt) throw new Error("No datatable api found");
+  dt.rows({
+    page: "current",
+  }).select();
 
   setAllCheckboxes(true);
 }
 
 function deselectAllRows() {
-  if (!dt.value) throw new Error("No datatable api found");
-  dt.value
-    .rows({
-      page: "current",
-    })
-    .deselect();
+  if (!dt) throw new Error("No datatable api found");
+  dt.rows({
+    page: "current",
+  }).deselect();
 
   setAllCheckboxes(false);
 }
 
 function handleSelectAllClick(e: MouseEvent) {
-  if (!dt.value) throw new Error("No datatable api found");
+  if (!dt) throw new Error("No datatable api found");
   const checked = (e.target as HTMLInputElement).checked;
   checked ? selectAllRows() : deselectAllRows();
 }
 
 function setSelectAllCheckboxState() {
-  if (!dt.value) throw new Error("No datatable api found");
-  const selectedRows = dt.value.rows({ selected: true } as any);
-  const allRows = dt.value.rows();
+  if (!dt) throw new Error("No datatable api found");
+  const selectedRows = dt.rows({ selected: true } as any);
+  const allRows = dt.rows();
   const isAllSelected = selectedRows.count() === allRows.count();
 
   selectAllCheckbox.value!.checked = isAllSelected;
@@ -141,33 +137,33 @@ function emitSelectedRows(e: Event, dt: DataTableApi<any>) {
 }
 
 function handleFilterInput(e: Event, colIndex: number) {
-  if (!dt.value) throw new Error("No datatable api found");
+  if (!dt) throw new Error("No datatable api found");
   const input = e.target as HTMLInputElement;
   console.log("filteringInput", input.value);
-  dt.value.column(colIndex).search(input.value).draw();
+  dt.column(colIndex).search(input.value).draw();
 }
 
 const debouncedFilterInput = debounce(handleFilterInput, 250);
 
 onMounted(() => {
   if (!table.value) throw new Error("No dataTableRef found");
-  dt.value = table.value.dt() as DataTableApi<object>;
+  dt = table.value.dt as DataTableApi<object>;
 
   selectAllCheckbox.value?.addEventListener("click", handleSelectAllClick);
-  dt.value.on("select", setSelectAllCheckboxState);
-  dt.value.on("deselect", setSelectAllCheckboxState);
+  dt.on("select", setSelectAllCheckboxState);
+  dt.on("deselect", setSelectAllCheckboxState);
 
-  dt.value.on("select", emitSelectedRows);
-  dt.value.on("deselect", emitSelectedRows);
+  dt.on("select", emitSelectedRows);
+  dt.on("deselect", emitSelectedRows);
 
-  emit("mounted", dt.value);
+  emit("mounted", dt);
 });
 
 // passes both the event and the datatable instance's
 // api to the listener
 function handleDataTableClick(event: MouseEvent) {
-  if (!dt.value) throw new Error("No datatable api found");
-  emit("click", event, dt.value);
+  if (!dt) throw new Error("No datatable api found");
+  emit("click", event, dt);
 }
 
 const defaultOptions: DataTableOptions = {
