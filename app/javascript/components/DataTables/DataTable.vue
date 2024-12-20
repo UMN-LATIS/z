@@ -64,6 +64,7 @@ import "datatables.net-select";
 import "datatables.net-buttons";
 import "datatables.net-bs4";
 import debounce from "lodash/debounce";
+import "datatables.net-bs4/css/dataTables.bootstrap4.min.css";
 
 DataTable.use(DataTablesLib);
 
@@ -199,7 +200,7 @@ const mergedCols = props.selectable
   : props.columns;
 </script>
 <style>
-div.dataTables_wrapper div.dataTables_processing {
+.dt-container .dt-processing {
   position: absolute;
   margin: 0;
   width: 100%;
