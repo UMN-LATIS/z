@@ -212,4 +212,9 @@ const mergedCols = props.selectable
   align-items: center;
   justify-content: center;
 }
+
+/* prevent cells with long urls from overflowing */
+.dt-container tbody td {
+  overflow-wrap: break-word;
+}
 </style>
