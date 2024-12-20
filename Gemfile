@@ -105,7 +105,7 @@ group :development, :test do
   # rails helpers for cypress
   gem 'cypress-on-rails', '~> 1.17'
 
-  gem 'database_cleaner-active_record', '~> 2.1'
+  gem 'database_cleaner-active_record', '~> 2.2'
   gem 'factory_bot_rails', "~> 6.2"
   gem 'fuubar', "~> 2.5"
   gem 'launchy', "~> 2.4"
@@ -151,7 +151,7 @@ group :development do
   gem 'annotate', "~> 3.1"
 
   gem 'bcrypt_pbkdf', "~> 1.1"
-  gem 'capistrano', "~> 3.14"
+  gem 'capistrano', "~> 3.19"
   gem 'capistrano-bundler', "~> 1.6"
   gem 'capistrano-passenger', '~> 0.2'
   gem 'capistrano-rails', "~> 1.5"
