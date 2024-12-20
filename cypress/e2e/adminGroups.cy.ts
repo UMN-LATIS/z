@@ -148,7 +148,7 @@ describe("admin groups index page", () => {
       const collectionNamesDesc = [...collectionNamesAsc].reverse();
 
       // check that it begins in acending order
-      cy.get("[data-cy='groups-table'] tbody > tr td:first-child").each(
+      cy.get("[data-cy='groups-table'] tbody > tr:first-child .sorting_1").each(
         ($el, index) => {
           const expectedCollectionName = collectionNamesAsc[index];
           cy.wrap($el).should("contain", expectedCollectionName);
@@ -191,13 +191,11 @@ describe("admin groups index page", () => {
     });
 
     it("searches collections by name", () => {
-      cy.get("[data-cy='groups-table']").within(() => {
-        cy.contains("Search").type("collection2");
+      cy.get("#dt-search-0").type("collection2");
 
-        cy.get("tbody > tr")
-          .should("have.length", 1)
-          .should("contain", "collection2");
-      });
+      cy.get("tbody > tr")
+        .should("have.length", 1)
+        .should("contain", "collection2");
     });
   });
 });
