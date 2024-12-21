@@ -37,6 +37,7 @@
 /* Data Tables */
 .datatable input[type="search"],
 .dataTables_wrapper input[type="search"],
+.dt-container input[type="search"],
 .data-table tfoot input {
   font-size: 16px;
   border: 0;
@@ -49,13 +50,14 @@
 
 .datatable,
 .dataTables_wrapper,
+.dt-container,
 .data-table.table-bordered th {
   border-left: 0;
   border-right: 0;
 }
 
 /* right align search on vue pages */
-[data-behavior="vue"] div.dataTables_wrapper div.dataTables_filter {
+[data-behavior="vue"] .dt-container .dt-search {
   text-align: right;
 }
 
@@ -66,12 +68,12 @@
 
 /* center datatable search on mobile */
 @media (max-width: 640px) {
-  [data-behavior="vue"] div.dataTables_wrapper div.dataTables_filter label {
+  [data-behavior="vue"] .dt-container .dt-search label {
     display: block;
     width: 100%;
   }
 
-  [data-behavior="vue"] div.dataTables_wrapper div.dataTables_filter input {
+  [data-behavior="vue"] .dt-container .dt-search input {
     margin: 0;
     width: 100%;
   }
