@@ -10,7 +10,7 @@ gem 'omniauth-shibboleth', "~> 1.1"
 gem 'omniauth-shibboleth-passive', "~> 0.1"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.1'
+gem 'rails', '~> 8.0'
 # Use mysql2 as the database for Active Record
 gem 'mysql2', "~> 0.5"
 # Use sqlite also
@@ -45,7 +45,7 @@ gem 'twitter-typeahead-rails', git: 'https://github.com/pgate/twitter-typeahead-
 gem 'net-ldap', "~> 0.16"
 
 # Use bootstrap for styling
-gem 'twitter-bootstrap-rails', git: 'https://github.com/seyhunak/twitter-bootstrap-rails.git'
+gem 'twitter-bootstrap-rails', git: 'https://github.com/UMN-LATIS/twitter-bootstrap-rails.git'
 
 # Use special bootstrap select
 gem 'bootstrap-select-rails', "~> 1.13"
@@ -73,7 +73,7 @@ gem 'starburst',  github: 'UMN-LATIS/starburst', branch: 'feature/rails-7'
 
 # notify someone when exceptions occur
 # and notify slack channel
-gem 'exception_notification', "~> 4.4"
+gem 'exception_notification', git: "https://github.com/smartinez87/exception_notification.git"
 gem 'slack-notifier', "~> 2.3"
 
 # For URL migration
@@ -148,7 +148,8 @@ group :development do
   gem "rubocop-rspec", "~> 2.4", require: false
 
   # Use annotate to list the attributes of models
-  gem 'annotate', "~> 3.1"
+  # gem 'annotate', "~> 3.2" 
+  # TODO: fix to work with Rails 8 or move to annotaterb?
 
   gem 'bcrypt_pbkdf', "~> 1.1"
   gem 'capistrano', "~> 3.19"
