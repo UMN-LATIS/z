@@ -20,7 +20,6 @@ Rails.application.routes.draw do
 
   # Handle Auth
   post "/auth/:provider/callback", to: "sessions#create"
-  get "/auth/:provider/callback", to: "sessions#create"
 
   root "home#index"
   get "shortener", to: "urls#index"

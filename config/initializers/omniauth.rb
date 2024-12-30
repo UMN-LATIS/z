@@ -16,4 +16,5 @@ end
 
 OmniAuth.config.logger = Rails.logger
 
+# permit get requests so that redirects to `/auth/:provider` work
 OmniAuth.config.allowed_request_methods = %i[post get]
