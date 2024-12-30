@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   end
 
   # dev routes for cypress
-  if Rails.env.local?
+  if Rails.env.development? || Rails.env.test?
     scope path: "/__cypress__", controller: "cypress" do
       post "login", action: "login"
     end
@@ -53,16 +53,16 @@ Rails.application.routes.draw do
     resources :urls do
       get "datatable", to: "urls_datatable#index", on: :collection
       get "keyword_filter/(:destination)/(:keyword)",
-          on: :collection,
-          to: "urls#keyword_filter",
-          as: "keyword_filter"
+        on: :collection,
+        to: "urls#keyword_filter",
+        as: "keyword_filter"
       get "download_qrcode", to: "url_barcodes#show"
       get "csv/click_data", to: "url_csvs#show"
       get "csv/:duration/:time_unit", to: "url_csvs#show_aggregated"
       get "csv/:duration/:time_unit",
-          on: :collection,
-          to: "url_csvs#show_aggregated",
-          as: "csv"
+        on: :collection,
+        to: "url_csvs#show_aggregated",
+        as: "csv"
       member do
         patch :note, to: 'urls#update_note'
       end
