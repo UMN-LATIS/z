@@ -1,12 +1,12 @@
 def is_dev_or_test_env?
-  Rails.env.development? || Rails.env.test?
+  Rails.env.local?
 end
 
 class SessionsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def new
-    redirect_to "/auth/#{Rails.application.config.omniauth_provider}"
+    @auth_provider = Rails.application.config.omniauth_provider
   end
 
   def create
