@@ -1,0 +1,47 @@
+name: "z"
+
+services:
+  rails-app:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+
+    volumes:
+      - ../..:/workspaces:cached
+      - ../.bash_history:/home/vscode/.bash_history
+
+    # Overrides default command so things don't shut down after the process ends.
+    command: sleep infinity
+
+    # Uncomment the next line to use a non-root user for all processes.
+    # user: vscode
+
+    # Use "forwardPorts" in **devcontainer.json** to forward an app port locally.
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
+    depends_on:
+      - db
+  db:
+    image: mysql/mysql-server:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
+      MYSQL_DATABASE: "${DB_DATABASE}"
+      MYSQL_USER: "${DB_USERNAME}"
+      MYSQL_PASSWORD: "${DB_PASSWORD}"
+    healthcheck:
+      test:
+        - CMD
+        - mysqladmin
+        - ping
+        - "-p${DB_PASSWORD}"
+      retries: 3
+      timeout: 5s
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - default
+
+volumes:
+  db-data:

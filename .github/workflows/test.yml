@@ -46,6 +46,7 @@ jobs:
       - name: Setup config files for CI
         run: |
           cp config/ldap_ci.yml config/ldap.yml
+          cp config/secrets_ci.yml config/secrets.yml
 
       - name: Setup Database
         run: |

@@ -5,12 +5,13 @@ gem 'passenger', "~> 6.0"
 gem 'ajax-datatables-rails', "~> 1.4"
 
 # Use OmniAuth to support any type of auth
-gem 'omniauth', "~> 1.9"
-gem 'omniauth-shibboleth', "~> 1.1"
+gem 'omniauth', "~> 2.0"
+gem 'omniauth-rails_csrf_protection', "~> 1.0"
 gem 'omniauth-shibboleth-passive', "~> 0.1"
+gem 'omniauth-shibboleth-redux', "~> 2.0"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.1'
+gem 'rails', '~> 8.0'
 # Use mysql2 as the database for Active Record
 gem 'mysql2', "~> 0.5"
 # Use sqlite also
@@ -45,7 +46,7 @@ gem 'twitter-typeahead-rails', git: 'https://github.com/pgate/twitter-typeahead-
 gem 'net-ldap', "~> 0.16"
 
 # Use bootstrap for styling
-gem 'twitter-bootstrap-rails', git: 'https://github.com/seyhunak/twitter-bootstrap-rails.git'
+gem 'twitter-bootstrap-rails', git: 'https://github.com/UMN-LATIS/twitter-bootstrap-rails.git'
 
 # Use special bootstrap select
 gem 'bootstrap-select-rails', "~> 1.13"
@@ -59,7 +60,7 @@ gem 'clipboard-rails', "~> 1.7"
 gem 'data-confirm-modal', "~> 1.6"
 
 # use papertrail for auding or versioning
-gem 'paper_trail', '~> 15.1'
+gem 'paper_trail', '~> 16.0'
 
 # QR code generation
 gem 'rqrcode', "~> 2.2"
@@ -73,7 +74,7 @@ gem 'starburst',  github: 'UMN-LATIS/starburst', branch: 'feature/rails-7'
 
 # notify someone when exceptions occur
 # and notify slack channel
-gem 'exception_notification', "~> 4.4"
+gem 'exception_notification', git: "https://github.com/smartinez87/exception_notification.git"
 gem 'slack-notifier', "~> 2.3"
 
 # For URL migration
@@ -105,7 +106,7 @@ group :development, :test do
   # rails helpers for cypress
   gem 'cypress-on-rails', '~> 1.17'
 
-  gem 'database_cleaner-active_record', '~> 2.1'
+  gem 'database_cleaner-active_record', '~> 2.2'
   gem 'factory_bot_rails', "~> 6.2"
   gem 'fuubar', "~> 2.5"
   gem 'launchy', "~> 2.4"
@@ -148,10 +149,11 @@ group :development do
   gem "rubocop-rspec", "~> 2.4", require: false
 
   # Use annotate to list the attributes of models
-  gem 'annotate', "~> 3.1"
+  # gem 'annotate', "~> 3.2" 
+  # TODO: fix to work with Rails 8 or move to annotaterb?
 
   gem 'bcrypt_pbkdf', "~> 1.1"
-  gem 'capistrano', "~> 3.14"
+  gem 'capistrano', "~> 3.19"
   gem 'capistrano-bundler', "~> 1.6"
   gem 'capistrano-passenger', '~> 0.2'
   gem 'capistrano-rails', "~> 1.5"

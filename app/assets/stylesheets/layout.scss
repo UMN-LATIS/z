@@ -375,7 +375,7 @@ though the color below doesn't improve much.
       right: 27px;
     }
   }
-  div.dataTables_wrapper {
+  .dataTables_wrapper {
     table {
       tbody {
         a {
@@ -395,6 +395,7 @@ though the color below doesn't improve much.
       }
     }
   }
+  .dt-length,
   .dataTables_length {
     display: none;
   }

@@ -1,0 +1,15 @@
+<script>
+  const onDOMReady = (fn) => document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', fn) : fn();
+
+  onDOMReady(() => {
+    document.getElementById('auth-form').submit();
+  });
+</script>
+<%= form_tag("/auth/#{@auth_provider}", method: 'post', id: 'auth-form', data: {turbo: false}) do %>
+  <noscript>
+    <div class="tw-flex tw-flex-col tw-max-w-screen-sm tw-mx-auto tw-justify-center tw-items-center tw-p-4 tw-gap-4">
+      <p>Redirecting to sign in...</p>
+      <button type='submit' class="btn btn-primary tw-text-base">Continue to sign in</button>
+    </div>
+  </noscript>
+<% end %>
