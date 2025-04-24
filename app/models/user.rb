@@ -112,7 +112,7 @@ class User < ApplicationRecord
 
   def generate_token(column)
     loop do
-      self[column] = SecureRandom.urlsafe_base64
+      self[column] = SecureRandom.urlsafe_base64(32)
       break unless User.exists?(column => self[column])
     end
   end
