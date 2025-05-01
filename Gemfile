@@ -7,8 +7,8 @@ gem 'ajax-datatables-rails', "~> 1.4"
 # Use OmniAuth to support any type of auth
 gem 'omniauth', "~> 2.0"
 gem 'omniauth-rails_csrf_protection', "~> 1.0"
-gem 'omniauth-shibboleth-passive', "~> 0.1"
-gem 'omniauth-shibboleth-redux', "~> 2.0"
+# gem 'omniauth-shibboleth-passive', "~> 0.1"
+# gem 'omniauth-shibboleth-redux', "~> 2.0"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 8.0'
@@ -171,3 +171,5 @@ gem "rack-utf8_sanitizer", "~> 1.7"
 # gem "tailwindcss-rails", "~> 2.0"
 
 gem "terser", "~> 1.2"
+
+gem "omniauth-saml", "~> 2.2"

@@ -19,8 +19,8 @@ Rails.application.routes.draw do
   end
 
   # Handle Auth
-  post "/auth/:provider/callback", to: "sessions#create"
-  get "/auth/:provider/callback", to: "sessions#create"
+  post "/auth/:provider/callback", to: "sessions#create", as: 'auth_saml_callback'
+  get 'auth/saml/metadata' => 'saml_metadata#metadata'
 
   root "home#index"
   get "shortener", to: "urls#index"

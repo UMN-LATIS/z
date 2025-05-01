@@ -88,7 +88,8 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # Set the omniauth provider
-  config.omniauth_provider = 'shibboleth'
+  config.omniauth_provider = 'saml'
+  config.app_base_url = "https://cla-z-tst-02.oit.umn.edu"
   config.shib_return_url = 'https://login.umn.edu/idp/profile/Logout'
 
   config.action_mailer.delivery_method = :smtp
