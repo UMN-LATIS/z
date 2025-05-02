@@ -112,7 +112,7 @@ Rails.application.configure do
   # Set the omniauth provider
   config.omniauth_provider = 'saml'
   config.app_base_url = "https://z.umn.edu"
-  config.shib_return_url = 'https://login.umn.edu/idp/profile/Logout'
+  config.shib_return_url = ENV['SHIB_IDP_SLO']
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {

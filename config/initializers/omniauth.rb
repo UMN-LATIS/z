@@ -5,14 +5,14 @@ Rails.application.config.middleware.use OmniAuth::Builder do
  
   provider :saml, {
     idp_cert_multi: idp_metadata[:idp_cert_multi],
-    uid_field: 'https://www.umn.edu/shibboleth/attributes/umnDID',
+    uid_field: ENV['SHIB_DID'],
     extra_fields: [
-      'https://www.umn.edu/shibboleth/attributes/isGuest'
+      ENV['SHIB_IS_GUEST']
     ],
     issuer: "#{Rails.application.config.app_base_url}",
-    assertion_consumer_service_url: "#{Rails.application.config.app_base_url}/auth/saml/callback",
-    sp_entity_id: "https://claoit.umn.edu/shibboleth/default",
-    idp_sso_service_url: "https://login.umn.edu/idp/profile/SAML2/Redirect/SSO",
+    assertion_consumer_service_url: ENV['SHIB_ASSERTION_CONSUMER_URL'],
+    sp_entity_id: ENV['SHIB_ENTITY_ID'],
+    idp_sso_service_url: ENV['SHIB_IDP_SSO'],
     idp_metadata: idp_metadata,
     certificate: ENV['SHIB_X509_CERT'] || raise("SHIB_X509_CERT environment variable must be defined"),
     private_key: ENV['SHIB_PRIVATE_KEY'] || raise("SHIB_PRIVATE_KEY environment variable must be defined"),
@@ -23,15 +23,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
     },
     protocol_binding: OneLogin::RubySaml::Utils::BINDINGS[:post],
     name_identifier_format: nil
-  }
-  # provider :shibboleth_passive, {
-  #   uid_field: 'umnDID',
-  #   extra_fields: [
-  #     :isGuest
-  #   ]
-  # }
-  # provider :saml,
-    
+  } 
 end
 
 
