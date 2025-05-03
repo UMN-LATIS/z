@@ -10,16 +10,26 @@ class SessionsController < ApplicationController
   end
 
   def create
-    # Filter out isGuest shibboleth requests. This is almost surely the wrong way to filter logins with
-    # omniAuth. TODO: refactor.
-    if auth_hash["extra"]["raw_info"]["https://www.umn.edu/shibboleth/attributes/isGuest"] == "Y"
+    # short circuit and just sign in if we're using the developer provider
+    if Rails.application.config.omniauth_provider == "developer"
+      @user = User.find_or_create_by(
+        uid: auth_hash[:uid],
+      )
+      sign_in @user
+      redirect_to urls_path
+      return
+    end
+
+    # if we're a guest, redirect to the root path
+    if auth_hash["extra"]["raw_info"][ENV['SHIB_IS_GUEST']] == "Y"
       redirect_to root_path
       return
     end
 
-    if auth_hash.extra.raw_info.attributes.key?("https://www.umn.edu/shibboleth/attributes/umnDID") && auth_hash.extra.raw_info.attributes["https://www.umn.edu/shibboleth/attributes/umnDID"].present?
+    # if there's a valid uid sign in
+    if auth_hash.extra.raw_info.attributes.key?() && auth_hash.extra.raw_info.attributes[ENV["SHIB_DID"]].present?
       @user = User.find_or_create_by(
-        uid: auth_hash[:extra][:raw_info][:"https://www.umn.edu/shibboleth/attributes/umnDID"]
+        uid: auth_hash[:extra][:raw_info][ENV["SHIB_DID"]],
       )
       sign_in @user
       redirect_to urls_path
@@ -32,7 +42,6 @@ class SessionsController < ApplicationController
   def destroy
     sign_out
     redirect_to shib_logout_url, :allow_other_host => true
-    
   end
 
   protected

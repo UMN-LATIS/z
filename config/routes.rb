@@ -20,6 +20,12 @@ Rails.application.routes.draw do
 
   # Handle Auth
   post "/auth/:provider/callback", to: "sessions#create", as: 'auth_saml_callback'
+
+  # omniauth developer provider uses a GET request
+  if Rails.application.config.omniauth_provider == "developer"
+    get "/auth/developer/callback", to: "sessions#create"
+  end
+
   get 'auth/saml/metadata' => 'saml_metadata#metadata'
 
   root "home#index"
