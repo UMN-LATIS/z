@@ -110,8 +110,8 @@ Rails.application.configure do
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 
   # Set the omniauth provider
-  config.omniauth_provider = ENV.fetch('OMNIAUTH_PROVIDER','saml')
-  
+  config.omniauth_provider = ENV.fetch("OMNIAUTH_PROVIDER", "saml")
+
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address: 'mail.socsci.umn.edu',

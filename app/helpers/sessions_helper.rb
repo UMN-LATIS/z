@@ -30,6 +30,6 @@ module SessionsHelper
   end
 
   def shib_logout_url
-    ENV['SHIB_IDP_SLO']
+    ENV["SHIB_IDP_SLO"]
   end
 end

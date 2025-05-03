@@ -88,8 +88,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # Set the omniauth provider
-  config.omniauth_provider = ENV.fetch('OMNIAUTH_PROVIDER','saml')
-  
+  config.omniauth_provider = ENV.fetch("OMNIAUTH_PROVIDER", "saml")
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
