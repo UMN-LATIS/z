@@ -40,6 +40,7 @@ jobs:
         run: |
           cp config/ldap_ci.yml config/ldap.yml
           cp config/secrets_ci.yml config/secrets.yml
+          cp .env.example .env
 
       - name: Setup Database
         run: |
