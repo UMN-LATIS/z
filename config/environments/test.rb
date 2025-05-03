@@ -67,5 +67,6 @@ Rails.application.configure do
   config.action_controller.raise_on_missing_callback_actions = true
 
   # Set the omniauth provider
-  config.omniauth_provider = 'developer'
+  config.omniauth_provider = ENV.fetch('OMNIAUTH_PROVIDER','developer')
+  
 end
