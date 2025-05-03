@@ -27,9 +27,9 @@ class SessionsController < ApplicationController
     end
 
     # if there's a valid uid sign in
-    if auth_hash.extra.raw_info.attributes.key?() && auth_hash.extra.raw_info.attributes[ENV["SHIB_DID"]].present?
+    if auth_hash.extra.raw_info.attributes.key?(ENV["SHIB_DID"]) && auth_hash.extra.raw_info.attributes[ENV["SHIB_DID"]].present?
       @user = User.find_or_create_by(
-        uid: auth_hash[:extra][:raw_info][ENV["SHIB_DID"]],
+        uid: auth_hash[:extra][:raw_info][ENV["SHIB_DID"].to_sym],
       )
       sign_in @user
       redirect_to urls_path
