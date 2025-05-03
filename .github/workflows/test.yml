@@ -24,7 +24,7 @@ jobs:
         run: |
           mysql --host ${{ env.DB_HOST }} --port ${{ env.DB_PORT }} -u${{ env.DB_USERNAME}} -p${{ env.DB_PASSWORD }} -e "SHOW DATABASES"
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: ruby/setup-ruby@v1
         with:
@@ -48,7 +48,7 @@ jobs:
           ./bin/rails db:migrate
 
       - name: Run E2E tests with Cypress
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           start: bundle exec rails server -e test -p 5017
           wait-on: "http://localhost:5017"
@@ -56,14 +56,14 @@ jobs:
           config: baseUrl=http://localhost:5017
 
       - name: Upload test screenshots if any
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: cypress-screenshots
           path: cypress/screenshots
 
       - name: Upload snapshots
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: cypress-snapshots
