@@ -11,7 +11,7 @@ if ENV['OMNIAUTH_PROVIDER'] != "developer"
     extra_fields: [
       ENV['SHIB_IS_GUEST']
     ],
-    issuer: -> { Rails.application.config.app_base_url },
+    issuer: ENV['APP_URL'],
     assertion_consumer_service_url: ENV['SHIB_ASSERTION_CONSUMER_URL'],
     sp_entity_id: ENV['SHIB_ENTITY_ID'],
     idp_sso_service_url: ENV['SHIB_IDP_SSO'],

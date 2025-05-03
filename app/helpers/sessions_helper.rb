@@ -30,6 +30,6 @@ module SessionsHelper
   end
 
   def shib_logout_url
-    redirect_url = Rails.application.config.shib_return_url
+    ENV['SHIB_IDP_SLO']
   end
 end
