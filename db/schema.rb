@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_05_133839) do
+ActiveRecord::Schema[8.0].define(version: 2024_06_05_133839) do
   create_table "clicks", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "country_code"
     t.integer "url_id"

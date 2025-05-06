@@ -110,8 +110,7 @@ Rails.application.configure do
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 
   # Set the omniauth provider
-  config.omniauth_provider = 'shibboleth'
-  config.shib_return_url = 'https://login.umn.edu/idp/profile/Logout'
+  config.omniauth_provider = ENV.fetch("OMNIAUTH_PROVIDER", "saml")
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {

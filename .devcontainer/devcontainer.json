@@ -18,6 +18,7 @@
     "ghcr.io/rails/devcontainer/features/activestorage": {},
     "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
     "ghcr.io/rails/devcontainer/features/mysql-client": {},
+    "ghcr.io/devcontainers/features/git:1": {},
     // add nodejs and yarn
     "ghcr.io/devcontainers/features/node:1": {
       "nodeGypDependencies": true,
@@ -27,9 +28,13 @@
       "nvmVersion": "latest"
     }
   },
+  "mounts": [
+    "source=${localEnv:HOME}/.gitconfig,target=/home/vscode/.gitconfig,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
+  ],
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
-  "forwardPorts": [3000, 3606],
+  "forwardPorts": [3000, 3306],
 
   // Configure tool-specific properties.
   "customizations": {

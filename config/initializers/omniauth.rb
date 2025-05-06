@@ -1,17 +1,9 @@
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :developer unless Rails.env.production? || Rails.env.staging? || Rails.env.remotedev?
-  provider :shibboleth, {
-    uid_field: 'umnDID',
-    extra_fields: [
-      :isGuest
-    ]
-  }
-  provider :shibboleth_passive, {
-    uid_field: 'umnDID',
-    extra_fields: [
-      :isGuest
-    ]
-  }
+  if Rails.application.config.omniauth_provider == "developer"
+    provider :developer
+  else
+    provider :saml, Rails.application.config.shib_settings
+  end
 end
 
 OmniAuth.config.logger = Rails.logger
