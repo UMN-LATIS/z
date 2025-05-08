@@ -38,13 +38,10 @@ jobs:
 
       - name: Setup config files for CI
         run: |
-          cp config/ldap_ci.yml config/ldap.yml
-          cp config/secrets_ci.yml config/secrets.yml
           cp .env.example .env
 
       - name: Setup Database
         run: |
-          cp config/database_ci.yml config/database.yml
           ./bin/rails db:create
           ./bin/rails db:migrate
 
