@@ -1,8 +1,8 @@
-:host: ldapauth.umn.edu
-:port: 636
+:host: "<%= ENV['LDAP_HOST'] %>"
+:port: <%= ENV['LDAP_PORT'] %>
 :encryption: :simple_tls
-:base: o=University of Minnesota,c=US
+:base: "<%= ENV['LDAP_BASE'] %>"
 :auth:
   :method: :simple
-  :username: <%= ENV['LDAP_USERNAME'] %>
-  :password: <%= ENV['LDAP_PASSWORD'] %>
+  :username: "<%= ENV['LDAP_USERNAME'] %>"
+  :password: "<%= ENV['LDAP_PASSWORD'] %>"
