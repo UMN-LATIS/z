@@ -1,5 +1,5 @@
 :host: "<%= ENV['LDAP_HOST'] %>"
-:port: <%= ENV['LDAP_PORT'] %>
+:port: <%= Integer(ENV['LDAP_PORT']) %>
 :encryption: :simple_tls
 :base: "<%= ENV['LDAP_BASE'] %>"
 :auth:
