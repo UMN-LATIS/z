@@ -1,17 +1,17 @@
 default: &default
   adapter: mysql2
-  host: <%= ENV['DB_HOST'] %>
+  host: "<%= ENV['DB_HOST'] %>"
   port: <%= ENV['DB_PORT'] %>
-  database: <%= ENV['DB_DATABASE'] %>
-  username: <%= ENV['DB_USERNAME'] %>
+  database: "<%= ENV['DB_DATABASE'] %>"
+  username: "<%= ENV['DB_USERNAME'] %>"
   password: "<%= ENV['DB_PASSWORD'] %>"
-  encoding: utf8mb4
+  encoding: "utf8mb4"
   enable_cleartext_plugin: <%= ENV['DB_ENABLE_CLEARTEXT_PLUGIN'] %>
-  sslca: <%= ENV['DB_SSL_CA_FILE'] %>
+  sslca: "<%= ENV['DB_SSL_CA_FILE'] %>"
 
 test:
   <<: *default
-  database: <%= ENV['DB_DATABASE'] %>_test
+  database: "<%= ENV['DB_DATABASE'] %>_test"
 
 development: *default
 remotedev: *default
