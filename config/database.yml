@@ -6,7 +6,7 @@ default: &default
   username: "<%= ENV['DB_USERNAME'] %>"
   password: "<%= ENV['DB_PASSWORD'] %>"
   encoding: "utf8mb4"
-  enable_cleartext_plugin: <%= ENV['DB_ENABLE_CLEARTEXT_PLUGIN'] %>
+  enable_cleartext_plugin: <%= ENV['DB_ENABLE_CLEARTEXT_PLUGIN'] == 'true' || ENV['DB_ENABLE_CLEARTEXT_PLUGIN'] == '1' %>
   sslca: "<%= ENV['DB_SSL_CA_FILE'] %>"
 
 test:
