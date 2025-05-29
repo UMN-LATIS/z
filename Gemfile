@@ -173,3 +173,5 @@ gem "terser", "~> 1.2"
 gem "omniauth-saml", "~> 2.2"
 
 gem "csv", "~> 3.3"
+
+gem "ostruct", "~> 0.6.1"

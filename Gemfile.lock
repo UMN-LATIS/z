@@ -623,6 +623,7 @@ DEPENDENCIES
   omniauth (~> 2.0)
   omniauth-rails_csrf_protection (~> 1.0)
   omniauth-saml (~> 2.2)
+  ostruct (~> 0.6.1)
   paper_trail (~> 16.0)
   passenger (~> 6.0)
   pry (~> 0.13)
