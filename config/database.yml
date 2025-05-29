@@ -7,7 +7,11 @@ default: &default
   password: "<%= ENV['DB_PASSWORD'] %>"
   encoding: "utf8mb4"
   enable_cleartext_plugin: <%= ENV['DB_ENABLE_CLEARTEXT_PLUGIN'] == 'true' || ENV['DB_ENABLE_CLEARTEXT_PLUGIN'] == '1' %>
+  # only define sslca prop if the environment variable is set
+  # this is useful for local development
+  <% if ENV['DB_SSL_CA_FILE'].present? %>
   sslca: "<%= ENV['DB_SSL_CA_FILE'] %>"
+  <% end %>
 
 test:
   <<: *default
