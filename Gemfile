@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'passenger', "~> 6.0"
+# Use Puma as the app server
+gem 'puma', '~> 6.0'
 
 gem 'ajax-datatables-rails', "~> 1.4"
 
@@ -153,7 +154,6 @@ group :development do
   gem 'bcrypt_pbkdf', "~> 1.1"
   gem 'capistrano', "~> 3.19"
   gem 'capistrano-bundler', "~> 1.6"
-  gem 'capistrano-passenger', '~> 0.2'
   gem 'capistrano-rails', "~> 1.5"
   gem 'capistrano-rbenv', "~> 2.1"
   gem 'ed25519', "~> 1.2"
