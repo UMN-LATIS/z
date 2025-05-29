@@ -1,7 +1,5 @@
 source 'https://rubygems.org'
 
-# Use Puma as the app server
-gem 'puma', '~> 6.0'
 
 gem 'ajax-datatables-rails', "~> 1.4"
 
