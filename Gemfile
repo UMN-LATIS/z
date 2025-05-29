@@ -3,6 +3,8 @@ source 'https://rubygems.org'
 
 gem 'ajax-datatables-rails', "~> 1.4"
 
+
+
 # Use OmniAuth to support any type of auth
 gem 'omniauth', "~> 2.0"
 gem 'omniauth-rails_csrf_protection', "~> 1.0"
@@ -169,3 +171,5 @@ gem "rack-utf8_sanitizer", "~> 1.7"
 gem "terser", "~> 1.2"
 
 gem "omniauth-saml", "~> 2.2"
+
+gem "csv", "~> 3.3"
