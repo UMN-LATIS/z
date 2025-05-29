@@ -155,7 +155,7 @@ if [[ "$TERM" == "xterm" ]]; then
     # Append to PROMPT_COMMAND to call precmd before displaying the prompt
     PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND; }precmd"
 fi
-# eval "$(rbenv init -)"
+eval "$(rbenv init -)"
 export PROMPT_COMMAND='history -a'
 export HISTFILE="${HOME}/.bash_history"
 
