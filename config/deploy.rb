@@ -36,8 +36,19 @@ append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/syst
 
 # Default value for keep_releases is 5
 # set :keep_releases, 5
+namespace :deploy do
+  desc "Phased restart Puma via pumactl"
+  task :phased_restart do
+    on roles(:app) do
+      within current_path do
+        execute "sudo /usr/local/bin/pumactl phased-restart -F /etc/puma/puma.rb "
+      end
+    end
+  end
+  after :publishing, :phased_restart
+end
 
-after 'deploy:symlink:release', 'deploy:apache'
+after 'deploy:symlink:release', 'deploy:phased_restart'
 
 # Compile assets on every deployment
 before "deploy:assets:precompile", "deploy:yarn_install"
