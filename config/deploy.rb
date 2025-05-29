@@ -9,8 +9,7 @@ set :rbenv_ruby, File.read('.ruby-version').strip
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, '/var/www/z'
-set :tmp_dir, "/home/latis_deploy/tmp"
+set :deploy_to, '/swadm/web/z/'
 
 # Default value for :scm is :git
 # set :scm, :git
@@ -38,19 +37,15 @@ append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/syst
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 namespace :deploy do
-  desc "Phased restart Puma via pumactl"
-  task :phased_restart do
+  desc 'Restart Apache'
+  task :apache do
     on roles(:app) do
-      within current_path do
-        execute "sudo /usr/local/bin/pumactl phased-restart -F /etc/puma/puma.rb "
-      end
+      execute :sudo, "/bin/systemctl restart  httpd.service"
     end
   end
-  after :publishing, :phased_restart
 end
 
-after 'deploy:symlink:release', 'deploy:phased_restart'
-
+after 'deploy:symlink:release', 'deploy:apache'
 
 # Compile assets on every deployment
 before "deploy:assets:precompile", "deploy:yarn_install"
