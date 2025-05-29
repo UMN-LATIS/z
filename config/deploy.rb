@@ -28,8 +28,9 @@ set :deploy_to, '/swadm/web/z/'
 append :linked_files, 'config/database.yml', 'config/secrets.yml', 'config/ldap.yml','.env'
 
 # Default value for linked_dirs is []
-append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system', 'public/packs', '.bundle',
-       'node_modules'
+append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system', 'public/packs', '.bundle', 'node_modules', "public/vite"
+
+append :assets_manifests, "public/vite/.vite/manifest*.*"
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -51,13 +52,24 @@ end
 after 'deploy:symlink:release', 'deploy:phased_restart'
 
 # Compile assets on every deployment
-before "deploy:assets:precompile", "deploy:yarn_install"
+before "deploy:assets:precompile", "deploy:npm_install"
 namespace :deploy do
-  desc "Run rake yarn install"
-  task :yarn_install do
+  desc "npm install"
+  task :npm_install do
     on roles(:web) do
       within release_path do
-        execute("cd #{release_path} && yarn install --silent --no-progress --no-audit --no-optional")
+        execute("cd #{release_path} && npm ci")
+      end
+    end
+  end
+end
+
+namespace :deploy do
+  desc "npm build"
+  task :npm_install do
+    on roles(:web) do
+      within release_path do
+        execute("cd #{release_path} && npm ci")
       end
     end
   end
