@@ -9,7 +9,8 @@ set :rbenv_ruby, File.read('.ruby-version').strip
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, '/swadm/web/z/'
+set :deploy_to, '/var/www/z'
+set :tmp_dir, "/home/latis_deploy/tmp"
 
 # Default value for :scm is :git
 # set :scm, :git
@@ -25,11 +26,12 @@ set :deploy_to, '/swadm/web/z/'
 # set :pty, true
 
 # Default value for :linked_files is []
-append :linked_files, 'config/database.yml', 'config/secrets.yml', 'config/ldap.yml','.env'
+append :linked_files, '.env'
 
 # Default value for linked_dirs is []
-append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system', 'public/packs', '.bundle',
-       'node_modules'
+append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system', 'public/packs', '.bundle', 'node_modules', "public/vite"
+
+append :assets_manifests, "public/vite/.vite/manifest*.*"
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -37,24 +39,38 @@ append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/syst
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 namespace :deploy do
-  desc 'Restart Apache'
-  task :apache do
+  desc "Phased restart Puma via pumactl"
+  task :phased_restart do
     on roles(:app) do
-      execute :sudo, "/bin/systemctl restart  httpd.service"
+      within current_path do
+        execute "sudo /usr/local/bin/pumactl phased-restart -F /etc/puma/puma.rb "
+      end
+    end
+  end
+  after :publishing, :phased_restart
+end
+
+after 'deploy:symlink:release', 'deploy:phased_restart'
+
+# Compile assets on every deployment
+before "deploy:assets:precompile", "deploy:npm_install"
+namespace :deploy do
+  desc "npm install"
+  task :npm_install do
+    on roles(:web) do
+      within release_path do
+        execute("cd #{release_path} && npm ci")
+      end
     end
   end
 end
 
-after 'deploy:symlink:release', 'deploy:apache'
-
-# Compile assets on every deployment
-before "deploy:assets:precompile", "deploy:yarn_install"
 namespace :deploy do
-  desc "Run rake yarn install"
-  task :yarn_install do
+  desc "npm build"
+  task :npm_install do
     on roles(:web) do
       within release_path do
-        execute("cd #{release_path} && yarn install --silent --no-progress --no-audit --no-optional")
+        execute("cd #{release_path} && npm ci")
       end
     end
   end

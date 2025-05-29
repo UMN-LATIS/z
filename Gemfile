@@ -13,7 +13,7 @@ gem 'rails', '~> 8.0'
 # Use mysql2 as the database for Active Record
 gem 'mysql2', "~> 0.5"
 # Use sqlite also
-gem 'sqlite3', "~> 1.4"
+gem 'sqlite3', "~> 2.6"
 # Use Puma as the app server
 gem 'puma', '~> 6.0'
 # Use SCSS for stylesheets
@@ -171,3 +171,7 @@ gem "rack-utf8_sanitizer", "~> 1.7"
 gem "terser", "~> 1.2"
 
 gem "omniauth-saml", "~> 2.2"
+
+gem "csv", "~> 3.3"
+
+gem "ostruct", "~> 0.6.1"

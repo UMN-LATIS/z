@@ -25,11 +25,6 @@
 .tags
 .tags_sorted_by_file
 
-# Ignore authention information
-config/ldap.yml
-config/database.yml
-config/secrets.yml
-
 .env*
 !.env.example
 /public/packs
