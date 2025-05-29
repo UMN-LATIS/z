@@ -9,7 +9,8 @@ set :rbenv_ruby, File.read('.ruby-version').strip
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, '/swadm/web/z/'
+set :deploy_to, '/var/www/z'
+set :tmp_dir, "/home/latis_deploy/tmp"
 
 # Default value for :scm is :git
 # set :scm, :git
