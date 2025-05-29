@@ -51,7 +51,6 @@ end
 
 after 'deploy:symlink:release', 'deploy:phased_restart'
 
-
 # Compile assets on every deployment
 before "deploy:assets:precompile", "deploy:yarn_install"
 namespace :deploy do
@@ -59,7 +58,7 @@ namespace :deploy do
   task :yarn_install do
     on roles(:web) do
       within release_path do
-        execute("cd #{release_path} && npm install --silent --no-progress --no-audit --no-optional")
+        execute("cd #{release_path} && yarn install --silent --no-progress --no-audit --no-optional")
       end
     end
   end
