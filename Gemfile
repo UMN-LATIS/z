@@ -171,3 +171,5 @@ gem "rack-utf8_sanitizer", "~> 1.7"
 gem "terser", "~> 1.2"
 
 gem "omniauth-saml", "~> 2.2"
+
+gem "csv", "~> 3.3"

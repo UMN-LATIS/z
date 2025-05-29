@@ -4,9 +4,7 @@
   "name": "z",
   "initializeCommand": {
     "create .env": "if [ ! -f .env ]; then cp .env.example .env; fi",
-    "devcontainer symlink to .env": "if [ ! -L .devcontainer/.env ]; then ln -s ../.env .devcontainer/.env; fi",
-    "create database.yml": "if [ ! -f config/database.yml ]; then cp config/database_ci.yml config/database.yml; fi",
-    "crate ldap.yml": "if [ ! -f config/ldap.yml ]; then cp config/ldap_ci.yml config/ldap.yml; fi"
+    "devcontainer symlink to .env": "if [ ! -L .devcontainer/.env ]; then ln -s ../.env .devcontainer/.env; fi"
   },
   "dockerComposeFile": "docker-compose.yml",
   "service": "rails-app",
@@ -68,7 +66,7 @@
 
   // Use 'postCreateCommand' to run commands after the container is created.
   "postCreateCommand": {
-    "Setup Rails": "bin/setup --skip-server",
-    "Setup Yarn": "yarn install --check-files"
+    "Setup Rails": "bin/setup --skip-server"
+    // "node install": "npm ci"
   }
 }

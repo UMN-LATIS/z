@@ -161,6 +161,7 @@ GEM
     concurrent-ruby (1.3.5)
     connection_pool (2.5.3)
     crass (1.0.6)
+    csv (3.3.4)
     cypress-on-rails (1.17.0)
       rack
     data-confirm-modal (1.6.3)
@@ -597,6 +598,7 @@ DEPENDENCIES
   capistrano-rbenv (~> 2.1)
   clipboard-rails (~> 1.7)
   coffee-rails (~> 4.2)
+  csv (~> 3.3)
   cypress-on-rails (~> 1.17)
   data-confirm-modal (~> 1.6)
   database_cleaner-active_record (~> 2.2)
