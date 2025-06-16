@@ -51,3 +51,6 @@ node_modules
 
 .bash_history
 /config/master.key
+
+# don't accidentally commit vscode config
+.vscode
