@@ -2,7 +2,11 @@ require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-
+  config.action_dispatch.trusted_proxies = [
+    IPAddr.new("127.0.0.1"),          # for local requests
+    IPAddr.new("::1"),                # for IPv6 loopback
+    IPAddr.new("128.101.235.129")   # or use a subnet like "10.0.0.0/8" if it's on a private network
+  ]
   # Code is not reloaded between requests.
   config.enable_reloading = false
 
