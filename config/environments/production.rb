@@ -5,7 +5,8 @@ Rails.application.configure do
   config.action_dispatch.trusted_proxies = [
     IPAddr.new("127.0.0.1"),          # for local requests
     IPAddr.new("::1"),                # for IPv6 loopback
-    IPAddr.new("128.101.235.129")   # or use a subnet like "10.0.0.0/8" if it's on a private network
+    IPAddr.new("128.101.235.128/26"),   
+    IPAddr.new("10.33.18.0/26")   
   ]
   # Code is not reloaded between requests.
   config.enable_reloading = false
