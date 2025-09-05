@@ -155,7 +155,9 @@ if [[ "$TERM" == "xterm" ]]; then
     # Append to PROMPT_COMMAND to call precmd before displaying the prompt
     PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND; }precmd"
 fi
-eval "$(rbenv init -)"
+
+# rails devcontainer's default changed to mise from rbenv
+eval "$(mise activate bash)"
 export PROMPT_COMMAND='history -a'
 export HISTFILE="${HOME}/.bash_history"
 
