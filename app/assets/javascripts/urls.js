@@ -198,7 +198,14 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
                 selected_collection = $('.collection-selected').data('collectionSelected')
                 this.api().columns([1]).every(function() {
                     var column = this;
-                    var select = $('<select id="collection-filter" class="form-control" aria-label="Collections Filter"><option value="">' + I18n.t("views.urls.index.table.collection_filter.all") + '</option></select>')
+                    var select = $(`
+                        <select id="collection-filter" 
+                            class="collection-filter-select">
+                            <option value="">
+                                ${I18n.t("views.urls.index.table.collection_filter.all")}
+                            </option>
+                        </select>
+                    `)
                         .prependTo($("#urls-table_filter"))
                         .on('change', function() {
                             var val = $.fn.dataTable.util.escapeRegex(
@@ -212,7 +219,6 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
                         select.append('<option value="' + d[0] + '">' + d[1] + '</option>')
                     });
                     select.before('<label for="collection-filter">' + I18n.t("views.urls.index.table.collection_filter.label") + ':</label>');
-                    select.selectpicker();
                     if (selected_collection !== undefined) {
                         setTimeout(function() {
                             select.val(selected_collection).trigger("change");
