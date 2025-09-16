@@ -184,10 +184,7 @@ describe("urlsPageListZlinks - /shortener/urls", () => {
 
       it("can filter results by collection dropdown", () => {
         // now try filtering by the test collection
-        cy.get("#urls-table_filter > .dropdown > .btn").click();
-        cy.get("#urls-table_filter .open > .dropdown-menu")
-          .contains("testcollection")
-          .click();
+        cy.get("#collection-filter").select("testcollection");
 
         // verify that only the cla url is visible
         cy.get("#urls-table > tbody > tr").should("have.length", 1);
