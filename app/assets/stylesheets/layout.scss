@@ -279,7 +279,8 @@ though the color below doesn't improve much.
     -moz-border-radius: 0 6px 6px 6px;
     border-radius: 0 6px 6px 6px;
   }
-  .dropdown-submenu:hover > .dropdown-menu {
+  .dropdown-submenu:hover > .dropdown-menu,
+  .dropdown-submenu:focus-within > .dropdown-menu  {
     display: block;
   }
   .dropdown-submenu > a:after {
