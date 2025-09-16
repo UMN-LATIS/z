@@ -1,18 +1,19 @@
 <div class="actions-column">
   <div class="dropdown">
-    <button data-toggle="dropdown" class="actions-dropdown-button" aria-label="More Actions">
+    <button data-toggle="dropdown" class="actions-dropdown-button" aria-haspopup="true" aria-expanded="false" aria-controls="url-actions-menu-<%= url.id %>">
       <i class="fa fa-ellipsis-h">
       </i>
+      <span class="sr-only">More Actions</span>
     </button>
-    <ul class="dropdown-menu dropdown-menu-right">
+    <ul class="dropdown-menu dropdown-menu-right" id="url-actions-menu-<%= url.id %>" role="menu" aria-labelledby="url-actions-menu-<%= url.id %>">
       <li class="dropdown-submenu pull-left">
-        <%= link_to t('views.urls.index.table.in_row_actions.share'),
-                  '',
-                  class: 'btn action-button share-url fa fa-share-square-o',
-                  'data-content': render('urls/share_buttons', url: url) %>
+        <a href="#" class="btn action-button share-url" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-controls="share-url-menu-<%= url.id %>">
+          <i class="fa fa-share-square-o !tw-text-black"></i>
+          <%= t('views.urls.index.table.in_row_actions.share') %>
+          </a>
         <ul class="dropdown-menu dropdown-menu-left">
           <li>
-            <button class="url-share-button js-share-button-twitter tw-text-twitter-blue !tw-text-sm" data-short-url="<%= full_url(url) %>">
+            <button class="url-share-button js-share-button-twitter tw-text-twitter-blue !tw-text-sm" data-short-url="<%= full_url(url) %>" role="menuitem">
               <i class="fa fa-twitter"></i>
               <%= t("views.urls.index.table.in_row_actions.twitter") %>
             </button>
@@ -20,19 +21,19 @@
         </ul>
       </li>
       <li class="dropdown-submenu pull-left">
-        <a href="#" class="btn action-button">
+        <a href="#" class="btn action-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-controls="qr-code-download-menu-<%= url.id %>">
           <i class="fa fa-qrcode !tw-text-black"></i>
           <%= t('views.urls.index.table.in_row_actions.qr_code') %>
         </a>
-        <ul class="dropdown-menu dropdown-menu-left">
+        <ul class="dropdown-menu dropdown-menu-left" id="qr-code-download-menu-<%= url.id %>" role="menu" aria-labelledby="qr-code-download-menu-trigger-button">
           <li>
-            <a class="tw-text-left !tw-flex tw-justify-between tw-items-baseline" href="<%= url_download_qrcode_path(url.keyword) %>" download>
+            <a class="tw-text-left !tw-flex tw-justify-between tw-items-baseline" href="<%= url_download_qrcode_path(url.keyword) %>" download role="menuitem">
               PNG
               <span class="tw-uppercase tw-text-[0.75em] tw-text-neutral-400">Standard</span>
             </a>
           </li>
           <li>
-            <a class="tw-text-left !tw-flex tw-justify-between tw-items-baseline" href="<%= url_download_qrcode_path(url.keyword, format: :svg) %>" download>
+            <a class="tw-text-left !tw-flex tw-justify-between tw-items-baseline" href="<%= url_download_qrcode_path(url.keyword, format: :svg) %>" download role="menuitem">
               SVG
               <span class="tw-uppercase tw-text-[0.75em] tw-text-neutral-400">Advanced</span>
             </a>
