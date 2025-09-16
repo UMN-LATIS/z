@@ -291,13 +291,6 @@ table.dataTable thead .sorting_desc_disabled:after {
     display: inline-block;
     vertical-align: middle;
   }
-  .bootstrap-select.form-control:not([class*="col-"]) {
-    width: auto;
-    max-width: 150px;
-    margin-right: 14px;
-    margin-left: 4px;
-    margin-bottom: 2px;
-  }
 }
 
 table.dataTable tbody > tr.selected,
@@ -564,4 +557,12 @@ table.dataTable tr.selected .fa-ellipsis-h {
   tfoot th:last-child input {
     display: none;
   }
+}
+
+.collection-filter-select {
+  border: 1px solid #ddd;
+  font-size: 0.75rem;
+  padding: 0.25rem 1.5rem 0.25rem 0.5rem;
+  border-radius: 3px;
+  max-width: 6rem;
 }
