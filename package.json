@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@headlessui/vue": "^1.7.23",
-    "@umn-latis/cla-vue-template": "^2.0.1",
+    "@umn-latis/cla-vue-template": "^3.0.0",
     "axios": "^1.7.9",
     "datatables.net": "^2.1.8",
     "datatables.net-bs4": "^2.1.8",
@@ -59,6 +59,5 @@
     "vite-plugin-full-reload": "^1.2.0",
     "vite-plugin-ruby": "^5.1.1",
     "vue-tsc": "^2.1.10"
-  },
-  "packageManager": "yarn@1.22.22"
+  }
 }
