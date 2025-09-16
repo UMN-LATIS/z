@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@headlessui/vue": "^1.7.23",
-    "@umn-latis/cla-vue-template": "^1.2.1",
+    "@umn-latis/cla-vue-template": "^2.0.1",
     "axios": "^1.7.9",
     "datatables.net": "^2.1.8",
     "datatables.net-bs4": "^2.1.8",
