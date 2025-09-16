@@ -7,8 +7,8 @@
 </button>
 <!-- QR Code split download button -->
 <div class="btn-group">
-  <a href="<%= url_download_qrcode_path(url.keyword) %>" class="btn btn-default <%= is_large %> " download>
-    <i class="fa fa-qrcode"></i>
+  <a href="<%= url_download_qrcode_path(url.keyword) %>" class="btn btn-default <%= is_large %> " download aria-label="Download QR Code">
+    <i class="fa fa-qrcode" aria-hidden="true"></i>
     <%= t('views.urls.index.table.in_row_actions.qr_code') %>
   </a>
   <button id="qr-code-download-menu-trigger-button" type="button" class="btn btn-default dropdown-toggle  <%= is_large %>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-controls="qr-code-download-menu">
@@ -17,16 +17,15 @@
   </button>
   <ul class="dropdown-menu" id="qr-code-download-menu" role="menu" aria-labelledby="qr-code-download-menu-trigger-button">
     <li>
-      <a href="<%= url_download_qrcode_path(url.keyword) %>" download class="!tw-flex tw-justify-between tw-items-baseline">
-        <span class="sr-only">Download</span> PNG 
-        <span class="tw-uppercase tw-text-[0.75em] tw-text-neutral-400">Standard</span>
+      <a role="menuitem" href="<%= url_download_qrcode_path(url.keyword) %>" download class="!tw-flex tw-justify-between tw-items-baseline">
+        <span aria-label="Download PNG">PNG</span>
+        <span class="tw-uppercase tw-text-[0.75em] tw-text-neutral-400" aria-label="(Standard option)">Standard</span>
       </a>
     </li>
     <li>
-      <a href="<%= url_download_qrcode_path(url.keyword, format: :svg) %>" download class="!tw-flex tw-justify-between tw-items-baseline">
-        <span class="sr-only">Download</span>
-        SVG 
-        <span class="tw-uppercase tw-text-[0.75em] tw-text-neutral-400">Advanced</span>
+      <a role="menuitem" href="<%= url_download_qrcode_path(url.keyword, format: :svg) %>" download class="!tw-flex tw-justify-between tw-items-baseline">
+        <span aria-label="Download SVG">SVG</span>
+        <span class="tw-uppercase tw-text-[0.75em] tw-text-neutral-400" aria-label="(Advanced option)">Advanced</span>
       </a>
     </li>
   </ul>
