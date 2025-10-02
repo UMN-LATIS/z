@@ -208,9 +208,40 @@ table.dataTable thead .sorting_desc_disabled:after {
   }
 }
 
+// action buttons at top of urls datatable
+// below is futzing to bulk action buttons to align
+// with collection filter and search box
+// mostly overriding bootstrap
+#urls-table_wrapper .row:first-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+
+  #urls-table_filter {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+
+    & label {
+      margin: 0;
+      margin-left: 0.5rem;
+
+    }
+    & input {
+      margin: 0;
+      margin-left: 0.25rem;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+    }
+  }
+}
+
 .bulk-actions-buttons {
-  white-space: nowrap;
-  margin-bottom: 0.625rem;
+  display: flex;
+  align-items: center;
 
   .btn {
     min-width: 2.5rem;
@@ -233,7 +264,7 @@ table.dataTable thead .sorting_desc_disabled:after {
       background: none;
       color: #d95450;
       border: 1px solid #d95450;
-      &:hover {
+      &:hover:not([aria-disabled="true"]) {
         background-color: #d92232;
         color: white;
         border: 1px solid #d92232;
@@ -268,18 +299,6 @@ table.dataTable thead .sorting_desc_disabled:after {
   .btn-xs {
     padding: 3px 7px;
     display: inline;
-    vertical-align: middle;
-  }
-}
-
-#collection-filter {
-  margin: 0 15px 0 5px;
-}
-
-#urls-table_filter {
-  margin-top: 8px;
-  label {
-    display: inline-block;
     vertical-align: middle;
   }
 }
