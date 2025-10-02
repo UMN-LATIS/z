@@ -35,10 +35,14 @@ describe("FAQ Page", () => {
       .should("contain", "What is Z?")
       .should("contain", "Should I use it?");
 
+    // default with no answers visible
+    cy.get('details').should('not.have.attr', 'open')
+
     // click on the first question
     cy.contains("What is Z?").click();
 
     // answer should be visible
+    cy.get('details').first().should('have.attr', 'open')
     cy.contains("This site is used to shorten URLs.").should("be.visible");
   });
 });
