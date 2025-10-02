@@ -141,11 +141,6 @@ function changeGroup(groupPath, keyword) {
 }
 
 function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColumn, showMoveButton, collectionSelect) {
-    var transferText = '<i class="fa fa-exchange"></i> ' + I18n.t("views.urls.transfer_button");
-    var moveText = '<i class="fa fa-share-square-o "></i> ' + I18n.t("views.urls.move_button");
-    var batchDeleteText = '<i class="fa fa-trash-o "></i> ' + I18n.t("views.urls.batch_delete_button");
-    var bulkActionsText = I18n.t("views.urls.bulk_actions") + '<i class="fa fa-sort-desc "></i> ';
-
     var $urlsTable = $('#urls-table');
     var userTable = $urlsTable.DataTable({
         drawCallback: function(settings) {
@@ -282,19 +277,14 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
         }
     });
 
-    //function for disabling bulk table options dropdown
+    //function for disabling bulk action buttons when no rows are selected
     function enableDisableTableOptions(){
-      var selectedRows = userTable.rows('.selected');
-      if (selectedRows[0].length){
-        $(".table-options").removeClass("disabled");
-      }
-      else{
-        $(".table-options").addClass("disabled");
-
-      }
+      const selectedRows = userTable.rows('.selected');
+      const isDisabled = selectedRows[0].length === 0;
+      $(".js-transfer-urls, .js-move-urls, .js-delete-urls").attr("aria-disabled", isDisabled.toString());
     }
 
-    //use the function for disabling bulk table options dropdown
+    //use the function for disabling bulk action buttons
     userTable.on('select', enableDisableTableOptions);
     userTable.on('deselect', enableDisableTableOptions);
 
@@ -308,73 +298,80 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
         }).select() : userTable.rows().deselect();
     });
 
-    var transfer_button = {
-        extend: 'selected',
-        text: transferText,
-        className: 'btn js-transfer-urls',
-        action: function(e, dt, node, config) {
-            var keywords = [];
-            userTable.rows('.selected').data().map(function(row) {
-                keywords.push(row['DT_RowData_keyword'])
-            });
-            transferUrl($('.route-info').data('new-transfer-request-path'), keywords);
+    // Create bulk action buttons container
+    const $bulkActionsContainer = $('<div class="bulk-actions-buttons"></div>');
+
+    // Transfer button
+    const $transferButton = $(`
+        <button type="button"
+                class="btn btn-default js-transfer-urls bulk-action-btn"
+                aria-disabled="true"
+                data-toggle="tooltip"
+                title="${I18n.t("views.urls.transfer_button")}">
+            <span class="sr-only">${I18n.t("views.urls.transfer_button")}</span>
+            <i class="fa fa-exchange" aria-hidden="true"></i>
+        </button>
+    `);
+    $transferButton.on('click', (e) => {
+        if ($(e.currentTarget).attr('aria-disabled') === 'true') {
+            e.preventDefault();
+            return false;
         }
-    }
-
-    var move_button = {
-        extend: 'selected',
-        className: 'btn js-move-urls',
-        text: moveText,
-        action: function(e, dt, node, config) {
-            var keywords = [];
-            userTable.rows('.selected').data().map(function(row) {
-                keywords.push(row['DT_RowData_keyword'])
-            });
-
-            moveUrl($('.route-info').data('new-move-to-group-path'), keywords);
-        }
-    }
-
-    var batch_delete_button = {
-        extend: 'selected',
-        className: 'btn btn-danger js-delete-urls',
-        text: batchDeleteText,
-        action: function(e, dt, node, config) {
-            var keywords = [];
-            userTable.rows('.selected').data().map(function(row) {
-                keywords.push(row['DT_RowData_keyword'])
-            });
-
-            batchDelete($('.route-info').data('new-batch-delete-path'), keywords);
-        }
-    }
-
-    buttons = []
-    if (showMoveButton) {
-        buttons = [transfer_button, move_button, batch_delete_button]
-    } else {
-        buttons = [transfer_button]
-    }
-
-    var dropdown_button = {
-        extend: 'collection',
-        text: bulkActionsText,
-        className: 'table-options',
-        autoClose: true,
-        fade: 200,
-        buttons: buttons
-    }
-
-    new $.fn.dataTable.Buttons(userTable, {
-        buttons: [dropdown_button]
+        const keywords = userTable.rows('.selected').data().map(row => row['DT_RowData_keyword']).toArray();
+        transferUrl($('.route-info').data('new-transfer-request-path'), keywords);
     });
+    $bulkActionsContainer.append($transferButton);
 
-    userTable
-        .buttons(0, null)
-        .container()
-        .prependTo('.dataTables_wrapper >.row:eq(0) > .col-sm-6:eq(0)');
+    // Move button (only show if multiple collections)
+    if (showMoveButton) {
+        const $moveButton = $(`
+            <button type="button"
+                    class="btn btn-default js-move-urls bulk-action-btn"
+                    aria-disabled="true"
+                    data-toggle="tooltip"
+                    title="${I18n.t("views.urls.move_button")}">
+                <span class="sr-only">${I18n.t("views.urls.move_button")}</span>
+                <i class="fa fa-share-square-o" aria-hidden="true"></i>
+            </button>
+        `);
+        $moveButton.on('click', (e) => {
+            if ($(e.currentTarget).attr('aria-disabled') === 'true') {
+                e.preventDefault();
+                return false;
+            }
+            const keywords = userTable.rows('.selected').data().map(row => row['DT_RowData_keyword']).toArray();
+            moveUrl($('.route-info').data('new-move-to-group-path'), keywords);
+        });
+        $bulkActionsContainer.append($moveButton);
+    }
 
-    $(".col-sm-6 .dt-buttons").removeClass("btn-group");
+    // Batch delete button (always shown)
+    const $deleteButton = $(`
+        <button type="button"
+                class="btn btn-outline-danger js-delete-urls bulk-action-btn"
+                aria-disabled="true"
+                data-toggle="tooltip"
+                title="${I18n.t("views.urls.batch_delete_button")}">
+            <span class="sr-only">${I18n.t("views.urls.batch_delete_button")}</span>
+            <i class="fa fa-trash-o" aria-hidden="true"></i>
+        </button>
+    `);
+    $deleteButton.on('click', (e) => {
+        if ($(e.currentTarget).attr('aria-disabled') === 'true') {
+            e.preventDefault();
+            return false;
+        }
+        const keywords = userTable.rows('.selected').data().map(row => row['DT_RowData_keyword']).toArray();
+        batchDelete($('.route-info').data('new-batch-delete-path'), keywords);
+    });
+    $bulkActionsContainer.append($deleteButton);
+
+    // Add buttons to the DataTable wrapper
+    $bulkActionsContainer.prependTo('.dataTables_wrapper >.row:eq(0) > .col-sm-6:eq(0)');
+
+    // Initialize tooltips
+    $('.bulk-action-btn').tooltip();
+
     return userTable;
 }
 
