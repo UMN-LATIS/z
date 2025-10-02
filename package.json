@@ -11,8 +11,8 @@
     "cypress:all": "concurrently \"npm run cypress:rails\" \"npm run cypress:open\"",
     "cypress:open": "npx cypress open",
     "cypress:rails": "bin/foreman start -f Procfile.test",
-    "cypress:run": "npx cypress run --browser chrome",
-    "cypress:headless": "npx cypress run --browser chrome --config baseUrl=http://localhost:5100",
+    "cypress:run": "npx cypress run --browser chromium",
+    "cypress:headless": "npx cypress run --browser chromium --config baseUrl=http://localhost:5100",
     "test:e2e:server": "RAILS_ENV=test USER_LOOKUP_SKELETON=1 bin/rails server -p 5100",
     "test:e2e:run": "npx wait-on --timeout 10000 http://localhost:5100 && npx cypress run --browser chromium --config baseUrl=http://localhost:5100",
     "test:e2e": "concurrently --kill-others --success first \"npm run test:e2e:server\" \"npm run test:e2e:run\""
