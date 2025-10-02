@@ -44,7 +44,6 @@ describe("moving urls to a group", () => {
     cy.get("@duluthRow").find("td.select-checkbox").click();
 
     // click bulk actions button
-    cy.contains("Bulk Actions").click();
     cy.contains("Move to a different collection").click();
 
     // open the dropdown of collections
