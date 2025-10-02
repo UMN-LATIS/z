@@ -216,6 +216,28 @@ table.dataTable thead .sorting_desc_disabled:after {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
+  margin: 0;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  &:before,
+  &:after {
+    display: none;
+  }
+
+  @media (max-width: 640px) {
+    // bulk actions should always be closer to checkbox
+    // so reorder on small screens
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .col-sm-6 {
+    padding: 0;
+    margin: 0;
+    float: none;
+    width: auto;
+  }
 
   #urls-table_filter {
     padding: 0;
