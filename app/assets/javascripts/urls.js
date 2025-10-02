@@ -322,28 +322,25 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
     });
     $bulkActionsContainer.append($transferButton);
 
-    // Move button (only show if multiple collections)
-    if (showMoveButton) {
-        const $moveButton = $(`
-            <button type="button"
-                    class="btn btn-default js-move-urls bulk-action-btn"
-                    aria-disabled="true"
-                    data-toggle="tooltip"
-                    title="${I18n.t("views.urls.move_button")}">
-                <span class="sr-only">${I18n.t("views.urls.move_button")}</span>
-                <i class="fa fa-share-square-o" aria-hidden="true"></i>
-            </button>
-        `);
-        $moveButton.on('click', (e) => {
-            if ($(e.currentTarget).attr('aria-disabled') === 'true') {
-                e.preventDefault();
-                return false;
-            }
-            const keywords = userTable.rows('.selected').data().map(row => row['DT_RowData_keyword']).toArray();
-            moveUrl($('.route-info').data('new-move-to-group-path'), keywords);
-        });
-        $bulkActionsContainer.append($moveButton);
-    }
+    const $moveButton = $(`
+        <button type="button"
+                class="btn btn-default js-move-urls bulk-action-btn"
+                aria-disabled="true"
+                data-toggle="tooltip"
+                title="${I18n.t("views.urls.move_button")}">
+            <span class="sr-only">${I18n.t("views.urls.move_button")}</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><!-- Icon from Material Symbols by Google - https://github.com/google/material-design-icons/blob/master/LICENSE --><path fill="currentColor" d="M8 18q-.825 0-1.412-.587T6 16v-1q0-.425.288-.712T7 14t.713.288T8 15v1h12V6H8v1q0 .425-.288.713T7 8t-.712-.288T6 7V4q0-.825.588-1.412T8 2h12q.825 0 1.413.588T22 4v12q0 .825-.587 1.413T20 18zm-4 4q-.825 0-1.412-.587T2 20V7q0-.425.288-.712T3 6t.713.288T4 7v13h13q.425 0 .713.288T18 21t-.288.713T17 22zm9.175-10H7q-.425 0-.712-.288T6 11t.288-.712T7 10h6.175l-.9-.9Q12 8.825 12 8.413t.3-.713q.275-.275.7-.275t.7.275l2.6 2.6q.3.3.3.7t-.3.7l-2.6 2.6q-.275.275-.687.288T12.3 14.3q-.275-.275-.275-.7t.275-.7z"/></svg>
+        </button>
+    `);
+    $moveButton.on('click', (e) => {
+        if ($(e.currentTarget).attr('aria-disabled') === 'true') {
+            e.preventDefault();
+            return false;
+        }
+        const keywords = userTable.rows('.selected').data().map(row => row['DT_RowData_keyword']).toArray();
+        moveUrl($('.route-info').data('new-move-to-group-path'), keywords);
+    });
+    $bulkActionsContainer.append($moveButton);
 
     // Batch delete button (always shown)
     const $deleteButton = $(`
