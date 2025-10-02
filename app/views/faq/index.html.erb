@@ -6,7 +6,7 @@
     <div class="panel-group" id="accordion">
       <% @faqs.each_with_index do |faq, index| %>
         <details class="tw-mb-4 tw-border tw-border-neutral-300 tw-rounded-lg tw-overflow-clip tw-group">
-          <summary class="tw-cursor-pointer group-open:tw-font-bold tw-bg-neutral-100 tw-p-4">
+          <summary class="tw-cursor-pointer group-open:tw-font-bold tw-bg-neutral-100 tw-p-4" data-cy="faq-question">
               <%= faq.question.html_safe %>
           </summary>
           <div class="tw-mt-2 tw-ml-4 tw-p-4">

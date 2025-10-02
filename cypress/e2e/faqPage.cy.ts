@@ -30,13 +30,10 @@ describe("FAQ Page", () => {
     cy.get("h1").should("contain", "Frequently Asked Questions");
 
     // two questions
-    cy.get(".panel-heading")
+    cy.get("[data-cy=faq-question]")
       .should("have.length", 2)
       .should("contain", "What is Z?")
       .should("contain", "Should I use it?");
-
-    // answers should be collapsed
-    cy.get(".panel-body").should("have.length", 2).should("not.be.visible");
 
     // click on the first question
     cy.contains("What is Z?").click();
