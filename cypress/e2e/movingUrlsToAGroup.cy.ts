@@ -40,8 +40,8 @@ describe("moving urls to a group", () => {
     cy.get("#urls-table").contains("duluth").closest("tr").as("duluthRow");
 
     // select morris and duluth rows
-    cy.get("@morrisRow").find("td .select-checkbox").click();
-    cy.get("@duluthRow").find("td .select-checkbox").click();
+    cy.get("@morrisRow").find("td.select-checkbox").click();
+    cy.get("@duluthRow").find("td.select-checkbox").click();
 
     // click bulk actions button
     cy.contains("Move to a different collection").click();
