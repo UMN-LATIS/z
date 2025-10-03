@@ -150,11 +150,11 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
         "pageLength": 25,
         "autoWidth": false,
         columns: [{
-            defaultContent: "<input type='checkbox' class='select-checkbox' aria-label='select/deselect current row'/>",
+            defaultContent: "<input type='checkbox' class='select-checkbox' aria-label='Select row'/>",
             className: 'select-checkbox__container',
             searchable: false,
             orderable: false,
-            title: "<input type='checkbox' id='select-all' class='select-checkbox' aria-label='select/deselect all rows'/>"
+            title: "<input type='checkbox' id='select-all' class='select-checkbox' aria-label='Select all rows'/>"
         }, {
             data: 'group_id',
             visible: false,
