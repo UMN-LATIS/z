@@ -1,7 +1,7 @@
-<div class="page-header tw-text-center">
+<header class="page-header tw-text-center">
   <p class="tw-uppercase tw-tracking-wide tw-font-bold tw-text-center tw-text-sm tw-text-neutral-400">Z-Link Stats</p>
   <h1><%= @url.keyword %></h1>
-</div>
+</header>
 <div class="tw-p-4">
   <div class="umn-post-it">
     <div class="row">
@@ -9,7 +9,7 @@
         <div class="row">
           <div class="col-md-6">
             <div class="panel panel-default">
-              <div class="panel-heading"><%= t('views.urls.show.short_url') %></div>
+              <h2 class="panel-heading tw-mb-0 tw-text-base tw-text-left"><%= t('views.urls.show.short_url') %></h2>
               <div class="panel-body">
                 <a target='_blank' href="<%= full_url(@url) %>"><%= full_url(@url) %></a>
                 <button class='btn btn-default clipboard-btn' data-clipboard-text="<%= full_url(@url) %>" data-cy="copy-button">
@@ -21,7 +21,7 @@
           </div>
           <div class="col-md-6">
             <div class="panel panel-default">
-              <div class="panel-heading"><%= t('views.urls.show.source_url') %></div>
+              <h2 class="panel-heading tw-mb-0 tw-text-base tw-text-left"><%= t('views.urls.show.source_url') %></h2>
               <div class="panel-body">
                 <a target='_blank' href="<%= @url.url %>"><%= @url.url %></a>
               </div>
@@ -31,7 +31,7 @@
         <div class="row">
           <div class="col-md-12 stats-actions">
             <div class="panel panel-default">
-              <div class="panel-heading"><%= t('views.urls.show.collection') %></div>
+              <h2 class="panel-heading tw-mb-0 tw-text-base tw-text-left"><%= t('views.urls.show.collection') %></h2>
               <div class="panel-body">
                 <% user_groups_for_collection = group_names_and_ids_for_select(current_user.groups)%>
                 <%= select_tag(
@@ -56,7 +56,7 @@
           </div>
         </div>
         <div class="traffic-stats-header">
-          <h3 ><%= t('views.urls.show.traffic_stats') %></h3>
+          <h2 ><%= t('views.urls.show.traffic_stats') %></h2>
           <a class='btn btn-default js-csv-download' href="<%= url_csv_click_data_path(@url, format: :csv) %>"><%= t('views.urls.show.export_button') %></a>
         </div>
         <div class="row">
@@ -151,7 +151,7 @@
             </div>
           </div>
         </div>
-        <h3><%= t('views.urls.show.traffic_location')%></h3>
+        <h2><%= t('views.urls.show.traffic_location')%></h2>
         <div class="row">
           <div id="regions-div" class="col-md-12" aria-hidden="true">
           </div>
@@ -185,7 +185,7 @@
         <div class="row">
           <div class="col-md-12">
             <div class="panel panel-default">
-              <div class="panel-heading">Note</div>
+              <h2 class="panel-heading tw-mb-0 tw-text-base tw-text-left">Note</h2>
               <div class="panel-body text-center">
                 <%= form_with model: @url, url: note_url_path(@url.keyword), method: :patch, data: { cy: 'note-form' } do |form|%>
                   <%= form.label :note, "Note", class: 'sr-only' %>
@@ -202,7 +202,7 @@
         <div class="row">
           <div class="col-md-12">
             <div class="panel panel-default">
-              <div class="panel-heading"><%= t('views.urls.show.share') %></div>
+              <h2 class="panel-heading tw-mb-0 tw-text-base tw-text-left"><%= t('views.urls.show.share') %></h2>
               <div class="panel-body text-center">
                 <%= render "/urls/share_buttons", url: @url, large: true %>
               </div>
@@ -213,7 +213,7 @@
           <div class="col-md-12">
             <div class="panel panel-default">
               <!-- Default panel contents -->
-              <div class="panel-heading"><%= t('views.urls.show.historical_click_count') %></div>
+              <h2 class="panel-heading tw-mb-0 tw-text-base tw-text-left"><%= t('views.urls.show.historical_click_count') %></h2>
               <div class="panel-body">
                 <%= t('views.urls.show.created_on')%> <%= @url.created_at.to_fs(:created_on_formatted) %> (<%= time_ago_in_words(@url.created_at) %> ago)
               </div>
@@ -250,7 +250,7 @@
               </table>
             </div>
             <div class="panel panel-default">
-              <div class="panel-heading"><%= t('views.urls.show.best_day_header')%></div>
+              <h2 class="panel-heading tw-mb-0 tw-text-base tw-text-left"><%= t('views.urls.show.best_day_header')%></h2>
               <div class="panel-body">
                 <%= best_day_formatter(@best_day) %>
               </div>
