@@ -62,10 +62,10 @@
         <div class="row">
           <div class="col-md-12">
             <ul id='show-tabs' class="col-md-12 nav nav-tabs" role='tablist'>
-              <li role="presentation" class="active"><a href="#chart-div-hrs24" data-load='hrs24' data-toggle='tab' role='tab'><%= t('views.urls.show.hours_24')%></a></li>
-              <li role="presentation"><a href="#chart-div-days7" data-load='days7' data-toggle='tab' role='tab'><%= t('views.urls.show.days_7')%></a></li>
-              <li role="presentation"><a href="#chart-div-days30" data-load='days30' data-toggle='tab' role='tab'><%= t('views.urls.show.days_30')%></a></li>
-              <li role="presentation"><a href="#chart-div-all" data-load='all' data-toggle='tab' role='tab'><%= t('views.urls.show.all_time')%></a></li>
+              <li role="presentation" class="active"><a href="#chart-div-hrs24" data-load='hrs24' data-toggle='tab' role='tab' aria-selected="true"><%= t('views.urls.show.hours_24')%></a></li>
+              <li role="presentation"><a href="#chart-div-days7" data-load='days7' data-toggle='tab' role='tab' aria-selected="false"><%= t('views.urls.show.days_7')%></a></li>
+              <li role="presentation"><a href="#chart-div-days30" data-load='days30' data-toggle='tab' role='tab' aria-selected="false"><%= t('views.urls.show.days_30')%></a></li>
+              <li role="presentation"><a href="#chart-div-all" data-load='all' data-toggle='tab' role='tab' aria-selected="false"><%= t('views.urls.show.all_time')%></a></li>
             </ul>
             <div class="col-md-12 tab-content">
               <div role="tabpanel" class='tab-pane fade in active' id="chart-div-hrs24" ></div>

@@ -83,6 +83,10 @@ $(document).on('show.bs.modal', function() {
 // The rest of the charts need to be loaded upon showing the tab
 // preloading the charts ruins their formatting
 $(document).on('shown.bs.tab', function(e) {
+    // Update aria-selected for accessibility
+    $('#show-tabs a[role="tab"]').attr('aria-selected', 'false');
+    $(e.target).attr('aria-selected', 'true');
+
     switch ($(e.target).data('load')) {
         case 'hrs24':
             drawChartHrs24();
