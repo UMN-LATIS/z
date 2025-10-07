@@ -1,6 +1,6 @@
 <%= form_for(admin_announcement) do |f| %>
     <% if admin_announcement.errors.any? %>
-        <div id="error_explanation">
+        <div id="error_explanation" role="alert" aria-live="assertive" aria-atomic="true">
           <h2><%= pluralize(admin_announcement.errors.count, "error") %> prohibited this admin_announcement from being
             saved:</h2>
 
