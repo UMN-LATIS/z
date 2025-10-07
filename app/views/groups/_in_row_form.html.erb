@@ -10,11 +10,11 @@
           <%= hidden_field_tag :new_identifier, group_identifier %>
           <div class="tw-flex tw-flex-col md:!tw-flex-row tw-gap-2 md:tw-gap-4 tw-w-fit tw-mx-auto md:tw-justify-center md:tw-items-end">
             <div class="tw-flex tw-flex-col tw-items-start">
-              <label class="tw-m-0">Collection Name</label>
+              <%= f.label :name, "Collection Name", class: "tw-m-0" %>
               <%= f.text_field :name, class: 'js-new-group-name !tw-m-0', placeholder: t('views.groups.form.placeholders.name') %>
             </div>
             <div class="tw-flex tw-flex-col tw-items-start">
-              <label class="tw-m-0">Description</label>
+              <%= f.label :description, "Description", class: "tw-m-0" %>
               <%= f.text_field :description, class: 'js-new-group-description !tw-m-0', placeholder: t('views.groups.form.placeholders.description') %>
             </div>
             <button type="submit" class="js-group-submit umn-btn--primary">
