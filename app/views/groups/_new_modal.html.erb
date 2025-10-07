@@ -7,7 +7,7 @@
     <%= form_for_group_admin @admin_view, @group do |f| %>
 
       <div class="modal-body">
-          <div class="error-space"><%= @group.errors.full_messages.join('. ') %></div>
+          <div class="error-space" role="alert" aria-live="assertive" aria-atomic="true"><%= @group.errors.full_messages.join('. ') %></div>
 
             <%= hidden_field_tag :modal, true %>
             <%= hidden_field_tag :new_identifier, @group_identifier %>
