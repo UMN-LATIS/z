@@ -7,7 +7,13 @@ $(document).bind('turbolinks:load', function () {
      "columnDefs": [ {
       "targets": 2,
       "orderable": false
-      } ]
+      } ],
+     drawCallback: function(settings) {
+       // Add aria-current to active pagination link for accessibility
+       var pagination = $(this).closest('.dataTables_wrapper').find('.dataTables_paginate');
+       pagination.find('.paginate_button').removeAttr('aria-current');
+       pagination.find('.paginate_button.current').attr('aria-current', 'page');
+     }
    });
 });
 
