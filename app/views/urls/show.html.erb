@@ -122,6 +122,13 @@
                 <%= t('views.urls.show.created_on')%> <%= @url.created_at.to_fs(:created_on_formatted) %> (<%= time_ago_in_words(@url.created_at) %> ago)
               </div>
               <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Time Period</th>
+                    <th scope="col">Total Hits</th>
+                    <th scope="col">Average</th>
+                  </tr>
+                </thead>
                 <tbody>
                   <tr>
                     <td><%= t('views.urls.show.hours_24')%></td>
