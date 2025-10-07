@@ -50,7 +50,7 @@
     </div>
     <%= form_for_transfer_admin @admin_view, @transfer_request do |f| %>
       <div class="modal-body">
-        <div class="error-space"><%= @transfer_request.errors.full_messages.join('. ') %></div>
+        <div class="error-space" role="alert" aria-live="assertive" aria-atomic="true"><%= @transfer_request.errors.full_messages.join('. ') %></div>
 
         <h5><label for="people_search"> <%=t('views.transfer_requests.new.transferee_label')%> </label><span class="hidden glyphicon glyphicon-refresh glyphicon-refresh-animate" aria-hidden="true"></span></h5>
 
