@@ -13,7 +13,7 @@
               <div class="panel-body">
                 <a target='_blank' href="<%= full_url(@url) %>"><%= full_url(@url) %></a>
                 <button class='btn btn-default clipboard-btn' data-clipboard-text="<%= full_url(@url) %>" data-cy="copy-button">
-                  <i class=" fa fa-files-o"></i>
+                  <i class=" fa fa-files-o" aria-hidden="true"></i>
                   <%= t('views.urls.show.thing.copy') %>
                 </button>
               </div>
@@ -50,7 +50,7 @@
               </div>
             </div>
             <button class="btn btn-primary js-transfer-urls ">
-              <i class="fa fa-exchange"></i>
+              <i class="fa fa-exchange" aria-hidden="true"></i>
               <%= t('views.urls.transfer_button') %>
             </button>
           </div>
@@ -68,20 +68,20 @@
               <li role="presentation"><a href="#chart-div-all" data-load='all' data-toggle='tab' role='tab'><%= t('views.urls.show.all_time')%></a></li>
             </ul>
             <div class="col-md-12 tab-content">
-              <div role="tabpanel" class='tab-pane fade in active' id="chart-div-hrs24" ></div>
-              <div role="tabpanel" class='tab-pane fade' id="chart-div-days7"></div>
-              <div role="tabpanel" class='tab-pane fade' id="chart-div-days30"></div>
-              <div role="tabpanel" class='tab-pane fade' id="chart-div-all"></div>
+              <div role="tabpanel" class='tab-pane fade in active' id="chart-div-hrs24" aria-hidden="true"></div>
+              <div role="tabpanel" class='tab-pane fade' id="chart-div-days7" aria-hidden="true"></div>
+              <div role="tabpanel" class='tab-pane fade' id="chart-div-days30" aria-hidden="true"></div>
+              <div role="tabpanel" class='tab-pane fade' id="chart-div-all" aria-hidden="true"></div>
             </div>
           </div>
         </div>
         <h3><%= t('views.urls.show.traffic_location')%></h3>
         <div class="row">
-          <div id="regions-div" class="col-md-12">
+          <div id="regions-div" class="col-md-12" aria-hidden="true">
           </div>
         </div>
         <div class="row">
-          <div id="regions-pie-div" class="col-md-12">
+          <div id="regions-pie-div" class="col-md-12" aria-hidden="true">
           </div>
         </div>
       </div>
