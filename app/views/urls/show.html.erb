@@ -84,6 +84,26 @@
           <div id="regions-pie-div" class="col-md-12" aria-hidden="true">
           </div>
         </div>
+        <!-- Accessible location data table for screen readers -->
+        <div class="sr-only">
+          <h4>Traffic by Location</h4>
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Country</th>
+                <th scope="col">Clicks</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @clicks[:regions].each do |country_code, count| %>
+                <tr>
+                  <td><%= country_code.present? ? country_code : 'Unknown' %></td>
+                  <td><%= count %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
       </div>
       <div class="col-md-5">
         <div class="row">
