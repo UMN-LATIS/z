@@ -146,6 +146,10 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
         drawCallback: function(settings) {
             var pagination = $(this).closest('.dataTables_wrapper').find('.dataTables_paginate');
             pagination.toggle(this.api().page.info().pages > 1);
+
+            // Add aria-current to active pagination link for accessibility
+            pagination.find('.paginate_button').removeAttr('aria-current');
+            pagination.find('.paginate_button.current').attr('aria-current', 'page');
         },
         "pageLength": 25,
         "autoWidth": false,
