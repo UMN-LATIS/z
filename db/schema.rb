@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_06_05_133839) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_26_172732) do
   create_table "clicks", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "country_code"
     t.integer "url_id"
@@ -122,9 +122,8 @@ ActiveRecord::Schema[8.0].define(version: 2024_06_05_133839) do
     t.index ["default_group_id"], name: "index_users_on_default_group_id"
   end
 
-  create_table "versions", id: :integer, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
-    t.string "item_type"
-    t.string "{:null=>false, :limit=>191}"
+  create_table "versions", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "item_type", limit: 191, null: false
     t.integer "item_id", null: false
     t.string "event", null: false
     t.string "whodunnit"
