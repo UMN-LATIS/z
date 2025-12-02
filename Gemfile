@@ -9,7 +9,7 @@ gem 'omniauth', "~> 2.0"
 gem 'omniauth-rails_csrf_protection', "~> 1.0"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 8.0'
+gem 'rails', '~> 8.1'
 # Use mysql2 as the database for Active Record
 gem 'mysql2', "~> 0.5"
 # Use sqlite also
