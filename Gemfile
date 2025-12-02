@@ -58,7 +58,7 @@ gem 'clipboard-rails', "~> 1.7"
 gem 'data-confirm-modal', "~> 1.6"
 
 # use papertrail for auding or versioning
-gem 'paper_trail', '~> 16.0'
+gem 'paper_trail', '~> 17.0'
 
 # QR code generation
 gem 'rqrcode', "~> 2.2"
