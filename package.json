@@ -11,11 +11,15 @@
     "cypress:all": "concurrently \"npm run cypress:rails\" \"npm run cypress:open\"",
     "cypress:open": "npx cypress open",
     "cypress:rails": "bin/foreman start -f Procfile.test",
-    "cypress:run": "npx cypress run --browser chrome"
+    "cypress:run": "npx cypress run --browser chromium",
+    "cypress:headless": "npx cypress run --browser chromium --config baseUrl=http://localhost:5100",
+    "test:e2e:server": "RAILS_ENV=test USER_LOOKUP_SKELETON=1 bin/rails server -p 5100",
+    "test:e2e:run": "npx wait-on --timeout 10000 http://localhost:5100 && npx cypress run --browser chromium --config baseUrl=http://localhost:5100",
+    "test:e2e": "concurrently --kill-others --success first \"npm run test:e2e:server\" \"npm run test:e2e:run\""
   },
   "dependencies": {
     "@headlessui/vue": "^1.7.23",
-    "@umn-latis/cla-vue-template": "^1.2.1",
+    "@umn-latis/cla-vue-template": "^3.0.0",
     "axios": "^1.7.9",
     "datatables.net": "^2.1.8",
     "datatables.net-bs4": "^2.1.8",
@@ -59,6 +63,5 @@
     "vite-plugin-full-reload": "^1.2.0",
     "vite-plugin-ruby": "^5.1.1",
     "vue-tsc": "^2.1.10"
-  },
-  "packageManager": "yarn@1.22.22"
+  }
 }

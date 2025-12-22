@@ -43,7 +43,7 @@ Rails.application.configure do
   # config.action_cable.mount_path = nil
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  config.force_ssl = true
+  # config.force_ssl = true
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
@@ -88,8 +88,8 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # Set the omniauth provider
-  config.omniauth_provider = 'shibboleth'
-  config.shib_return_url = 'https://login.umn.edu/idp/profile/Logout'
+  config.omniauth_provider = ENV.fetch('OMNIAUTH_PROVIDER','saml')
+  
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
