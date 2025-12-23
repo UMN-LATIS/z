@@ -83,6 +83,10 @@ $(document).on('show.bs.modal', function() {
 // The rest of the charts need to be loaded upon showing the tab
 // preloading the charts ruins their formatting
 $(document).on('shown.bs.tab', function(e) {
+    // Update aria-selected for accessibility
+    $('#show-tabs a[role="tab"]').attr('aria-selected', 'false');
+    $(e.target).attr('aria-selected', 'true');
+
     switch ($(e.target).data('load')) {
         case 'hrs24':
             drawChartHrs24();
@@ -141,25 +145,24 @@ function changeGroup(groupPath, keyword) {
 }
 
 function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColumn, showMoveButton, collectionSelect) {
-    var transferText = '<i class="fa fa-exchange"></i> ' + I18n.t("views.urls.transfer_button");
-    var moveText = '<i class="fa fa-share-square-o "></i> ' + I18n.t("views.urls.move_button");
-    var batchDeleteText = '<i class="fa fa-trash-o "></i> ' + I18n.t("views.urls.batch_delete_button");
-    var bulkActionsText = I18n.t("views.urls.bulk_actions") + '<i class="fa fa-sort-desc "></i> ';
-
     var $urlsTable = $('#urls-table');
     var userTable = $urlsTable.DataTable({
         drawCallback: function(settings) {
             var pagination = $(this).closest('.dataTables_wrapper').find('.dataTables_paginate');
             pagination.toggle(this.api().page.info().pages > 1);
+
+            // Add aria-current to active pagination link for accessibility
+            pagination.find('.paginate_button').removeAttr('aria-current');
+            pagination.find('.paginate_button.current').attr('aria-current', 'page');
         },
         "pageLength": 25,
         "autoWidth": false,
         columns: [{
-            defaultContent: "",
-            className: 'select-checkbox',
+            defaultContent: "<input type='checkbox' class='select-checkbox' aria-label='Select row'/>",
+            className: 'select-checkbox__container',
             searchable: false,
             orderable: false,
-            title: "<input type='checkbox' id='select-all' class='select-checkbox' aria-label='select/deselect all rows'/>"
+            title: "<input type='checkbox' id='select-all' class='select-checkbox' aria-label='Select all rows'/>"
         }, {
             data: 'group_id',
             visible: false,
@@ -198,7 +201,14 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
                 selected_collection = $('.collection-selected').data('collectionSelected')
                 this.api().columns([1]).every(function() {
                     var column = this;
-                    var select = $('<select id="collection-filter" class="form-control" aria-label="Collections Filter"><option value="">' + I18n.t("views.urls.index.table.collection_filter.all") + '</option></select>')
+                    var select = $(`
+                        <select id="collection-filter" 
+                            class="collection-filter-select">
+                            <option value="">
+                                ${I18n.t("views.urls.index.table.collection_filter.all")}
+                            </option>
+                        </select>
+                    `)
                         .prependTo($("#urls-table_filter"))
                         .on('change', function() {
                             var val = $.fn.dataTable.util.escapeRegex(
@@ -212,7 +222,6 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
                         select.append('<option value="' + d[0] + '">' + d[1] + '</option>')
                     });
                     select.before('<label for="collection-filter">' + I18n.t("views.urls.index.table.collection_filter.label") + ':</label>');
-                    select.selectpicker();
                     if (selected_collection !== undefined) {
                         setTimeout(function() {
                             select.val(selected_collection).trigger("change");
@@ -276,19 +285,14 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
         }
     });
 
-    //function for disabling bulk table options dropdown
+    //function for disabling bulk action buttons when no rows are selected
     function enableDisableTableOptions(){
-      var selectedRows = userTable.rows('.selected');
-      if (selectedRows[0].length){
-        $(".table-options").removeClass("disabled");
-      }
-      else{
-        $(".table-options").addClass("disabled");
-
-      }
+      const selectedRows = userTable.rows('.selected');
+      const isDisabled = selectedRows[0].length === 0;
+      $(".js-transfer-urls, .js-move-urls, .js-delete-urls").attr("aria-disabled", isDisabled.toString());
     }
 
-    //use the function for disabling bulk table options dropdown
+    //use the function for disabling bulk action buttons
     userTable.on('select', enableDisableTableOptions);
     userTable.on('deselect', enableDisableTableOptions);
 
@@ -302,73 +306,77 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
         }).select() : userTable.rows().deselect();
     });
 
-    var transfer_button = {
-        extend: 'selected',
-        text: transferText,
-        className: 'btn js-transfer-urls',
-        action: function(e, dt, node, config) {
-            var keywords = [];
-            userTable.rows('.selected').data().map(function(row) {
-                keywords.push(row['DT_RowData_keyword'])
-            });
-            transferUrl($('.route-info').data('new-transfer-request-path'), keywords);
+    // Create bulk action buttons container
+    const $bulkActionsContainer = $('<div class="bulk-actions-buttons"></div>');
+
+    // Transfer button
+    const $transferButton = $(`
+        <button type="button"
+                class="btn btn-default js-transfer-urls bulk-action-btn"
+                aria-disabled="true"
+                data-toggle="tooltip"
+                title="${I18n.t("views.urls.transfer_button")}">
+            <span class="sr-only">${I18n.t("views.urls.transfer_button")}</span>
+            <i class="fa fa-exchange" aria-hidden="true"></i>
+        </button>
+    `);
+    $transferButton.on('click', (e) => {
+        if ($(e.currentTarget).attr('aria-disabled') === 'true') {
+            e.preventDefault();
+            return false;
         }
-    }
-
-    var move_button = {
-        extend: 'selected',
-        className: 'btn js-move-urls',
-        text: moveText,
-        action: function(e, dt, node, config) {
-            var keywords = [];
-            userTable.rows('.selected').data().map(function(row) {
-                keywords.push(row['DT_RowData_keyword'])
-            });
-
-            moveUrl($('.route-info').data('new-move-to-group-path'), keywords);
-        }
-    }
-
-    var batch_delete_button = {
-        extend: 'selected',
-        className: 'btn btn-danger js-delete-urls',
-        text: batchDeleteText,
-        action: function(e, dt, node, config) {
-            var keywords = [];
-            userTable.rows('.selected').data().map(function(row) {
-                keywords.push(row['DT_RowData_keyword'])
-            });
-
-            batchDelete($('.route-info').data('new-batch-delete-path'), keywords);
-        }
-    }
-
-    buttons = []
-    if (showMoveButton) {
-        buttons = [transfer_button, move_button, batch_delete_button]
-    } else {
-        buttons = [transfer_button]
-    }
-
-    var dropdown_button = {
-        extend: 'collection',
-        text: bulkActionsText,
-        className: 'table-options',
-        autoClose: true,
-        fade: 200,
-        buttons: buttons
-    }
-
-    new $.fn.dataTable.Buttons(userTable, {
-        buttons: [dropdown_button]
+        const keywords = userTable.rows('.selected').data().map(row => row['DT_RowData_keyword']).toArray();
+        transferUrl($('.route-info').data('new-transfer-request-path'), keywords);
     });
+    $bulkActionsContainer.append($transferButton);
 
-    userTable
-        .buttons(0, null)
-        .container()
-        .prependTo('.dataTables_wrapper >.row:eq(0) > .col-sm-6:eq(0)');
+    const $moveButton = $(`
+        <button type="button"
+                class="btn btn-default js-move-urls bulk-action-btn"
+                aria-disabled="true"
+                data-toggle="tooltip"
+                title="${I18n.t("views.urls.move_button")}">
+            <span class="sr-only">${I18n.t("views.urls.move_button")}</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><!-- Icon from Material Symbols by Google - https://github.com/google/material-design-icons/blob/master/LICENSE --><path fill="currentColor" d="M8 18q-.825 0-1.412-.587T6 16v-1q0-.425.288-.712T7 14t.713.288T8 15v1h12V6H8v1q0 .425-.288.713T7 8t-.712-.288T6 7V4q0-.825.588-1.412T8 2h12q.825 0 1.413.588T22 4v12q0 .825-.587 1.413T20 18zm-4 4q-.825 0-1.412-.587T2 20V7q0-.425.288-.712T3 6t.713.288T4 7v13h13q.425 0 .713.288T18 21t-.288.713T17 22zm9.175-10H7q-.425 0-.712-.288T6 11t.288-.712T7 10h6.175l-.9-.9Q12 8.825 12 8.413t.3-.713q.275-.275.7-.275t.7.275l2.6 2.6q.3.3.3.7t-.3.7l-2.6 2.6q-.275.275-.687.288T12.3 14.3q-.275-.275-.275-.7t.275-.7z"/></svg>
+        </button>
+    `);
+    $moveButton.on('click', (e) => {
+        if ($(e.currentTarget).attr('aria-disabled') === 'true') {
+            e.preventDefault();
+            return false;
+        }
+        const keywords = userTable.rows('.selected').data().map(row => row['DT_RowData_keyword']).toArray();
+        moveUrl($('.route-info').data('new-move-to-group-path'), keywords);
+    });
+    $bulkActionsContainer.append($moveButton);
 
-    $(".col-sm-6 .dt-buttons").removeClass("btn-group");
+    // Batch delete button (always shown)
+    const $deleteButton = $(`
+        <button type="button"
+                class="btn btn-outline-danger js-delete-urls bulk-action-btn"
+                aria-disabled="true"
+                data-toggle="tooltip"
+                title="${I18n.t("views.urls.batch_delete_button")}">
+            <span class="sr-only">${I18n.t("views.urls.batch_delete_button")}</span>
+            <i class="fa fa-trash-o" aria-hidden="true"></i>
+        </button>
+    `);
+    $deleteButton.on('click', (e) => {
+        if ($(e.currentTarget).attr('aria-disabled') === 'true') {
+            e.preventDefault();
+            return false;
+        }
+        const keywords = userTable.rows('.selected').data().map(row => row['DT_RowData_keyword']).toArray();
+        batchDelete($('.route-info').data('new-batch-delete-path'), keywords);
+    });
+    $bulkActionsContainer.append($deleteButton);
+
+    // Add buttons to the DataTable wrapper
+    $bulkActionsContainer.prependTo('.dataTables_wrapper >.row:eq(0) > .col-sm-6:eq(0)');
+
+    // Initialize tooltips
+    $('.bulk-action-btn').tooltip();
+
     return userTable;
 }
 

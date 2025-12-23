@@ -7,15 +7,13 @@ gem 'ajax-datatables-rails', "~> 1.4"
 # Use OmniAuth to support any type of auth
 gem 'omniauth', "~> 2.0"
 gem 'omniauth-rails_csrf_protection', "~> 1.0"
-gem 'omniauth-shibboleth-passive', "~> 0.1"
-gem 'omniauth-shibboleth-redux', "~> 2.0"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 8.0'
+gem 'rails', '~> 8.1'
 # Use mysql2 as the database for Active Record
 gem 'mysql2', "~> 0.5"
 # Use sqlite also
-gem 'sqlite3', "~> 1.4"
+gem 'sqlite3', "~> 2.6"
 # Use Puma as the app server
 gem 'puma', '~> 6.0'
 # Use SCSS for stylesheets
@@ -60,7 +58,7 @@ gem 'clipboard-rails', "~> 1.7"
 gem 'data-confirm-modal', "~> 1.6"
 
 # use papertrail for auding or versioning
-gem 'paper_trail', '~> 16.0'
+gem 'paper_trail', '~> 17.0'
 
 # QR code generation
 gem 'rqrcode', "~> 2.2"
@@ -171,3 +169,9 @@ gem "rack-utf8_sanitizer", "~> 1.7"
 # gem "tailwindcss-rails", "~> 2.0"
 
 gem "terser", "~> 1.2"
+
+gem "omniauth-saml", "~> 2.2"
+
+gem "csv", "~> 3.3"
+
+gem "ostruct", "~> 0.6.1"

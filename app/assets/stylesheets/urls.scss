@@ -169,38 +169,6 @@ table.dataTable {
     width: 300px !important;
   }
 }
-.table-options {
-  &.disabled {
-    cursor: not-allowed;
-  }
-  i {
-    margin-left: 5px !important;
-    vertical-align: top;
-  }
-}
-.dt-button-collection.dropdown-menu {
-  padding: 0;
-  overflow: hidden;
-  li.btn {
-    padding: 0;
-    display: block;
-    text-align: left;
-    a {
-      padding: 14px 32px;
-    }
-    &.btn-danger {
-      border-radius: 0;
-      border: none;
-      color: white;
-      a {
-        color: white;
-        &:hover {
-          background-color: transparent;
-        }
-      }
-    }
-  }
-}
 @media screen and (max-width: 900px) {
   .table-row-edit-main {
     .super-input {
@@ -240,14 +208,90 @@ table.dataTable thead .sorting_desc_disabled:after {
   }
 }
 
-.dt-buttons {
-  white-space: nowrap;
+// action buttons at top of urls datatable
+// below is futzing to bulk action buttons to align
+// with collection filter and search box
+// mostly overriding bootstrap
+#urls-table_wrapper .row:first-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 0;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  &:before,
+  &:after {
+    display: none;
+  }
+
+  @media (max-width: 640px) {
+    // bulk actions should always be closer to checkbox
+    // so reorder on small screens
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .col-sm-6 {
+    padding: 0;
+    margin: 0;
+    float: none;
+    width: auto;
+  }
+
+  #urls-table_filter {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+
+    & label {
+      margin: 0;
+      margin-left: 0.5rem;
+
+    }
+    & input {
+      margin: 0;
+      margin-left: 0.25rem;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+    }
+  }
+}
+
+.bulk-actions-buttons {
+  display: flex;
+  align-items: center;
 
   .btn {
-    margin: 3px;
-  }
-  :first-child {
-    margin-left: 0px;
+    min-width: 2.5rem;
+    padding: 0.375rem 0.75rem;
+    margin-right: 0.5rem;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &[aria-disabled="true"] {
+      cursor: not-allowed;
+      opacity: 0.4;
+    }
+
+    i {
+      margin: 0;
+    }
+    &.btn-outline-danger {
+      background: none;
+      color: #d95450;
+      border: 1px solid #d95450;
+      &:hover:not([aria-disabled="true"]) {
+        background-color: #d92232;
+        color: white;
+        border: 1px solid #d92232;
+      }
+    }
   }
 }
 
@@ -278,25 +322,6 @@ table.dataTable thead .sorting_desc_disabled:after {
     padding: 3px 7px;
     display: inline;
     vertical-align: middle;
-  }
-}
-
-#collection-filter {
-  margin: 0 15px 0 5px;
-}
-
-#urls-table_filter {
-  margin-top: 8px;
-  label {
-    display: inline-block;
-    vertical-align: middle;
-  }
-  .bootstrap-select.form-control:not([class*="col-"]) {
-    width: auto;
-    max-width: 150px;
-    margin-right: 14px;
-    margin-left: 4px;
-    margin-bottom: 2px;
   }
 }
 
@@ -413,7 +438,6 @@ table.dataTable tr.selected .fa-ellipsis-h {
     background: none;
     border: none;
     padding: 3px;
-    outline: none;
     margin-top: -6px;
   }
   .delete-url,
@@ -564,4 +588,12 @@ table.dataTable tr.selected .fa-ellipsis-h {
   tfoot th:last-child input {
     display: none;
   }
+}
+
+.collection-filter-select {
+  border: 1px solid #ddd;
+  font-size: 0.75rem;
+  padding: 0.25rem 1.5rem 0.25rem 0.5rem;
+  border-radius: 3px;
+  max-width: 6rem;
 }

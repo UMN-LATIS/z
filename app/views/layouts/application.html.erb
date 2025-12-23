@@ -17,6 +17,7 @@
     <%= vite_typescript_tag 'application' %>
   </head>
   <body class='<%= params[:controller] %> <%= params[:action] %> tw-flex tw-flex-col tw-min-h-screen'>
+    <a href="#main-content" class="skipnav">Skip to main content</a>
     <noscript>
       <div class="tw-flex tw-flex-col tw-items-center tw-justify-center tw-h-screen tw-text-2xl tw-font-bold tw-text-umn-neutral-900">
         <p class="tw-mb-4">This site requires JavaScript to function properly.</p>
@@ -28,7 +29,8 @@
       <app-header :current-user="<%= current_user&.to_json || 'null' %>">
       </app-header>
     </div>
-    <main class="main-container tw-flex-1 tw-bg-umn-neutral-50 hidden" id="main-content">
+    <main class="main-container tw-flex-1 tw-bg-umn-neutral-50">
+      <a id="main-content" tabindex="-1"></a>
       <%= flash_messages %>
       <%= yield %>
     </main>

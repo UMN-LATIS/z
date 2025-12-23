@@ -2,7 +2,12 @@ require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-
+  config.action_dispatch.trusted_proxies = [
+    IPAddr.new("127.0.0.1"),          # for local requests
+    IPAddr.new("::1"),                # for IPv6 loopback
+    IPAddr.new("128.101.235.128/26"),   
+    IPAddr.new("10.33.18.0/26")   
+  ]
   # Code is not reloaded between requests.
   config.enable_reloading = false
 
@@ -62,21 +67,22 @@ Rails.application.configure do
   # requests to the user interface side of Z to be https.
   # config.force_ssl = true
 
-  # Log to STDOUT by default
-  config.logger = ActiveSupport::Logger.new(STDOUT)
-                                       .tap  { |logger| logger.formatter = Logger::Formatter.new }
-                                       .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
+  # Skip http-to-https redirect for the default health check endpoint.
+  # config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
 
-  # Prepend all log lines with the following tags.
-  config.log_tags = [:request_id]
+  # Log to STDOUT with the current request id as a default log tag.
+  config.log_tags = [ :request_id ]
+  config.logger   = ActiveSupport::TaggedLogging.logger(STDOUT)
 
-  # "info" includes generic and useful information about system operation, but avoids logging too much
-  # information to avoid inadvertent exposure of personally identifiable information (PII). If you
-  # want to log everything, set the level to "debug".
+  # Change to "debug" to log everything (including potentially personally-identifiable information!).
   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
 
-  # Use a different cache store in production.
-  config.cache_store = :memory_store, { size: 32.megabytes }
+  # Prevent health checks from clogging up the logs.
+  config.silence_healthcheck_path = "/up"
+
+  # Don't log any deprecations.
+  config.active_support.report_deprecations = false
+
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter = :resque
@@ -110,8 +116,7 @@ Rails.application.configure do
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 
   # Set the omniauth provider
-  config.omniauth_provider = 'shibboleth'
-  config.shib_return_url = 'https://login.umn.edu/idp/profile/Logout'
+  config.omniauth_provider = ENV.fetch("OMNIAUTH_PROVIDER", "saml")
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
