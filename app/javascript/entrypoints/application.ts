@@ -4,7 +4,7 @@ import AppFooter from "@/components/AppFooter.vue";
 import AdminCollectionsIndexPage from "@/pages/AdminCollectionsIndexPage.vue";
 import AdminAuditLogPage from "@/pages/AdminAuditLogPage.vue";
 import AdminUrlsIndexPage from "@/pages/AdminUrlsIndexPage.vue";
-import "@umn-latis/cla-vue-template/dist/style.css";
+import "@umn-latis/cla-vue-template/dist/index.css";
 import "@/application.css";
 import AdminCollectionsShowPage from "@/pages/AdminCollectionsShowPage.vue";
 
@@ -12,7 +12,7 @@ const components = {
   "app-header": AppHeader,
   "app-footer": AppFooter,
   "admin-collections-index-page": AdminCollectionsIndexPage,
-  'admin-collections-show-page': AdminCollectionsShowPage,
+  "admin-collections-show-page": AdminCollectionsShowPage,
   "admin-audit-log-page": AdminAuditLogPage,
   "admin-urls-index-page": AdminUrlsIndexPage,
 };
