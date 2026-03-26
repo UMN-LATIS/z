@@ -70,6 +70,26 @@ describe("csv of clicks for urls", () => {
 
       validateFlashMessage("not authorized");
     });
+
+    // The test above only proves the stats *page* blocks non-owners.
+    // This test proves the CSV *endpoint* itself also blocks non-owners —
+    // a separate check that was previously bypassed due to a nil guard bug
+    // in UrlCsvsController#show (authorize was called `unless @urls.nil?`
+    // but @urls is never set in that action, so the check always skipped).
+    it("denies a non-owner who directly requests the click data CSV endpoint", () => {
+      cy.appEval("Url.find_by(keyword: 'cla').id").then((urlId) => {
+        cy.request({
+          url: `/shortener/urls/${urlId}/csv/click_data.csv`,
+          failOnStatusCode: false,
+          followRedirect: false,
+        }).then((response) => {
+          // Before fix: 200 with CSV content (authorization silently skipped)
+          // After fix: redirect — non-owner is denied
+          expect(response.status).not.to.eq(200);
+          expect(response.headers["content-type"] ?? "").not.to.include("csv");
+        });
+      });
+    });
   });
 
   context("as a link owner", () => {

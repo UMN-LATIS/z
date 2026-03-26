@@ -1,4 +1,5 @@
 class GroupContextController < ApplicationController
+  before_action :ensure_signed_in
   before_action :set_group, only: [:show]
 
   def show

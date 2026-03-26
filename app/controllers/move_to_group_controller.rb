@@ -4,6 +4,7 @@ class MoveToGroupController < ApplicationController
 
   def new
     @urls = Url
+            .created_by_ids(current_user.groups.pluck(:id))
             .where(keyword: params[:keywords])
             .order('created_at DESC')
     @groups = current_user.groups
@@ -20,6 +21,7 @@ class MoveToGroupController < ApplicationController
     @to_group_id = Group.where(id: @to_group).take.try(:id)
 
     @urls = Url
+            .created_by_ids(current_user.groups.pluck(:id))
             .where(keyword: params[:keywords])
             .order('created_at DESC')
 

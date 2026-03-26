@@ -1,5 +1,7 @@
 # controllers/url_csvs_controller.rb
 class Admin::UrlCsvsController < ApplicationController
+  before_action :ensure_signed_in
+
   def show
     @duration = params[:duration]
     @time_unit = params[:time_unit]

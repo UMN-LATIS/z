@@ -1,6 +1,9 @@
 class BatchDeleteController < ApplicationController
+  before_action :ensure_signed_in
+
   def new
     @urls = Url
+            .created_by_ids(current_user.groups.pluck(:id))
             .where(keyword: params[:keywords])
 
     respond_to do |format|
@@ -10,7 +13,9 @@ class BatchDeleteController < ApplicationController
   end
 
   def create
-    Url.where(keyword: params[:keywords]).destroy_all
+    Url.created_by_ids(current_user.groups.pluck(:id))
+       .where(keyword: params[:keywords])
+       .destroy_all
     respond_to do |format|
       format.js do
         redirect_to urls_path
