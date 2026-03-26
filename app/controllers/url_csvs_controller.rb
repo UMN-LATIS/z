@@ -1,5 +1,7 @@
 # controllers/url_csvs_controller.rb
 class UrlCsvsController < ApplicationController
+  before_action :ensure_signed_in
+
   def show_aggregated
     @duration = params[:duration]
     @time_unit = params[:time_unit]
@@ -20,7 +22,7 @@ class UrlCsvsController < ApplicationController
 
   def show
     url = Url.find(params[:url_id])
-    authorize([url], :csvs?) unless @urls.nil?
+    authorize([url], :csvs?)
     respond_to do |format|
       format.csv { send_data url.click_data_to_csv }
     end

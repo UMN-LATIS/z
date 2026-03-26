@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
   end
 
   def ensure_is_admin
-    current_user.admin
+    redirect_to root_path unless current_user&.admin?
   end
 
   def urls_by_keyword(keyword)

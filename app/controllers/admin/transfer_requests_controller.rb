@@ -1,5 +1,6 @@
 class Admin::TransferRequestsController < ApplicationController
   before_action :set_admin_view
+  before_action :ensure_signed_in
   def new
     @transfer_request = TransferRequest.new
     authorize @transfer_request
