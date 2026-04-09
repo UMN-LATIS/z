@@ -9,7 +9,18 @@ class AdminUrlDatatable < ApplicationDatatable
       group_name: { source: 'Group.name' },
       is_default_group: { source: 'Group.default?' },
       url: { source: 'Url.url' },
-      keyword: { source: 'Url.keyword' },
+      keyword: {
+        source: 'Url.keyword',
+        cond: ->(column, value) {
+          if value.match?(/\A"(.+)"\z/)
+            # Quoted search: exact match (LIKE without wildcards is case-insensitive in MySQL)
+            column.table[column.field].matches(value.delete_prefix('"').delete_suffix('"'))
+          else
+            # Unquoted search: default substring match
+            column.table[column.field].matches("%#{value}%")
+          end
+        }
+      },
       total_clicks: { source: 'Url.total_clicks' },
       created_at: { source: 'Url.created_at' }
     }
