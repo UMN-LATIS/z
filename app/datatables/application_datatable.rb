@@ -13,7 +13,11 @@ class ApplicationDatatable < AjaxDatatablesRails::ActiveRecord
   def quoted_or_substring_match
     ->(column, value) {
       if value.match?(/\A"(.+)"\z/)
-        column.table[column.field].matches(value.delete_prefix('"').delete_suffix('"'))
+        # Escape _ so it matches literally (not as a single-char wildcard).
+        # We keep % unescaped so power users can do e.g. "abc%xyz".
+        # This is why we use `matches` (LIKE) instead of `eq` (=).
+        pattern = value.delete_prefix('"').delete_suffix('"').gsub("_", "\\_")
+        column.table[column.field].matches(pattern)
       else
         column.table[column.field].matches("%#{value}%")
       end
