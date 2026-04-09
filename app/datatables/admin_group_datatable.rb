@@ -6,8 +6,8 @@ class AdminGroupDatatable < ApplicationDatatable
     # or in aliased_join_table.column_name format
     @view_columns ||= {
       id: {source: "Group.id", cond: :eq},
-      name: {source: "Group.name", cond: :like},
-      description: {source: "Group.description"},
+      name: {source: "Group.name", cond: quoted_or_substring_match},
+      description: {source: "Group.description", cond: quoted_or_substring_match},
       users: {source: "Group.users", searchable: false, orderable: false},
       urls: {source: "Group.urls", searchable: false, orderable: false},
       actions: {searchable: false, orderable: false}

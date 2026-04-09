@@ -10,10 +10,10 @@ class UrlDatatable < ApplicationDatatable
       # see: js method `initializeUrlDataTable()`
       '0': { searchable: false, orderable: false },
       group_id: { source: 'Url.group_id' },
-      group_name: { source: 'Group.name' },
-      url: { source: 'Url.url' },
-      keyword: { source: 'Url.keyword' },
-      note: { source: 'Url.note' },
+      group_name: { source: 'Group.name', cond: quoted_or_substring_match },
+      url: { source: 'Url.url', cond: quoted_or_substring_match },
+      keyword: { source: 'Url.keyword', cond: quoted_or_substring_match },
+      note: { source: 'Url.note', cond: quoted_or_substring_match },
       total_clicks: { source: 'Url.total_clicks', searchable: false },
       created_at: { source: 'Url.created_at' },
       # needed for actions like edit, delete, etc.
