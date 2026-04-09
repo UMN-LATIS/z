@@ -3,9 +3,9 @@ class AdminAuditDatatable < ApplicationDatatable
 
   def view_columns
     @view_columns ||= {
-      item_type: { source: 'Audit.item_type' },
-      event: { source: 'Audit.event' },
-      whodunnit: { source: 'Audit.whodunnit' },
+      item_type: { source: 'Audit.item_type', cond: quoted_or_substring_match },
+      event: { source: 'Audit.event', cond: quoted_or_substring_match },
+      whodunnit: { source: 'Audit.whodunnit', cond: quoted_or_substring_match },
       audit_history: { source: 'Audit.version_history' },
       created_at: { source: 'Audit.created_at' }
     }

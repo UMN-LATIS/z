@@ -6,10 +6,10 @@ class AdminUrlDatatable < ApplicationDatatable
     @view_columns ||= {
       id: { source: 'Url.id' },
       group_id: { source: 'Url.group_id' },
-      group_name: { source: 'Group.name' },
+      group_name: { source: 'Group.name', cond: quoted_or_substring_match },
       is_default_group: { source: 'Group.default?' },
-      url: { source: 'Url.url' },
-      keyword: { source: 'Url.keyword' },
+      url: { source: 'Url.url', cond: quoted_or_substring_match },
+      keyword: { source: 'Url.keyword', cond: quoted_or_substring_match },
       total_clicks: { source: 'Url.total_clicks' },
       created_at: { source: 'Url.created_at' }
     }
