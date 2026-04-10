@@ -110,7 +110,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { Bar } from "vue-chartjs";
 import {
   Chart as ChartJS,
@@ -161,14 +161,14 @@ onMounted(async () => {
   try {
     stats.value = await getUrlStats(props.keyword);
   } catch (e) {
+    console.error("Failed to fetch url stats", e);
     error.value = "Failed to load stats.";
   } finally {
     loading.value = false;
   }
 });
 
-function formatTimestamp(iso: string, granularity: ClickGranularity): string {
-  const date = new Date(iso);
+function formatBucket(date: Date, granularity: ClickGranularity): string {
   switch (granularity) {
     case "hour":
       return date.toLocaleTimeString(undefined, {
@@ -188,18 +188,64 @@ function formatTimestamp(iso: string, granularity: ClickGranularity): string {
   }
 }
 
+// Truncate a date to the start of its containing bucket, in local time.
+// The server returns fine-grained buckets (hour or day); the client aggregates
+// them into whatever the chart's display granularity is, honoring the viewer's
+// timezone so day/month boundaries align with local wall-clock time.
+function bucketStart(date: Date, granularity: ClickGranularity): Date {
+  switch (granularity) {
+    case "hour":
+      return new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate(),
+        date.getHours()
+      );
+    case "day":
+      return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    case "month":
+      return new Date(date.getFullYear(), date.getMonth(), 1);
+  }
+}
+
 const activeSeries = computed(() => {
   if (!stats.value) return null;
   return stats.value.clicks[activeTab.value];
 });
 
-const tableRows = computed(() => {
-  if (!activeSeries.value) return [];
-  return Object.entries(activeSeries.value.data).map(([iso, count]) => ({
-    iso,
-    label: formatTimestamp(iso, activeSeries.value!.granularity),
-    count,
-  }));
+interface TableRow {
+  iso: string;
+  label: string;
+  count: number;
+}
+
+const tableRows = computed<TableRow[]>(() => {
+  const series = activeSeries.value;
+  if (!series) return [];
+
+  // Aggregate server buckets into local-time display buckets. Key by the
+  // millisecond timestamp of the local bucket start — unique, sortable, and
+  // collision-free for different local buckets.
+  const buckets = new Map<number, { start: Date; count: number }>();
+
+  for (const [iso, count] of Object.entries(series.data)) {
+    const start = bucketStart(new Date(iso), series.granularity);
+    const key = start.getTime();
+    const existing = buckets.get(key);
+    if (existing) {
+      existing.count += count;
+    } else {
+      buckets.set(key, { start, count });
+    }
+  }
+
+  return Array.from(buckets.values())
+    .sort((a, b) => a.start.getTime() - b.start.getTime())
+    .map(({ start, count }) => ({
+      iso: start.toISOString(),
+      label: formatBucket(start, series.granularity),
+      count,
+    }));
 });
 
 const chartData = computed(() => ({

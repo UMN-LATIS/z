@@ -111,9 +111,28 @@ RSpec.describe Click, type: :model do
       end
 
       it 'aggregates multiple clicks in the same hour' do
-        result = url1.clicks.group_by_time_ago_utc(1.day)
-        # url1 has 1 click from today, should be in a single hourly bucket
-        expect(result.values).to include(1)
+        fresh_url = FactoryBot.create(:url)
+        target_hour = Time.zone.now.utc.beginning_of_hour
+        5.times do
+          Click.create!(url_id: fresh_url.id, country_code: 'US', created_at: target_hour + 5.minutes)
+        end
+
+        result = fresh_url.clicks.group_by_time_ago_utc(1.day)
+        expect(result[target_hour.iso8601]).to eq(5)
+      end
+
+      it 'supports daily interval for reduced payload on long durations' do
+        result = url1.clicks.group_by_time_ago_utc(3.days, interval: :day)
+
+        # All keys should be at midnight UTC (start of day)
+        result.each_key do |key|
+          time = Time.iso8601(key)
+          expect(time.hour).to eq(0)
+          expect(time.min).to eq(0)
+        end
+
+        # Counts should still sum to the expected total
+        expect(result.values.sum).to eq(6) # 1 + 2 + 3 clicks for url1
       end
     end
 
