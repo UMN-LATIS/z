@@ -45,9 +45,9 @@ export interface Zlink {
 
 export type ClickGranularity = "hour" | "day" | "month";
 
-// Raw hourly click series from the server: { iso_utc_timestamp => count }.
-// Only hours with at least one click are included.
-export type ClickSeries = Record<string, number>;
+// Raw hourly click data from the server: { iso_utc_timestamp => count }.
+// Only hours with at least one click are included. Covers up to 5 years.
+export type ClicksByHour = Record<string, number>;
 
 export interface UrlStatsResponse {
   url: {
@@ -56,14 +56,7 @@ export interface UrlStatsResponse {
     created_at: string;
     total_clicks: number;
   };
-  clicks: {
-    hrs24: ClickSeries;
-    days7: ClickSeries;
-    days30: ClickSeries;
-    year: ClickSeries;
-    years5: ClickSeries;
-  };
-  best_day: { date: string; count: number } | null;
+  clicks_by_hour: ClicksByHour;
 }
 
 export interface LookupUserResponse {

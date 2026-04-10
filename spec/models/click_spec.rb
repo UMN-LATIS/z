@@ -122,13 +122,5 @@ RSpec.describe Click, type: :model do
       end
     end
 
-    describe('.max_by_day') do
-      it 'shows the best day and number of clicks' do
-        # all clicks
-        expect(described_class.max_by_day).to eq([Time.zone.now.utc.to_date, 101])
-        # clicks specific to a url
-        expect(url1.clicks.max_by_day).to eq([(Time.zone.now.utc - 2.days).to_date, 3])
-      end
-    end
   end
 end

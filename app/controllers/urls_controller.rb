@@ -41,11 +41,12 @@ class UrlsController < ApplicationController
       end
       format.js { render layout: false }
       format.json do
-        best_day = @url.clicks.max_by_day
-
         # Click data is private to the URL owner; do not allow any caching.
         response.headers['Cache-Control'] = 'no-store'
 
+        # Return up to 5 years of hourly UTC click data. The client handles
+        # all filtering by time range, bucketing into local-timezone days/
+        # months, and computing best day.
         render json: {
           url: {
             id: @url.id,
@@ -53,14 +54,7 @@ class UrlsController < ApplicationController
             created_at: @url.created_at.utc.iso8601,
             total_clicks: @url.total_clicks
           },
-          clicks: {
-            hrs24: @url.clicks.group_by_time_ago_utc(24.hours),
-            days7: @url.clicks.group_by_time_ago_utc(7.days),
-            days30: @url.clicks.group_by_time_ago_utc(30.days),
-            year: @url.clicks.group_by_time_ago_utc(1.year),
-            years5: @url.clicks.group_by_time_ago_utc(5.years)
-          },
-          best_day: best_day&.then { |date, count| { date: date.iso8601, count: count } }
+          clicks_by_hour: @url.clicks.group_by_time_ago_utc(5.years)
         }
       end
     end
