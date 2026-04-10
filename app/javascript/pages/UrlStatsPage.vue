@@ -326,9 +326,30 @@ const chartOptions = computed(() => ({
   },
 }));
 
+// Precomputed per-tab sums. Uses a single pass over clicks_by_hour to
+// populate all tabs at once, so re-rendering the summary table doesn't
+// re-iterate the click hash N times.
+const clickSumsByTab = computed<Record<TabKey, number>>(() => {
+  const sums = Object.fromEntries(tabs.map((t) => [t.key, 0])) as Record<
+    TabKey,
+    number
+  >;
+  if (!stats.value) return sums;
+
+  const now = Date.now();
+  for (const [iso, count] of Object.entries(stats.value.clicks_by_hour)) {
+    const age = now - new Date(iso).getTime();
+    for (const tab of tabs) {
+      if (age <= tab.hoursBack * HOUR_MS) {
+        sums[tab.key] += count;
+      }
+    }
+  }
+  return sums;
+});
+
 function sumClicks(key: TabKey): number {
-  const tab = tabs.find((t) => t.key === key)!;
-  return clicksWithin(tab.hoursBack).reduce((sum, [, n]) => sum + n, 0);
+  return clickSumsByTab.value[key];
 }
 
 function avgClicks(key: TabKey): number {
