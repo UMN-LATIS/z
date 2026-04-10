@@ -78,9 +78,9 @@ RSpec.describe Click, type: :model do
       end
     end
 
-    describe('.group_by_time_ago_utc') do
+    describe('.hourly_counts_for_last') do
       it 'returns a hash keyed by ISO 8601 UTC timestamps with click counts' do
-        result = url1.clicks.group_by_time_ago_utc(3.days)
+        result = url1.clicks.hourly_counts_for_last(3.days)
 
         # all keys should be parseable ISO 8601 UTC timestamps
         result.each_key do |key|
@@ -93,7 +93,7 @@ RSpec.describe Click, type: :model do
       end
 
       it 'returns timestamps at hourly granularity' do
-        result = url1.clicks.group_by_time_ago_utc(3.days)
+        result = url1.clicks.hourly_counts_for_last(3.days)
 
         result.each_key do |key|
           time = Time.iso8601(key)
@@ -104,7 +104,7 @@ RSpec.describe Click, type: :model do
 
       it 'is sorted chronologically oldest to newest' do
         repeatedly_click(url: url1, times: 1, days_ago: 7)
-        result = url1.clicks.group_by_time_ago_utc(10.days)
+        result = url1.clicks.hourly_counts_for_last(10.days)
 
         timestamps = result.keys.map { |k| Time.iso8601(k) }
         expect(timestamps).to eq(timestamps.sort)
@@ -117,7 +117,7 @@ RSpec.describe Click, type: :model do
           Click.create!(url_id: fresh_url.id, country_code: 'US', created_at: target_hour + 5.minutes)
         end
 
-        result = fresh_url.clicks.group_by_time_ago_utc(1.day)
+        result = fresh_url.clicks.hourly_counts_for_last(1.day)
         expect(result[target_hour.iso8601]).to eq(5)
       end
     end

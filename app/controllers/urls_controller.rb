@@ -54,7 +54,7 @@ class UrlsController < ApplicationController
             created_at: @url.created_at.utc.iso8601,
             total_clicks: @url.total_clicks
           },
-          clicks_by_hour: @url.clicks.group_by_time_ago_utc(5.years)
+          clicks_by_hour: @url.clicks.hourly_counts_for_last(5.years)
         }
       end
     end
