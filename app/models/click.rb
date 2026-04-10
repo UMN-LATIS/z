@@ -65,17 +65,4 @@ class Click < ApplicationRecord
     end.sort_by { |iso, _| Time.iso8601(iso) }.to_h
   end
 
-  def self.max_by_day
-    click_counts = {}
-
-    all.group("date_format(created_at, '%Y%m%d %H')").count.each do |result|
-      time_label = Date.parse(result[0])
-      if click_counts[time_label].present?
-        click_counts[time_label] += result[1]
-      else
-        click_counts[time_label] = result[1]
-      end
-    end
-    click_counts.max_by { |_k, v| v }
-  end
 end

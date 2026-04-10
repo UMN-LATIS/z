@@ -79,12 +79,12 @@
         </tbody>
       </table>
 
-      <div v-if="stats.best_day" class="panel panel-default">
+      <div v-if="bestDay" class="panel panel-default">
         <h2 class="panel-heading tw-mb-0 tw-text-base tw-text-left">
           Best Day
         </h2>
         <div class="panel-body">
-          {{ formatBestDay(stats.best_day) }}
+          {{ formatBestDay(bestDay) }}
         </div>
       </div>
     </template>
@@ -110,16 +110,18 @@ const props = defineProps<{
   keyword: string;
 }>();
 
-// Tab configuration drives both the chart tabs and the summary stats table.
-// averageUnit / averageDivisor match the chart granularity:
-//   - hourly chart → "hour" average over 24 hours
-//   - daily chart → "day" average over 7 or 30 days
-//   - monthly chart → "month" average over 12 or 60 months
+const HOUR_MS = 60 * 60 * 1000;
+
+// Tab configuration drives the chart tabs, the chart bucketing, and the
+// summary stats table. hoursBack is the time window; granularity is how to
+// group clicks for display; averageDivisor is the denominator for the
+// per-period average.
 const tabs = [
   {
     key: "hrs24",
     label: "Last 24 Hours",
     axisLabel: "Time",
+    hoursBack: 24,
     granularity: "hour",
     averageUnit: "hour",
     averageDivisor: 24,
@@ -128,6 +130,7 @@ const tabs = [
     key: "days7",
     label: "Last 7 Days",
     axisLabel: "Date",
+    hoursBack: 24 * 7,
     granularity: "day",
     averageUnit: "day",
     averageDivisor: 7,
@@ -136,6 +139,7 @@ const tabs = [
     key: "days30",
     label: "Last 30 Days",
     axisLabel: "Date",
+    hoursBack: 24 * 30,
     granularity: "day",
     averageUnit: "day",
     averageDivisor: 30,
@@ -144,6 +148,7 @@ const tabs = [
     key: "year",
     label: "Last Year",
     axisLabel: "Month",
+    hoursBack: 24 * 365,
     granularity: "month",
     averageUnit: "month",
     averageDivisor: 12,
@@ -152,6 +157,7 @@ const tabs = [
     key: "years5",
     label: "Last 5 Years",
     axisLabel: "Month",
+    hoursBack: 24 * 365 * 5,
     granularity: "month",
     averageUnit: "month",
     averageDivisor: 60,
@@ -160,6 +166,7 @@ const tabs = [
   key: string;
   label: string;
   axisLabel: string;
+  hoursBack: number;
   granularity: ClickGranularity;
   averageUnit: string;
   averageDivisor: number;
@@ -238,10 +245,21 @@ function bucketStart(date: Date, granularity: ClickGranularity): Date {
   }
 }
 
-const activeSeries = computed(() => {
-  if (!stats.value) return null;
-  return stats.value.clicks[activeTab.value];
-});
+// Return the hourly click entries that fall within the last `hoursBack`
+// hours, as [Date, count] pairs. Reused by chart data, summary stats, and
+// best-day computation.
+function clicksWithin(hoursBack: number): Array<[Date, number]> {
+  if (!stats.value) return [];
+  const cutoff = Date.now() - hoursBack * HOUR_MS;
+  const result: Array<[Date, number]> = [];
+  for (const [iso, count] of Object.entries(stats.value.clicks_by_hour)) {
+    const date = new Date(iso);
+    if (date.getTime() >= cutoff) {
+      result.push([date, count]);
+    }
+  }
+  return result;
+}
 
 interface TableRow {
   iso: string;
@@ -250,18 +268,18 @@ interface TableRow {
 }
 
 const tableRows = computed<TableRow[]>(() => {
-  const series = activeSeries.value;
-  if (!series) return [];
+  if (!stats.value) return [];
 
-  const granularity = activeTabConfig.value.granularity;
+  const { hoursBack, granularity } = activeTabConfig.value;
+  const clicks = clicksWithin(hoursBack);
 
-  // Aggregate hourly server buckets into local-time display buckets. Key by
-  // the millisecond timestamp of the local bucket start — unique, sortable,
+  // Aggregate hourly clicks into local-time display buckets. Key by the
+  // millisecond timestamp of the local bucket start — unique, sortable,
   // and collision-free for different local buckets.
   const buckets = new Map<number, { start: Date; count: number }>();
 
-  for (const [iso, count] of Object.entries(series)) {
-    const start = bucketStart(new Date(iso), granularity);
+  for (const [date, count] of clicks) {
+    const start = bucketStart(date, granularity);
     const key = start.getTime();
     const existing = buckets.get(key);
     if (existing) {
@@ -309,8 +327,8 @@ const chartOptions = computed(() => ({
 }));
 
 function sumClicks(key: TabKey): number {
-  if (!stats.value) return 0;
-  return Object.values(stats.value.clicks[key]).reduce((sum, n) => sum + n, 0);
+  const tab = tabs.find((t) => t.key === key)!;
+  return clicksWithin(tab.hoursBack).reduce((sum, [, n]) => sum + n, 0);
 }
 
 function avgClicks(key: TabKey): number {
@@ -318,17 +336,41 @@ function avgClicks(key: TabKey): number {
   return sumClicks(key) / tab.averageDivisor;
 }
 
+// Best day is computed in the viewer's local timezone — aggregate every
+// hourly click into the local day that contains it, then find the max.
+const bestDay = computed<{ date: Date; count: number } | null>(() => {
+  if (!stats.value) return null;
+
+  const byLocalDay = new Map<number, { start: Date; count: number }>();
+  for (const [iso, count] of Object.entries(stats.value.clicks_by_hour)) {
+    const date = new Date(iso);
+    const start = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    const key = start.getTime();
+    const existing = byLocalDay.get(key);
+    if (existing) {
+      existing.count += count;
+    } else {
+      byLocalDay.set(key, { start, count });
+    }
+  }
+
+  let best: { start: Date; count: number } | null = null;
+  for (const bucket of byLocalDay.values()) {
+    if (!best || bucket.count > best.count) best = bucket;
+  }
+  return best ? { date: best.start, count: best.count } : null;
+});
+
 function pluralize(count: number, singular: string): string {
   return `${count} ${count === 1 ? singular : singular + "s"}`;
 }
 
-function formatBestDay(bestDay: { date: string; count: number }): string {
-  const date = new Date(bestDay.date + "T00:00:00");
-  const formatted = date.toLocaleDateString(undefined, {
+function formatBestDay(best: { date: Date; count: number }): string {
+  const formatted = best.date.toLocaleDateString(undefined, {
     month: "long",
     day: "numeric",
     year: "numeric",
   });
-  return `${pluralize(bestDay.count, "hit")} on ${formatted}`;
+  return `${pluralize(best.count, "hit")} on ${formatted}`;
 }
 </script>
