@@ -41,7 +41,6 @@ class UrlsController < ApplicationController
       end
       format.js { render layout: false }
       format.json do
-        alltime_duration = ((Time.zone.now - @url.created_at) / 60 / 60 / 24).ceil.days
         best_day = @url.clicks.max_by_day
 
         # Click data is private to the URL owner; do not allow any caching.
@@ -55,10 +54,11 @@ class UrlsController < ApplicationController
             total_clicks: @url.total_clicks
           },
           clicks: {
-            hrs24: { granularity: 'hour', data: @url.clicks.group_by_time_ago_utc(24.hours, interval: :hour) },
-            days7: { granularity: 'day', data: @url.clicks.group_by_time_ago_utc(7.days, interval: :hour) },
-            days30: { granularity: 'day', data: @url.clicks.group_by_time_ago_utc(30.days, interval: :hour) },
-            alltime: { granularity: 'month', data: @url.clicks.group_by_time_ago_utc(alltime_duration, interval: :day) }
+            hrs24: @url.clicks.group_by_time_ago_utc(24.hours),
+            days7: @url.clicks.group_by_time_ago_utc(7.days),
+            days30: @url.clicks.group_by_time_ago_utc(30.days),
+            year: @url.clicks.group_by_time_ago_utc(1.year),
+            years5: @url.clicks.group_by_time_ago_utc(5.years)
           },
           best_day: best_day&.then { |date, count| { date: date.iso8601, count: count } }
         }

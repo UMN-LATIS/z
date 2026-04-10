@@ -120,20 +120,6 @@ RSpec.describe Click, type: :model do
         result = fresh_url.clicks.group_by_time_ago_utc(1.day)
         expect(result[target_hour.iso8601]).to eq(5)
       end
-
-      it 'supports daily interval for reduced payload on long durations' do
-        result = url1.clicks.group_by_time_ago_utc(3.days, interval: :day)
-
-        # All keys should be at midnight UTC (start of day)
-        result.each_key do |key|
-          time = Time.iso8601(key)
-          expect(time.hour).to eq(0)
-          expect(time.min).to eq(0)
-        end
-
-        # Counts should still sum to the expected total
-        expect(result.values.sum).to eq(6) # 1 + 2 + 3 clicks for url1
-      end
     end
 
     describe('.max_by_day') do

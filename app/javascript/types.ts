@@ -45,10 +45,9 @@ export interface Zlink {
 
 export type ClickGranularity = "hour" | "day" | "month";
 
-export interface ClickSeries {
-  granularity: ClickGranularity;
-  data: Record<string, number>; // ISO 8601 UTC timestamp → count
-}
+// Raw hourly click series from the server: { iso_utc_timestamp => count }.
+// Only hours with at least one click are included.
+export type ClickSeries = Record<string, number>;
 
 export interface UrlStatsResponse {
   url: {
@@ -61,7 +60,8 @@ export interface UrlStatsResponse {
     hrs24: ClickSeries;
     days7: ClickSeries;
     days30: ClickSeries;
-    alltime: ClickSeries;
+    year: ClickSeries;
+    years5: ClickSeries;
   };
   best_day: { date: string; count: number } | null;
 }
