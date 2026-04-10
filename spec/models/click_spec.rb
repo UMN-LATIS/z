@@ -78,6 +78,45 @@ RSpec.describe Click, type: :model do
       end
     end
 
+    describe('.group_by_time_ago_utc') do
+      it 'returns a hash keyed by ISO 8601 UTC timestamps with click counts' do
+        result = url1.clicks.group_by_time_ago_utc(3.days)
+
+        # all keys should be parseable ISO 8601 UTC timestamps
+        result.each_key do |key|
+          time = Time.iso8601(key)
+          expect(time.utc?).to be(true), "Expected #{key} to be a UTC timestamp"
+        end
+
+        # counts should match what group_by_time_ago returns
+        expect(result.values.sum).to eq(6) # 1 + 2 + 3 clicks for url1
+      end
+
+      it 'returns timestamps at hourly granularity' do
+        result = url1.clicks.group_by_time_ago_utc(3.days)
+
+        result.each_key do |key|
+          time = Time.iso8601(key)
+          expect(time.min).to eq(0), "Expected #{key} to have 0 minutes (hourly bucket)"
+          expect(time.sec).to eq(0), "Expected #{key} to have 0 seconds (hourly bucket)"
+        end
+      end
+
+      it 'is sorted chronologically oldest to newest' do
+        repeatedly_click(url: url1, times: 1, days_ago: 7)
+        result = url1.clicks.group_by_time_ago_utc(10.days)
+
+        timestamps = result.keys.map { |k| Time.iso8601(k) }
+        expect(timestamps).to eq(timestamps.sort)
+      end
+
+      it 'aggregates multiple clicks in the same hour' do
+        result = url1.clicks.group_by_time_ago_utc(1.day)
+        # url1 has 1 click from today, should be in a single hourly bucket
+        expect(result.values).to include(1)
+      end
+    end
+
     describe('.max_by_day') do
       it 'shows the best day and number of clicks' do
         # all clicks
