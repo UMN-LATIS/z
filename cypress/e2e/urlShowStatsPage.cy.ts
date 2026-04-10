@@ -35,15 +35,6 @@ describe("admin url details (stats) page", () => {
   });
 
   describe("error handling", () => {
-    beforeEach(() => {
-      // FIXME: catch the drawChartHrs24 error for now
-      cy.on("uncaught:exception", (err, runnable) => {
-        if (err.message.includes("drawChartHrs24")) {
-          return false;
-        }
-      });
-    });
-
     it("redirects a user who is not the owner or an admin back to the urls page and shows a not authorized error", () => {
       cy.createAndLoginUser("testuser");
 
@@ -82,8 +73,8 @@ describe("admin url details (stats) page", () => {
 
     it("shows the total clicks on this url", () => {
       // initially the clicks should be 0
-      cy.contains("Historical Click Count")
-        .closest(".panel")
+      cy.contains("Summary")
+        .closest("div")
         .find("table")
         .contains("Last 24 Hours")
         .closest("tr")
@@ -99,7 +90,7 @@ describe("admin url details (stats) page", () => {
       cy.get("@last24row").contains("3 hits").should("be.visible");
     });
 
-    it.only("shows the best day for clicks", () => {
+    it("shows the best day for clicks", () => {
       cy.clickUrl("cla", 10, {
         country_code: "US",
         created_at: "01/01/2020",
@@ -112,7 +103,7 @@ describe("admin url details (stats) page", () => {
       cy.reload();
 
       // check that the best day is 01-01-2020
-      cy.contains("Best Day").closest(".panel").contains("January 01 2020");
+      cy.contains("Best Day").closest("div").contains("January 1, 2020");
     });
 
     it("downloads a QR code", () => {

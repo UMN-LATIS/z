@@ -33,29 +33,16 @@ class UrlsController < ApplicationController
   def show
     @url_identifier = @url.id
 
-    @clicks = {
-      hrs24:
-        @url.clicks.group_by_time_ago(24.hours, '%I:%M%p'),
-      days7:
-        @url.clicks.group_by_time_ago(7.days, '%m/%d'),
-      days30:
-        @url.clicks.group_by_time_ago(30.days, '%m/%d'),
-      alltime:
-        @url.clicks.group_by_time_ago(
-          ((Time.zone.now - @url.created_at) / 60 / 60 / 24).ceil.days,
-          '%m/%Y'
-        ),
-      regions:
-        @url.clicks.group(:country_code).count.to_a
-    }
-
-    @best_day = @url.clicks.max_by_day
-
     respond_to do |format|
-      format.html
+      format.html do
+        @clicks = {
+          regions: @url.clicks.group(:country_code).count.to_a
+        }
+      end
       format.js { render layout: false }
       format.json do
         alltime_duration = ((Time.zone.now - @url.created_at) / 60 / 60 / 24).ceil.days
+        best_day = @url.clicks.max_by_day
 
         render json: {
           url: {
@@ -70,7 +57,7 @@ class UrlsController < ApplicationController
             days30: { granularity: 'day', data: @url.clicks.group_by_time_ago_utc(30.days) },
             alltime: { granularity: 'month', data: @url.clicks.group_by_time_ago_utc(alltime_duration) }
           },
-          best_day: @best_day&.then { |date, count| { date: date.iso8601, count: count } }
+          best_day: best_day&.then { |date, count| { date: date.iso8601, count: count } }
         }
       end
     end
