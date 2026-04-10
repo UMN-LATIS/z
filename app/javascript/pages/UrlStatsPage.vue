@@ -1,6 +1,14 @@
 <template>
   <div>
-    <h2 class="tw-text-lg tw-font-bold tw-mb-2">Traffic Over Time</h2>
+    <div class="tw-flex tw-items-baseline tw-justify-between tw-mb-2">
+      <h2 class="tw-text-lg tw-font-bold">Traffic Over Time</h2>
+      <p
+        class="tw-text-xs tw-text-neutral-500"
+        :title="`Times shown in ${browserTimezone}`"
+      >
+        Times in {{ browserTimezoneShort }}
+      </p>
+    </div>
     <ul class="nav nav-tabs tw-mb-4" role="tablist">
       <li
         v-for="tab in tabs"
@@ -133,6 +141,17 @@ const activeTab = ref<TabKey>("hrs24");
 const stats = ref<UrlStatsResponse | null>(null);
 const loading = ref(true);
 const error = ref<string | null>(null);
+
+// IANA timezone name, e.g. "America/Chicago"
+const browserTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+// Short abbreviation, e.g. "CDT" — extracted from a formatted date
+const browserTimezoneShort = (() => {
+  const parts = new Intl.DateTimeFormat(undefined, {
+    timeZoneName: "short",
+  }).formatToParts(new Date());
+  return parts.find((p) => p.type === "timeZoneName")?.value ?? browserTimezone;
+})();
 
 const activeTabConfig = computed(
   () => tabs.find((t) => t.key === activeTab.value)!
