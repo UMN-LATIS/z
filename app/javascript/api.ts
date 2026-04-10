@@ -3,6 +3,7 @@ import {
   Collection,
   LookupUserResponse,
   TransferRequest,
+  UrlStatsResponse,
   User,
   Zlink,
 } from "@/types";
@@ -187,6 +188,14 @@ export function removeUserFromCollection(
       data: null,
     }))
     .catch(handleAxiosError);
+}
+
+export function getUrlStats(
+  keyword: string
+): Promise<UrlStatsResponse> {
+  return axios
+    .get<UrlStatsResponse>(`/shortener/urls/${keyword}.json`)
+    .then((res) => res.data);
 }
 
 export function addUserToCollection({

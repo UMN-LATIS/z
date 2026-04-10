@@ -54,6 +54,25 @@ class UrlsController < ApplicationController
     respond_to do |format|
       format.html
       format.js { render layout: false }
+      format.json do
+        alltime_duration = ((Time.zone.now - @url.created_at) / 60 / 60 / 24).ceil.days
+
+        render json: {
+          url: {
+            id: @url.id,
+            keyword: @url.keyword,
+            created_at: @url.created_at.utc.iso8601,
+            total_clicks: @url.total_clicks
+          },
+          clicks: {
+            hrs24: { granularity: 'hour', data: @url.clicks.group_by_time_ago_utc(24.hours) },
+            days7: { granularity: 'day', data: @url.clicks.group_by_time_ago_utc(7.days) },
+            days30: { granularity: 'day', data: @url.clicks.group_by_time_ago_utc(30.days) },
+            alltime: { granularity: 'month', data: @url.clicks.group_by_time_ago_utc(alltime_duration) }
+          },
+          best_day: @best_day&.then { |date, count| { date: date.iso8601, count: count } }
+        }
+      end
     end
   end
 

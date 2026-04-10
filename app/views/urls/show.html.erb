@@ -61,93 +61,8 @@
         </div>
         <div class="row">
           <div class="col-md-12">
-            <ul id='show-tabs' class="col-md-12 nav nav-tabs" role='tablist'>
-              <li role="presentation" class="active"><a href="#chart-div-hrs24" data-load='hrs24' data-toggle='tab' role='tab' aria-selected="true"><%= t('views.urls.show.hours_24')%></a></li>
-              <li role="presentation"><a href="#chart-div-days7" data-load='days7' data-toggle='tab' role='tab' aria-selected="false"><%= t('views.urls.show.days_7')%></a></li>
-              <li role="presentation"><a href="#chart-div-days30" data-load='days30' data-toggle='tab' role='tab' aria-selected="false"><%= t('views.urls.show.days_30')%></a></li>
-              <li role="presentation"><a href="#chart-div-all" data-load='all' data-toggle='tab' role='tab' aria-selected="false"><%= t('views.urls.show.all_time')%></a></li>
-            </ul>
-            <div class="col-md-12 tab-content">
-              <div role="tabpanel" class='tab-pane fade in active' id="chart-div-hrs24" aria-hidden="true"></div>
-              <div role="tabpanel" class='tab-pane fade' id="chart-div-days7" aria-hidden="true"></div>
-              <div role="tabpanel" class='tab-pane fade' id="chart-div-days30" aria-hidden="true"></div>
-              <div role="tabpanel" class='tab-pane fade' id="chart-div-all" aria-hidden="true"></div>
-            </div>
-            <!-- Accessible data tables for screen readers -->
-            <div class="sr-only">
-              <h4>Traffic Statistics Data Tables</h4>
-
-              <h5>Last 24 Hours</h5>
-              <table>
-                <thead>
-                  <tr>
-                    <th scope="col">Time</th>
-                    <th scope="col">Clicks</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% @clicks[:hrs24].each do |time, count| %>
-                    <tr>
-                      <td><%= time %></td>
-                      <td><%= count %></td>
-                    </tr>
-                  <% end %>
-                </tbody>
-              </table>
-
-              <h5>Last 7 Days</h5>
-              <table>
-                <thead>
-                  <tr>
-                    <th scope="col">Date</th>
-                    <th scope="col">Clicks</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% @clicks[:days7].each do |date, count| %>
-                    <tr>
-                      <td><%= date %></td>
-                      <td><%= count %></td>
-                    </tr>
-                  <% end %>
-                </tbody>
-              </table>
-
-              <h5>Last 30 Days</h5>
-              <table>
-                <thead>
-                  <tr>
-                    <th scope="col">Date</th>
-                    <th scope="col">Clicks</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% @clicks[:days30].each do |date, count| %>
-                    <tr>
-                      <td><%= date %></td>
-                      <td><%= count %></td>
-                    </tr>
-                  <% end %>
-                </tbody>
-              </table>
-
-              <h5>All Time</h5>
-              <table>
-                <thead>
-                  <tr>
-                    <th scope="col">Date</th>
-                    <th scope="col">Clicks</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% @clicks[:alltime].each do |date, count| %>
-                    <tr>
-                      <td><%= date %></td>
-                      <td><%= count %></td>
-                    </tr>
-                  <% end %>
-                </tbody>
-              </table>
+            <div data-behavior="vue">
+              <url-stats-page keyword="<%= @url.keyword %>"></url-stats-page>
             </div>
           </div>
         </div>
@@ -212,47 +127,9 @@
         <div class="row">
           <div class="col-md-12">
             <div class="panel panel-default">
-              <!-- Default panel contents -->
-              <h2 class="panel-heading tw-mb-0 tw-text-base tw-text-left"><%= t('views.urls.show.historical_click_count') %></h2>
+              <h2 class="panel-heading tw-mb-0 tw-text-base tw-text-left"><%= t('views.urls.show.created_on')%></h2>
               <div class="panel-body">
-                <%= t('views.urls.show.created_on')%> <%= @url.created_at.to_fs(:created_on_formatted) %> (<%= time_ago_in_words(@url.created_at) %> ago)
-              </div>
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th scope="col">Time Period</th>
-                    <th scope="col">Total Hits</th>
-                    <th scope="col">Average</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><%= t('views.urls.show.hours_24')%></td>
-                    <td><%= pluralize(@clicks[:hrs24].values.sum, 'hit') %></td>
-                    <td><%= (@clicks[:hrs24].values.sum / 24.00).round(2) %> <%= t('views.urls.show.per_hour') %></td>
-                  </tr>
-                  <tr>
-                    <td><%= t('views.urls.show.days_7')%></td>
-                    <td><%= pluralize(@clicks[:days7].values.sum, 'hit') %></td>
-                    <td><%= (@clicks[:days7].values.sum / 7.00).round(2) %> <%= t('views.urls.show.per_day') %></td>
-                  </tr>
-                  <tr>
-                    <td><%= t('views.urls.show.days_30')%></td>
-                    <td><%= pluralize(@clicks[:days30].values.sum, 'hit') %></td>
-                    <td><%= (@clicks[:days30].values.sum / 30.0).round(2) %> <%= t('views.urls.show.per_day') %></td>
-                  </tr>
-                  <tr>
-                    <td><%= t('views.urls.show.all_time')%></td>
-                    <td><%= pluralize(@url.total_clicks, 'hit') %></td>
-                    <td><%= (@url.total_clicks / ((Time.now.to_ms - @url.created_at.to_ms) / 1000 / 60 / 60 / 24.0).ceil).round(2) %> <%= t('views.urls.show.per_day') %></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="panel panel-default">
-              <h2 class="panel-heading tw-mb-0 tw-text-base tw-text-left"><%= t('views.urls.show.best_day_header')%></h2>
-              <div class="panel-body">
-                <%= best_day_formatter(@best_day) %>
+                <%= @url.created_at.to_fs(:created_on_formatted) %> (<%= time_ago_in_words(@url.created_at) %> ago)
               </div>
             </div>
           </div>
@@ -263,11 +140,7 @@
 </div>
 <%= render 'modal' %>
 <script type="text/javascript">
-  // Load the data functions for the Google Charts
-  <%= render partial: 'urls/show_js/hrs24', formats: :js %>
-  <%= render partial: 'urls/show_js/days7', formats: :js %>
-  <%= render partial: 'urls/show_js/days30', formats: :js %>
-  <%= render partial: 'urls/show_js/alltime', formats: :js %>
+  // Google Charts for geographic data (country map/pie) — time-series charts are now Vue
   <%= render partial: 'urls/show_js/country_map', formats: :js %>
   <%= render partial: 'urls/show_js/country_pie', formats: :js %>
   <%= render partial: 'urls/show_js/move', formats: :js %>

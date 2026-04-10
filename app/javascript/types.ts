@@ -43,6 +43,29 @@ export interface Zlink {
   total_clicks?: number;
 }
 
+export type ClickGranularity = "hour" | "day" | "month";
+
+export interface ClickSeries {
+  granularity: ClickGranularity;
+  data: Record<string, number>; // ISO 8601 UTC timestamp → count
+}
+
+export interface UrlStatsResponse {
+  url: {
+    id: number;
+    keyword: string;
+    created_at: string;
+    total_clicks: number;
+  };
+  clicks: {
+    hrs24: ClickSeries;
+    days7: ClickSeries;
+    days30: ClickSeries;
+    alltime: ClickSeries;
+  };
+  best_day: { date: string; count: number } | null;
+}
+
 export interface LookupUserResponse {
   umndid: string;
   display: string;
