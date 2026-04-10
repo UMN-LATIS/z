@@ -1,14 +1,6 @@
 <template>
   <div>
-    <div class="tw-flex tw-items-baseline tw-justify-between tw-mb-2">
-      <h2 class="tw-text-lg tw-font-bold">Traffic Over Time</h2>
-      <p
-        class="tw-text-xs tw-text-neutral-500"
-        :title="`Times shown in ${browserTimezone}`"
-      >
-        Times in {{ browserTimezoneShort }}
-      </p>
-    </div>
+    <h2 class="tw-text-lg tw-font-bold">Traffic Over Time</h2>
     <ul class="nav nav-tabs tw-mb-4" role="tablist">
       <li
         v-for="tab in tabs"
@@ -48,7 +40,9 @@
         <table class="table table-hover tw-mt-2">
           <thead>
             <tr>
-              <th scope="col">{{ activeTabConfig.axisLabel }}</th>
+              <th scope="col">
+                {{ activeTabConfig.axisLabel }} ({{ browserTimezoneShort }})
+              </th>
               <th scope="col">Clicks</th>
             </tr>
           </thead>
@@ -76,22 +70,22 @@
         <tbody>
           <tr>
             <td>Last 24 Hours</td>
-            <td>{{ pluralize(sumClicks('hrs24'), 'hit') }}</td>
-            <td>{{ avgClicks('hrs24', 24).toFixed(2) }} per hour</td>
+            <td>{{ pluralize(sumClicks("hrs24"), "hit") }}</td>
+            <td>{{ avgClicks("hrs24", 24).toFixed(2) }} per hour</td>
           </tr>
           <tr>
             <td>Last 7 Days</td>
-            <td>{{ pluralize(sumClicks('days7'), 'hit') }}</td>
-            <td>{{ avgClicks('days7', 7).toFixed(2) }} per day</td>
+            <td>{{ pluralize(sumClicks("days7"), "hit") }}</td>
+            <td>{{ avgClicks("days7", 7).toFixed(2) }} per day</td>
           </tr>
           <tr>
             <td>Last 30 Days</td>
-            <td>{{ pluralize(sumClicks('days30'), 'hit') }}</td>
-            <td>{{ avgClicks('days30', 30).toFixed(2) }} per day</td>
+            <td>{{ pluralize(sumClicks("days30"), "hit") }}</td>
+            <td>{{ avgClicks("days30", 30).toFixed(2) }} per day</td>
           </tr>
           <tr>
             <td>All Time</td>
-            <td>{{ pluralize(stats.url.total_clicks, 'hit') }}</td>
+            <td>{{ pluralize(stats.url.total_clicks, "hit") }}</td>
             <td>{{ alltimeAvg.toFixed(2) }} per day</td>
           </tr>
         </tbody>
@@ -129,11 +123,17 @@ const props = defineProps<{
 }>();
 
 const tabs = [
-  { key: "hrs24", label: "Last 24 Hours", axisLabel: "Time" },
-  { key: "days7", label: "Last 7 Days", axisLabel: "Date" },
-  { key: "days30", label: "Last 30 Days", axisLabel: "Date" },
-  { key: "alltime", label: "All Time", axisLabel: "Month" },
-] as const;
+  { key: "hrs24", label: "Last 24 Hours", axisLabel: "Time", granularity: "hour" },
+  { key: "days7", label: "Last 7 Days", axisLabel: "Date", granularity: "day" },
+  { key: "days30", label: "Last 30 Days", axisLabel: "Date", granularity: "day" },
+  { key: "year", label: "Last Year", axisLabel: "Month", granularity: "month" },
+  { key: "years5", label: "Last 5 Years", axisLabel: "Month", granularity: "month" },
+] as const satisfies readonly {
+  key: string;
+  label: string;
+  axisLabel: string;
+  granularity: ClickGranularity;
+}[];
 
 type TabKey = (typeof tabs)[number]["key"];
 
@@ -154,7 +154,7 @@ const browserTimezoneShort = (() => {
 })();
 
 const activeTabConfig = computed(
-  () => tabs.find((t) => t.key === activeTab.value)!
+  () => tabs.find((t) => t.key === activeTab.value)!,
 );
 
 onMounted(async () => {
@@ -199,7 +199,7 @@ function bucketStart(date: Date, granularity: ClickGranularity): Date {
         date.getFullYear(),
         date.getMonth(),
         date.getDate(),
-        date.getHours()
+        date.getHours(),
       );
     case "day":
       return new Date(date.getFullYear(), date.getMonth(), date.getDate());
@@ -223,13 +223,15 @@ const tableRows = computed<TableRow[]>(() => {
   const series = activeSeries.value;
   if (!series) return [];
 
-  // Aggregate server buckets into local-time display buckets. Key by the
-  // millisecond timestamp of the local bucket start — unique, sortable, and
-  // collision-free for different local buckets.
+  const granularity = activeTabConfig.value.granularity;
+
+  // Aggregate hourly server buckets into local-time display buckets. Key by
+  // the millisecond timestamp of the local bucket start — unique, sortable,
+  // and collision-free for different local buckets.
   const buckets = new Map<number, { start: Date; count: number }>();
 
-  for (const [iso, count] of Object.entries(series.data)) {
-    const start = bucketStart(new Date(iso), series.granularity);
+  for (const [iso, count] of Object.entries(series)) {
+    const start = bucketStart(new Date(iso), granularity);
     const key = start.getTime();
     const existing = buckets.get(key);
     if (existing) {
@@ -243,7 +245,7 @@ const tableRows = computed<TableRow[]>(() => {
     .sort((a, b) => a.start.getTime() - b.start.getTime())
     .map(({ start, count }) => ({
       iso: start.toISOString(),
-      label: formatBucket(start, series.granularity),
+      label: formatBucket(start, granularity),
       count,
     }));
 });
@@ -266,17 +268,19 @@ const chartOptions = computed(() => ({
     legend: { display: false },
   },
   scales: {
-    x: { title: { display: true, text: activeTabConfig.value.axisLabel } },
+    x: {
+      title: {
+        display: true,
+        text: `${activeTabConfig.value.axisLabel} (${browserTimezoneShort})`,
+      },
+    },
     y: { title: { display: true, text: "Clicks" }, beginAtZero: true },
   },
 }));
 
 function sumClicks(key: TabKey): number {
   if (!stats.value) return 0;
-  return Object.values(stats.value.clicks[key].data).reduce(
-    (sum, n) => sum + n,
-    0
-  );
+  return Object.values(stats.value.clicks[key]).reduce((sum, n) => sum + n, 0);
 }
 
 function avgClicks(key: TabKey, divisor: number): number {
@@ -288,7 +292,7 @@ const alltimeAvg = computed(() => {
   const createdAt = new Date(stats.value.url.created_at);
   const days = Math.max(
     1,
-    Math.ceil((Date.now() - createdAt.getTime()) / (1000 * 60 * 60 * 24))
+    Math.ceil((Date.now() - createdAt.getTime()) / (1000 * 60 * 60 * 24)),
   );
   return stats.value.url.total_clicks / days;
 });
