@@ -41,13 +41,13 @@ class Click < ApplicationRecord
     clicks_hash.sort_by { |datetime, _clicks| Time.zone.parse(datetime) }.to_h
   end
 
-  # Group clicks over a duration by hour, returning ISO 8601 UTC
-  # timestamps as keys. Only hours with at least one click are included.
-  # Timezone-aware re-bucketing (into local days/months) happens client-side.
+  # Count clicks in each hour over the given duration, keyed by ISO 8601 UTC
+  # timestamp. Only hours with at least one click are included. Timezone-aware
+  # re-bucketing (into local days/months) happens client-side.
   #
   # @param duration [ActiveSupport::Duration] how far back to look
   # @return [Hash{String => Integer}] { iso_utc_string => count }
-  def self.group_by_time_ago_utc(duration)
+  def self.hourly_counts_for_last(duration)
     all.within(duration)
        .group("date_format(created_at, '%Y%m%d %H')")
        .count
