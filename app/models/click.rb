@@ -41,18 +41,28 @@ class Click < ApplicationRecord
     clicks_hash.sort_by { |datetime, _clicks| Time.zone.parse(datetime) }.to_h
   end
 
-  # Like group_by_time_ago but returns ISO 8601 UTC timestamps as keys
-  # instead of formatted strings. Formatting moves to the client.
-  def self.group_by_time_ago_utc(duration)
+  # Group clicks over a duration by hour or day, returning ISO 8601 UTC
+  # timestamps as keys. Formatting moves to the client.
+  #
+  # @param duration [ActiveSupport::Duration] how far back to look
+  # @param interval [Symbol] :hour (default) or :day
+  # @return [Hash{String => Integer}] { iso_utc_string => count }
+  def self.group_by_time_ago_utc(duration, interval: :hour)
+    format_str = case interval
+                 when :hour then '%Y%m%d %H'
+                 when :day then '%Y%m%d'
+                 else raise ArgumentError, "unknown interval #{interval.inspect}"
+                 end
+
     all.within(duration)
-       .group("date_format(created_at, '%Y%m%d %H')")
+       .group("date_format(created_at, '#{format_str}')")
        .count
        .each_with_object({}) do |(datetime, count), acc|
       utc_time = Time.utc(
         datetime[0..3].to_i,   # year
         datetime[4..5].to_i,   # month
         datetime[6..7].to_i,   # day
-        datetime[9..10].to_i   # hour
+        interval == :hour ? datetime[9..10].to_i : 0
       )
       iso_key = utc_time.iso8601
 
