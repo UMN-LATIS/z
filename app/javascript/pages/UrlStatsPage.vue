@@ -57,7 +57,7 @@
         </table>
       </details>
 
-      <!-- Summary stats -->
+      <!-- Summary stats — one row per tab -->
       <h2 class="tw-text-lg tw-font-bold tw-mb-2">Summary</h2>
       <table class="table table-hover">
         <thead>
@@ -68,25 +68,13 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Last 24 Hours</td>
-            <td>{{ pluralize(sumClicks("hrs24"), "hit") }}</td>
-            <td>{{ avgClicks("hrs24", 24).toFixed(2) }} per hour</td>
-          </tr>
-          <tr>
-            <td>Last 7 Days</td>
-            <td>{{ pluralize(sumClicks("days7"), "hit") }}</td>
-            <td>{{ avgClicks("days7", 7).toFixed(2) }} per day</td>
-          </tr>
-          <tr>
-            <td>Last 30 Days</td>
-            <td>{{ pluralize(sumClicks("days30"), "hit") }}</td>
-            <td>{{ avgClicks("days30", 30).toFixed(2) }} per day</td>
-          </tr>
-          <tr>
-            <td>All Time</td>
-            <td>{{ pluralize(stats.url.total_clicks, "hit") }}</td>
-            <td>{{ alltimeAvg.toFixed(2) }} per day</td>
+          <tr v-for="tab in tabs" :key="tab.key">
+            <td>{{ tab.label }}</td>
+            <td>{{ pluralize(sumClicks(tab.key), "hit") }}</td>
+            <td>
+              {{ avgClicks(tab.key).toFixed(2) }} per
+              {{ tab.averageUnit }}
+            </td>
           </tr>
         </tbody>
       </table>
@@ -122,17 +110,59 @@ const props = defineProps<{
   keyword: string;
 }>();
 
+// Tab configuration drives both the chart tabs and the summary stats table.
+// averageUnit / averageDivisor match the chart granularity:
+//   - hourly chart → "hour" average over 24 hours
+//   - daily chart → "day" average over 7 or 30 days
+//   - monthly chart → "month" average over 12 or 60 months
 const tabs = [
-  { key: "hrs24", label: "Last 24 Hours", axisLabel: "Time", granularity: "hour" },
-  { key: "days7", label: "Last 7 Days", axisLabel: "Date", granularity: "day" },
-  { key: "days30", label: "Last 30 Days", axisLabel: "Date", granularity: "day" },
-  { key: "year", label: "Last Year", axisLabel: "Month", granularity: "month" },
-  { key: "years5", label: "Last 5 Years", axisLabel: "Month", granularity: "month" },
+  {
+    key: "hrs24",
+    label: "Last 24 Hours",
+    axisLabel: "Time",
+    granularity: "hour",
+    averageUnit: "hour",
+    averageDivisor: 24,
+  },
+  {
+    key: "days7",
+    label: "Last 7 Days",
+    axisLabel: "Date",
+    granularity: "day",
+    averageUnit: "day",
+    averageDivisor: 7,
+  },
+  {
+    key: "days30",
+    label: "Last 30 Days",
+    axisLabel: "Date",
+    granularity: "day",
+    averageUnit: "day",
+    averageDivisor: 30,
+  },
+  {
+    key: "year",
+    label: "Last Year",
+    axisLabel: "Month",
+    granularity: "month",
+    averageUnit: "month",
+    averageDivisor: 12,
+  },
+  {
+    key: "years5",
+    label: "Last 5 Years",
+    axisLabel: "Month",
+    granularity: "month",
+    averageUnit: "month",
+    averageDivisor: 60,
+  },
 ] as const satisfies readonly {
   key: string;
   label: string;
   axisLabel: string;
   granularity: ClickGranularity;
+  averageUnit: string;
+  averageDivisor: number;
 }[];
 
 type TabKey = (typeof tabs)[number]["key"];
@@ -283,19 +313,10 @@ function sumClicks(key: TabKey): number {
   return Object.values(stats.value.clicks[key]).reduce((sum, n) => sum + n, 0);
 }
 
-function avgClicks(key: TabKey, divisor: number): number {
-  return sumClicks(key) / divisor;
+function avgClicks(key: TabKey): number {
+  const tab = tabs.find((t) => t.key === key)!;
+  return sumClicks(key) / tab.averageDivisor;
 }
-
-const alltimeAvg = computed(() => {
-  if (!stats.value) return 0;
-  const createdAt = new Date(stats.value.url.created_at);
-  const days = Math.max(
-    1,
-    Math.ceil((Date.now() - createdAt.getTime()) / (1000 * 60 * 60 * 24)),
-  );
-  return stats.value.url.total_clicks / days;
-});
 
 function pluralize(count: number, singular: string): string {
   return `${count} ${count === 1 ? singular : singular + "s"}`;
