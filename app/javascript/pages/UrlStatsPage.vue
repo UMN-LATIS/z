@@ -189,8 +189,8 @@ function formatBucket(date: Date, granularity: ClickGranularity): string {
 }
 
 // Truncate a date to the start of its containing bucket, in local time.
-// The server returns fine-grained buckets (hour or day); the client aggregates
-// them into whatever the chart's display granularity is, honoring the viewer's
+// The server returns hourly UTC buckets; the client aggregates them into
+// whatever the chart's display granularity is, honoring the viewer's
 // timezone so day/month boundaries align with local wall-clock time.
 function bucketStart(date: Date, granularity: ClickGranularity): Date {
   switch (granularity) {
