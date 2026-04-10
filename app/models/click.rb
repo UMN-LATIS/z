@@ -41,6 +41,26 @@ class Click < ApplicationRecord
     clicks_hash.sort_by { |datetime, _clicks| Time.zone.parse(datetime) }.to_h
   end
 
+  # Like group_by_time_ago but returns ISO 8601 UTC timestamps as keys
+  # instead of formatted strings. Formatting moves to the client.
+  def self.group_by_time_ago_utc(duration)
+    all.within(duration)
+       .group("date_format(created_at, '%Y%m%d %H')")
+       .count
+       .each_with_object({}) do |(datetime, count), acc|
+      utc_time = Time.utc(
+        datetime[0..3].to_i,   # year
+        datetime[4..5].to_i,   # month
+        datetime[6..7].to_i,   # day
+        datetime[9..10].to_i   # hour
+      )
+      iso_key = utc_time.iso8601
+
+      prev_count = acc[iso_key].to_i
+      acc[iso_key] = prev_count + count
+    end.sort_by { |iso, _| Time.iso8601(iso) }.to_h
+  end
+
   def self.max_by_day
     click_counts = {}
 
