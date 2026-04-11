@@ -71,7 +71,12 @@ module Z
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
-    config.time_zone = 'Central Time (US & Canada)'
+    # Controls server-side time display (ERB views, CSV exports, Ruby-side
+    # Time.zone). Does NOT affect database storage — ActiveRecord always
+    # reads/writes UTC. Exposed as an env var so forks (e.g. schools in
+    # other timezones running their own deployment) can override without
+    # carrying a patch on this line.
+    config.time_zone = ENV.fetch('APP_TIME_ZONE', 'Central Time (US & Canada)')
     # config.eager_load_paths << Rails.root.join("extras")
 
     # disable ip spoofing check, as it looks like users behind badly behaving
