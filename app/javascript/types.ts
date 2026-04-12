@@ -45,9 +45,14 @@ export interface Zlink {
 
 export type ClickGranularity = "hour" | "day" | "month";
 
-// Raw hourly click data from the server: { iso_utc_timestamp => count }.
-// Only hours with at least one click are included. Covers up to 5 years.
+// Hourly UTC click data, keyed by ISO 8601 timestamp (e.g.
+// "2026-04-10T15:00:00Z"). Covers the last 30 days. Used by tabs that
+// need hour precision to bucket into the viewer's local timezone.
 export type ClicksByHour = Record<string, number>;
+
+// Daily UTC click data, keyed by ISO date (e.g. "2026-04-10"). Covers
+// the last 5 years. Used by tabs that display monthly rollups.
+export type ClicksByDay = Record<string, number>;
 
 export interface UrlStatsResponse {
   url: {
@@ -57,6 +62,7 @@ export interface UrlStatsResponse {
     total_clicks: number;
   };
   clicks_by_hour: ClicksByHour;
+  clicks_by_day: ClicksByDay;
 }
 
 export interface LookupUserResponse {

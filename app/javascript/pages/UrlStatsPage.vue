@@ -41,7 +41,7 @@
           <thead>
             <tr>
               <th scope="col">
-                {{ activeTabConfig.axisLabel }} ({{ browserTimezoneShort }})
+                {{ activeTabConfig.axisLabel }} ({{ displayTzLabel }})
               </th>
               <th scope="col">Clicks</th>
             </tr>
@@ -81,7 +81,7 @@
 
       <div v-if="bestDay" class="panel panel-default">
         <h2 class="panel-heading tw-mb-0 tw-text-base tw-text-left">
-          Best Day
+          Best Day (UTC)
         </h2>
         <div class="panel-body">
           {{ formatBestDay(bestDay) }}
@@ -112,10 +112,12 @@ const props = defineProps<{
 
 const HOUR_MS = 60 * 60 * 1000;
 
-// Tab configuration drives the chart tabs, the chart bucketing, and the
-// summary stats table. hoursBack is the time window; granularity is how to
-// group clicks for display; averageDivisor is the denominator for the
-// per-period average.
+// Tab configuration drives the chart tabs, chart bucketing, and summary
+// stats table. `source` selects which server payload to read:
+//   "hour" — clicks_by_hour (last 30d, hour precision). Needed for any
+//            tab that buckets into local-timezone days.
+//   "day"  — clicks_by_day (last 5y, day precision). Used for year/5y
+//            tabs, which render monthly rollups.
 const tabs = [
   {
     key: "hrs24",
@@ -123,6 +125,7 @@ const tabs = [
     axisLabel: "Time",
     hoursBack: 24,
     granularity: "hour",
+    source: "hour",
     averageUnit: "hour",
     averageDivisor: 24,
   },
@@ -132,6 +135,7 @@ const tabs = [
     axisLabel: "Date",
     hoursBack: 24 * 7,
     granularity: "day",
+    source: "hour",
     averageUnit: "day",
     averageDivisor: 7,
   },
@@ -141,6 +145,7 @@ const tabs = [
     axisLabel: "Date",
     hoursBack: 24 * 30,
     granularity: "day",
+    source: "hour",
     averageUnit: "day",
     averageDivisor: 30,
   },
@@ -150,6 +155,7 @@ const tabs = [
     axisLabel: "Month",
     hoursBack: 24 * 365,
     granularity: "month",
+    source: "day",
     averageUnit: "month",
     averageDivisor: 12,
   },
@@ -159,6 +165,7 @@ const tabs = [
     axisLabel: "Month",
     hoursBack: 24 * 365 * 5,
     granularity: "month",
+    source: "day",
     averageUnit: "month",
     averageDivisor: 60,
   },
@@ -168,6 +175,7 @@ const tabs = [
   axisLabel: string;
   hoursBack: number;
   granularity: ClickGranularity;
+  source: "hour" | "day";
   averageUnit: string;
   averageDivisor: number;
 }[];
@@ -205,31 +213,67 @@ onMounted(async () => {
   }
 });
 
-function formatBucket(date: Date, granularity: ClickGranularity): string {
+function formatBucket(
+  date: Date,
+  granularity: ClickGranularity,
+  tz: DisplayTz,
+): string {
+  const tzOpt = tz === "utc" ? { timeZone: "UTC" } : {};
   switch (granularity) {
     case "hour":
       return date.toLocaleTimeString(undefined, {
         hour: "numeric",
         minute: "2-digit",
+        ...tzOpt,
       });
     case "day":
       return date.toLocaleDateString(undefined, {
         month: "numeric",
         day: "numeric",
+        ...tzOpt,
       });
     case "month":
       return date.toLocaleDateString(undefined, {
         month: "short",
         year: "numeric",
+        ...tzOpt,
       });
   }
 }
 
-// Truncate a date to the start of its containing bucket, in local time.
-// The server returns hourly UTC buckets; the client aggregates them into
-// whatever the chart's display granularity is, honoring the viewer's
-// timezone so day/month boundaries align with local wall-clock time.
-function bucketStart(date: Date, granularity: ClickGranularity): Date {
+type DisplayTz = "local" | "utc";
+
+// Truncate a date to the start of its containing bucket.
+//   tz="local" — hourly-source tabs (24h/7d/30d). The server sends hour-
+//     precise UTC instants; the client buckets them into the viewer's
+//     local wall-clock so day/month boundaries align with local calendar.
+//   tz="utc" — day-source tabs (year/5y). The server's daily keys are
+//     UTC dates, so bucketing must stay in UTC. Otherwise a viewer west
+//     of UTC would see the bucket shift backward by one day.
+function bucketStart(
+  date: Date,
+  granularity: ClickGranularity,
+  tz: DisplayTz,
+): Date {
+  if (tz === "utc") {
+    switch (granularity) {
+      case "hour":
+        return new Date(
+          Date.UTC(
+            date.getUTCFullYear(),
+            date.getUTCMonth(),
+            date.getUTCDate(),
+            date.getUTCHours(),
+          ),
+        );
+      case "day":
+        return new Date(
+          Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()),
+        );
+      case "month":
+        return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), 1));
+    }
+  }
   switch (granularity) {
     case "hour":
       return new Date(
@@ -245,20 +289,33 @@ function bucketStart(date: Date, granularity: ClickGranularity): Date {
   }
 }
 
-// Return the hourly click entries that fall within the last `hoursBack`
-// hours, as [Date, count] pairs. Reused by chart data, summary stats, and
-// best-day computation.
-function clicksWithin(hoursBack: number): Array<[Date, number]> {
+// Parse a "YYYY-MM-DD" daily-counts key as UTC midnight. The server
+// produces these via MySQL's DATE(created_at), which is a UTC date (Rails
+// stores datetimes as UTC). Keep the parsed instant in UTC so downstream
+// bucketing/formatting can operate in UTC without drift.
+function parseDayKey(key: string): Date {
+  const [y, m, d] = key.split("-").map(Number);
+  return new Date(Date.UTC(y, m - 1, d));
+}
+
+// Return the click entries from the tab's configured source that fall
+// within the last `hoursBack` hours, as [Date, count] pairs. Used by
+// tableRows to build chart and table data for the active tab.
+function clicksWithin(
+  hoursBack: number,
+  source: "hour" | "day",
+): Array<[Date, number]> {
   if (!stats.value) return [];
   const cutoff = Date.now() - hoursBack * HOUR_MS;
-  const result: Array<[Date, number]> = [];
-  for (const [iso, count] of Object.entries(stats.value.clicks_by_hour)) {
-    const date = new Date(iso);
-    if (date.getTime() >= cutoff) {
-      result.push([date, count]);
-    }
-  }
-  return result;
+  const entries =
+    source === "hour"
+      ? Object.entries(stats.value.clicks_by_hour).map(
+          ([iso, count]) => [new Date(iso), count] as [Date, number],
+        )
+      : Object.entries(stats.value.clicks_by_day).map(
+          ([key, count]) => [parseDayKey(key), count] as [Date, number],
+        );
+  return entries.filter(([date]) => date.getTime() >= cutoff);
 }
 
 interface TableRow {
@@ -267,19 +324,34 @@ interface TableRow {
   count: number;
 }
 
+// The display timezone is determined by the tab's source. Hour-source
+// tabs display in the viewer's local tz (since we have hour precision to
+// bucket correctly). Day-source tabs display in UTC, because the server's
+// daily buckets are UTC dates and silently rebucketing them into local
+// time would drift by up to a day near midnight.
+const displayTz = computed<DisplayTz>(() =>
+  activeTabConfig.value.source === "hour" ? "local" : "utc",
+);
+
+// Label for the display timezone, shown on the chart axis and table
+// header so the viewer always knows what tz the numbers are in.
+const displayTzLabel = computed(() =>
+  displayTz.value === "utc" ? "UTC" : browserTimezoneShort,
+);
+
 const tableRows = computed<TableRow[]>(() => {
   if (!stats.value) return [];
 
-  const { hoursBack, granularity } = activeTabConfig.value;
-  const clicks = clicksWithin(hoursBack);
+  const { hoursBack, granularity, source } = activeTabConfig.value;
+  const clicks = clicksWithin(hoursBack, source);
+  const tz = displayTz.value;
 
-  // Aggregate hourly clicks into local-time display buckets. Key by the
-  // millisecond timestamp of the local bucket start — unique, sortable,
-  // and collision-free for different local buckets.
+  // Aggregate clicks into display buckets. Key by the millisecond
+  // timestamp of the bucket start — unique, sortable, collision-free.
   const buckets = new Map<number, { start: Date; count: number }>();
 
   for (const [date, count] of clicks) {
-    const start = bucketStart(date, granularity);
+    const start = bucketStart(date, granularity, tz);
     const key = start.getTime();
     const existing = buckets.get(key);
     if (existing) {
@@ -293,7 +365,7 @@ const tableRows = computed<TableRow[]>(() => {
     .sort((a, b) => a.start.getTime() - b.start.getTime())
     .map(({ start, count }) => ({
       iso: start.toISOString(),
-      label: formatBucket(start, granularity),
+      label: formatBucket(start, granularity, tz),
       count,
     }));
 });
@@ -319,16 +391,17 @@ const chartOptions = computed(() => ({
     x: {
       title: {
         display: true,
-        text: `${activeTabConfig.value.axisLabel} (${browserTimezoneShort})`,
+        text: `${activeTabConfig.value.axisLabel} (${displayTzLabel.value})`,
       },
     },
     y: { title: { display: true, text: "Clicks" }, beginAtZero: true },
   },
 }));
 
-// Precomputed per-tab sums. Uses a single pass over clicks_by_hour to
-// populate all tabs at once, so re-rendering the summary table doesn't
-// re-iterate the click hash N times.
+// Precomputed per-tab sums. One pass over clicks_by_hour accumulates into
+// the hour-source tabs; one pass over clicks_by_day accumulates into the
+// day-source tabs. Each tab only reads from its configured source, so the
+// 30d/5y payloads stay cleanly separated.
 const clickSumsByTab = computed<Record<TabKey, number>>(() => {
   const sums = Object.fromEntries(tabs.map((t) => [t.key, 0])) as Record<
     TabKey,
@@ -337,9 +410,20 @@ const clickSumsByTab = computed<Record<TabKey, number>>(() => {
   if (!stats.value) return sums;
 
   const now = Date.now();
+  const hourTabs = tabs.filter((t) => t.source === "hour");
+  const dayTabs = tabs.filter((t) => t.source === "day");
+
   for (const [iso, count] of Object.entries(stats.value.clicks_by_hour)) {
     const age = now - new Date(iso).getTime();
-    for (const tab of tabs) {
+    for (const tab of hourTabs) {
+      if (age <= tab.hoursBack * HOUR_MS) {
+        sums[tab.key] += count;
+      }
+    }
+  }
+  for (const [key, count] of Object.entries(stats.value.clicks_by_day)) {
+    const age = now - parseDayKey(key).getTime();
+    for (const tab of dayTabs) {
       if (age <= tab.hoursBack * HOUR_MS) {
         sums[tab.key] += count;
       }
@@ -357,29 +441,20 @@ function avgClicks(key: TabKey): number {
   return sumClicks(key) / tab.averageDivisor;
 }
 
-// Best day is computed in the viewer's local timezone — aggregate every
-// hourly click into the local day that contains it, then find the max.
+// Best day is computed from clicks_by_day (the broadest window — up to
+// 5 years). The server's daily buckets are UTC dates, so the displayed
+// day is also UTC. The "(UTC)" label in the panel heading makes this
+// explicit so viewers can reconcile it with their local calendar.
 const bestDay = computed<{ date: Date; count: number } | null>(() => {
   if (!stats.value) return null;
 
-  const byLocalDay = new Map<number, { start: Date; count: number }>();
-  for (const [iso, count] of Object.entries(stats.value.clicks_by_hour)) {
-    const date = new Date(iso);
-    const start = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-    const key = start.getTime();
-    const existing = byLocalDay.get(key);
-    if (existing) {
-      existing.count += count;
-    } else {
-      byLocalDay.set(key, { start, count });
+  let best: { date: Date; count: number } | null = null;
+  for (const [key, count] of Object.entries(stats.value.clicks_by_day)) {
+    if (!best || count > best.count) {
+      best = { date: parseDayKey(key), count };
     }
   }
-
-  let best: { start: Date; count: number } | null = null;
-  for (const bucket of byLocalDay.values()) {
-    if (!best || bucket.count > best.count) best = bucket;
-  }
-  return best ? { date: best.start, count: best.count } : null;
+  return best;
 });
 
 function pluralize(count: number, singular: string): string {
@@ -391,6 +466,7 @@ function formatBestDay(best: { date: Date; count: number }): string {
     month: "long",
     day: "numeric",
     year: "numeric",
+    timeZone: "UTC",
   });
   return `${pluralize(best.count, "hit")} on ${formatted}`;
 }

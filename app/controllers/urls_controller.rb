@@ -44,9 +44,14 @@ class UrlsController < ApplicationController
         # Click data is private to the URL owner; do not allow any caching.
         response.headers['Cache-Control'] = 'no-store'
 
-        # Return up to 5 years of hourly UTC click data. The client handles
-        # all filtering by time range, bucketing into local-timezone days/
-        # months, and computing best day.
+        # Two click payloads, split by granularity:
+        #   clicks_by_hour — last 30 days at hourly UTC resolution. The
+        #     client uses this for the 24h/7d/30d tabs, where hour precision
+        #     is needed to bucket into local-timezone days without drift.
+        #   clicks_by_day  — last 5 years at daily UTC resolution. Used for
+        #     the year/5y tabs (monthly bars) and the best-day summary.
+        # Sending hourly for 5 years would be ~5s+ on a 7M-click URL even
+        # with the composite index; daily runs in ~2s.
         render json: {
           url: {
             id: @url.id,
@@ -54,7 +59,8 @@ class UrlsController < ApplicationController
             created_at: @url.created_at.utc.iso8601,
             total_clicks: @url.total_clicks
           },
-          clicks_by_hour: @url.clicks.hourly_counts_for_last(5.years)
+          clicks_by_hour: @url.clicks.hourly_counts(30.days),
+          clicks_by_day: @url.clicks.daily_counts(5.years)
         }
       end
     end

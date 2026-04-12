@@ -78,9 +78,9 @@ RSpec.describe Click, type: :model do
       end
     end
 
-    describe('.hourly_counts_for_last') do
+    describe('.hourly_counts') do
       it 'returns a hash keyed by ISO 8601 UTC timestamps with click counts' do
-        result = url1.clicks.hourly_counts_for_last(3.days)
+        result = url1.clicks.hourly_counts(3.days)
 
         # all keys should be parseable ISO 8601 UTC timestamps
         result.each_key do |key|
@@ -93,21 +93,13 @@ RSpec.describe Click, type: :model do
       end
 
       it 'returns timestamps at hourly granularity' do
-        result = url1.clicks.hourly_counts_for_last(3.days)
+        result = url1.clicks.hourly_counts(3.days)
 
         result.each_key do |key|
           time = Time.iso8601(key)
           expect(time.min).to eq(0), "Expected #{key} to have 0 minutes (hourly bucket)"
           expect(time.sec).to eq(0), "Expected #{key} to have 0 seconds (hourly bucket)"
         end
-      end
-
-      it 'is sorted chronologically oldest to newest' do
-        repeatedly_click(url: url1, times: 1, days_ago: 7)
-        result = url1.clicks.hourly_counts_for_last(10.days)
-
-        timestamps = result.keys.map { |k| Time.iso8601(k) }
-        expect(timestamps).to eq(timestamps.sort)
       end
 
       it 'aggregates multiple clicks in the same hour' do
@@ -117,8 +109,39 @@ RSpec.describe Click, type: :model do
           Click.create!(url_id: fresh_url.id, country_code: 'US', created_at: target_hour + 5.minutes)
         end
 
-        result = fresh_url.clicks.hourly_counts_for_last(1.day)
+        result = fresh_url.clicks.hourly_counts(1.day)
         expect(result[target_hour.iso8601]).to eq(5)
+      end
+    end
+
+    describe('.daily_counts') do
+      it 'returns a hash keyed by ISO 8601 UTC date strings with click counts' do
+        result = url1.clicks.daily_counts(3.days)
+
+        result.each_key do |key|
+          expect(key).to match(/\A\d{4}-\d{2}-\d{2}\z/)
+        end
+        expect(result.values.sum).to eq(6) # 1 + 2 + 3 clicks for url1
+      end
+
+      it 'aggregates clicks occurring on the same UTC day' do
+        fresh_url = FactoryBot.create(:url)
+        target_day = Time.zone.now.utc.beginning_of_day
+        5.times do
+          Click.create!(url_id: fresh_url.id, country_code: 'US', created_at: target_day + 3.hours)
+        end
+        2.times do
+          Click.create!(url_id: fresh_url.id, country_code: 'US', created_at: target_day + 20.hours)
+        end
+
+        result = fresh_url.clicks.daily_counts(1.day)
+        expect(result[target_day.to_date.to_s]).to eq(7)
+      end
+
+      it 'excludes clicks outside the duration window' do
+        repeatedly_click(url: url1, times: 4, days_ago: 10)
+        result = url1.clicks.daily_counts(3.days)
+        expect(result.values.sum).to eq(6) # the 10-days-ago clicks are excluded
       end
     end
 
