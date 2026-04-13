@@ -103,12 +103,12 @@ describe("admin url details (stats) page", () => {
       cy.reload();
 
       // check that the best day is 01-01-2020
-      cy.contains("Best Day").closest("div").contains("January 1, 2020");
+      cy.contains("Best Day (UTC)").closest(".panel").contains("January 1, 2020");
     });
 
     it("downloads a QR code", () => {
       const claStatsPage = "/shortener/urls/cla";
-      let qrResponse = null;
+      let qrResponse: any = null;
 
       //intercept the download request
       cy.intercept("GET", `${claStatsPage}/download_qrcode`, (req) => {
