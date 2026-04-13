@@ -47,6 +47,7 @@ describe("admin url details (stats) page", () => {
     });
 
     it("shows a not found page when the url does not exist", () => {
+      cy.login(user1.umndid);
       cy.visit("/shortener/urls/does-not-exist", {
         failOnStatusCode: false,
       });
@@ -99,8 +100,9 @@ describe("admin url details (stats) page", () => {
       // now add a few more clicks
       cy.clickUrl("cla", 5, { country_code: "CA" });
 
-      // reload the page
+      // reload the page and wait for Vue stats to load
       cy.reload();
+      cy.contains("Summary").should("be.visible");
 
       // check that the best day is 01-01-2020
       cy.contains("Best Day (UTC)").closest(".panel").contains("January 1, 2020");
@@ -160,11 +162,14 @@ describe("admin url details (stats) page", () => {
 
       // reload page and make sure changes were saved
       cy.reload();
-      cy.get("@collectionPanel").contains("testgroup");
+      cy.get(".panel-heading")
+        .contains("Collection")
+        .closest(".panel")
+        .contains("testgroup");
 
       // also check the My Collections page
       cy.visit("/shortener/groups");
-      cy.contains("testgroup").should("be.visible").click();
+      cy.get("table").contains("testgroup").should("be.visible").click();
 
       // when opening the group urls list,
       // the `cla` url should be in the collection
