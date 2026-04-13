@@ -41,17 +41,9 @@ class UrlsController < ApplicationController
       end
       format.js { render layout: false }
       format.json do
-        # Click data is private to the URL owner; do not allow any caching.
         response.headers['Cache-Control'] = 'no-store'
 
-        # Two click payloads, split by granularity:
-        #   clicks_by_hour — last 30 days at hourly UTC resolution. The
-        #     client uses this for the 24h/7d/30d tabs, where hour precision
-        #     is needed to bucket into local-timezone days without drift.
-        #   clicks_by_day  — last 5 years at daily UTC resolution. Used for
-        #     the year/5y tabs (monthly bars) and the best-day summary.
-        # Sending hourly for 5 years would be ~5s+ on a 7M-click URL even
-        # with the composite index; daily runs in ~2s.
+        # Hourly for 24h/7d/30d tabs, daily for year/5y tabs.
         render json: {
           url: {
             id: @url.id,

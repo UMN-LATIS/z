@@ -11,6 +11,19 @@ namespace :clicks do
   # Uses insert_all in BATCH_SIZE-row batches so memory stays flat and the
   # insert path skips ActiveRecord callbacks/validations. On a local MySQL
   # this lands around 50-100k rows/sec; 10m rows takes a few minutes.
+  desc 'Delete a seeded perf-test URL and its clicks: clicks:cleanup[keyword]'
+  task :cleanup, %i[keyword] => :environment do |_, args|
+    keyword = args[:keyword] || 'perf'
+    url = Url.find_by(keyword: keyword)
+    abort "No URL with keyword '#{keyword}'" unless url
+
+    count = url.clicks.count
+    puts "Deleting #{count} clicks and URL '#{keyword}' (id=#{url.id})..."
+    url.clicks.delete_all
+    url.destroy!
+    puts "Done."
+  end
+
   desc 'Seed clicks for stats-page perf testing: clicks:seed_perf[count,keyword]'
   task :seed_perf, %i[count keyword] => :environment do |_, args|
     count = (args[:count] || 10_000).to_i

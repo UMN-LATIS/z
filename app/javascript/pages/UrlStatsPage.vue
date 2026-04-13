@@ -112,12 +112,7 @@ const props = defineProps<{
 
 const HOUR_MS = 60 * 60 * 1000;
 
-// Tab configuration drives the chart tabs, chart bucketing, and summary
-// stats table. `source` selects which server payload to read:
-//   "hour" — clicks_by_hour (last 30d, hour precision). Needed for any
-//            tab that buckets into local-timezone days.
-//   "day"  — clicks_by_day (last 5y, day precision). Used for year/5y
-//            tabs, which render monthly rollups.
+// source: "hour" reads clicks_by_hour, "day" reads clicks_by_day.
 const tabs = [
   {
     key: "hrs24",
@@ -187,10 +182,9 @@ const stats = ref<UrlStatsResponse | null>(null);
 const loading = ref(true);
 const error = ref<string | null>(null);
 
-// IANA timezone name, e.g. "America/Chicago"
 const browserTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-// Short abbreviation, e.g. "CDT" — extracted from a formatted date
+// e.g. "CDT"
 const browserTimezoneShort = (() => {
   const parts = new Intl.DateTimeFormat(undefined, {
     timeZoneName: "short",
@@ -243,13 +237,7 @@ function formatBucket(
 
 type DisplayTz = "local" | "utc";
 
-// Truncate a date to the start of its containing bucket.
-//   tz="local" — hourly-source tabs (24h/7d/30d). The server sends hour-
-//     precise UTC instants; the client buckets them into the viewer's
-//     local wall-clock so day/month boundaries align with local calendar.
-//   tz="utc" — day-source tabs (year/5y). The server's daily keys are
-//     UTC dates, so bucketing must stay in UTC. Otherwise a viewer west
-//     of UTC would see the bucket shift backward by one day.
+// Truncate a date to the start of its containing bucket in local or UTC.
 function bucketStart(
   date: Date,
   granularity: ClickGranularity,
@@ -289,18 +277,12 @@ function bucketStart(
   }
 }
 
-// Parse a "YYYY-MM-DD" daily-counts key as UTC midnight. The server
-// produces these via MySQL's DATE(created_at), which is a UTC date (Rails
-// stores datetimes as UTC). Keep the parsed instant in UTC so downstream
-// bucketing/formatting can operate in UTC without drift.
+// Parse "YYYY-MM-DD" as UTC midnight.
 function parseDayKey(key: string): Date {
   const [y, m, d] = key.split("-").map(Number);
   return new Date(Date.UTC(y, m - 1, d));
 }
 
-// Return the click entries from the tab's configured source that fall
-// within the last `hoursBack` hours, as [Date, count] pairs. Used by
-// tableRows to build chart and table data for the active tab.
 function clicksWithin(
   hoursBack: number,
   source: "hour" | "day",
@@ -324,17 +306,12 @@ interface TableRow {
   count: number;
 }
 
-// The display timezone is determined by the tab's source. Hour-source
-// tabs display in the viewer's local tz (since we have hour precision to
-// bucket correctly). Day-source tabs display in UTC, because the server's
-// daily buckets are UTC dates and silently rebucketing them into local
-// time would drift by up to a day near midnight.
+// Hour-source tabs show local tz; day-source tabs show UTC (daily buckets
+// are UTC dates, rebucketing to local would drift near midnight).
 const displayTz = computed<DisplayTz>(() =>
   activeTabConfig.value.source === "hour" ? "local" : "utc",
 );
 
-// Label for the display timezone, shown on the chart axis and table
-// header so the viewer always knows what tz the numbers are in.
 const displayTzLabel = computed(() =>
   displayTz.value === "utc" ? "UTC" : browserTimezoneShort,
 );
@@ -346,8 +323,6 @@ const tableRows = computed<TableRow[]>(() => {
   const clicks = clicksWithin(hoursBack, source);
   const tz = displayTz.value;
 
-  // Aggregate clicks into display buckets. Key by the millisecond
-  // timestamp of the bucket start — unique, sortable, collision-free.
   const buckets = new Map<number, { start: Date; count: number }>();
 
   for (const [date, count] of clicks) {
@@ -398,10 +373,6 @@ const chartOptions = computed(() => ({
   },
 }));
 
-// Precomputed per-tab sums. One pass over clicks_by_hour accumulates into
-// the hour-source tabs; one pass over clicks_by_day accumulates into the
-// day-source tabs. Each tab only reads from its configured source, so the
-// 30d/5y payloads stay cleanly separated.
 const clickSumsByTab = computed<Record<TabKey, number>>(() => {
   const sums = Object.fromEntries(tabs.map((t) => [t.key, 0])) as Record<
     TabKey,
@@ -441,10 +412,6 @@ function avgClicks(key: TabKey): number {
   return sumClicks(key) / tab.averageDivisor;
 }
 
-// Best day is computed from clicks_by_day (the broadest window — up to
-// 5 years). The server's daily buckets are UTC dates, so the displayed
-// day is also UTC. The "(UTC)" label in the panel heading makes this
-// explicit so viewers can reconcile it with their local calendar.
 const bestDay = computed<{ date: Date; count: number } | null>(() => {
   if (!stats.value) return null;
 

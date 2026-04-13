@@ -8,13 +8,6 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #
-# FORCE INDEX note: the analytics methods below use FORCE INDEX to make
-# MySQL use the (url_id, created_at) composite. Without the hint, the query
-# planner sometimes picks (url_id, country_code) instead because it estimates
-# the same row count for both. The created_at index is the right choice here
-# because it gives us rows pre-sorted by time, turning the WHERE clause into
-# a range scan instead of a full partition scan. On a 7M-click URL this is
-# the difference between ~46s and ~2s on a 5-year daily query.
 class Click < ApplicationRecord
   belongs_to :url
 
@@ -48,15 +41,9 @@ class Click < ApplicationRecord
     clicks_hash.sort_by { |datetime, _clicks| Time.zone.parse(datetime) }.to_h
   end
 
-  # Count clicks in each hour over the given duration, keyed by ISO 8601 UTC
-  # timestamp. Only hours with at least one click are included.
-  #
-  # Intended for narrow time windows (24 hours, 7 days, 30 days) where the
-  # client wants to display hour-level bars or bucket into local days. For
-  # longer ranges, prefer #daily_counts.
-  #
-  # @param duration [ActiveSupport::Duration] how far back to look
-  # @return [Hash{String => Integer}] { "2026-04-10T15:00:00Z" => count }
+  # { "2026-04-10T15:00:00Z" => count } — hours with zero clicks omitted.
+  # FORCE INDEX: without the hint MySQL sometimes picks the (url_id, country_code)
+  # composite over (url_id, created_at), turning a range scan into a full scan.
   def self.hourly_counts(duration)
     all.from('clicks FORCE INDEX (index_clicks_on_url_id_and_created_at)')
        .within(duration)
@@ -64,19 +51,8 @@ class Click < ApplicationRecord
        .count
   end
 
-  # Count clicks in each day over the given duration, keyed by ISO 8601 UTC
-  # date. Only days with at least one click are included.
-  #
-  # Uses MySQL's native DATE() function — much faster than DATE_FORMAT() for
-  # day-level grouping over large ranges. On a 7M-click URL the 5-year query
-  # runs in ~2s with the composite index (vs ~48s before the index).
-  #
-  # Intended for wider time windows (year, 5 years) where the client wants
-  # to display monthly bars rolled up from daily data, or compute the
-  # best day.
-  #
-  # @param duration [ActiveSupport::Duration] how far back to look
-  # @return [Hash{String => Integer}] { "2026-04-10" => count }
+  # { "2026-04-10" => count } — days with zero clicks omitted.
+  # FORCE INDEX: same reason as hourly_counts above.
   def self.daily_counts(duration)
     all.from('clicks FORCE INDEX (index_clicks_on_url_id_and_created_at)')
        .within(duration)
