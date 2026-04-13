@@ -1,17 +1,15 @@
 <template>
   <div>
     <h2 class="tw-text-lg tw-font-bold">Traffic Over Time</h2>
-    <ul class="nav nav-tabs tw-mb-4" role="tablist">
+    <ul class="nav nav-tabs tw-mb-4">
       <li
         v-for="tab in tabs"
         :key="tab.key"
-        role="presentation"
         :class="{ active: activeTab === tab.key }"
       >
         <a
           href="#"
-          role="tab"
-          :aria-selected="activeTab === tab.key"
+          :aria-current="activeTab === tab.key ? 'true' : undefined"
           @click.prevent="activeTab = tab.key"
         >
           {{ tab.label }}

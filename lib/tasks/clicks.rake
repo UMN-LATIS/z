@@ -13,6 +13,8 @@ namespace :clicks do
   # this lands around 50-100k rows/sec; 10m rows takes a few minutes.
   desc 'Delete a seeded perf-test URL and its clicks: clicks:cleanup[keyword]'
   task :cleanup, %i[keyword] => :environment do |_, args|
+    abort 'clicks:cleanup is only available in development and test' unless Rails.env.development? || Rails.env.test?
+
     keyword = args[:keyword] || 'perf'
     url = Url.find_by(keyword: keyword)
     abort "No URL with keyword '#{keyword}'" unless url
@@ -26,12 +28,14 @@ namespace :clicks do
 
   desc 'Seed clicks for stats-page perf testing: clicks:seed_perf[count,keyword]'
   task :seed_perf, %i[count keyword] => :environment do |_, args|
+    abort 'clicks:seed_perf is only available in development and test' unless Rails.env.development? || Rails.env.test?
+
     count = (args[:count] || 10_000).to_i
     keyword = args[:keyword] || 'perf'
     batch_size = 10_000
     countries = %w[US CA GB DE FR JP IN BR MX AU CN RU KR IT ES]
 
-    group = Group.first || Group.create!(name: 'perf-seed')
+    group = Group.find_or_create_by!(name: 'perf-seed')
     url = Url.find_or_create_by!(keyword: keyword) do |u|
       u.url = "https://example.com/#{keyword}"
       u.group = group
