@@ -7,9 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     services:
       mysql:
-        image: mysql
+        image: mysql/mysql-server:8.0
         env:
           MYSQL_ROOT_PASSWORD: root
+          MYSQL_ROOT_HOST: "%"
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
@@ -30,11 +31,16 @@ jobs:
         with:
           bundler-cache: true
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
       - name: Install dependencies
         run: |
           gem install bundler
           bundle install
-          yarn install --frozen-lockfile
+          npm ci
 
       - name: Setup config files for CI
         run: |
@@ -48,10 +54,10 @@ jobs:
       - name: Run E2E tests with Cypress
         uses: cypress-io/github-action@v6
         with:
-          start: bundle exec rails server -e test -p 5017
-          wait-on: "http://localhost:5017"
+          start: bundle exec rails server -e test -p 3000
+          wait-on: "http://localhost:3000"
           browser: chrome
-          config: baseUrl=http://localhost:5017
+          config: baseUrl=http://localhost:3000
 
       - name: Upload test screenshots if any
         uses: actions/upload-artifact@v4

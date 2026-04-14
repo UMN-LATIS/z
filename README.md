@@ -1,6 +1,6 @@
 # Z
 
-[![tests](https://github.com/UMN-LATIS/z/actions/workflows/test.yml/badge.svg)](https://github.com/UMN-LATIS/z/actions/workflows/test.yml) [![GitHub Release](https://img.shields.io/github/release/tterb/PlayMusic.svg?style=flat)]()
+[![tests](https://github.com/UMN-LATIS/z/actions/workflows/test.yml/badge.svg)](https://github.com/UMN-LATIS/z/actions/workflows/test.yml)
 
 Z is a custom URL shortener for the [University of Minnnesota](https://www.umn.edu) developed by [LATIS](https://cla.umn.edu/latis). We use Z to create and manage University branded short links, for example: <http://z.umn.edu/mycoolsite>.
 
@@ -19,67 +19,121 @@ Z is a custom URL shortener for the [University of Minnnesota](https://www.umn.e
 
 ## Getting Started
 
-1. Prep your system for running [Ruby and Rails with MySQL](https://gorails.com/setup/)
-2. Make sure that `config/database.yml` is correctly configured with database credentials, and `config/ldap.yml` is correctly configured with LDAP credentials, and an instance of MySQL is running.
-3. Install the version of ruby in `.ruby-version`:
+**Prerequisite:** Docker
 
-   ```sh
-   rbenv install
-   ```
+### Option 1: VS Code Dev Container
+**Steps:**
 
-4. Install dependencies with bundler and yarn
-
-   ```sh
-   bundle install # ruby dependencies
-   yarn install   # javascript dependencies
-   ```
-
-5. Create, import the schema, and seed the database. Part of this connects to LDAP, so you will need to be on UMN VPN.
-
-   ```sh
-   # create the database, run migrations, and seed the database
-   ./bin/rails db:setup # or ./bin/rails db:reset to drop the exist db first
-   ```
-
-6. To launch the application, run:
+1. Open VSCode with the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) installed.
+2. Click **Reopen in Container** when prompted.
+3. Start the app:
 
    ```sh
    ./bin/dev
    ```
 
-   This will use `foreman` to start both Vite (used for VueJS), and Rails.
+4. Open <http://localhost:3000>.
 
-Connect to [http://localhost:5100].
+### Option 2: Docker Compose
+
+
+```sh
+git clone https://github.com/UMN-LATIS/z.git
+cd z
+cp .env.example .env
+docker compose up
+```
+
+In another terminal, set up the database:
+
+```sh
+docker compose exec web bin/rails db:setup
+
+# OR to drop an existing db first
+# docker compose exec web bin/rails db:reset
+```
+
+Open <http://localhost:3000>.
+
+**Common commands:**
+
+```sh
+# shell into the container
+docker compose exec web bash
+
+# run unit tests
+docker compose exec web bundle exec rspec
+```
+
+### Mocking LDAP
+
+Development mode looks up users in UMN LDAP which requires **UMN VPN**.
+
+To skip LDAP, set this in your `.env`:
+
+```sh
+# 1 = mock ldap lookups
+USER_LOOKUP_SKELETON=1
+```
+
+Rails will load test users from `cypress/fixtures/` instead. The test environment does this automatically.
 
 ## Testing
 
-In test mode, Rails will use `UserLookupServiceSkeleton`, a stubbed version of the normal LDAP `UserLookupService` which will load test users from Cypress fixtures at `cypress/fixtures` rather than doing a normal LDAP lookup.
-
-### [Rspec](https://github.com/rspec/rspec)
-
-To run the unit tests with Rspec:
+### Unit tests ([RSpec](https://github.com/rspec/rspec))
 
 ```sh
-bundle exec rspec
+docker compose exec web bundle exec rspec
 ```
 
-### [Cypress](https://www.cypress.io/)
+### End-to-end tests ([Cypress](https://www.cypress.io/))
 
-Cypress is used for End to End testing. To run the tests locally, you will need to have the application running.
+Docker and devcontainer environments can only run Cypress **headlessly** (no GUI). For the interactive runner, you need to run Cypress from your host machine.
 
-You'll want to start the server using `UserLookupServiceSkeleton`, a stubbed version of the normal LDAP, which will load test user data from Cypress fixtures at `cypress/fixtures`. This is configured in `Procfile.test`.
+#### Headless (Docker or devcontainer)
+
+Boots a test server and runs the full suite:
 
 ```sh
-# start the Rails server in test mode wiht user lookup skeleton service stubbed
-./bin/foreman start -f Procfile.test
+docker compose exec web npm run test:e2e
 ```
 
-Once the server is running, you can open Cypress with:
+#### Interactive (from host)
 
-```sh
-# open cypress
-yarn cypress open
-```
+**One-time host setup:**
+
+1. Install [Node.js](https://nodejs.org/) (version 22).
+2. Install dependencies locally:
+
+   ```sh
+   npm install
+   ```
+
+**Each run:**
+
+1. Put Rails in test mode. In your `.env`, change:
+
+   ```sh
+   RAILS_ENV=test
+   ```
+
+   (`USER_LOOKUP_SKELETON=1` is already the default.)
+
+2. Start the stack:
+
+   ```sh
+   docker compose up
+   ```
+
+3. In another terminal on your host, open Cypress:
+
+   ```sh
+   npx cypress open
+   ```
+
+   Cypress will connect to the Rails server at <http://localhost:3000>.
+
+When you're done, set `RAILS_ENV=development` back in `.env` and restart the stack.
 
 ## Deployment
 
