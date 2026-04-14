@@ -14,13 +14,15 @@ services:
         - CMD
         - mysqladmin
         - ping
-        - "-p${DB_PASSWORD}"
-      retries: 3
+        - "--password=${DB_PASSWORD}"
+      interval: 2s
       timeout: 5s
+      retries: 10
+      start_period: 30s
     volumes:
       - db-data:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - "${FORWARD_DB_PORT:-3306}:3306"
 
   web:
     build:
@@ -33,6 +35,7 @@ services:
     volumes:
       - .:/app
       - bundle_cache:/app/vendor/bundle
+      - cypress_cache:/home/vscode/.cache/Cypress
     env_file:
       - .env
     environment:
@@ -40,7 +43,7 @@ services:
       DB_HOST: db
       DB_PORT: 3306
     ports:
-      - "3000:3000"
+      - "${APP_PORT:-3000}:3000"
     depends_on:
       db:
         condition: service_healthy
@@ -48,3 +51,4 @@ services:
 volumes:
   db-data:
   bundle_cache:
+  cypress_cache:

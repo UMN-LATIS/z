@@ -14,7 +14,7 @@
     "cypress:run": "npx cypress run --browser chromium",
     "cypress:headless": "npx cypress run --browser chromium --config baseUrl=http://localhost:3000",
     "test:e2e:server": "RAILS_ENV=test USER_LOOKUP_SKELETON=1 bin/rails server",
-    "test:e2e:run": "npx wait-on --timeout 10000 http://localhost:3000 && npx cypress run --browser chromium --config baseUrl=http://localhost:3000",
+    "test:e2e:run": "npx wait-on --timeout 60000 http://localhost:3000 && npx cypress run --browser chromium --config baseUrl=http://localhost:3000",
     "test:e2e": "concurrently --kill-others --success first \"npm run test:e2e:server\" \"npm run test:e2e:run\""
   },
   "dependencies": {
@@ -62,6 +62,7 @@
     "vite": "^6.0.5",
     "vite-plugin-full-reload": "^1.2.0",
     "vite-plugin-ruby": "^5.1.1",
-    "vue-tsc": "^2.1.10"
+    "vue-tsc": "^2.1.10",
+    "wait-on": "^9.0.1"
   }
 }

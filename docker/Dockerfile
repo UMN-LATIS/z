@@ -9,8 +9,6 @@ ARG USER_UID=1000
 ARG USER_GID=1000
 ARG SKIP_BUNDLE_INSTALL=false
 
-EXPOSE 3000
-
 # Enable repositories and module streams
 RUN dnf install -y dnf-plugins-core && \
 	dnf config-manager --set-enabled crb && \
@@ -50,8 +48,6 @@ RUN dnf groupinstall -y "Development Tools" && \
 	net-tools \
 	nodejs \
 	npm \
-	ruby \
-	ruby-devel \
 	libffi-devel \
 	git-credential-libsecret \
 	libyaml \
@@ -73,9 +69,9 @@ RUN dnf install -y epel-release && \
 	dnf clean all && \
 	rm -rf /var/cache/dnf
 
-# Install Ruby from source
+# Install Ruby from source via ruby-build (installed into /usr/local)
 RUN git clone https://github.com/rbenv/ruby-build.git /tmp/ruby-build && \
-	/tmp/ruby-build/install.sh chdir=/tmp/ruby-build && \
+	PREFIX=/usr/local /tmp/ruby-build/install.sh && \
 	RUBY_CFLAGS="-std=gnu99" ruby-build ${RUBY_VERSION} /usr/local && \
 	rm -rf /tmp/ruby-build
 
@@ -118,6 +114,9 @@ RUN mkdir -p $APP_HOME && \
 
 # Switch to non-root user
 USER ${USERNAME}
+
+# Pre-create Cypress cache dir so the named volume inherits vscode ownership
+RUN mkdir -p /home/${USERNAME}/.cache/Cypress
 
 # Copy Gemfile for bundle install
 COPY --chown=${USERNAME}:${USERNAME} Gemfile Gemfile.lock ./

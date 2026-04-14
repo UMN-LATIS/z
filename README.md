@@ -44,13 +44,17 @@ cp .env.example .env
 docker compose up
 ```
 
-In another terminal, set up the database:
+In another terminal, install JS dependencies and set up the databases:
 
 ```sh
+# install node deps
+docker compose exec web npm install
+
+# create dev db, load schema, and seed
 docker compose exec web bin/rails db:setup
 
-# OR to drop an existing db first
-# docker compose exec web bin/rails db:reset
+# create test db, load schema, skip seeding
+docker compose exec -e RAILS_ENV=test web bin/rails db:create db:schema:load
 ```
 
 Open <http://localhost:3000>.
@@ -90,50 +94,45 @@ docker compose exec web bundle exec rspec
 
 Docker and devcontainer environments can only run Cypress **headlessly** (no GUI). For the interactive runner, you need to run Cypress from your host machine.
 
-#### Headless (Docker or devcontainer)
+#### Dev Container (Headless only)
 
-Boots a test server and runs the full suite:
+You can only run cypress within a docker container headlessly (no GUI):
 
 ```sh
-docker compose exec web npm run test:e2e
+# run headless
+npm run test:e2e
 ```
 
-#### Interactive (from host)
+#### From Host (headless or interactive)
+
+Runs Cypress from your host machine against a test Rails server in a throwaway container. The dev stack can keep running — the test server lives on a separate port so there's no conflict and no need to flip `RAILS_ENV`.
 
 **One-time host setup:**
 
 1. Install [Node.js](https://nodejs.org/) (version 22).
-2. Install dependencies locally:
+2. Install JS deps on the host:
 
    ```sh
    npm install
    ```
 
-**Each run:**
+**Each run:** open two terminals.
 
-1. Put Rails in test mode. In your `.env`, change:
+Terminal 1 — start the test Rails server (container port 3000 → host 3001):
 
-   ```sh
-   RAILS_ENV=test
-   ```
+```sh
+docker compose run --rm -p 3001:3000 web npm run test:e2e:server
+```
 
-   (`USER_LOOKUP_SKELETON=1` is already the default.)
+Terminal 2 — run Cypress, pointed at port 3001:
 
-2. Start the stack:
+```sh
+# headless
+npx cypress run --config baseUrl=http://localhost:3001
 
-   ```sh
-   docker compose up
-   ```
-
-3. In another terminal on your host, open Cypress:
-
-   ```sh
-   npx cypress open
-   ```
-
-   Cypress will connect to the Rails server at <http://localhost:3000>.
-
-When you're done, set `RAILS_ENV=development` back in `.env` and restart the stack.
+# interactive GUI
+npx cypress open --config baseUrl=http://localhost:3001
+```
 
 ## Deployment
 
