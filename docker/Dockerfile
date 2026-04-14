@@ -74,7 +74,7 @@ RUN dnf install -y epel-release && \
 	rm -rf /var/cache/dnf
 
 # Install Ruby from source
-RUN git clone https://github.com/sstephenson/ruby-build.git /tmp/ruby-build && \
+RUN git clone https://github.com/rbenv/ruby-build.git /tmp/ruby-build && \
 	/tmp/ruby-build/install.sh chdir=/tmp/ruby-build && \
 	RUBY_CFLAGS="-std=gnu99" ruby-build ${RUBY_VERSION} /usr/local && \
 	rm -rf /tmp/ruby-build
