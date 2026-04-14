@@ -1,0 +1,50 @@
+services:
+  db:
+    image: mysql/mysql-server:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
+      MYSQL_DATABASE: "${DB_DATABASE}"
+      MYSQL_USER: "${DB_USERNAME}"
+      MYSQL_PASSWORD: "${DB_PASSWORD}"
+    healthcheck:
+      test:
+        - CMD
+        - mysqladmin
+        - ping
+        - "-p${DB_PASSWORD}"
+      retries: 3
+      timeout: 5s
+    volumes:
+      - db-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  web:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    command: bash -c "bundle install && rm -f tmp/pids/server.pid && bundle exec rails server -b 0.0.0.0"
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/app
+      - bundle_cache:/app/vendor/bundle
+    env_file:
+      - .env
+    environment:
+      # Override .env's DB_HOST so the container connects to the db service, not localhost
+      DB_HOST: db
+      DB_PORT: 3306
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  db-data:
+  bundle_cache:

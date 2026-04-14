@@ -156,8 +156,6 @@ if [[ "$TERM" == "xterm" ]]; then
     PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND; }precmd"
 fi
 
-# rails devcontainer's default changed to mise from rbenv
-eval "$(mise activate bash)"
 export PROMPT_COMMAND='history -a'
 export HISTFILE="${HOME}/.bash_history"
 
