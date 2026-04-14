@@ -79,8 +79,6 @@ $(document).on('show.bs.modal', function() {
     $("#index-modal select#Group").selectpicker();
 });
 
-// Time-series charts are now handled by Vue (UrlStatsPage component)
-
 //these three should be one function.
 function transferUrl(transferPath, keywords) {
     $.ajax({
@@ -179,7 +177,7 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
                 this.api().columns([1]).every(function() {
                     var column = this;
                     var select = $(`
-                        <select id="collection-filter" 
+                        <select id="collection-filter"
                             class="collection-filter-select">
                             <option value="">
                                 ${I18n.t("views.urls.index.table.collection_filter.all")}
