@@ -35,7 +35,7 @@ services:
     volumes:
       - .:/app
       - bundle_cache:/app/vendor/bundle
-      - cypress_cache:/home/vscode/.cache/Cypress
+      - cypress_cache:/home/${APP_USER:-vscode}/.cache/Cypress
     env_file:
       - .env
     environment:
