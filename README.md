@@ -94,13 +94,16 @@ docker compose exec web bundle exec rspec
 
 Docker and devcontainer environments can only run Cypress **headlessly** (no GUI). For the interactive runner, you need to run Cypress from your host machine.
 
-#### Dev Container (Headless only)
+#### Inside a container (headless only)
 
-You can only run cypress within a docker container headlessly (no GUI):
+Cypress can only run headlessly inside a container — no GUI.
 
 ```sh
-# run headless
+# from a devcontainer shell
 npm run test:e2e
+
+# from the host, against the running dev stack
+docker compose exec web npm run test:e2e
 ```
 
 #### From Host (headless or interactive)
