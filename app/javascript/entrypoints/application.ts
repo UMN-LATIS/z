@@ -7,6 +7,7 @@ import AdminUrlsIndexPage from "@/pages/AdminUrlsIndexPage.vue";
 import "@umn-latis/cla-vue-template/dist/index.css";
 import "@/application.css";
 import AdminCollectionsShowPage from "@/pages/AdminCollectionsShowPage.vue";
+import UrlStatsPage from "@/pages/UrlStatsPage.vue";
 
 const components = {
   "app-header": AppHeader,
@@ -15,6 +16,7 @@ const components = {
   "admin-collections-show-page": AdminCollectionsShowPage,
   "admin-audit-log-page": AdminAuditLogPage,
   "admin-urls-index-page": AdminUrlsIndexPage,
+  "url-stats-page": UrlStatsPage,
 };
 
 const createMyApp = () => {

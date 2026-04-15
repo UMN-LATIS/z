@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_23_183139) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_10_183912) do
   create_table "clicks", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "country_code"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.integer "url_id"
-    t.index ["url_id"], name: "index_clicks_on_url_id"
+    t.index ["url_id", "country_code"], name: "index_clicks_on_url_id_and_country_code"
+    t.index ["url_id", "created_at"], name: "index_clicks_on_url_id_and_created_at"
   end
 
   create_table "frequently_asked_questions", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

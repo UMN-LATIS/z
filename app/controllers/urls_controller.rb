@@ -33,27 +33,28 @@ class UrlsController < ApplicationController
   def show
     @url_identifier = @url.id
 
-    @clicks = {
-      hrs24:
-        @url.clicks.group_by_time_ago(24.hours, '%I:%M%p'),
-      days7:
-        @url.clicks.group_by_time_ago(7.days, '%m/%d'),
-      days30:
-        @url.clicks.group_by_time_ago(30.days, '%m/%d'),
-      alltime:
-        @url.clicks.group_by_time_ago(
-          ((Time.zone.now - @url.created_at) / 60 / 60 / 24).ceil.days,
-          '%m/%Y'
-        ),
-      regions:
-        @url.clicks.group(:country_code).count.to_a
-    }
-
-    @best_day = @url.clicks.max_by_day
-
     respond_to do |format|
-      format.html
+      format.html do
+        @clicks = {
+          regions: @url.clicks.group(:country_code).count.to_a
+        }
+      end
       format.js { render layout: false }
+      format.json do
+        response.headers['Cache-Control'] = 'no-store'
+
+        # Hourly for 24h/7d/30d tabs, daily for year/5y tabs.
+        render json: {
+          url: {
+            id: @url.id,
+            keyword: @url.keyword,
+            created_at: @url.created_at.utc.iso8601,
+            total_clicks: @url.total_clicks
+          },
+          clicks_by_hour: @url.clicks.hourly_counts(30.days),
+          clicks_by_day: @url.clicks.daily_counts(5.years)
+        }
+      end
     end
   end
 

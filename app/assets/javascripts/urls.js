@@ -54,10 +54,9 @@ $(document).bind('turbolinks:load', function() {
     if ($("body.urls.show").length > 0) {
         if (google.charts.Bar === undefined) {
             google.charts.load('current', {
-                'packages': ['bar', 'geochart', 'corechart']
+                'packages': ['geochart', 'corechart']
             });
         }
-        google.charts.setOnLoadCallback(drawChartHrs24);
         google.charts.setOnLoadCallback(drawRegionsMap);
         google.charts.setOnLoadCallback(drawRegionsPie);
 
@@ -79,30 +78,6 @@ $(document).bind('turbolinks:load', function() {
 $(document).on('show.bs.modal', function() {
     $("#index-modal select#Group").selectpicker();
 });
-
-// The rest of the charts need to be loaded upon showing the tab
-// preloading the charts ruins their formatting
-$(document).on('shown.bs.tab', function(e) {
-    // Update aria-selected for accessibility
-    $('#show-tabs a[role="tab"]').attr('aria-selected', 'false');
-    $(e.target).attr('aria-selected', 'true');
-
-    switch ($(e.target).data('load')) {
-        case 'hrs24':
-            drawChartHrs24();
-            break;
-        case 'days7':
-            drawChartDays7();
-            break;
-        case 'days30':
-            drawChartDays30();
-            break;
-        case 'all':
-            drawChartAllTime();
-        default:
-            break;
-    }
-})
 
 //these three should be one function.
 function transferUrl(transferPath, keywords) {
@@ -202,7 +177,7 @@ function initializeUrlDataTable(sortColumn, sortOrder, actionColumn, keywordColu
                 this.api().columns([1]).every(function() {
                     var column = this;
                     var select = $(`
-                        <select id="collection-filter" 
+                        <select id="collection-filter"
                             class="collection-filter-select">
                             <option value="">
                                 ${I18n.t("views.urls.index.table.collection_filter.all")}
