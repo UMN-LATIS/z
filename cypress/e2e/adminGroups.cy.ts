@@ -207,7 +207,7 @@ describe("admin group show page", () => {
     cy.createAndLoginUser(admin.umndid, { admin: true });
   });
 
-  it("links a default group's owner to umn people search in a new tab", () => {
+  function seedPersonOwnedUrlAndVisitAdminGroup(ownerNameOverride?: string) {
     cy.createUser(user1.umndid, {
       internet_id_loaded: user1.internet_id,
     }).then((user) => {
@@ -217,18 +217,32 @@ describe("admin group show page", () => {
         group_id: user.context_group_id,
       });
 
-      cy.visit(`/shortener/admin/groups/${user.context_group_id}`);
+      if (ownerNameOverride) {
+        cy.appEval(
+          `Group.find(${user.context_group_id}).update!(name: ${JSON.stringify(ownerNameOverride)})`
+        );
+      }
 
-      cy.get("[data-cy='admin-urls-table']")
-        .contains(user1.internet_id)
-        .closest("a")
-        .should(
-          "have.attr",
-          "href",
-          `https://udirectory.umn.edu/lookup?type=Internet+ID&CN=${user1.internet_id}&campus=a&role=any`
-        )
-        .and("have.attr", "target", "_blank")
-        .and("have.attr", "rel", "noopener noreferrer nofollow");
+      cy.visit(`/shortener/admin/groups/${user.context_group_id}`);
     });
+  }
+
+  it("links a default group's owner to umn people search in a new tab", () => {
+    seedPersonOwnedUrlAndVisitAdminGroup();
+
+    cy.get("[data-cy='owner-person-link']")
+      .should(
+        "have.attr",
+        "href",
+        `https://udirectory.umn.edu/lookup?type=Internet+ID&CN=${user1.internet_id}&campus=a&role=any`
+      )
+      .and("have.attr", "target", "_blank")
+      .and("have.attr", "rel", "noopener noreferrer nofollow");
+  });
+
+  it("keeps the external link icon visible when the owner name overflows", () => {
+    seedPersonOwnedUrlAndVisitAdminGroup("Office of Information Technology");
+
+    cy.get("[data-cy='owner-person-link'] svg").should("be.visible");
   });
 });

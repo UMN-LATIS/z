@@ -12,21 +12,32 @@ function peopleSearchUrl(internetId: string): string {
   return `https://udirectory.umn.edu/lookup?type=Internet+ID&CN=${internetId}&campus=a&role=any`;
 }
 
-export function renderOwnerCell(groupName: string, row: Zlink): string {
+function ownerPersonLink(internetId: string): string {
+  // truncate the name, not the anchor: moving this
+  // class to the <a> clips the external-link icon
+  return `<a
+      data-cy="owner-person-link"
+      class="tw-inline-flex tw-items-center tw-gap-1"
+      title="${internetId}"
+      href="${peopleSearchUrl(internetId)}"
+      target="_blank"
+      rel="noopener noreferrer nofollow"
+    ><span class="admin-urls-datatable__group-col">${internetId}</span>${EXTERNAL_LINK_ICON}</a>`;
+}
+
+function groupMembersLink(groupName: string, groupId: string): string {
+  return `<a
+      class="admin-urls-datatable__group-col"
+      title="${groupName}"
+      href="/shortener/groups/${groupId}/members"
+    >${GROUP_ICON}<span>${groupName}</span></a>`;
+}
+
+export function renderOwnerCell(row: Zlink): string {
+  // "false" is truthy, so a truthiness check here
+  // links every collection to people search
   const isDefaultGroup = row.is_default_group === "true";
 
-  // a default group's name is its owner's internet id (User#before_validation)
-  return isDefaultGroup
-    ? `<a
-        class="admin-urls-datatable__group-col"
-        title="${groupName}"
-        href="${peopleSearchUrl(groupName)}"
-        target="_blank"
-        rel="noopener noreferrer nofollow"
-      >${groupName} ${EXTERNAL_LINK_ICON}</a>`
-    : `<a
-        class="admin-urls-datatable__group-col"
-        title="${groupName}"
-        href="/shortener/groups/${row.group_id}/members"
-      >${GROUP_ICON}<span>${groupName}</span></a>`;
+  if (isDefaultGroup) return ownerPersonLink(row.group_name);
+  return groupMembersLink(row.group_name, row.group_id);
 }

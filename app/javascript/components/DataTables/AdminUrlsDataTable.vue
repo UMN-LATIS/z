@@ -191,7 +191,7 @@ const columns: DataTableColumnOptions[] = [
   },
   {
     data: "group_name",
-    render: (group_name: string, _, row) => renderOwnerCell(group_name, row),
+    render: (_data, _type, row) => renderOwnerCell(row),
   },
   {
     data: "total_clicks",

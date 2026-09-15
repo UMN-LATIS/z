@@ -269,14 +269,14 @@ describe("admin urls page", () => {
     });
 
     it("should link default groups (users) to umn people search", () => {
-      cy.get("[data-cy='admin-urls-table']")
-        .contains("user1")
-        .closest("a")
+      cy.get("[data-cy='owner-person-link']")
         .should(
           "have.attr",
           "href",
           `https://udirectory.umn.edu/lookup?type=Internet+ID&CN=user1&campus=a&role=any`
-        );
+        )
+        .find("svg")
+        .should("be.visible");
     });
   });
 });
