@@ -40,6 +40,7 @@ export interface Zlink {
   updated_at: string;
   group_id: string;
   group_name: string;
+  is_default_group?: "true" | "false";
   total_clicks?: number;
 }
 
