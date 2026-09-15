@@ -2,6 +2,7 @@ import { validateFlashMessage } from "../support/validateFlashMessage";
 
 //fixtures
 import admin from "../fixtures/users/admin.json";
+import user1 from "../fixtures/users/user1.json";
 
 describe("admin groups index page", () => {
   beforeEach(() => {
@@ -196,6 +197,38 @@ describe("admin groups index page", () => {
       cy.get("tbody > tr")
         .should("have.length", 1)
         .should("contain", "collection2");
+    });
+  });
+});
+
+describe("admin group show page", () => {
+  beforeEach(() => {
+    cy.app("clean");
+    cy.createAndLoginUser(admin.umndid, { admin: true });
+  });
+
+  it("links a default group's owner to umn people search in a new tab", () => {
+    cy.createUser(user1.umndid, {
+      internet_id_loaded: user1.internet_id,
+    }).then((user) => {
+      cy.createUrl({
+        keyword: "owned-by-a-person",
+        url: "https://example.com",
+        group_id: user.context_group_id,
+      });
+
+      cy.visit(`/shortener/admin/groups/${user.context_group_id}`);
+
+      cy.get("[data-cy='admin-urls-table']")
+        .contains(user1.internet_id)
+        .closest("a")
+        .should(
+          "have.attr",
+          "href",
+          `https://udirectory.umn.edu/lookup?type=Internet+ID&CN=${user1.internet_id}&campus=a&role=any`
+        )
+        .and("have.attr", "target", "_blank")
+        .and("have.attr", "rel", "noopener noreferrer nofollow");
     });
   });
 });

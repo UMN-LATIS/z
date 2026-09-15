@@ -275,7 +275,7 @@ describe("admin urls page", () => {
         .should(
           "have.attr",
           "href",
-          `https://myaccount.umn.edu/lookup?type=Internet+ID&CN=user1&campus=a&role=any`
+          `https://udirectory.umn.edu/lookup?type=Internet+ID&CN=user1&campus=a&role=any`
         );
     });
   });
