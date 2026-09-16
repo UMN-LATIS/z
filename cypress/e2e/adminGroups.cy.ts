@@ -207,7 +207,7 @@ describe("admin group show page", () => {
     cy.createAndLoginUser(admin.umndid, { admin: true });
   });
 
-  function seedPersonOwnedUrlAndVisitAdminGroup(ownerNameOverride?: string) {
+  function visitAdminGroupPageForOwnerNamed(ownerName: string) {
     cy.createUser(user1.umndid, {
       internet_id_loaded: user1.internet_id,
     }).then((user) => {
@@ -217,18 +217,17 @@ describe("admin group show page", () => {
         group_id: user.context_group_id,
       });
 
-      if (ownerNameOverride) {
-        cy.appEval(
-          `Group.find(${user.context_group_id}).update!(name: ${JSON.stringify(ownerNameOverride)})`
-        );
-      }
+      const rubyQuotedName = JSON.stringify(ownerName);
+      cy.appEval(
+        `Group.find(${user.context_group_id}).update!(name: ${rubyQuotedName})`
+      );
 
       cy.visit(`/shortener/admin/groups/${user.context_group_id}`);
     });
   }
 
   it("links a default group's owner to umn people search in a new tab", () => {
-    seedPersonOwnedUrlAndVisitAdminGroup();
+    visitAdminGroupPageForOwnerNamed(user1.internet_id);
 
     cy.get("[data-cy='owner-person-link']")
       .should(
@@ -241,7 +240,7 @@ describe("admin group show page", () => {
   });
 
   it("keeps the external link icon visible when the owner name overflows", () => {
-    seedPersonOwnedUrlAndVisitAdminGroup("Office of Information Technology");
+    visitAdminGroupPageForOwnerNamed("Office of Information Technology");
 
     cy.get("[data-cy='owner-person-link'] svg").should("be.visible");
   });
