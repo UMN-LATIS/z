@@ -2,6 +2,7 @@ import { validateFlashMessage } from "../support/validateFlashMessage";
 
 //fixtures
 import admin from "../fixtures/users/admin.json";
+import user1 from "../fixtures/users/user1.json";
 
 describe("admin groups index page", () => {
   beforeEach(() => {
@@ -197,5 +198,50 @@ describe("admin groups index page", () => {
         .should("have.length", 1)
         .should("contain", "collection2");
     });
+  });
+});
+
+describe("admin group show page", () => {
+  beforeEach(() => {
+    cy.app("clean");
+    cy.createAndLoginUser(admin.umndid, { admin: true });
+  });
+
+  function visitAdminGroupPageForOwnerNamed(ownerName: string) {
+    cy.createUser(user1.umndid, {
+      internet_id_loaded: user1.internet_id,
+    }).then((user) => {
+      cy.createUrl({
+        keyword: "owned-by-a-person",
+        url: "https://example.com",
+        group_id: user.context_group_id,
+      });
+
+      const rubyQuotedName = JSON.stringify(ownerName);
+      cy.appEval(
+        `Group.find(${user.context_group_id}).update!(name: ${rubyQuotedName})`
+      );
+
+      cy.visit(`/shortener/admin/groups/${user.context_group_id}`);
+    });
+  }
+
+  it("links a default group's owner to umn people search in a new tab", () => {
+    visitAdminGroupPageForOwnerNamed(user1.internet_id);
+
+    cy.get("[data-cy='owner-person-link']")
+      .should(
+        "have.attr",
+        "href",
+        `https://udirectory.umn.edu/lookup?type=Internet+ID&CN=${user1.internet_id}&campus=a&role=any`
+      )
+      .and("have.attr", "target", "_blank")
+      .and("have.attr", "rel", "noopener noreferrer nofollow");
+  });
+
+  it("keeps the external link icon visible when the owner name overflows", () => {
+    visitAdminGroupPageForOwnerNamed("Office of Information Technology");
+
+    cy.get("[data-cy='owner-person-link'] svg").should("be.visible");
   });
 });
